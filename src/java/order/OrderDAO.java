@@ -3,11 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package order;
+
+import java.io.Serializable;
 
 /**
  *
- * @author nguye
+ * @author ASUS
  */
-public class NewClass {
+public class OrderDAO implements Serializable{
     
 }
