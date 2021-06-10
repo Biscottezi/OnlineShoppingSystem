@@ -14,8 +14,8 @@ import java.sql.Date;
  */
 public class UserDTO implements Serializable{
     private int id;
-    private String gender;
-    private String username;
+    private String name;
+    private int gender;
     private String address;
     private String email;
     private String phone;
@@ -28,10 +28,10 @@ public class UserDTO implements Serializable{
     public UserDTO() {
     }
 
-    public UserDTO(int id, String gender, String username, String address, String email, String phone, int status, Date createdDate, String avatar, int role, String password) {
+    public UserDTO(int id, String name, int gender, String address, String email, String phone, int status, Date createdDate, String avatar, int role, String password) {
         this.id = id;
+        this.name = name;
         this.gender = gender;
-        this.username = username;
         this.address = address;
         this.email = email;
         this.phone = phone;
@@ -50,20 +50,20 @@ public class UserDTO implements Serializable{
         this.id = id;
     }
 
-    public String getGender() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getAddress() {
@@ -129,5 +129,5 @@ public class UserDTO implements Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
 }
