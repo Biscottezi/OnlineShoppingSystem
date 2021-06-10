@@ -31,8 +31,8 @@
                     </a>
                 </div>
                 <form action="" class="col-3 searchbar">
-                    <input type="text" placeholder="Search" class="search-input col-10">
-                    <button type="submit" id="search-button" class="col-2">
+                    <input type="text" placeholder="Search" class="search-input col-10" name="txtSearchProduct">
+                    <button type="submit" id="search-button" class="col-2" name="btAction">
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
@@ -68,12 +68,12 @@
                             <h1>Sign in</h1>
                             <form action="" method="POST" class="form">
                                 <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Email">
+                                    <input class="form-control" type="text" placeholder="Email" name="txtEmail">
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" type="password" placeholder="Password">
+                                    <input class="form-control" type="password" placeholder="Password" name="txtPassword">
                                 </div>
-                                <button type="submit" class="form-col-btn">Sign in</button>
+                                <button type="submit" class="form-col-btn" name="btAction">Sign in</button>
                             </form>
                             <span onclick="openForgotPassword()">Forgot your password?</span>
                             <img src="img/Frame.png" alt="frame" id="frame-hand-1">
@@ -103,31 +103,31 @@
                             <h1>Create Account</h1>
                             <form action="" method="POST" class="form">
                                 <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Email">
+                                    <input class="form-control" type="text" placeholder="Email" name="txtEmail">
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" type="password" placeholder="Password">
+                                    <input class="form-control" type="password" placeholder="Password" name="txtPassword">
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" type="password" placeholder="Confirm password">
+                                    <input class="form-control" type="password" placeholder="Confirm password" name="txtConfirm">
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Fullname">
+                                    <input class="form-control" type="text" placeholder="Fullname" name="txtFullName">
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Mobile">
+                                    <input class="form-control" type="text" placeholder="Mobile" name="txtMobile">
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control">
+                                    <select class="form-control" name="txtGender">
                                         <option disabled selected>Gender</option>
                                         <option>Male</option>
                                         <option>Female</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <textarea class="form-control" placeholder="Address"></textarea>
+                                    <textarea class="form-control" placeholder="Address" name="txtAddress"></textarea>
                                 </div>
-                                <button type="submit" class="form-col-btn">Sign up</button>
+                                <button type="submit" class="form-col-btn" name="btAction">Sign up</button>
                             </form>
                         </div>                
                     </div>
@@ -145,9 +145,9 @@
                     <h1>Forgot Password</h1>
                     <form action="" method="POST" class="form">
                         <div class="form-group">
-                            <input class="form-control" type="text" placeholder="Email">
+                            <input class="form-control" type="text" placeholder="Email" name="txtEmail">
                         </div>
-                        <button type="submit" class="form-col-btn forgot-btn" onclick="resetNoti()">Request Reset Link</button>
+                        <button type="submit" class="form-col-btn forgot-btn" onclick="resetNoti()" name="btAction">Request Reset Link</button>
                     </form>
                     <button class="welcome-btn forgot-btn" id="forgot-btn" onclick="openLogin()">Sign in</button>
                 </div>
