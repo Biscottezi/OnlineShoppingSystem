@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" href="css/header-footer.css">
         <link rel="stylesheet" href="css/homepage.css">
+        <link rel="stylesheet" href="css/pop-up.css">
         <script src="js/homepage.js"></script>
     </head>
 

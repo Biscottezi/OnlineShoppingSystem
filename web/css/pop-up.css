@@ -1,0 +1,145 @@
+.pop-up {
+    display: none;
+    position: fixed;
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 4%;
+    z-index: 18;
+    border: 1px solid cornflowerblue;
+    background-color: white;
+    border-radius: 16px;
+}
+
+#login {
+    height: auto;
+}
+
+.welcome {
+    background: linear-gradient(180deg, rgba(0, 133, 255, 0.58) 0%, #002A4B 100%);
+    height: auto;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+}
+
+.welcome div {
+    color: white;
+    text-align: center;
+    margin-top: 30%;
+}
+
+.welcome div h1 {
+    font-weight: 400;
+    font-size: 2.4rem;
+    margin: 10px 0;
+}
+
+.welcome div h3 {
+    font-weight: 400;
+    font-size: 1.2rem;
+    width: 90%;
+    margin: 10px auto;
+}
+
+.welcome-btn {
+    width: 80%;
+    margin-top: 30px;
+    background-color: transparent;
+    border: white 2px solid;
+    border-radius: 60px;
+    color: white;
+    height: 3.2rem;
+    font-size: 1.2rem;
+}
+
+.form {
+    display: block;
+}
+
+.form-col h1 {
+    margin-top: 5%;
+    font-weight: 700;
+    background: -webkit-linear-gradient(rgba(0, 133, 255, 0.58) 0%, rgba(0, 83, 158, 0.80738) 55.8%, #002A4B 110%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-bottom: 3px;
+}
+
+.form-control {
+    margin-top: 4%;
+    width: 90%;
+    border: cornflowerblue 2px solid;
+    border-radius: 60px;
+}
+
+.form-col-btn {
+    margin-top: 3%;
+    width: 36%;
+    background: linear-gradient(270deg, rgba(0, 133, 255, 0.58) -39.07%,#002A4B 130.65%);
+    border-radius: 60px;
+    border: none;
+    color: white;
+    height: 3.2rem;
+    font-weight: 400;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.form-col span {
+    text-decoration: none;
+    color: #6c6d6d;
+    cursor: pointer;
+}
+
+#frame-hand-1 {
+    width: 9rem;
+    display: flex;
+    margin-top: -20%;
+    filter: contrast(20%);
+    position: relative;
+    left: 65%;
+}
+
+.close-btn {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    z-index: 19;
+}
+
+.fa-times-circle {
+    color: cornflowerblue;
+}
+
+#frame-hand-2 {
+    width: 80%;
+    display: block;
+    position: absolute;
+    bottom: 0;
+}
+
+#register {
+    margin-top: 1.5%;
+    height: auto;
+}
+
+#register-welcome {
+    height: auto;
+}
+
+#forgot-password {
+    width: 30%;
+    margin-left: 35%;
+    padding-bottom: 1rem;
+}
+
+.forgot-btn {
+    width: 60%;
+    margin: 0.7rem 0;
+}
+
+#forgot-btn {
+    color: cornflowerblue;
+    border: cornflowerblue 1px solid;
+    border-radius: 60px;
+}
