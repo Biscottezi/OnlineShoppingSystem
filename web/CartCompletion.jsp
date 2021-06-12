@@ -1,7 +1,7 @@
 <%-- 
-    Document   : ProductList
-    Created on : May 26, 2021, 8:04:23 PM
-    Author     : ASUS
+    Document   : CartCompletion
+    Created on : Jun 12, 2021, 10:47:15 AM
+    Author     : nguye
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -10,7 +10,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Products</title>
+        <title>Cart Completion</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" href="css/header-footer.css">
         <link rel="stylesheet" href="css/sider.css">
-        <link rel="stylesheet" href="css/ProductPage.css">
+        <link rel="stylesheet" href="css/CartCompletion.css">
         <link rel="stylesheet" href="css/pop-up.css">
         <script src="js/homepage.js"></script>
     </head>
@@ -184,122 +184,26 @@
                     </div>
                 </div>
 
-                <div class="main-content">
-                    <div class="container" style="padding-left: 24px;">
-                        <h1>Latest products</h1>
-                        <select name="" id="">
-                            <option value="" selected>Newest</option>
-                            <option value="">Oldest</option>
-                        </select>
-                    </div>
-                    <div class="row product-row">
-                        <div class="col-3">
-                            <div class="card">
-                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                    <h3 class="card-title card-price">$49.50</h3>
-                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                    <p class="card-text">Star: 4/5</p>
-                                </div>
-                            </div>
+                <div class="main-content container">
+                    <h1>Order</h1>
+                    <div class="col">
+                        <div class="d-flex justify-content-center p-2">
+                            <img src="img/cartCompletion.png" alt="cartCompletionImg">
                         </div>
-                        <div class="col-3">
-                            <div class="card">
-                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                    <h3 class="card-title card-price">$49.50</h3>
-                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                    <p class="card-text">Star: 4/5</p>
-                                </div>
-                            </div>
+                        <h2 class="d-flex justify-content-center pt-2">Thank you [customer name]</h2>
+                        <h3 class="d-flex justify-content-center p-2">Sit back and relax, your order is on its way!</h3>
+                        <div class="d-flex flex-row justify-content-around p-2">
+                            <button class="main-ctn-btn">HOME PAGE</button>
+                            <button class="main-ctn-btn">BUY MORE</button>
                         </div>
-                        <div class="col-3">
-                            <div class="card">
-                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                    <h3 class="card-title card-price">$49.50</h3>
-                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                    <p class="card-text">Star: 4/5</p>
-                                </div>
-                            </div>
+                        <div class="d-flex justify-content-center p-2">
+                            <h4>Order confirmation was sent to receiver@gmail.com</h4>
                         </div>
-                        <div class="col-3">
-                            <div class="card">
-                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                    <h3 class="card-title card-price">$49.50</h3>
-                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                    <p class="card-text">Star: 4/5</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row product-row">
-                        <div class="col-3">
-                            <div class="card">
-                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                    <h3 class="card-title card-price">$49.50</h3>
-                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                    <p class="card-text">Star: 4/5</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="card">
-                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                    <h3 class="card-title card-price">$49.50</h3>
-                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                    <p class="card-text">Star: 4/5</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="card">
-                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                    <h3 class="card-title card-price">$49.50</h3>
-                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                    <p class="card-text">Star: 4/5</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="card">
-                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                    <h3 class="card-title card-price">$49.50</h3>
-                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                    <p class="card-text">Star: 4/5</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="container">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                              <li class="page-item"><a class="page-link" href="#">1</a></li>
-                              <li class="page-item"><a class="page-link" href="#">2</a></li>
-                              <li class="page-item"><a class="page-link" href="#">3</a></li>
-                              <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                            </ul>
-                          </nav>
                     </div>
                 </div>
             </div>
         </main>
-        
+
         <!--Footer-->
         <footer class="container footer-wrapper">
             <div class="row footer-row-1">
