@@ -6,6 +6,14 @@
 package user;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import javax.naming.NamingException;
+import utils.DBHelper;
 
 /**
  *
@@ -13,4 +21,61 @@ import java.io.Serializable;
  */
 public class UserDAO implements Serializable{
     
+    private UserDTO user;
+
+    public UserDTO getUser() {
+        return user;
+    }
+    
+    
+    public boolean checkLogin(String email, String password)
+        throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        
+        try{
+            //1. Connect DB
+            con = DBHelper.makeConnection();
+            if(con != null){
+                //2. Create SQL String
+                String sql = "Select Role "
+                        + "From User "
+                        + "Where Email = ? And Password = ?";
+                //3.Create statement and assign value for parameters if any
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
+                stm.setString(2, password);
+                //4. Execute Query
+                rs = stm.executeQuery();
+                //5. Process result
+                if(rs.next()){
+                    int id = rs.getInt("UserID");
+                    String name = rs.getString("Name");
+                    int gender = rs.getInt("Gender");
+                    String address = rs.getString("Address");
+                    String phone = rs.getString("Phone");
+                    int status = rs.getInt("Status");
+                    Date dateCreated = rs.getDate("DateCreated");
+                    String avatar = rs.getString("Avatar");
+                    int role = rs.getInt("Role");
+                    this.user = new UserDTO(id, name, gender, address, email, phone, status, dateCreated, avatar, role, password);
+                    return true;
+                }//end if rs is existed
+            }//end if con is opened
+        } finally {
+            if(con != null){
+                rs.close();
+            }
+            if(con != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        
+        
+        return false;
+    }
 }

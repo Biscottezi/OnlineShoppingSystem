@@ -27,15 +27,17 @@ public class ProductDAO implements Serializable{
         return productList;
     }
     
-    public void showProduct() throws SQLException, NamingException{
+    public void getFeaturedProduct() throws SQLException, NamingException{
         Connection con = null;
         CallableStatement stm = null;
         ResultSet rs = null;
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "SELECT ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated "
-                        + "FROM Product";
+                String sql = "SELECT TOP 8 ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated "
+                        + "FROM Product "
+                        + "WHERE Featured = 1 "
+                        + "ORDER by DateCreated desc";
                 stm = con.prepareCall(sql);
                 rs = stm.executeQuery();
                 
@@ -60,7 +62,15 @@ public class ProductDAO implements Serializable{
                 }
             }
         }finally{
-            
+            if(con != null){
+                    rs.close();
+                }
+                if(con != null){
+                    stm.close();
+                }
+                if(con != null){
+                    con.close();
+                }
         }
     }
 }
