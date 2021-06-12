@@ -1,0 +1,27 @@
+.product-row{
+    margin: 0.5em;
+}
+
+.card { 
+    height: 450px;
+}
+
+.card-title {
+    font-size: 1em;
+}
+
+.card-img-top {
+    height: 170px;
+}
+
+.card-price {
+    font-size: 24px;
+}
+
+.card-text {
+    font-size: 14px;
+}
+
+.page-link {
+    color: black;
+}

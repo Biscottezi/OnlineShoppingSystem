@@ -101,29 +101,19 @@ public class filterDispatcher implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) request;
-        String uri = req.getRequestURI();
-        String url = ERROR_PAGE;
-        try{
-            ServletContext context = filterConfig.getServletContext();
-            HashMap<String, String> map = (HashMap<String, String>)context.getAttribute("MAP");
-            int  lastIndex = uri.lastIndexOf("/");
-            String resource = uri.substring(lastIndex + 1);
-            if(resource.length() >= 0){
-                if(map.containsKey(resource)){
-                    url = map.get(resource);
-                }
-            }
-            
-            if(url != null){
-                RequestDispatcher rd = request.getRequestDispatcher(url);
-                rd.forward(request, response);
-            } else{
-                chain.doFilter(request, response);
-            }
-        }catch(Throwable t){
-            t.printStackTrace();
-        }
+        HttpServletRequest rq = (HttpServletRequest) request;
+        ServletContext context = rq.getServletContext();
+        HashMap<String, String> sitemap = (HashMap<String, String>) context.getAttribute("SITE_MAP_ATTRI");
+
+        String uri = rq.getRequestURI();
+
+        String resource = uri.substring(uri.lastIndexOf("/") + 1);
+
+        String convertedURI = null;
+        convertedURI = sitemap.get(resource);
+
+        RequestDispatcher rd = rq.getRequestDispatcher(convertedURI);
+        rd.forward(request, response);
     }
 //        if (debug) {
 //            log("filterDispatcher:doFilter()");
