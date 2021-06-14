@@ -36,7 +36,7 @@ public class ProductDAO implements Serializable{
             if(con != null){
                 String sql = "SELECT TOP 8 ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated "
                         + "FROM Product "
-                        + "WHERE Featured = 1 "
+                        + "WHERE Featured = 1 AND Status = 1 "
                         + "ORDER by DateCreated desc";
                 stm = con.prepareCall(sql);
                 rs = stm.executeQuery();

@@ -13,4 +13,5 @@ import java.io.Serializable;
  */
 public class SliderDAO implements Serializable{
     
+    
 }
