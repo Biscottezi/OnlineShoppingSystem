@@ -67,7 +67,7 @@
                     <div class="container">
                         <div class="col-12">
                             <h1>Sign in</h1>
-                            <form action="" method="POST" class="form">
+                            <form action="login" method="POST" class="form">
                                 <div class="form-group">
                                     <input class="form-control" type="text" placeholder="Email" name="txtEmail">
                                 </div>
@@ -102,7 +102,7 @@
                     <div class="container">
                         <div class="col-12">
                             <h1>Create Account</h1>
-                            <form action="" method="POST" class="form">
+                            <form action="registration" method="POST" class="form">
                                 <div class="form-group">
                                     <input class="form-control" type="text" placeholder="Email" name="txtEmail">
                                 </div>
@@ -144,7 +144,7 @@
             <div class="container">
                 <div class="col-12">
                     <h1>Forgot Password</h1>
-                    <form action="" method="POST" class="form">
+                    <form action="reset-password" method="POST" class="form">
                         <div class="form-group">
                             <input class="form-control" type="text" placeholder="Email" name="txtEmail">
                         </div>
