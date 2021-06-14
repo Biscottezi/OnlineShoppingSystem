@@ -121,8 +121,8 @@
                                 <div class="form-group">
                                     <select class="form-control" name="txtGender">
                                         <option disabled selected>Gender</option>
-                                        <option>Male</option>
-                                        <option>Female</option>
+                                        <option value="0">Male</option>
+                                        <option value="1">Female</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
