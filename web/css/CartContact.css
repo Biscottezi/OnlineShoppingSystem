@@ -1,0 +1,73 @@
+.product {
+    margin-top: 1em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid#E3E3E3;
+}
+
+.summary {
+    background-color: #274156;
+    border-radius: 10px;
+    color: white;
+    height: 220px;
+    padding: 1em 1em;
+}
+
+.btn-change {
+    background-color: white;
+    color: black;
+    width: 45%;
+    border-radius: 10px;
+    font-size: 19px;
+    font-weight: 600;
+    height: 2.2em;
+}
+
+.btn-submit {
+    background-color:#F38300;
+    border-radius: 10px;
+    width: 45%;
+    color: white;
+    font-size: 19px;
+    font-weight: 600;
+    height: 2.2em;
+}
+
+.summary span {
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+.contact-form {
+    border: 1px solid #E3E3E3;
+    border-radius: 10px;
+    padding: 1em 2em;
+}
+
+[name="txtReceiverName"] {
+    width: 16em;
+}
+
+[name="txtReceiverEmail"] {
+    width: 16em;
+}
+
+[name="txtReceiverMobile"] {
+    width: 16em;
+}
+
+[name="txtReceiverGender"] {
+    width: 6em;
+}
+
+.frm-ctrl {
+    margin-top: 1em;
+}
+
+.frm-ctrl label {
+    font-weight: 500;
+}
+
+.frm-ctrl input, select, textarea {
+    border: 1px solid #E3E3E3;
+    border-radius: 4px;
+}
