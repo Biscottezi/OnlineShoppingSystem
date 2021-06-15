@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 public class filterDispatcher implements Filter {
     private final String ERROR_PAGE = "Error.html";
     private static final boolean debug = true;
+    private final String HOME_PAGE = "viewHomePageServlet";
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
@@ -106,14 +107,24 @@ public class filterDispatcher implements Filter {
         HashMap<String, String> sitemap = (HashMap<String, String>) context.getAttribute("SITE_MAP_ATTRI");
 
         String uri = rq.getRequestURI();
+        String resource = HOME_PAGE;
 
-        String resource = uri.substring(uri.lastIndexOf("/") + 1);
+        resource = uri.substring(uri.lastIndexOf("/") + 1);
 
         String convertedURI = null;
         convertedURI = sitemap.get(resource);
 
-        RequestDispatcher rd = rq.getRequestDispatcher(convertedURI);
-        rd.forward(request, response);
+
+        
+        if (rq.getRequestURI().endsWith(".png")||rq.getRequestURI().endsWith(".jpg")||rq.getRequestURI().endsWith(".css")||rq.getRequestURI().endsWith(".js")) {
+                chain.doFilter(request, response);
+        }
+        if (convertedURI!=null) {
+            RequestDispatcher rd = rq.getRequestDispatcher(convertedURI);
+            rd.forward(request, response);
+        } else {
+            chain.doFilter(request, response);
+        }
     }
 //        if (debug) {
 //            log("filterDispatcher:doFilter()");
