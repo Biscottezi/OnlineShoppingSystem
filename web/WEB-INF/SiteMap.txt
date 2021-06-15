@@ -5,3 +5,5 @@ error=Error.html
 homepage=homepage.jsp
 registerPage=RegisterForm.jsp
 registerSuccess=RegisterSucess.html
+productPage=ProductPage.jsp
+cartCompletion=CartCompletion.jsp
