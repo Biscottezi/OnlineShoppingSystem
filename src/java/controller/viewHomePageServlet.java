@@ -64,16 +64,19 @@ public class viewHomePageServlet extends HttpServlet {
             
             SliderDAO sliderDao = new SliderDAO();
             SliderDTO slider = sliderDao.getSlider();
-            SliderContentDAO sliderContentDao = new SliderContentDAO();
-            sliderContentDao.getProductID(slider.getId());
-            List<Integer> productIDList = sliderContentDao.getProductIDList();
-            if(productIDList != null){
-                List<ProductDTO> sliderProducts = new ArrayList<>();
-                for(int i = 0; i < productIDList.size(); i++){
-                    productDao.searchProductID(productIDList.get(i));
-                    sliderProducts.add(productDao.getProduct());
+            if(slider != null){
+                request.setAttribute("SLIDER", slider);
+                SliderContentDAO sliderContentDao = new SliderContentDAO();
+                sliderContentDao.getProductID(slider.getId());
+                List<Integer> productIDList = sliderContentDao.getProductIDList();
+                if(productIDList != null){
+                    List<ProductDTO> sliderProducts = new ArrayList<>();
+                    for(int i = 0; i < productIDList.size(); i++){
+                        productDao.searchProductID(productIDList.get(i));
+                        sliderProducts.add(productDao.getProduct());
+                    }
+                    request.setAttribute("SLIDER_PRODUCTS", sliderProducts);
                 }
-                request.setAttribute("SLIDER_PRODUCTS", sliderProducts);
             }
             
             

@@ -1,5 +1,7 @@
 login=loginServlet
 registration=RegisterServlet
 reset-password=resetPasswordServlet
-error=
-homepage=
+error=Error.html
+homepage=homepage.jsp
+registerPage=RegisterForm.jsp
+registerSuccess=RegisterSucess.html
