@@ -8,6 +8,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -20,6 +21,9 @@ import post.PostDAO;
 import post.PostDTO;
 import product.ProductDAO;
 import product.ProductDTO;
+import slider.SliderDAO;
+import slider.SliderDTO;
+import sliderContent.SliderContentDAO;
 
 /**
  *
@@ -58,6 +62,19 @@ public class viewHomePageServlet extends HttpServlet {
                 request.setAttribute("FEATURED_POST", postList);
             }
             
+            SliderDAO sliderDao = new SliderDAO();
+            SliderDTO slider = sliderDao.getSlider();
+            SliderContentDAO sliderContentDao = new SliderContentDAO();
+            sliderContentDao.getProductID(slider.getId());
+            List<Integer> productIDList = sliderContentDao.getProductIDList();
+            if(productIDList != null){
+                List<ProductDTO> sliderProducts = new ArrayList<>();
+                for(int i = 0; i < productIDList.size(); i++){
+                    productDao.searchProductID(productIDList.get(i));
+                    sliderProducts.add(productDao.getProduct());
+                }
+                request.setAttribute("SLIDER_PRODUCTS", sliderProducts);
+            }
             
             
             url = HOME_PAGE;

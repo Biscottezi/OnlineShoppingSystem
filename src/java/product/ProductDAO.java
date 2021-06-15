@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,6 +26,12 @@ public class ProductDAO implements Serializable{
 
     public List<ProductDTO> getProductList() {
         return productList;
+    }
+    
+    private ProductDTO product;
+    
+    public ProductDTO getProduct(){
+        return product;
     }
     
     public void getFeaturedProduct() throws SQLException, NamingException{
@@ -72,5 +79,51 @@ public class ProductDAO implements Serializable{
                     con.close();
                 }
         }
+    }
+    
+    public void searchProductID(int productID)
+            throws SQLException, NamingException{
+            Connection con = null;
+            PreparedStatement stm = null;
+            ResultSet rs = null;
+            try{
+                con = DBHelper.makeConnection();
+                if(con != null){
+                    String sql = "Select ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated "
+                            + "From Product "
+                            + "Where ProductID = ?";
+                    
+                    stm = con.prepareStatement(sql);
+                    stm.setInt(1, productID);
+                    rs = stm.executeQuery();
+                    
+                    if(rs.next()){
+                        int ProductID = rs.getInt("ProductID");
+                    String Title = rs.getString("Title");
+                    int ProductCategoryID = rs.getInt("ProductCategoryID");
+                    String Thumbnail = rs.getString("Thumbnail");
+                    String BriefInfo = rs.getString("BriefInfo");
+                    String Description = rs.getString("Description");
+                    int Quantity = rs.getInt("Quantity");
+                    float ListPrice = rs.getFloat("ListPrice");
+                    float SalePrice = rs.getFloat("SalePrice");
+                    int Featured = rs.getInt("Featured");
+                    int Status = rs.getInt("Status");
+                    Date DateCreated = rs.getDate("DateCreated");
+                    ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated);
+                    this.product = dto;
+                    }
+                }
+            }finally{
+                if(con != null){
+                    rs.close();
+                }
+                if(con != null){
+                    stm.close();
+                }
+                if(con != null){
+                    con.close();
+                }
+            }
     }
 }

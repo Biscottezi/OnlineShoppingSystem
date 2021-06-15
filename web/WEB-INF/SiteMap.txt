@@ -1,0 +1,5 @@
+login=loginServlet
+registration=RegisterServlet
+reset-password=resetPasswordServlet
+error=
+homepage=
