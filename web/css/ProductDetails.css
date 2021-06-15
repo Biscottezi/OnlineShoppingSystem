@@ -1,0 +1,53 @@
+.product-info {
+    padding-top: 3em;
+}
+
+.btn-add-to-cart {
+    background-color:#274156;
+    color: white;
+    height: 3em;
+    width: 9em;
+    margin-left: 2em;
+}
+
+.btn-add-to-cart-txt {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.btn-quantity {
+    height: 3em;
+    width: 3em;
+    background-color:  white;
+    border: 1px solid #A7A7A7;
+}
+
+.quantity-input {
+    height: 3em;
+    width: 7em;
+    border: 1px solid #A7A7A7;
+}
+
+.product-description {
+    padding-top: 2em;
+}
+
+.product-description-titre {
+    border: 1px solid #E3E3E3;
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+    height: 2em;
+    text-align: center;
+}
+
+.product-description-titre h6 {
+    margin: 5px auto;
+}
+
+.product-description-para {
+    padding-right: 1.5em;
+    padding-left: 1.5em;
+    padding-top: 1em;
+    border: 1px solid #E3E3E3;
+    border-radius: 0 0 14px 14px;
+}
