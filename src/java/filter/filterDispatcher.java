@@ -25,9 +25,9 @@ import javax.servlet.http.HttpServletRequest;
  * @author ASUS
  */
 public class filterDispatcher implements Filter {
-    private final String ERROR_PAGE = "Error.html";
+    private final String ERROR_PAGE = "homepage.jsp";
     private static final boolean debug = true;
-    private final String HOME_PAGE = "viewHomePageServlet";
+    private final String HOME_PAGE = "homepage.jsp";
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
@@ -108,7 +108,7 @@ public class filterDispatcher implements Filter {
 
         String uri = rq.getRequestURI();
         String resource = HOME_PAGE;
-
+        try{
         resource = uri.substring(uri.lastIndexOf("/") + 1);
 
         String convertedURI = null;
@@ -119,11 +119,14 @@ public class filterDispatcher implements Filter {
         if (rq.getRequestURI().endsWith(".png")||rq.getRequestURI().endsWith(".jpg")||rq.getRequestURI().endsWith(".css")||rq.getRequestURI().endsWith(".js")) {
                 chain.doFilter(request, response);
         }
-        if (convertedURI!=null) {
-            RequestDispatcher rd = rq.getRequestDispatcher(convertedURI);
-            rd.forward(request, response);
-        } else {
-            chain.doFilter(request, response);
+        RequestDispatcher rd = rq.getRequestDispatcher(convertedURI);
+        rd.forward(request, response);
+        }catch (Throwable t) {
+            // If an exception is thrown somewhere down the filter chain,
+            // we still want to execute our after processing, and then
+            // rethrow the problem after that.
+
+            log("FilterDispatcher_Throwable: "+t.getMessage());
         }
     }
 //        if (debug) {
