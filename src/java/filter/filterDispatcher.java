@@ -25,9 +25,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author ASUS
  */
 public class filterDispatcher implements Filter {
-    private final String ERROR_PAGE = "homepage.jsp";
+    
     private static final boolean debug = true;
-    private final String HOME_PAGE = "homepage.jsp";
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
@@ -102,64 +101,28 @@ public class filterDispatcher implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
+        
         HttpServletRequest rq = (HttpServletRequest) request;
         ServletContext context = rq.getServletContext();
         HashMap<String, String> sitemap = (HashMap<String, String>) context.getAttribute("SITE_MAP_ATTRI");
 
         String uri = rq.getRequestURI();
-        String resource = HOME_PAGE;
-        try{
-        resource = uri.substring(uri.lastIndexOf("/") + 1);
+
+        String resource = uri.substring(uri.lastIndexOf("/") + 1);
 
         String convertedURI = null;
         convertedURI = sitemap.get(resource);
 
-
-        
         if (rq.getRequestURI().endsWith(".png")||rq.getRequestURI().endsWith(".jpg")||rq.getRequestURI().endsWith(".css")||rq.getRequestURI().endsWith(".js")) {
                 chain.doFilter(request, response);
         }
-        RequestDispatcher rd = rq.getRequestDispatcher(convertedURI);
-        rd.forward(request, response);
-        }catch (Throwable t) {
-            // If an exception is thrown somewhere down the filter chain,
-            // we still want to execute our after processing, and then
-            // rethrow the problem after that.
-
-            log("FilterDispatcher_Throwable: "+t.getMessage());
+        if (convertedURI!=null) {
+            RequestDispatcher rd = request.getRequestDispatcher(convertedURI);
+            rd.forward(request, response);
+        } else {
+            chain.doFilter(request, response);
         }
     }
-//        if (debug) {
-//            log("filterDispatcher:doFilter()");
-//        }
-//        
-//        doBeforeProcessing(request, response);
-//        
-//        Throwable problem = null;
-//        try {
-//            chain.doFilter(request, response);
-//        } catch (Throwable t) {
-//            // If an exception is thrown somewhere down the filter chain,
-//            // we still want to execute our after processing, and then
-//            // rethrow the problem after that.
-//            problem = t;
-//            t.printStackTrace();
-//        }
-//        
-//        doAfterProcessing(request, response);
-//
-//        // If there was a problem, we want to rethrow it if it is
-//        // a known type, otherwise log it.
-//        if (problem != null) {
-//            if (problem instanceof ServletException) {
-//                throw (ServletException) problem;
-//            }
-//            if (problem instanceof IOException) {
-//                throw (IOException) problem;
-//            }
-//            sendProcessingError(problem, response);
-//        }
-//    }
 
     /**
      * Return the filter configuration object for this filter.

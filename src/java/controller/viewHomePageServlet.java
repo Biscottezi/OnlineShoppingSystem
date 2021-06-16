@@ -31,8 +31,8 @@ import sliderContent.SliderContentDAO;
  */
 @WebServlet(name = "viewHomePageServlet", urlPatterns = {"/viewHomePageServlet"})
 public class viewHomePageServlet extends HttpServlet {
-    private final String ERROR_PAGE = "error";
-    private final String HOME_PAGE = "homepage";
+    private final String ERROR_PAGE = "Error.html";
+    private final String HOME_PAGE = "homepage.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -47,7 +47,7 @@ public class viewHomePageServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR_PAGE;
         
-        try (PrintWriter out = response.getWriter()) {
+        try {
             ProductDAO productDao = new ProductDAO();
             productDao.getFeaturedProduct();
             List<ProductDTO> productList = productDao.getProductList();
@@ -88,6 +88,7 @@ public class viewHomePageServlet extends HttpServlet {
         }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
+            
         }
     }
 
