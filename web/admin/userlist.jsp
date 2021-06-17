@@ -24,6 +24,8 @@
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
         <script src="js/tbllist.js"></script>
         <script src="js/managerpopup.js"></script>
+        <script src="js/upload.js"></script>
+        <script src="js/statuschange.js"></script>
         <style>
             .status{
                 width:100px;
@@ -143,7 +145,7 @@
                         </div>
                         <div class="extended col-4 row d-flex">
                             <div class="col-6 d-flex align-items-center justify-content-end">
-                                <div class="addbtn d-flex align-items-center justify-content-center" id="adduser">Add User</div>
+                                <div class="addbtn d-flex align-items-center justify-content-center" id="adduser" onclick="showCreatePopup()">Add User</div>
                             </div>
                             <div class="col-3 d-flex align-items-center justify-content-end"><i class="fas fa-sort-amount-up"></i>Sort</div>
                             <div class="col-3 d-flex align-items-center justify-content-end"><i class="fas fa-filter"></i>Filter</div>
@@ -172,7 +174,7 @@
                           <td class="align-middle">Admin</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  Enabled
+                                  ENABLED
                               </div>
                           </td>
                         </tr>
@@ -185,7 +187,7 @@
                           <td class="align-middle">Admin</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status disable">
-                                  Disabled
+                                  DISABLED
                               </div>
                           </td>
                         </tr>
@@ -198,7 +200,7 @@
                           <td class="align-middle">Admin</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  Enabled
+                                  ENABLED
                               </div>
                           </td>
                         </tr>
@@ -211,7 +213,7 @@
                           <td class="align-middle">Admin</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  Enabled
+                                  ENABLED
                               </div>
                           </td>
                         </tr>
@@ -224,7 +226,7 @@
                           <td class="align-middle">Admin</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  Enabled
+                                  ENABLED
                               </div>
                           </td>
                         </tr>
@@ -237,7 +239,7 @@
                           <td class="align-middle">Admin</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  Enabled
+                                  ENABLED
                               </div>
                           </td>
                         </tr>
@@ -250,7 +252,7 @@
                           <td class="align-middle">Admin</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  Enabled
+                                  ENABLED
                               </div>
                           </td>
                         </tr>
@@ -263,7 +265,7 @@
                           <td class="align-middle">Admin</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  Enabled
+                                  ENABLED
                               </div>
                           </td>
                         </tr>
@@ -276,7 +278,7 @@
                           <td class="align-middle">Admin</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  Enabled
+                                  ENABLED
                               </div>
                           </td>
                         </tr>
@@ -289,7 +291,7 @@
                           <td class="align-middle">Admin</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  Enabled
+                                  ENABLED
                               </div>
                           </td>
                         </tr>
@@ -302,7 +304,7 @@
                           <td class="align-middle">Admin</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  Enabled
+                                  ENABLED
                               </div>
                           </td>
                         </tr>
@@ -340,5 +342,82 @@
                 <div class="col-9 d-flex align-items-center description menu-itemtitle">Sign Out</div>
             </div>
         </div>
+        
+        <div class="popupwrapperadd" id="createpopup">
+            <div class="title row">Create Account</div>
+            <div class="info row">
+                <div class="col">
+                    Fullname<br>
+                    <input class="inputbox" type="text" name="txtFullname" value="" form="createform"/>
+                </div>
+                <div class="col">
+                    Gender<br>
+                    <select id="gender" class="inputbox" form="createform">
+                        <option value="" selected disabled hidden>Select gender</option>
+                            <option value="1">Male</option>
+                            <option value="2">Female</option>
+                            <option value="3">I prefer not to say</option>
+                    </select>
+                </div>
+            </div>
+            <div class="info row">
+                <div class="col">
+                    Avatar<br>
+                    <div class="avawrapper row">
+                        <img id="avapreview" class="col-3" src="http://placehold.it/180" onchange="showPreview();">
+                        <input type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="createform"/>
+                        <div class="col-4 d-flex align-items-end" style="padding-top: 117px;">
+                            <label for="upload" class="d-flex align-items-center justify-content-center uplbtn">
+                                <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    Email<br>
+                    <input class="inputbox" type="text" name="txtEmail" value="" form="createform"/>
+                    <br>
+                    <div style="margin-top:12px;">Mobile</div>
+                    <input class="inputbox" type="text" name="txtMobile" value="" form="createform"/>
+                </div>
+            </div>
+            <div class="info row">
+                <div class="col">
+                    Address<br>
+                    <textarea class="inputbox" id="address" type="text" name="txtAddress" value="" form="createform"></textarea>
+                </div>
+                <div class="col">
+                    Role<br>
+                    <select id="gender" class="inputbox" form="createform">
+                        <option value="" selected disabled hidden>Select role</option>
+                            <option value="1">Customer</option>
+                            <option value="2">Marketing</option>
+                            <option value="3">Sale</option>
+                            <option value="4">Sale Manager</option>
+                            <option value="5">Admin</option>
+                    </select>
+                </div>
+            </div>
+            <div class="info row">
+                <div class="col-6">
+                    Status<br>
+                    <div class="statuswrapper row d-flex align-items-end">
+                        <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">ENABLED</div>
+                        <input type="checkbox" name="chkStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="createform"/>
+                    </div>
+                </div>
+                <div class="col-2"></div>
+                <div class="col-4">
+                    <div class="savewrapper row d-flex align-items-end">
+                        <div class="col" id="cancelbtn" onclick="closeCreatePopup();">Cancel</div>
+                        <div class="col" style="padding-right: 56px;">
+                            <input type="submit" value="Create" name="btAction" id="createbtn" form="createform"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <form action="createUser" id="createform"></form>
     </body>
 </html>

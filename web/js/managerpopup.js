@@ -21,3 +21,11 @@ window.onclick = function(event) {
     }
   }
 };
+
+function showCreatePopup() {
+  document.getElementById("createpopup").style.display="block";
+
+}
+function closeCreatePopup() {
+  document.getElementById("createpopup").style.display="none";
+}
