@@ -39,7 +39,7 @@
                 </form>
                 <ul class="navbar-nav col-4">
                     <li class="nav-item">
-                        <a href="">Products</a>
+                        <a href="viewAllProduct">Products</a>
                     </li>
                     <li class="nav-item">
                         <a href="">Blogs</a>

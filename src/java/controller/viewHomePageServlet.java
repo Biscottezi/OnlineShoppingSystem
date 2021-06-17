@@ -82,9 +82,9 @@ public class viewHomePageServlet extends HttpServlet {
             
             url = HOME_PAGE;
         }catch(SQLException ex){
-            log("showProductServlet _ SQL:" + ex.getMessage());
+            log("viewHomePageServlet _ SQL:" + ex.getMessage());
         }catch(NamingException ex){
-            log("showProductServlet _ Naming:" + ex.getMessage());
+            log("viewHomePageServlet _ Naming:" + ex.getMessage());
         }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
