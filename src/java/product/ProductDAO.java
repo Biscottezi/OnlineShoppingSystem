@@ -173,4 +173,99 @@ public class ProductDAO implements Serializable{
                 }
         }
     }
+    
+    public void getProductByCategory(int categoryID) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated "
+                        + "FROM Product "
+                        + "WHERE ProductCategoryID = ? "
+                        + "ORDER by DateCreated desc";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, categoryID);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int ProductID = rs.getInt("ProductID");
+                    String Title = rs.getString("Title");
+                    int ProductCategoryID = rs.getInt("ProductCategoryID");
+                    String Thumbnail = rs.getString("Thumbnail");
+                    String BriefInfo = rs.getString("BriefInfo");
+                    String Description = rs.getString("Description");
+                    int Quantity = rs.getInt("Quantity");
+                    float ListPrice = rs.getFloat("ListPrice");
+                    float SalePrice = rs.getFloat("SalePrice");
+                    int Featured = rs.getInt("Featured");
+                    int Status = rs.getInt("Status");
+                    Date DateCreated = rs.getDate("DateCreated");
+                    ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated);
+                    if(this.productList == null){
+                        this.productList = new ArrayList<>();
+                    }
+                    this.productList.add(dto);
+                }
+            }
+        }finally{
+            if(con != null){
+                    rs.close();
+                }
+                if(con != null){
+                    stm.close();
+                }
+                if(con != null){
+                    con.close();
+                }
+        }
+    }
+    
+    public void searchProductName(String productName)
+            throws SQLException, NamingException{
+            Connection con = null;
+            PreparedStatement stm = null;
+            ResultSet rs = null;
+            try{
+                con = DBHelper.makeConnection();
+                if(con != null){
+                    String sql = "Select ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated "
+                            + "From Product "
+                            + "Where Title LIKE ?";
+                    
+                    stm = con.prepareStatement(sql);
+                    stm.setString(1,"%" + productName + "%");
+                    rs = stm.executeQuery();
+                    
+                    if(rs.next()){
+                        int ProductID = rs.getInt("ProductID");
+                    String Title = rs.getString("Title");
+                    int ProductCategoryID = rs.getInt("ProductCategoryID");
+                    String Thumbnail = rs.getString("Thumbnail");
+                    String BriefInfo = rs.getString("BriefInfo");
+                    String Description = rs.getString("Description");
+                    int Quantity = rs.getInt("Quantity");
+                    float ListPrice = rs.getFloat("ListPrice");
+                    float SalePrice = rs.getFloat("SalePrice");
+                    int Featured = rs.getInt("Featured");
+                    int Status = rs.getInt("Status");
+                    Date DateCreated = rs.getDate("DateCreated");
+                    ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated);
+                    this.product = dto;
+                    }
+                }
+            }finally{
+                if(con != null){
+                    rs.close();
+                }
+                if(con != null){
+                    stm.close();
+                }
+                if(con != null){
+                    con.close();
+                }
+            }
+    }
+    
 }
