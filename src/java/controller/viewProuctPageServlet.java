@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import product.ProductDAO;
 import product.ProductDTO;
+import productCategory.ProductCategoryDAO;
+import productCategory.ProductCategoryDTO;
 
 /**
  *
@@ -48,6 +50,14 @@ public class viewProuctPageServlet extends HttpServlet {
             if(dto != null){
                 request.setAttribute("ALL_PRODUCT_LIST", dto);
             }
+            
+            ProductCategoryDAO productCategoryDao = new ProductCategoryDAO();
+            productCategoryDao.getAllCategory();
+            List<ProductCategoryDTO> productCategoryDto = productCategoryDao.getCategoryList();
+            if(productCategoryDto != null){
+                request.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
+            }
+            
             url = PRODUCT_PAGE;
         }catch(SQLException ex){
             log("viewProuctPageServlet _ SQL:" + ex.getMessage());

@@ -80,14 +80,7 @@ public class viewHomePageServlet extends HttpServlet {
                     request.setAttribute("SLIDER_PRODUCTS", sliderProducts);
                 }
             }
-            
-            ProductCategoryDAO productCategoryDao = new ProductCategoryDAO();
-            productCategoryDao.getAllCategory();
-            List<ProductCategoryDTO> productCategoryDto = productCategoryDao.getCategoryList();
-            if(productCategoryDto != null){
-                request.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
-            }
-            
+        
             url = HOME_PAGE;
         }catch(SQLException ex){
             log("viewHomePageServlet _ SQL:" + ex.getMessage());
