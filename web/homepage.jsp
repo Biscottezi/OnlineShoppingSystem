@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -313,97 +314,20 @@
                     </div>
                     <div class="col-12">       
                         <div class="row">
-                            <div class="col-3">
-                                <div class="card" style="min-height: 530px; margin: auto;">
-                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                        <h3 class="card-title">$49.50</h3>
-                                        <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                        <p class="card-text">Star: 4/5</p>
+                            <c:set var="featured-products" value="${requestScope.FEATURED_PRODUCT}"/>
+                            <c:forEach var="product" items="featured-products">
+                                <div class="col-3">
+                                    <div class="card" style="min-height: 530px; margin: auto;">
+                                        <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${product.title}</h5>
+                                            <h3 class="card-title">${product.salePrice} USD</h3>
+                                            <p class="card-text">${briefInfo}</p>
+                                            <p class="card-text">Star: 4/5</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="card" style="min-height: 530px; margin: auto;">
-                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                        <h3 class="card-title">$49.50</h3>
-                                        <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                        <p class="card-text">Star: 4/5</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="card" style="min-height: 530px; margin: auto;">
-                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                        <h3 class="card-title">$49.50</h3>
-                                        <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                        <p class="card-text">Star: 4/5</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="card" style="min-height: 530px; margin: auto;">
-                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                        <h3 class="card-title">$49.50</h3>
-                                        <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                        <p class="card-text">Star: 4/5</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="card" style="min-height: 530px; margin: auto;">
-                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                        <h3 class="card-title">$49.50</h3>
-                                        <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                        <p class="card-text">Star: 4/5</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="card" style="min-height: 530px; margin: auto;">
-                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                        <h3 class="card-title">$49.50</h3>
-                                        <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                        <p class="card-text">Star: 4/5</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="card" style="min-height: 530px; margin: auto;">
-                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                        <h3 class="card-title">$49.50</h3>
-                                        <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                        <p class="card-text">Star: 4/5</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="card" style="min-height: 530px; margin: auto;">
-                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                        <h3 class="card-title">$49.50</h3>
-                                        <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                        <p class="card-text">Star: 4/5</p>
-                                    </div>
-                                </div>
-                            </div>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
