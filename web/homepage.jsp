@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -24,139 +25,7 @@
 
     <body>
         <!--Header-->
-        <header class="container wrapper">
-            <nav class="navbar navbar-expand">
-                <div class="navbar-branch col-2">
-                    <a href="" id="logo">
-                        <img src="" alt="Logo">
-                    </a>
-                </div>
-                <form action="" class="col-3 searchbar">
-                    <input type="text" placeholder="Search" class="search-input col-10" name="txtSearchProduct">
-                    <button type="submit" id="search-button" class="col-2" name="btAction">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-                <ul class="navbar-nav col-4">
-                    <li class="nav-item">
-                        <a href="viewAllProduct">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="">Blogs</a>
-                    </li>
-                </ul>
-                <i class="fas fa-shopping-cart col-1"></i>
-                <button class="col-1 header-sign-in" onclick="openLogin()">Sign in</button>
-            </nav>
-        </header>
-
-        <!--Login form-->
-        <div id="login" class="container pop-up">
-            <div class="row">
-                <div class="col-4 welcome">
-                    <div class="container">
-                        <h1>Welcome!</h1>
-                        <h3>Become a member and connect with us</h3>
-                        <button class="welcome-btn" onclick="openRegister()">Sign up</button>
-                    </div>
-                </div>
-                <div class="col-8 form-col">
-                    <div class="close-btn" onclick="closePopUp('login')">
-                        <i class="far fa-times-circle"></i>
-                    </div>
-                    <div class="container">
-                        <div class="col-12">
-                            <h1>Sign in</h1>
-                            <form action="login" method="POST" class="form">
-                                <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Email" name="txtEmail">
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" type="password" placeholder="Password" name="txtPassword">
-                                </div>
-                                <button type="submit" class="form-col-btn" name="btAction">Sign in</button>
-                            </form>
-                            <span onclick="openForgotPassword()">Forgot your password?</span>
-                            <img src="img/Frame.png" alt="frame" id="frame-hand-1">
-                        </div>                
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--User register form-->
-        <div id="register" class="container pop-up">
-            <div class="row">
-                <div class="col-4 welcome" id="register-welcome">
-                    <div class="container">
-                        <h1>Welcome!</h1>
-                        <h3>Already a member?<br>Sign in to keep up with us.</h3>
-                        <button class="welcome-btn" onclick="openLogin()">Sign in</button>
-                        <img src="img/Frame.png" alt="frame" id="frame-hand-2">
-                    </div>
-                </div>
-                <div class="col-8 form-col">
-                    <div class="close-btn" onclick="closePopUp('register')">
-                        <i class="far fa-times-circle"></i>
-                    </div>
-                    <div class="container">
-                        <div class="col-12">
-                            <h1>Create Account</h1>
-                            <form action="registration" method="POST" class="form">
-                                <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Email" name="txtEmail">
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" type="password" placeholder="Password" name="txtPassword">
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" type="password" placeholder="Confirm password" name="txtConfirm">
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Fullname" name="txtFullName">
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Mobile" name="txtMobile">
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" name="txtGender">
-                                        <option disabled selected>Gender</option>
-                                        <option value="0">Male</option>
-                                        <option value="1">Female</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <textarea class="form-control" placeholder="Address" name="txtAddress"></textarea>
-                                </div>
-                                <button type="submit" class="form-col-btn" name="btAction">Sign up</button>
-                            </form>
-                        </div>                
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--Forgot password-->
-        <div id="forgot-password" class="container pop-up form-col">
-            <div class="close-btn" onclick="closePopUp('forgot-password')">
-                <i class="far fa-times-circle"></i>
-            </div>
-            <div class="container">
-                <div class="col-12">
-                    <h1>Forgot Password</h1>
-                    <form action="resetPassword" method="POST" class="form">
-                        <div class="form-group">
-                            <input class="form-control" type="text" placeholder="Email" name="txtEmail">
-                        </div>
-                        <button type="submit" class="form-col-btn forgot-btn" onclick="resetNoti()" name="btAction">Request Reset Link</button>
-                    </form>
-                    <button class="welcome-btn forgot-btn" id="forgot-btn" onclick="openLogin()">Sign in</button>
-                </div>
-            </div>
-        </div>
-
-        <!--Change password-->
-        
+        <%@include file="header.jsp" %>
 
         <!--Main content-->
         <main>
@@ -181,6 +50,7 @@
             </div>
 
             <!--On sale product slider-->
+            <c:set var="onsaleProducts" value="${requestScope.SLIDER_PRODUCTS}"/>
             <div class="container slider-wrapper">
                 <div class="col-12">
                     <div class="row">
@@ -191,100 +61,38 @@
                             <div class="carousel-item active">
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-3">
-                                            <div class="card" style="min-height: 530px; margin: auto;">
-                                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                                    <h3 class="card-title">$49.50</h3>
-                                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                                    <p class="card-text">Star: 4/5</p>
+                                        <c:forEach var="product" items="${onsaleProducts}" begin="0" end="3">
+                                            <div class="col-3">
+                                                <div class="card" style="min-height: 530px; margin: auto;">
+                                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">${product.title}</h5>
+                                                        <h3 class="card-title">${product.salePrice}</h3>
+                                                        <p class="card-text">${product.briefInfo}</p>
+                                                        <p class="card-text">Star: 4/5</p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-3">
-                                            <div class="card" style="min-height: 530px; margin: auto;">
-                                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Vintage Typewriter.</h5>
-                                                    <h3 class="card-title">$49.50</h3>
-                                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                                    <p class="card-text">Star: 4/5</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-3">
-                                            <div class="card" style="min-height: 530px; margin: auto;">
-                                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                                    <h3 class="card-title">$49.50</h3>
-                                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                                    <p class="card-text">Star: 4/5</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-3">
-                                            <div class="card" style="min-height: 530px; margin: auto;">
-                                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                                    <h3 class="card-title">$49.50</h3>
-                                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                                    <p class="card-text">Star: 4/5</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </c:forEach>
                                     </div>
                                 </div>
                             </div>
                             <div class="carousel-item">
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-3">
-                                            <div class="card" style="min-height: 530px; margin: auto;">
-                                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                                    <h3 class="card-title">$49.50</h3>
-                                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                                    <p class="card-text">Star: 4/5</p>
+                                        <c:forEach var="product" items="${onsaleProducts}" begin="4" end="7">
+                                            <div class="col-3">
+                                                <div class="card" style="min-height: 530px; margin: auto;">
+                                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">${product.title}</h5>
+                                                        <h3 class="card-title">${product.salePrice}</h3>
+                                                        <p class="card-text">${product.briefInfo}</p>
+                                                        <p class="card-text">Star: 4/5</p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-3">
-                                            <div class="card" style="min-height: 530px; margin: auto;">
-                                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                                    <h3 class="card-title">$49.50</h3>
-                                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                                    <p class="card-text">Star: 4/5</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-3">
-                                            <div class="card" style="min-height: 530px; margin: auto;">
-                                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                                    <h3 class="card-title">$49.50</h3>
-                                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                                    <p class="card-text">Star: 4/5</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-3">
-                                            <div class="card" style="min-height: 530px; margin: auto;">
-                                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                                    <h3 class="card-title">$49.50</h3>
-                                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                                    <p class="card-text">Star: 4/5</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </c:forEach>
                                     </div>
                                 </div>
                             </div>
@@ -313,103 +121,27 @@
                     </div>
                     <div class="col-12">       
                         <div class="row">
-                            <div class="col-3">
-                                <div class="card" style="min-height: 530px; margin: auto;">
-                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                        <h3 class="card-title">$49.50</h3>
-                                        <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                        <p class="card-text">Star: 4/5</p>
+                            <c:set var="featuredProducts" value="${requestScope.FEATURED_PRODUCT}"/>
+                            <c:forEach var="product" items="${featuredProducts}">
+                                <div class="col-3" style="margin-top: 1em">
+                                    <div class="card" style="min-height: 530px; margin: auto;">
+                                        <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${product.title}</h5>
+                                            <h3 class="card-title">$${product.salePrice}</h3>
+                                            <p class="card-text">${product.briefInfo}</p>
+                                            <p class="card-text">Star: 4/5</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="card" style="min-height: 530px; margin: auto;">
-                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                        <h3 class="card-title">$49.50</h3>
-                                        <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                        <p class="card-text">Star: 4/5</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="card" style="min-height: 530px; margin: auto;">
-                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                        <h3 class="card-title">$49.50</h3>
-                                        <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                        <p class="card-text">Star: 4/5</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="card" style="min-height: 530px; margin: auto;">
-                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                        <h3 class="card-title">$49.50</h3>
-                                        <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                        <p class="card-text">Star: 4/5</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="card" style="min-height: 530px; margin: auto;">
-                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                        <h3 class="card-title">$49.50</h3>
-                                        <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                        <p class="card-text">Star: 4/5</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="card" style="min-height: 530px; margin: auto;">
-                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                        <h3 class="card-title">$49.50</h3>
-                                        <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                        <p class="card-text">Star: 4/5</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="card" style="min-height: 530px; margin: auto;">
-                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                        <h3 class="card-title">$49.50</h3>
-                                        <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                        <p class="card-text">Star: 4/5</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="card" style="min-height: 530px; margin: auto;">
-                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                        <h3 class="card-title">$49.50</h3>
-                                        <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                        <p class="card-text">Star: 4/5</p>
-                                    </div>
-                                </div>
-                            </div>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!--Blogs-->
+            <c:set var="postList" value="${requestScope.FEATURED_POST}"/>
             <div class="container blog-wrapper">
                 <div class="container">
                     <div class="row">
@@ -420,39 +152,23 @@
                     </div>
                     <div class="row">
                         <div class="col-5">
-                            <div class="card" style="height: 500px;">
-                                <img src="img/post-thumbnail.jpg" alt="post0thumbnail" class="card-img-top">
-                                <div class="card-body">
-                                    <h3 class="card-title">Đã có giá bán dự kiến iPad Pro M1 2021 tại Thế Giới Di Động, giá khởi điểm vẫn tốt như thế hệ tiền nhiệm</h3>
-                                    <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis nihil dolor ullam ea repellat ex porro! Incidunt fugit provident sit?</p>
+                            <c:forEach var="post" items="${postList}" begin="0" end="0">
+                                <div class="card" style="height: 500px;">
+                                    <img src="img/${post.thumbnail}" alt="post-thumbnail" class="card-img-top">
+                                    <div class="card-body">
+                                        <h3 class="card-title">${post.title}</h3>
+                                        <p class="card-text">${post.briefInfo}</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </c:forEach>
                         </div>
                         <div class="col-7 container">
-                            <div class="row" style="height: 120px; margin-bottom: 5px;">
-                                <img src="img/post-thumbnail.jpg" alt="post-thumbnail" class="col-3">
-                                <h5 class="col-9" style="overflow: hidden;">
-                                    Đã có giá bán dự kiến iPad Pro M1 2021 tại Thế Giới Di Động, giá khởi điểm vẫn tốt như thế hệ tiền nhiệm
-                                </h5>
-                            </div>
-                            <div class="row" style="height: 120px; margin-bottom: 5px;">
-                                <img src="img/post-thumbnail.jpg" alt="post-thumbnail" class="col-3">
-                                <h5 class="col-9" style="overflow: hidden;">
-                                    Đã có giá bán dự kiến iPad Pro M1 2021 tại Thế Giới Di Động, giá khởi điểm vẫn tốt như thế hệ tiền nhiệm
-                                </h5>
-                            </div>
-                            <div class="row" style="height: 120px; margin-bottom: 5px;">
-                                <img src="img/post-thumbnail.jpg" alt="post-thumbnail" class="col-3">
-                                <h5 class="col-9" style="overflow: hidden;">
-                                    Đã có giá bán dự kiến iPad Pro M1 2021 tại Thế Giới Di Động, giá khởi điểm vẫn tốt như thế hệ tiền nhiệm
-                                </h5>
-                            </div>
-                            <div class="row" style="height: 120px; margin-bottom: 5px;">
-                                <img src="img/post-thumbnail.jpg" alt="post-thumbnail" class="col-3">
-                                <h5 class="col-9" style="overflow: hidden;">
-                                    Đã có giá bán dự kiến iPad Pro M1 2021 tại Thế Giới Di Động, giá khởi điểm vẫn tốt như thế hệ tiền nhiệm
-                                </h5>
-                            </div>
+                            <c:forEach var="post" items="${postList}" begin="1" end="4">
+                                <div class="row" style="height: 120px; margin-bottom: 5px;">
+                                    <img src="img/post-thumbnail.jpg" alt="post-thumbnail" class="col-3">
+                                    <h5 class="col-9" style="overflow: hidden;">${post.title}</h5>
+                                </div>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
@@ -461,43 +177,6 @@
         </main>
 
         <!--Footer-->
-        <footer class="container footer-wrapper">
-            <div class="row footer-row-1">
-                <div class="col-3 footer-column">
-                    <h3>Customer Center</h3>
-                    <p>070-2707-1234<br/>
-                        Weekdays 09:30 - 18:00<br>
-                        Weekends 12:00 - 13:00<br/>
-                        Sat, Sun, National holidays</p>
-                </div>
-                <div class="col-3 footer-column">
-                    <h3>Shipment info</h3>
-                    <p>Track Shipping Location<br>
-                        Refund/exchange address<br>
-                        Incheon Gaeyanggu Gesangdong<br>
-                        GeyangBG #1117<br>
-                        (Please make sure to use<br> 
-                        Post Office Parcel service)</p>
-                </div>
-                <div class="col-3 footer-column">
-                    <h3>Company</h3>
-                    <p>Company<br>
-                        Notice/Event</p>
-                </div>
-                <div class="col-3 footer-column">
-                    <h3>Social media</h3>
-                    <i class="fab fa-facebook-square"></i>
-                    <i class="fab fa-youtube"></i>
-                    <i class="fab fa-instagram"></i>
-                    <i class="fab fa-pinterest-p"></i>
-                </div>
-            </div>
-            <div class="row  footer-row-2">
-                <p class="col-12">CEO: TaiNT&emsp;Company Name: FPTEdu&emsp;Tel: 070-123-1234&emsp;Fax: 02-123-4567&emsp;E-mail: hcmuni@fpt.edu.vn</p>
-                <p class="col-12">Address: Lô E2a-7, Đường D1, Khu Công nghệ cao, P.Long Thạnh Mỹ, Tp. Thủ Đức, TP.HCM.</p>
-                <p class="col-12">License Number: 123-45-78910&emsp;Technical Manager: TaiNT</p>
-                <p class="col-12">ⓒ 2021 FPTEdu All rights reserved.&emsp;Privacy Policy&emsp;Terms of Service</p>
-            </div>
-        </footer>
+        <%@include file="footer.html" %>
     </body>
 </html>

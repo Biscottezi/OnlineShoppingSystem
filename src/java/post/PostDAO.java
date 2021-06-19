@@ -26,6 +26,8 @@ public class PostDAO implements Serializable{
     public List<PostDTO> getPostList() {
         return postList;
     }
+    private PostDTO post;
+    
     public void getFeaturedPost() throws SQLException, NamingException{
         Connection con = null;
         CallableStatement stm = null;
@@ -59,15 +61,15 @@ public class PostDAO implements Serializable{
                 }
             }
         }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
             if(con != null){
-                    rs.close();
-                }
-                if(con != null){
-                    stm.close();
-                }
-                if(con != null){
-                    con.close();
-                }
+                con.close();
+            }
         }
     }
     public void getPostbyID(int PostID) throws SQLException, NamingException{
@@ -159,5 +161,9 @@ public class PostDAO implements Serializable{
                     con.close();
                 }
         }
+    }
+
+    public PostDTO getPost() {
+        return post;
     }
 }

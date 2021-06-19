@@ -41,15 +41,15 @@ public class SliderDAO implements Serializable{
                 }
             }
         }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
             if(con != null){
-                    rs.close();
-                }
-                if(con != null){
-                    stm.close();
-                }
-                if(con != null){
-                    con.close();
-                }
+                con.close();
+            }
         }
         return null;
     }

@@ -1,26 +1,36 @@
-
-
 .wrapper {
     border: 1px #E3E3E3 solid;
 }
 
-
-
 .searchbar {
-    border: 1px solid black;
+    border: 1px solid #E3E3E3;
     border-radius: 20px;
     margin: 1.5% auto;
-    margin-left: 1.5%;
     padding: auto;
+    background-color: #F5F5F5;
+}
+
+.searchbar:focus-within {
+    border-color: #274156;
 }
 
 .search-input {
     border: none;
+    background-color: #F5F5F5;
+}
+
+.search-input::placeholder {
+    color: #828282;
+    font-size: 13px;
+}
+
+input.search-input:focus, button:focus {
+    outline-width: 0;
 }
 
 #search-button {
     border: none;
-    background-color: white;
+    background-color: transparent;
 }
 
 .searchbar {
@@ -67,4 +77,49 @@ footer h3 {
 .footer-row-2 {
     text-align: center;
     padding-top: 20px;
+}
+
+.droplist {
+    width: 23em;
+    border: 1px solid #274156;
+    border-radius: 10px;
+    padding: 0.5em 1em;
+    z-index: 4;
+    position: fixed;
+    right: 22%;
+    top: 10%;
+    display: none;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.1);
+    color: #274156;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    background-color: white;
+}
+
+.droplist-btn {
+    padding: 10px;
+}
+
+.droplist-btn:hover{
+    background-color: #E3E3E3;
+    border-radius: 10px;
+}
+
+.droplist-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.droplist-btn-txt {
+    margin-left: 1em;
+}
+
+.droplist-btn-txt h6 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.show {
+    display: block;
 }

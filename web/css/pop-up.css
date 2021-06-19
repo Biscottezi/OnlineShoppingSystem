@@ -2,7 +2,6 @@
     display: none;
     position: fixed;
     width: 50%;
-    margin-left: 25%;
     margin-top: 4%;
     z-index: 18;
     border: 1px solid cornflowerblue;
@@ -12,6 +11,7 @@
 
 #login {
     height: auto;
+    margin-left: 4.5%;
 }
 
 .welcome {
@@ -121,6 +121,7 @@
 #register {
     margin-top: 1.5%;
     height: auto;
+    margin-left: 4.5%;
 }
 
 #register-welcome {
@@ -129,7 +130,7 @@
 
 #forgot-password {
     width: 30%;
-    margin-left: 35%;
+    margin-left: 15%;
     padding-bottom: 1rem;
 }
 
@@ -142,4 +143,10 @@
     color: cornflowerblue;
     border: cornflowerblue 1px solid;
     border-radius: 60px;
+}
+
+#change-pwd {
+    width: 24%;
+    margin-top: 4rem;
+    margin-left: 16%;
 }

@@ -29,3 +29,7 @@ function openForgotPassword(){
 function resetNoti(){
     alert("Please check your email inbox. Thank you!");
 }
+
+function openChangePwd(){
+    document.getElementById("change-pwd").style.display = "block";
+}
