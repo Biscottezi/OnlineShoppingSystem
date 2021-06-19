@@ -314,8 +314,8 @@
                     </div>
                     <div class="col-12">       
                         <div class="row">
-                            <c:set var="featured-products" value="${requestScope.FEATURED_PRODUCT}"/>
-                            <c:forEach var="product" items="featured-products">
+                            <c:set var="featuredProducts" value="${requestScope.FEATURED_PRODUCT}"/>
+                            <c:forEach var="product" items="${featuredProducts}">
                                 <div class="col-3">
                                     <div class="card" style="min-height: 530px; margin: auto;">
                                         <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">

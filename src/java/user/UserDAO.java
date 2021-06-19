@@ -39,13 +39,13 @@ public class UserDAO implements Serializable{
             con = DBHelper.makeConnection();
             if(con != null){
                 //2. Create SQL String
-                String sql = "Select Role "
-                        + "From User "
+                String sql = "Select UserID, Name, Gender, Address, Phone, Status, DateCreated, Avatar, Role "
+                        + "From [User] "
                         + "Where Email = ? And Password = ?";
                 //3.Create statement and assign value for parameters if any
                 stm = con.prepareStatement(sql);
-                stm.setString(1, email);
-                stm.setString(2, password);
+                stm.setString(1, email.trim());
+                stm.setString(2, password.trim());
                 //4. Execute Query
                 rs = stm.executeQuery();
                 //5. Process result
@@ -64,10 +64,10 @@ public class UserDAO implements Serializable{
                 }//end if rs is existed
             }//end if con is opened
         } finally {
-            if(con != null){
+            if(rs != null){
                 rs.close();
             }
-            if(con != null){
+            if(stm != null){
                 stm.close();
             }
             if(con != null){

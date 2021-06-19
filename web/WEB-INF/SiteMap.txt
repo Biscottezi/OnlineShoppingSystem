@@ -8,6 +8,7 @@ registerSuccess = RegisterSucess.html
 productPage = ProductPage.jsp
 cartCompletion = CartCompletion.jsp
     = viewHomePageServlet
+viewHomePage = viewHomePageServlet
 viewAllProduct = viewProuctPageServlet
 productDetails = ProductDetails.jsp
 viewProductDetails = viewProductDetailsServlet

@@ -25,8 +25,8 @@ import user.UserDTO;
  */
 @WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
 public class loginServlet extends HttpServlet {
-    private final String INVALID_PAGE = "error";
-    private final String HOME_PAGE = "homepage";
+    private final String INVALID_PAGE = "Error.html";
+    private final String HOME_PAGE = "viewHomePageServlet";
     private final String MARKETING_DASHBOARD = "";
     private final String SALE_MANAGER_DASHBOARD = "";
     private final String SALE_MEMBER_DASHBOARD = "";
@@ -83,6 +83,7 @@ public class loginServlet extends HttpServlet {
         }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
+//                response.sendRedirect(url);
         }
     }
 
