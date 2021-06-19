@@ -37,7 +37,7 @@ public class ProductCategoryDAO implements Serializable{
             if(con != null){
                 String sql = "SELECT ProductCategoryID, Name "
                         + "FROM ProductCategory "
-                        + "ORDER Name ASC";
+                        + "ORDER BY Name ASC";
                 stm = con.prepareCall(sql);
                 rs = stm.executeQuery();
                 
@@ -52,15 +52,15 @@ public class ProductCategoryDAO implements Serializable{
                 }
             }
         }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
             if(con != null){
-                    rs.close();
-                }
-                if(con != null){
-                    stm.close();
-                }
-                if(con != null){
-                    con.close();
-                }
+                con.close();
+            }
         }
     }
 }

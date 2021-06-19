@@ -27,8 +27,8 @@ import productCategory.ProductCategoryDTO;
  */
 @WebServlet(name = "viewProuctPageServlet", urlPatterns = {"/viewProuctPageServlet"})
 public class viewProuctPageServlet extends HttpServlet {
-    private final String ERROR_PAGE="error";
-    private final String PRODUCT_PAGE="productPage";
+    private final String ERROR_PAGE="Error.html";
+    private final String PRODUCT_PAGE="ProductPage.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

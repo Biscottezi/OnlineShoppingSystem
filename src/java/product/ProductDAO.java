@@ -69,15 +69,15 @@ public class ProductDAO implements Serializable{
                 }
             }
         }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
             if(con != null){
-                    rs.close();
-                }
-                if(con != null){
-                    stm.close();
-                }
-                if(con != null){
-                    con.close();
-                }
+                con.close();
+            }
         }
     }
     
@@ -115,10 +115,10 @@ public class ProductDAO implements Serializable{
                     }
                 }
             }finally{
-                if(con != null){
+                if(rs != null){
                     rs.close();
                 }
-                if(con != null){
+                if(stm != null){
                     stm.close();
                 }
                 if(con != null){
@@ -162,15 +162,15 @@ public class ProductDAO implements Serializable{
                 }
             }
         }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
             if(con != null){
-                    rs.close();
-                }
-                if(con != null){
-                    stm.close();
-                }
-                if(con != null){
-                    con.close();
-                }
+                con.close();
+            }
         }
     }
     
@@ -210,15 +210,15 @@ public class ProductDAO implements Serializable{
                 }
             }
         }finally{
-            if(con != null){
+            if(rs != null){
                     rs.close();
-                }
-                if(con != null){
-                    stm.close();
-                }
-                if(con != null){
-                    con.close();
-                }
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
         }
     }
     
@@ -256,10 +256,10 @@ public class ProductDAO implements Serializable{
                     }
                 }
             }finally{
-                if(con != null){
+                if(rs != null){
                     rs.close();
                 }
-                if(con != null){
+                if(stm != null){
                     stm.close();
                 }
                 if(con != null){
