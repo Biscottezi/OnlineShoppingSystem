@@ -314,15 +314,15 @@
                     </div>
                     <div class="col-12">       
                         <div class="row">
-                            <c:set var="featured-products" value="${requestScope.FEATURED_PRODUCT}"/>
-                            <c:forEach var="product" items="featured-products">
-                                <div class="col-3">
+                            <c:set var="featuredproducts" value="${requestScope.FEATURED_PRODUCT}"/>
+                            <c:forEach var="product" items="${featuredproducts}">
+                                <div class="col-3" style="margin-top: 1em">
                                     <div class="card" style="min-height: 530px; margin: auto;">
                                         <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
                                         <div class="card-body">
                                             <h5 class="card-title">${product.title}</h5>
-                                            <h3 class="card-title">${product.salePrice} USD</h3>
-                                            <p class="card-text">${briefInfo}</p>
+                                            <h3 class="card-title">${product.salePrice}</h3>
+                                            <p class="card-text">${product.briefInfo}</p>
                                             <p class="card-text">Star: 4/5</p>
                                         </div>
                                     </div>
