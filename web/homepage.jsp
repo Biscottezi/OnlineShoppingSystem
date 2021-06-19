@@ -314,15 +314,21 @@
                     </div>
                     <div class="col-12">       
                         <div class="row">
+<<<<<<< HEAD
                             <c:set var="featuredProducts" value="${requestScope.FEATURED_PRODUCT}"/>
                             <c:forEach var="product" items="${featuredProducts}">
                                 <div class="col-3">
+=======
+                            <c:set var="featuredproducts" value="${requestScope.FEATURED_PRODUCT}"/>
+                            <c:forEach var="product" items="${featuredproducts}">
+                                <div class="col-3" style="margin-top: 1em">
+>>>>>>> be99f42395f8a7639ae68ab54c8d4be2a82a449a
                                     <div class="card" style="min-height: 530px; margin: auto;">
                                         <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
                                         <div class="card-body">
                                             <h5 class="card-title">${product.title}</h5>
-                                            <h3 class="card-title">${product.salePrice} USD</h3>
-                                            <p class="card-text">${briefInfo}</p>
+                                            <h3 class="card-title">${product.salePrice}</h3>
+                                            <p class="card-text">${product.briefInfo}</p>
                                             <p class="card-text">Star: 4/5</p>
                                         </div>
                                     </div>
