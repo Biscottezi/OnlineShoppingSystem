@@ -21,6 +21,8 @@ import post.PostDAO;
 import post.PostDTO;
 import product.ProductDAO;
 import product.ProductDTO;
+import productCategory.ProductCategoryDAO;
+import productCategory.ProductCategoryDTO;
 import slider.SliderDAO;
 import slider.SliderDTO;
 import sliderContent.SliderContentDAO;
@@ -78,8 +80,7 @@ public class viewHomePageServlet extends HttpServlet {
                     request.setAttribute("SLIDER_PRODUCTS", sliderProducts);
                 }
             }
-            
-            
+        
             url = HOME_PAGE;
         }catch(SQLException ex){
             log("viewHomePageServlet _ SQL:" + ex.getMessage());

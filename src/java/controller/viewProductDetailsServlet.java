@@ -25,10 +25,10 @@ import productCategory.ProductCategoryDTO;
  *
  * @author ASUS
  */
-@WebServlet(name = "viewProuctPageServlet", urlPatterns = {"/viewProuctPageServlet"})
-public class viewProuctPageServlet extends HttpServlet {
-    private final String ERROR_PAGE="error";
-    private final String PRODUCT_PAGE="productPage";
+@WebServlet(name = "viewProductDetailsServlet", urlPatterns = {"/viewProductDetailsServlet"})
+public class viewProductDetailsServlet extends HttpServlet {
+    private final String ERROR_PAGE = "error";
+    private final String PRODUCT_DETAILS_PAGE = "productDetails";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,14 +41,14 @@ public class viewProuctPageServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String productID = request.getParameter("productID");
         String url = ERROR_PAGE;
-                
-        try {
-            ProductDAO dao = new ProductDAO();
-            dao.getAllProduct();
-            List<ProductDTO> dto = dao.getProductList();
-            if(dto != null){
-                request.setAttribute("ALL_PRODUCT_LIST", dto);
+        try{
+            ProductDAO productDao = new ProductDAO();
+            productDao.searchProductID(Integer.parseInt(productID));
+            ProductDTO productDto = productDao.getProduct();
+            if(productDto != null){
+                request.setAttribute("PRODUCT_DETAILS", productDto);
             }
             
             ProductCategoryDAO productCategoryDao = new ProductCategoryDAO();
@@ -58,11 +58,11 @@ public class viewProuctPageServlet extends HttpServlet {
                 request.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
             }
             
-            url = PRODUCT_PAGE;
+            url = PRODUCT_DETAILS_PAGE;
         }catch(SQLException ex){
-            log("viewProuctPageServlet _ SQL:" + ex.getMessage());
+            log("viewProductDetailsServlet _ SQL:" + ex.getMessage());
         }catch(NamingException ex){
-            log("viewProuctPageServlet _ Naming:" + ex.getMessage());
+            log("viewProductDetailsServlet _ Naming:" + ex.getMessage());
         }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
