@@ -19,25 +19,24 @@ import utils.DBHelper;
  *
  * @author ASUS
  */
-public class UserDAO implements Serializable{
-    
+public class UserDAO implements Serializable {
+
     private UserDTO user;
 
     public UserDTO getUser() {
         return user;
     }
-    
-    
+
     public boolean checkLogin(String email, String password)
-        throws SQLException, NamingException{
+            throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        
-        try{
+
+        try {
             //1. Connect DB
             con = DBHelper.makeConnection();
-            if(con != null){
+            if (con != null) {
                 //2. Create SQL String
                 String sql = "Select Role "
                         + "From User "
@@ -49,7 +48,7 @@ public class UserDAO implements Serializable{
                 //4. Execute Query
                 rs = stm.executeQuery();
                 //5. Process result
-                if(rs.next()){
+                if (rs.next()) {
                     int id = rs.getInt("UserID");
                     String name = rs.getString("Name");
                     int gender = rs.getInt("Gender");
@@ -64,24 +63,23 @@ public class UserDAO implements Serializable{
                 }//end if rs is existed
             }//end if con is opened
         } finally {
-            if(con != null){
+            if (con != null) {
                 rs.close();
             }
-            if(con != null){
+            if (con != null) {
                 stm.close();
             }
-            if(con != null){
+            if (con != null) {
                 con.close();
             }
         }
-        
-        
+
         return false;
     }
-    
-    public boolean createNewCustomer(String email,String pass, String fullname,int gender,String phone, String address) 
+
+    public boolean createNewCustomer(String email, String pass, String fullname, int gender, String phone, String address)
             throws SQLException, ClassNotFoundException, NamingException {
-           Connection con = null;
+        Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
@@ -101,6 +99,7 @@ public class UserDAO implements Serializable{
                 stm.setString(4, address);
                 stm.setInt(5, gender);
                 stm.setString(6, phone);
+                
                 int rowAffect = stm.executeUpdate();
 
                 if (rowAffect == 1) {
@@ -121,5 +120,5 @@ public class UserDAO implements Serializable{
         }
 
         return false;
-      }
+    }
 }
