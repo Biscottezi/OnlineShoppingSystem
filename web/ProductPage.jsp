@@ -27,7 +27,7 @@
         <main class="container">
             <div class="row">
                 <!--Sider-->
-                <div class="sider col-3">
+                <div class="sider col-2">
                     <div class="col">
                         <form action="" class="col-sm-12 searchbar">
                             <input type="text" placeholder="Search" class="search-input col-sm-10" name="txtSearchProduct">
@@ -52,7 +52,7 @@
                     </div>
                 </div>
 
-                <div class="main-content col-9">
+                <div class="main-content col-10">
                     <div class="container" style="padding-left: 24px;">
                         <h1>Latest products</h1>
                         <select name="" id="">

@@ -30,7 +30,7 @@
         <main class="container">
             <div class="row">
                 <!--Sider-->
-                <div class="sider col-3">
+                <div class="sider col-2">
                     <div class="col">
                         <form action="" class="col-sm-12 searchbar">
                             <input type="text" placeholder="Search" class="search-input col-sm-10" name="txtSearchProduct">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
 
-                <div class="main-content container col-9" style="min-height: 700px;">
+                <div class="main-content container col-10" style="min-height: 700px;">
                     <h1>Order</h1>
                     <div class="col">
                         <div class="d-flex justify-content-center p-2">

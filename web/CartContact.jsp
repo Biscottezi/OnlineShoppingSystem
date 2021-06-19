@@ -30,7 +30,7 @@
         <main class="container">
             <div class="row">
                 <!--Sider-->
-                <div class="sider col-3">
+                <div class="sider col-2">
                     <div class="col">
                         <form action="" class="col-sm-12 searchbar">
                             <input type="text" placeholder="Search" class="search-input col-sm-10" name="txtSearchProduct">
@@ -56,7 +56,7 @@
                 </div>
 
                 <!--Main content-->
-                <div class="main-content container col-9">
+                <div class="main-content container col-10">
                     <h1>Your Cart</h1>
                     <div class="row">
                         <div class="product-in-cart col-8">

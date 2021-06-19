@@ -6,7 +6,6 @@
     border: 1px solid #E3E3E3;
     border-radius: 20px;
     margin: 1.5% auto;
-    margin-left: 1.5%;
     padding: auto;
     background-color: #F5F5F5;
 }
@@ -22,7 +21,7 @@
 
 .search-input::placeholder {
     color: #828282;
-    ;
+    font-size: 13px;
 }
 
 input.search-input:focus, button:focus {
