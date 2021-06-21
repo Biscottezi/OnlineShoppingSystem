@@ -62,7 +62,7 @@
                                 <div class="container">
                                     <div class="row">
                                         <c:forEach var="product" items="${onsaleProducts}" begin="0" end="3">
-                                            <div class="col-3">
+                                            <div class="col-3" onclick="location.href='viewProductDetails?productID=${product.id}';">
                                                 <div class="card" style="min-height: 530px; margin: auto;">
                                                     <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
                                                     <div class="card-body">
@@ -81,7 +81,7 @@
                                 <div class="container">
                                     <div class="row">
                                         <c:forEach var="product" items="${onsaleProducts}" begin="4" end="7">
-                                            <div class="col-3">
+                                            <div class="col-3" onclick="location.href='viewProductDetails?productID=${product.id}';">
                                                 <div class="card" style="min-height: 530px; margin: auto;">
                                                     <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
                                                     <div class="card-body">
@@ -123,7 +123,7 @@
                         <div class="row">
                             <c:set var="featuredProducts" value="${requestScope.FEATURED_PRODUCT}"/>
                             <c:forEach var="product" items="${featuredProducts}">
-                                <div class="col-3" style="margin-top: 1em">
+                                <div class="col-3" style="margin-top: 1em" onclick="location.href='viewProductDetails?productID=${product.id}';">
                                     <div class="card" style="min-height: 530px; margin: auto;">
                                         <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
                                         <div class="card-body">
