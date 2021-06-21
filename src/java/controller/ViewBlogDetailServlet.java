@@ -50,14 +50,14 @@ public class ViewBlogDetailServlet extends HttpServlet {
             dao.getPostbyID(Integer.parseInt(selectedOrderID));
              PostDTO postDto = dao.getPost();
             if(postDto != null){
-                request.setAttribute("PRODUCT_DETAILS", postDto);
+                request.setAttribute("POST_DETAILS", postDto);
             }
             
             PostCategoryDAO postCategoryDao = new PostCategoryDAO();
             postCategoryDao.getAllCategory();
             List<PostCategoryDTO> productCategoryDto = postCategoryDao.getPostCateList();
             if(productCategoryDto != null){
-                request.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
+                request.setAttribute("POST_CATEGORY", productCategoryDto);
             }
             
             url = DETAIL_LIST_PAGE;
