@@ -39,7 +39,7 @@ public class ViewBlogListServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     private final String ERROR_PAGE="error";
-    private final String BLOG_DETAIL="BlogDetail";
+    private final String BLOG_LIST="BlogList.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -58,7 +58,7 @@ public class ViewBlogListServlet extends HttpServlet {
             if(postCategoryDto != null){
                 request.setAttribute("PRODUCT_CATEGORY", postCategoryDto);
             }
-            url = BLOG_DETAIL;
+            url = BLOG_LIST;
         }catch(SQLException ex){
             log("ViewBlogListServlet _ SQL:" + ex.getMessage());
         }catch(NamingException ex){

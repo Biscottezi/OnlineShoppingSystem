@@ -17,3 +17,4 @@ cartDetails = CartDetails.jsp
 cartContact = CartContact.jsp
 cartCompletion = CartCompletion.jsp
 blogDetails = BlogDetails.jsp
+blogList = BlogList.jsp
