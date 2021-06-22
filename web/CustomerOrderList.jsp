@@ -18,6 +18,10 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" href="css/sider.css">
         <link rel="stylesheet" href="css/CustomerOrderList.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+        <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+        <script src="js/table.js"></script>
     </head>
 
     <body>
@@ -56,51 +60,135 @@
                 <div class="main-content container col-10" style="min-height: 700px;">
                     <h1>Your Orders</h1>
                     <div class="order-list container">
-                        <table class="table">
+                        <table class="table" id="custOrderList">
                             <thead>
-                                <tr class="d-flex">
-                                    <th scope="col" class="col-1">ID</th>
-                                    <th scope="col" class="col-2">Date</th>
-                                    <th scope="col" class="col-5">Products</th>
-                                    <th scope="col" class="col-2">Total</th>
-                                    <th scope="col" class="col-2">Status</th>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Products</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="d-flex">
-                                    <td class="col-1"><a href="">1234</a></td>
-                                    <td class="col-2">22/5/2021</td>
-                                    <td class="col-5">Vintage typewriter and 1 more product</td>
-                                    <td class="col-2">$81.91</td>
-                                    <td class="col-2">Submitted</td>
+                                <tr>
+                                    <td><a href="">1234</a></td>
+                                    <td>22/5/2021</td>
+                                    <td>Vintage typewriter and 1 more product</td>
+                                    <td>$81.91</td>
+                                    <td>Submitted</td>
                                 </tr>
-                                <tr class="d-flex">
-                                    <td class="col-1"><a href="">1234</a></td>
-                                    <td class="col-2">22/5/2021</td>
-                                    <td class="col-5">Vintage typewriter and 1 more product</td>
-                                    <td class="col-2">$81.91</td>
-                                    <td class="col-2">Submitted</td>
+                                <tr>
+                                    <td><a href="">1234</a></td>
+                                    <td>22/5/2021</td>
+                                    <td>Vintage typewriter and 1 more product</td>
+                                    <td>$81.91</td>
+                                    <td>Submitted</td>
                                 </tr>
-                                <tr class="d-flex">
-                                    <td class="col-1"><a href="">1234</a></td>
-                                    <td class="col-2">22/5/2021</td>
-                                    <td class="col-5">Vintage typewriter and 1 more product</td>
-                                    <td class="col-2">$81.91</td>
-                                    <td class="col-2">Submitted</td>
+                                <tr>
+                                    <td><a href="">1234</a></td>
+                                    <td>22/5/2021</td>
+                                    <td>Vintage typewriter and 1 more product</td>
+                                    <td>$81.91</td>
+                                    <td>Submitted</td>
                                 </tr>
-                                <tr class="d-flex">
-                                    <td class="col-1"><a href="">1234</a></td>
-                                    <td class="col-2">22/5/2021</td>
-                                    <td class="col-5">Vintage typewriter and 1 more product</td>
-                                    <td class="col-2">$81.91</td>
-                                    <td class="col-2">Submitted</td>
+                                <tr>
+                                    <td><a href="">1234</a></td>
+                                    <td>22/5/2021</td>
+                                    <td>Vintage typewriter and 1 more product</td>
+                                    <td>$81.91</td>
+                                    <td>Submitted</td>
                                 </tr>
-                                <tr class="d-flex">
-                                    <td class="col-1"><a href="">12341</a></td>
-                                    <td class="col-2">22/5/2021</td>
-                                    <td class="col-5">Vintage typewriter and 1 more product</td>
-                                    <td class="col-2">$81.91</td>
-                                    <td class="col-2">Submitted</td>
+                                <tr>
+                                    <td><a href="">1234</a></td>
+                                    <td>22/5/2021</td>
+                                    <td>Vintage typewriter and 1 more product</td>
+                                    <td>$81.91</td>
+                                    <td>Submitted</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="">1234</a></td>
+                                    <td>22/5/2021</td>
+                                    <td>Vintage typewriter and 1 more product</td>
+                                    <td>$81.91</td>
+                                    <td>Submitted</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="">1234</a></td>
+                                    <td>22/5/2021</td>
+                                    <td>Vintage typewriter and 1 more product</td>
+                                    <td>$81.91</td>
+                                    <td>Submitted</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="">1234</a></td>
+                                    <td>22/5/2021</td>
+                                    <td>Vintage typewriter and 1 more product</td>
+                                    <td>$81.91</td>
+                                    <td>Submitted</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="">1234</a></td>
+                                    <td>22/5/2021</td>
+                                    <td>Vintage typewriter and 1 more product</td>
+                                    <td>$81.91</td>
+                                    <td>Submitted</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="">1234</a></td>
+                                    <td>22/5/2021</td>
+                                    <td>Vintage typewriter and 1 more product</td>
+                                    <td>$81.91</td>
+                                    <td>Submitted</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="">1234</a></td>
+                                    <td>22/5/2021</td>
+                                    <td>Vintage typewriter and 1 more product</td>
+                                    <td>$81.91</td>
+                                    <td>Submitted</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="">1234</a></td>
+                                    <td>22/5/2021</td>
+                                    <td>Vintage typewriter and 1 more product</td>
+                                    <td>$81.91</td>
+                                    <td>Submitted</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="">1234</a></td>
+                                    <td>22/5/2021</td>
+                                    <td>Vintage typewriter and 1 more product</td>
+                                    <td>$81.91</td>
+                                    <td>Submitted</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="">1234</a></td>
+                                    <td>22/5/2021</td>
+                                    <td>Vintage typewriter and 1 more product</td>
+                                    <td>$81.91</td>
+                                    <td>Submitted</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="">1234</a></td>
+                                    <td>22/5/2021</td>
+                                    <td>Vintage typewriter and 1 more product</td>
+                                    <td>$81.91</td>
+                                    <td>Submitted</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="">1234</a></td>
+                                    <td>22/5/2021</td>
+                                    <td>Vintage typewriter and 1 more product</td>
+                                    <td>$81.91</td>
+                                    <td>Submitted</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="">1234</a></td>
+                                    <td>22/5/2021</td>
+                                    <td>Vintage typewriter and 1 more product</td>
+                                    <td>$81.91</td>
+                                    <td>Submitted</td>
                                 </tr>
                             </tbody>
                         </table>

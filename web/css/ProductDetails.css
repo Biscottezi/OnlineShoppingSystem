@@ -24,8 +24,9 @@
 
 .quantity-input {
     height: 3em;
-    width: 7em;
+    width: 8em;
     border: 1px solid #A7A7A7;
+    margin-left: 1em;
 }
 
 .product-description {

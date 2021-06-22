@@ -17,8 +17,7 @@ cartDetails = CartDetails.jsp
 cartContact = CartContact.jsp
 cartCompletion = CartCompletion.jsp
 blogDetails = BlogDetails.jsp
-
+viewBlogDetails = viewBlogDetailServlet
 blogList = BlogList.jsp
-
 searchProduct = searchProductServlet
 removeFromCart = removeFromCartServlet

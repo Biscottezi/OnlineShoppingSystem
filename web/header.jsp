@@ -31,8 +31,8 @@
                         <img src="" alt="Logo">
                     </a>
                 </div>
-                <form action="" class="col-3 searchbar">
-                    <input type="text" placeholder="Search" class="search-input col-10" name="txtSearchProduct">
+                <form action="searchProduct" class="col-3 searchbar">
+                    <input type="text" placeholder="Search" class="search-input col-10" name="txtSearchProduct" value="">
                     <button type="submit" id="search-button" class="col-2" name="btAction">
                         <i class="fas fa-search"></i>
                     </button>
