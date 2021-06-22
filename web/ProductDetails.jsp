@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -37,42 +38,31 @@
                         </form>
                         <br>
                         <h4>Categories</h4>
+                        <c:set var="productCategoryList" value="${requestScope.PRODUCT_CATEGORY}"/>
+                        <c:forEach var="productCategory" items="${productCategoryList}">
                         <div class="category">
-                            <a href="">Smartphone</a>
+                            <a href="">${productCategory.name}</a>
                         </div>
-                        <div class="category">
-                            <a href="">Laptop</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Smartwatch</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Earphone</a>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
-
+                
                 <div class="main-content container col-10" style="min-height: 700px;">
+                    <c:set var="product" value="${requestScope.PRODUCT_DETAILS}"/>
                     <h1>Product</h1>
                     <div class="row">
-                        <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="col-6 product-img">
+                        <img src="img/${product.thumbnail}" alt="product-thumbnail" class="col-6 product-img">
                         <div class="col-6 product-info">
-                            <h2>Vintage Typewriter</h2>
+                            <h2>${product.title}</h2>
                             <span>Star: 4/5</span>
-                            <h1>$49.50</h1>
-                            <p>Vintage Typewriter to post awesome stories about UI design and webdev.</p>
-                            <p>Eligible for Shipping To Mars or somewhere else</p>
+                            <h4 style="text-decoration: line-through">$${product.listPrice}</h4>
+                            <h1>$${product.salePrice}</h1>
+                            <p>${product.briefInfo}</p>
                             <form action="">
                                 <label for="quantity-input">Quantity</label><br>
                                 <div class="row">
                                     <div id="quantity-input">
-                                        <button class="btn-quantity">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
                                         <input type="number" name="txtQuantity" value="1" class="quantity-input" min="1">
-                                        <button class="btn-quantity">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
                                     </div>
                                     <button type="submit" class="btn-add-to-cart" name="btAction">
                                         <i class="fas fa-shopping-cart"></i>
@@ -87,7 +77,7 @@
                             <h6>Description</h6>
                         </div>
                         <div class="product-description-para">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            <p>${product.description}</p>
                         </div>
                         
                     </div>

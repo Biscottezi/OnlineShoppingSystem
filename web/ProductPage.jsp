@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -29,128 +30,49 @@
                 <!--Sider-->
                 <div class="sider col-2">
                     <div class="col">
-                        <form action="" class="col-sm-12 searchbar">
-                            <input type="text" placeholder="Search" class="search-input col-sm-10" name="txtSearchProduct">
+                        <form action="searchProduct" class="col-sm-12 searchbar">
+                            <input type="text" placeholder="Search" class="search-input col-sm-10" name="txtSearchProduct" value="">
                             <button type="submit" id="search-button" class="col-sm-2">
                                 <i class="fas fa-search"></i>
                             </button>
                         </form>
                         <br>
                         <h4>Categories</h4>
+                        <c:set var="productCategoryList" value="${requestScope.PRODUCT_CATEGORY}"/>
+                        <c:forEach var="productCategory" items="${productCategoryList}">
                         <div class="category">
-                            <a href="">Smartphone</a>
+                            <a href="">${productCategory.name}</a>
                         </div>
-                        <div class="category">
-                            <a href="">Laptop</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Smartwatch</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Earphone</a>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
 
                 <div class="main-content col-10">
                     <div class="container" style="padding-left: 24px;">
                         <h1>Latest products</h1>
+                        <c:if test="${not empty requestScope.txtSearchedProduct}">
+                            <h3>Results for "${requestScope.txtSearchedProduct}"</h3>
+                        </c:if>
                         <select name="" id="">
                             <option value="" selected>Newest</option>
                             <option value="">Oldest</option>
                         </select>
                     </div>
                     <div class="row product-row">
-                        <div class="col-3">
+                        <c:set var="productList" value="${requestScope.ALL_PRODUCT_LIST}"/>
+                        <c:forEach var="product" items="${productList}">
+                            <div class="col-3" onclick="location.href='viewProductDetails?productID=${product.id}';" style="margin-top: 1em">
                             <div class="card">
-                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
+                                <img src="img/${product.thumbnail}" alt="product-thumbnail" class="card-img-top">
                                 <div class="card-body">
-                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                    <h3 class="card-title card-price">$49.50</h3>
-                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
+                                    <h5 class="card-title">${product.title}</h5>
+                                    <h3 class="card-title card-price">$${product.salePrice}</h3>
+                                    <p class="card-text">${product.briefInfo}</p>
                                     <p class="card-text">Star: 4/5</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-3">
-                            <div class="card">
-                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                    <h3 class="card-title card-price">$49.50</h3>
-                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                    <p class="card-text">Star: 4/5</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="card">
-                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                    <h3 class="card-title card-price">$49.50</h3>
-                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                    <p class="card-text">Star: 4/5</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="card">
-                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                    <h3 class="card-title card-price">$49.50</h3>
-                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                    <p class="card-text">Star: 4/5</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row product-row">
-                        <div class="col-3">
-                            <div class="card">
-                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                    <h3 class="card-title card-price">$49.50</h3>
-                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                    <p class="card-text">Star: 4/5</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="card">
-                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                    <h3 class="card-title card-price">$49.50</h3>
-                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                    <p class="card-text">Star: 4/5</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="card">
-                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                    <h3 class="card-title card-price">$49.50</h3>
-                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                    <p class="card-text">Star: 4/5</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="card">
-                                <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title">Vintage Typewriter to post awesome stories about UI design and webdev.</h5>
-                                    <h3 class="card-title card-price">$49.50</h3>
-                                    <p class="card-text">Eligible for Shipping To Mars or somewhere else</p>
-                                    <p class="card-text">Star: 4/5</p>
-                                </div>
-                            </div>
-                        </div>
+                        </c:forEach>
                     </div>
                     <br>
                     <div class="container">
