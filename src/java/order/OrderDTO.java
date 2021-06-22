@@ -15,8 +15,7 @@ import java.sql.Date;
 public class OrderDTO implements Serializable{
     private int id;
     private int status;
-    private Date orderedDate;
-    private int saleMemberId;
+    private Date orderedDate;    
     private int customerId;
     private String receiverName;
     private String receiverGender;
@@ -24,15 +23,15 @@ public class OrderDTO implements Serializable{
     private String receiverEmail;
     private String receiverPhone;
     private String note;
+    private int saleMemberId;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(int id, int status, Date orderedDate, int saleMemberId, int customerId, String receiverName, String receiverGender, String receiverAddress, String receiverEmail, String receiverPhone, String note) {
+    public OrderDTO(int id, int status, Date orderedDate, int customerId, String receiverName, String receiverGender, String receiverAddress, String receiverEmail, String receiverPhone, String note, int saleMemberId) {
         this.id = id;
         this.status = status;
         this.orderedDate = orderedDate;
-        this.saleMemberId = saleMemberId;
         this.customerId = customerId;
         this.receiverName = receiverName;
         this.receiverGender = receiverGender;
@@ -40,7 +39,10 @@ public class OrderDTO implements Serializable{
         this.receiverEmail = receiverEmail;
         this.receiverPhone = receiverPhone;
         this.note = note;
+        this.saleMemberId = saleMemberId;
     }
+
+    
 
     public int getId() {
         return id;
