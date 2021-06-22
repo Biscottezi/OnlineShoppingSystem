@@ -3,7 +3,7 @@
     Created on : Jun 16, 2021, 1:19:47 AM
     Author     : nguye
 --%>
-
+<%@include file="header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,15 +18,16 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" href="css/sider.css">
         <link rel="stylesheet" href="css/CustomerOrderList.css">
+        <link rel="stylesheet" href="css/header-footer.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
         <script src="js/table.js"></script>
     </head>
-
+    
     <body>
         <!--header-->
-        <%@include file="header.jsp" %>
+        
 
         <main class="container">
             <div class="row">
@@ -198,6 +199,43 @@
         </main>
 
         <!--Footer-->
-        <%@include file="footer.html" %>
+        <footer class="container footer-wrapper">
+            <div class="row footer-row-1">
+                <div class="col-3 footer-column">
+                    <h3>Customer Center</h3>
+                    <p>070-2707-1234<br/>
+                        Weekdays 09:30 - 18:00<br>
+                        Weekends 12:00 - 13:00<br/>
+                        Sat, Sun, National holidays</p>
+                </div>
+                <div class="col-3 footer-column">
+                    <h3>Shipment info</h3>
+                    <p>Track Shipping Location<br>
+                        Refund/exchange address<br>
+                        Incheon Gaeyanggu Gesangdong<br>
+                        GeyangBG #1117<br>
+                        (Please make sure to use<br> 
+                        Post Office Parcel service)</p>
+                </div>
+                <div class="col-3 footer-column">
+                    <h3>Company</h3>
+                    <p>Company<br>
+                        Notice/Event</p>
+                </div>
+                <div class="col-3 footer-column">
+                    <h3>Social media</h3>
+                    <i class="fab fa-facebook-square"></i>
+                    <i class="fab fa-youtube"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-pinterest-p"></i>
+                </div>
+            </div>
+            <div class="row  footer-row-2">
+                <p class="col-12">CEO: TaiNT&emsp;Company Name: FPTEdu&emsp;Tel: 070-123-1234&emsp;Fax: 02-123-4567&emsp;E-mail: hcmuni@fpt.edu.vn</p>
+                <p class="col-12">Address: Lô E2a-7, Đường D1, Khu Công nghệ cao, P.Long Thạnh Mỹ, Tp. Thủ Đức, TP.HCM.</p>
+                <p class="col-12">License Number: 123-45-78910&emsp;Technical Manager: TaiNT</p>
+                <p class="col-12">ⓒ 2021 FPTEdu All rights reserved.&emsp;Privacy Policy&emsp;Terms of Service</p>
+            </div>
+        </footer>
     </body>
 </html>

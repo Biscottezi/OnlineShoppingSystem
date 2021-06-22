@@ -2,7 +2,8 @@ $(document).ready( function () {
     $('#custOrderList').dataTable( {
       "bLengthChange": false,
       "bSort": false,
-      "searching": false,"pageLength": 10,
+      "searching": false,
+      "pageLength": 10,
       "pagingType": "simple",
       "language": {
           "info": '<span style="color: #9FA2B4">_START_ to _END_ of _TOTAL_</span>',
@@ -13,5 +14,5 @@ $(document).ready( function () {
               "previous": '<i class="fas fa-angle-left" style="color: #9FA2B4;"></i>'
           }
       }
-    } );
   } );
+} );
