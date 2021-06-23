@@ -21,3 +21,4 @@ viewBlogDetails = viewBlogDetailServlet
 blogList = BlogList.jsp
 searchProduct = searchProductServlet
 removeFromCart = removeFromCartServlet
+logout= LogoutServlet
