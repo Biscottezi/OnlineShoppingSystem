@@ -50,7 +50,7 @@ public class OrderDAO implements Serializable{
                     String Note = rs.getString("Note");
                     int SaleMemberID= rs.getInt("SaleMemberID");
 
-                    OrderDTO oDTO = new OrderDTO(OrderID, Status, OrderedDate , CustomerID, ReceiverName, ReceiverPhone, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note,SaleMemberID);
+                    OrderDTO oDTO = new OrderDTO(OrderID, Status, OrderedDate , CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note,SaleMemberID);
                     result.add(oDTO);
                 }
                 return result;

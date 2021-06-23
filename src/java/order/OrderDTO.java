@@ -18,7 +18,7 @@ public class OrderDTO implements Serializable{
     private Date orderedDate;    
     private int customerId;
     private String receiverName;
-    private String receiverGender;
+    private int receiverGender;
     private String receiverAddress;
     private String receiverEmail;
     private String receiverPhone;
@@ -28,7 +28,7 @@ public class OrderDTO implements Serializable{
     public OrderDTO() {
     }
 
-    public OrderDTO(int id, int status, Date orderedDate, int customerId, String receiverName, String receiverGender, String receiverAddress, String receiverEmail, String receiverPhone, String note, int saleMemberId) {
+    public OrderDTO(int id, int status, Date orderedDate, int customerId, String receiverName, int receiverGender, String receiverAddress, String receiverEmail, String receiverPhone, String note, int saleMemberId) {
         this.id = id;
         this.status = status;
         this.orderedDate = orderedDate;
@@ -92,11 +92,11 @@ public class OrderDTO implements Serializable{
         this.receiverName = receiverName;
     }
 
-    public String getReceiverGender() {
+    public int getReceiverGender() {
         return receiverGender;
     }
 
-    public void setReceiverGender(String receiverGender) {
+    public void setReceiverGender(int receiverGender) {
         this.receiverGender = receiverGender;
     }
 
