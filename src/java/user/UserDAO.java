@@ -63,10 +63,6 @@ public class UserDAO implements Serializable {
                 }//end if rs is existed
             }//end if con is opened
         } finally {
-            if (con != null) {
-                rs.close();
-            }
-            if (con != null) {
 
             if(rs != null){
                 rs.close();
@@ -79,9 +75,7 @@ public class UserDAO implements Serializable {
                 con.close();
             }
         }
-
         return false;
-    }
     }
 
     public boolean createNewCustomer(String email, String pass, String fullname, int gender, String phone, String address)
