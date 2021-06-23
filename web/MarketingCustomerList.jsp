@@ -40,6 +40,12 @@
             .disable{
                 background: #CC2929;
             }
+            .potential{
+                background: #FFCB15;
+            }
+            .contact{
+                background: #53D6FF;
+            }
             #tbllist_info {
                 padding: 8px;
             }
@@ -81,7 +87,7 @@
                         <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col"><img src="img/logo.png" alt=""/></div>
-                                <div class="col">Admin <br> Dashboard</div>
+                                <div class="col">Marketing <br> Dashboard</div>
                             </div>
                         </div>
                     </div>
@@ -105,7 +111,55 @@
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/users-chosen.png" alt=""/></div>
-                                <div class="col align-self-baseline" style="font-size: 19px;">Users</div>
+                                <div class="col align-self-baseline" style="font-size: 19px;">Customers</div>
+                            </div>
+                          </div>
+                      </a>
+                  </li>
+                  
+                  <!-- item 3 -->
+                  <li class="nav-item naviitem row">
+                      <a class="navbar-brand overview" href="#">
+                          <div class="container">
+                            <div class="row justify-content-md-center">
+                                <div class="col align-self-baseline"><img src="img/products.png" alt=""/></div>
+                                <div class="col align-self-baseline" style="font-size: 19px;">Products</div>
+                            </div>
+                          </div>
+                      </a>
+                  </li>
+                  
+                  <!-- item 4 -->
+                  <li class="nav-item naviitem row">
+                      <a class="navbar-brand overview" href="#">
+                          <div class="container">
+                            <div class="row justify-content-md-center">
+                                <div class="col align-self-baseline"><img src="img/posts.png" alt=""/></div>
+                                <div class="col align-self-baseline" style="font-size: 19px;">Posts</div>
+                            </div>
+                          </div>
+                      </a>
+                  </li>
+                  
+                  <!-- item 5 -->
+                  <li class="nav-item naviitem row">
+                      <a class="navbar-brand overview" href="#">
+                          <div class="container">
+                            <div class="row justify-content-md-center">
+                                <div class="col align-self-baseline"><img src="img/mkt-feedbacks.png" alt=""/></div>
+                                <div class="col align-self-baseline" style="font-size: 19px;">Feedbacks</div>
+                            </div>
+                          </div>
+                      </a>
+                  </li>
+                  
+                  <!-- item 6 -->
+                  <li class="nav-item naviitem row">
+                      <a class="navbar-brand overview" href="#">
+                          <div class="container">
+                            <div class="row justify-content-md-center">
+                                <div class="col align-self-baseline"><img src="img/sliders.png" alt=""/></div>
+                                <div class="col align-self-baseline" style="font-size: 19px;">Sliders  </div>
                             </div>
                           </div>
                       </a>
@@ -118,7 +172,7 @@
             <div class="wrapper col" style="background-color: #F7F8FC; padding: 30px 33px 30px 45px;" id="maincontent">
                 <!-- main title -->
                 <div class="maintitle row">
-                    <div class="col-2" id="title"><span>Users</span></div>
+                    <div class="col-2" id="title"><span>Customers</span></div>
                     <div class="col-7"></div>
                     <div class="col row">
                         <div class="d-flex justify-content-end col-10 align-items-center" id="user">
@@ -134,19 +188,16 @@
                 <div class="listwrapper">
                     <!-- list header -->
                     <div class="listheader row">
-                        <div class="col-2 d-flex justify-content-start align-items-center" id="listtitle">List users</div>
+                        <div class="col-2 d-flex justify-content-start align-items-center" id="listtitle">All Customers</div>
                         <div class="col-6 row">
                             <form action="" class="col-8 searchbar row">
-                                <input type="text" placeholder="Search user" class="search-input col-10" name="txtSearchProduct" id="searchtable">
+                                <input type="text" placeholder="Search customer" class="search-input col-10" name="txtSearchProduct" id="searchtable">
                                 <button type="submit" id="search-button" class="col-2 button" name="btAction">
                                     <i class="fas fa-search" style="color: #C5C7CD"></i>
                                 </button>
                             </form>
                         </div>
-                        <div class="extended col-4 row d-flex">
-                            <div class="col-6 d-flex align-items-center justify-content-end">
-                                <div class="addbtn d-flex align-items-center justify-content-center" id="adduser" onclick="showCreatePopup()">Add User</div>
-                            </div>
+                        <div class="extended col-4 row d-flex justify-content-end">
                             <div class="col-3 d-flex align-items-center justify-content-end"><i class="fas fa-sort-amount-up"></i>Sort</div>
                             <div class="col-3 d-flex align-items-center justify-content-end"><i class="fas fa-filter"></i>Filter</div>
                         </div>
@@ -156,155 +207,203 @@
                       <thead>
                         <tr>
                           <th scope="col" style="text-align: center">ID</th>
-                          <th scope="col">Fullname</th>
+                          <th scope="col">Full Name</th>
                           <th scope="col">Gender</th>
                           <th scope="col">Email</th>
                           <th scope="col">Mobile</th>
-                          <th scope="col">Role</th>
                           <th scope="col">Status</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
+                          <td class="align-middle">Tran Tan Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">0987654321</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  CUSTOMER
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
+                          <td class="align-middle">Nguyen Pham Minh Quan</td>
                           <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">quannpmse151004@fpt.edu.vn</td>
+                          <td class="align-middle">0987654321</td>
                           <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status disable">
-                                  DISABLED
+                              <div class="d-flex align-items-center justify-content-center status potential">
+                                  POTENTIAL
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
+                          <td class="align-middle">Tran Viet Nguyen Minh Hieu</td>
                           <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">hieutvnmse151005@fpt.edu.vn</td>
+                          <td class="align-middle">0987654321</td>
                           <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                              <div class="d-flex align-items-center justify-content-center status contact">
+                                  CONTACT
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
+                          <td class="align-middle">Tran Tan Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">0987654321</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  CUSTOMER
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
+                          <td class="align-middle">Tran Tan Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">0987654321</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  CUSTOMER
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
+                          <td class="align-middle">Tran Tan Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">0987654321</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  CUSTOMER
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Quân</td>
+                          <td class="align-middle">Tran Tan Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">0987654321</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  CUSTOMER
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
+                          <td class="align-middle">Tran Tan Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">0987654321</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  CUSTOMER
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
+                          <td class="align-middle">Tran Tan Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">0987654321</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  CUSTOMER
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
+                          <td class="align-middle">Tran Tan Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">0987654321</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  CUSTOMER
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
+                          <td class="align-middle">Tran Tan Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">0987654321</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  CUSTOMER
+                              </div>
+                          </td>
+                        </tr>
+                        <tr style="height: 92px;">
+                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle">Tran Tan Long</td>
+                          <td class="align-middle">Male</td>
+                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
+                          <td class="align-middle">0987654321</td>
+                          <td class="align-middle" style="width:150px;">
+                              <div class="d-flex align-items-center justify-content-center status enable">
+                                  CUSTOMER
+                              </div>
+                          </td>
+                        </tr>
+                        <tr style="height: 92px;">
+                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle">Tran Tan Long</td>
+                          <td class="align-middle">Male</td>
+                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
+                          <td class="align-middle">0987654321</td>
+                          <td class="align-middle" style="width:150px;">
+                              <div class="d-flex align-items-center justify-content-center status enable">
+                                  CUSTOMER
+                              </div>
+                          </td>
+                        </tr>
+                        <tr style="height: 92px;">
+                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle">Tran Tan Long</td>
+                          <td class="align-middle">Male</td>
+                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
+                          <td class="align-middle">0987654321</td>
+                          <td class="align-middle" style="width:150px;">
+                              <div class="d-flex align-items-center justify-content-center status enable">
+                                  CUSTOMER
+                              </div>
+                          </td>
+                        </tr>
+                        <tr style="height: 92px;">
+                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle">Tran Tan Long</td>
+                          <td class="align-middle">Male</td>
+                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
+                          <td class="align-middle">0987654321</td>
+                          <td class="align-middle" style="width:150px;">
+                              <div class="d-flex align-items-center justify-content-center status enable">
+                                  CUSTOMER
+                              </div>
+                          </td>
+                        </tr>
+                        <tr style="height: 92px;">
+                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle">Tran Tan Long</td>
+                          <td class="align-middle">Male</td>
+                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
+                          <td class="align-middle">0987654321</td>
+                          <td class="align-middle" style="width:150px;">
+                              <div class="d-flex align-items-center justify-content-center status enable">
+                                  CUSTOMER
                               </div>
                           </td>
                         </tr>
@@ -343,81 +442,6 @@
             </div>
         </div>
         
-        <div class="popupwrapperadd" id="createpopup">
-            <div class="title row">Create Account</div>
-            <div class="info row">
-                <div class="col">
-                    Fullname<br>
-                    <input class="inputbox" type="text" name="txtFullname" value="" form="createform"/>
-                </div>
-                <div class="col">
-                    Gender<br>
-                    <select id="gender" class="inputbox" form="createform">
-                        <option value="" selected disabled hidden>Select gender</option>
-                            <option value="1">Male</option>
-                            <option value="2">Female</option>
-                            <option value="3">I prefer not to say</option>
-                    </select>
-                </div>
-            </div>
-            <div class="info row">
-                <div class="col">
-                    Avatar<br>
-                    <div class="avawrapper row">
-                        <img id="avapreview" class="col-3" src="http://placehold.it/180" onchange="showPreview();">
-                        <input type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="createform"/>
-                        <div class="col-4 d-flex align-items-end" style="padding-top: 117px;">
-                            <label for="upload" class="d-flex align-items-center justify-content-center uplbtn">
-                                <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    Email<br>
-                    <input class="inputbox" type="text" name="txtEmail" value="" form="createform"/>
-                    <br>
-                    <div style="margin-top:12px;">Mobile</div>
-                    <input class="inputbox" type="text" name="txtMobile" value="" form="createform"/>
-                </div>
-            </div>
-            <div class="info row">
-                <div class="col">
-                    Address<br>
-                    <textarea class="inputbox" id="address" type="text" name="txtAddress" value="" form="createform"></textarea>
-                </div>
-                <div class="col">
-                    Role<br>
-                    <select id="gender" class="inputbox" form="createform">
-                        <option value="" selected disabled hidden>Select role</option>
-                            <option value="1">Customer</option>
-                            <option value="2">Marketing</option>
-                            <option value="3">Sale</option>
-                            <option value="4">Sale Manager</option>
-                            <option value="5">Admin</option>
-                    </select>
-                </div>
-            </div>
-            <div class="info row">
-                <div class="col-6">
-                    Status<br>
-                    <div class="statuswrapper row d-flex align-items-end">
-                        <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">ENABLED</div>
-                        <input type="checkbox" name="chkStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="createform"/>
-                    </div>
-                </div>
-                <div class="col-2"></div>
-                <div class="col-4">
-                    <div class="savewrapper row d-flex align-items-end">
-                        <div class="col" id="cancelbtn" onclick="closeCreatePopup();">Cancel</div>
-                        <div class="col" style="padding-right: 56px;">
-                            <input type="submit" value="Create" name="btAction" id="createbtn" form="createform"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         
-        <form action="createUser" id="createform"></form>
     </body>
 </html>

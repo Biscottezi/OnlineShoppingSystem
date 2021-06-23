@@ -81,7 +81,7 @@
                         <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col"><img src="img/logo.png" alt=""/></div>
-                                <div class="col">Admin <br> Dashboard</div>
+                                <div class="col">Marketing <br> Dashboard</div>
                             </div>
                         </div>
                     </div>
@@ -100,12 +100,60 @@
                   </li>
                   
                   <!-- item 2 -->
-                  <li class="nav-item naviitem row" id="active">
+                  <li class="nav-item naviitem row">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/users-chosen.png" alt=""/></div>
-                                <div class="col align-self-baseline" style="font-size: 19px;">Users</div>
+                                <div class="col align-self-baseline" style="font-size: 19px;">Customers</div>
+                            </div>
+                          </div>
+                      </a>
+                  </li>
+                  
+                  <!-- item 3 -->
+                  <li class="nav-item naviitem row" id="active">
+                      <a class="navbar-brand overview" href="#">
+                          <div class="container">
+                            <div class="row justify-content-md-center">
+                                <div class="col align-self-baseline"><img src="img/products-chosen.png" alt=""/></div>
+                                <div class="col align-self-baseline" style="font-size: 19px;">Products</div>
+                            </div>
+                          </div>
+                      </a>
+                  </li>
+                  
+                  <!-- item 4 -->
+                  <li class="nav-item naviitem row">
+                      <a class="navbar-brand overview" href="#">
+                          <div class="container">
+                            <div class="row justify-content-md-center">
+                                <div class="col align-self-baseline"><img src="img/posts.png" alt=""/></div>
+                                <div class="col align-self-baseline" style="font-size: 19px;">Posts</div>
+                            </div>
+                          </div>
+                      </a>
+                  </li>
+                  
+                  <!-- item 5 -->
+                  <li class="nav-item naviitem row">
+                      <a class="navbar-brand overview" href="#">
+                          <div class="container">
+                            <div class="row justify-content-md-center">
+                                <div class="col align-self-baseline"><img src="img/mkt-feedbacks.png" alt=""/></div>
+                                <div class="col align-self-baseline" style="font-size: 19px;">Feedbacks</div>
+                            </div>
+                          </div>
+                      </a>
+                  </li>
+                  
+                  <!-- item 6 -->
+                  <li class="nav-item naviitem row">
+                      <a class="navbar-brand overview" href="#">
+                          <div class="container">
+                            <div class="row justify-content-md-center">
+                                <div class="col align-self-baseline"><img src="img/sliders.png" alt=""/></div>
+                                <div class="col align-self-baseline" style="font-size: 19px;">Sliders  </div>
                             </div>
                           </div>
                       </a>
@@ -118,7 +166,7 @@
             <div class="wrapper col" style="background-color: #F7F8FC; padding: 30px 33px 30px 45px;" id="maincontent">
                 <!-- main title -->
                 <div class="maintitle row">
-                    <div class="col-2" id="title"><span>Users</span></div>
+                    <div class="col-2" id="title"><span>Products</span></div>
                     <div class="col-7"></div>
                     <div class="col row">
                         <div class="d-flex justify-content-end col-10 align-items-center" id="user">
@@ -134,10 +182,10 @@
                 <div class="listwrapper">
                     <!-- list header -->
                     <div class="listheader row">
-                        <div class="col-2 d-flex justify-content-start align-items-center" id="listtitle">List users</div>
+                        <div class="col-2 d-flex justify-content-start align-items-center" id="listtitle">All products</div>
                         <div class="col-6 row">
                             <form action="" class="col-8 searchbar row">
-                                <input type="text" placeholder="Search user" class="search-input col-10" name="txtSearchProduct" id="searchtable">
+                                <input type="text" placeholder="Search product" class="search-input col-10" name="txtSearchProduct" id="searchtable">
                                 <button type="submit" id="search-button" class="col-2 button" name="btAction">
                                     <i class="fas fa-search" style="color: #C5C7CD"></i>
                                 </button>
@@ -145,7 +193,7 @@
                         </div>
                         <div class="extended col-4 row d-flex">
                             <div class="col-6 d-flex align-items-center justify-content-end">
-                                <div class="addbtn d-flex align-items-center justify-content-center" id="adduser" onclick="showCreatePopup()">Add User</div>
+                                <div class="addbtn d-flex align-items-center justify-content-center" id="adduser" onclick="showCreatePopup()">Add Product</div>
                             </div>
                             <div class="col-3 d-flex align-items-center justify-content-end"><i class="fas fa-sort-amount-up"></i>Sort</div>
                             <div class="col-3 d-flex align-items-center justify-content-end"><i class="fas fa-filter"></i>Filter</div>
@@ -156,155 +204,269 @@
                       <thead>
                         <tr>
                           <th scope="col" style="text-align: center">ID</th>
-                          <th scope="col">Fullname</th>
-                          <th scope="col">Gender</th>
-                          <th scope="col">Email</th>
-                          <th scope="col">Mobile</th>
-                          <th scope="col">Role</th>
+                          <th scope="col">Thumbnail</th>
+                          <th scope="col">Title</th>
+                          <th scope="col">Category</th>
+                          <th scope="col">Price</th>
+                          <th scope="col">Sale Price</th>
+                          <th scope="col">Featured</th>
                           <th scope="col">Status</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">
+                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
+                          </td>
+                          <td class="align-middle">Vintage Typewriter</td>
+                          <td class="align-middle">Typewriter</td>
+                          <td class="align-middle">$49.50</td>
+                          <td class="align-middle">$42.50</td>
+                          <td class="align-middle">On</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  SELLING
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">
+                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
+                          </td>
+                          <td class="align-middle">Useless Cat</td>
+                          <td class="align-middle">House Cat</td>
+                          <td class="align-middle">$49.50</td>
+                          <td class="align-middle">$42.50</td>
+                          <td class="align-middle">Off</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status disable">
-                                  DISABLED
+                                  NOT SELLING
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">
+                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
+                          </td>
+                          <td class="align-middle">Vintage Typewriter</td>
+                          <td class="align-middle">Typewriter</td>
+                          <td class="align-middle">$49.50</td>
+                          <td class="align-middle">$42.50</td>
+                          <td class="align-middle">On</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  SELLING
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">
+                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
+                          </td>
+                          <td class="align-middle">Vintage Typewriter</td>
+                          <td class="align-middle">Typewriter</td>
+                          <td class="align-middle">$49.50</td>
+                          <td class="align-middle">$42.50</td>
+                          <td class="align-middle">On</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  SELLING
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">
+                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
+                          </td>
+                          <td class="align-middle">Vintage Typewriter</td>
+                          <td class="align-middle">Typewriter</td>
+                          <td class="align-middle">$49.50</td>
+                          <td class="align-middle">$42.50</td>
+                          <td class="align-middle">On</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  SELLING
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">
+                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
+                          </td>
+                          <td class="align-middle">Vintage Typewriter</td>
+                          <td class="align-middle">Typewriter</td>
+                          <td class="align-middle">$49.50</td>
+                          <td class="align-middle">$42.50</td>
+                          <td class="align-middle">On</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  SELLING
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Quân</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">
+                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
+                          </td>
+                          <td class="align-middle">Vintage Typewriter</td>
+                          <td class="align-middle">Typewriter</td>
+                          <td class="align-middle">$49.50</td>
+                          <td class="align-middle">$42.50</td>
+                          <td class="align-middle">On</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  SELLING
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">
+                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
+                          </td>
+                          <td class="align-middle">Vintage Typewriter</td>
+                          <td class="align-middle">Typewriter</td>
+                          <td class="align-middle">$49.50</td>
+                          <td class="align-middle">$42.50</td>
+                          <td class="align-middle">On</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  SELLING
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">
+                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
+                          </td>
+                          <td class="align-middle">Vintage Typewriter</td>
+                          <td class="align-middle">Typewriter</td>
+                          <td class="align-middle">$49.50</td>
+                          <td class="align-middle">$42.50</td>
+                          <td class="align-middle">On</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  SELLING
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">
+                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
+                          </td>
+                          <td class="align-middle">Vintage Typewriter</td>
+                          <td class="align-middle">Typewriter</td>
+                          <td class="align-middle">$49.50</td>
+                          <td class="align-middle">$42.50</td>
+                          <td class="align-middle">On</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  SELLING
                               </div>
                           </td>
                         </tr>
                         <tr style="height: 92px;">
                           <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">
+                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
+                          </td>
+                          <td class="align-middle">Vintage Typewriter</td>
+                          <td class="align-middle">Typewriter</td>
+                          <td class="align-middle">$49.50</td>
+                          <td class="align-middle">$42.50</td>
+                          <td class="align-middle">On</td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
+                                  SELLING
+                              </div>
+                          </td>
+                        </tr>
+                        <tr style="height: 92px;">
+                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle">
+                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
+                          </td>
+                          <td class="align-middle">Vintage Typewriter</td>
+                          <td class="align-middle">Typewriter</td>
+                          <td class="align-middle">$49.50</td>
+                          <td class="align-middle">$42.50</td>
+                          <td class="align-middle">On</td>
+                          <td class="align-middle" style="width:150px;">
+                              <div class="d-flex align-items-center justify-content-center status enable">
+                                  SELLING
+                              </div>
+                          </td>
+                        </tr>
+                        <tr style="height: 92px;">
+                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle">
+                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
+                          </td>
+                          <td class="align-middle">Vintage Typewriter</td>
+                          <td class="align-middle">Typewriter</td>
+                          <td class="align-middle">$49.50</td>
+                          <td class="align-middle">$42.50</td>
+                          <td class="align-middle">On</td>
+                          <td class="align-middle" style="width:150px;">
+                              <div class="d-flex align-items-center justify-content-center status enable">
+                                  SELLING
+                              </div>
+                          </td>
+                        </tr>
+                        <tr style="height: 92px;">
+                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle">
+                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
+                          </td>
+                          <td class="align-middle">Vintage Typewriter</td>
+                          <td class="align-middle">Typewriter</td>
+                          <td class="align-middle">$49.50</td>
+                          <td class="align-middle">$42.50</td>
+                          <td class="align-middle">On</td>
+                          <td class="align-middle" style="width:150px;">
+                              <div class="d-flex align-items-center justify-content-center status enable">
+                                  SELLING
+                              </div>
+                          </td>
+                        </tr>
+                        <tr style="height: 92px;">
+                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle">
+                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
+                          </td>
+                          <td class="align-middle">Vintage Typewriter</td>
+                          <td class="align-middle">Typewriter</td>
+                          <td class="align-middle">$49.50</td>
+                          <td class="align-middle">$42.50</td>
+                          <td class="align-middle">On</td>
+                          <td class="align-middle" style="width:150px;">
+                              <div class="d-flex align-items-center justify-content-center status enable">
+                                  SELLING
+                              </div>
+                          </td>
+                        </tr>
+                        <tr style="height: 92px;">
+                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle">
+                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
+                          </td>
+                          <td class="align-middle">Vintage Typewriter</td>
+                          <td class="align-middle">Typewriter</td>
+                          <td class="align-middle">$49.50</td>
+                          <td class="align-middle">$42.50</td>
+                          <td class="align-middle">On</td>
+                          <td class="align-middle" style="width:150px;">
+                              <div class="d-flex align-items-center justify-content-center status enable">
+                                  SELLING
                               </div>
                           </td>
                         </tr>
