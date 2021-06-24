@@ -115,13 +115,14 @@ public class filterDispatcher implements Filter {
 
         if (rq.getRequestURI().endsWith(".png")||rq.getRequestURI().endsWith(".jpg")||rq.getRequestURI().endsWith(".css")||rq.getRequestURI().endsWith(".js")) {
                 chain.doFilter(request, response);
-        }
+        }else{
 //        if (convertedURI!=null) {
             RequestDispatcher rd = request.getRequestDispatcher(convertedURI);
             rd.forward(request, response);
 //        } else {
 //            chain.doFilter(request, response);
 //        }
+        }
     }
 
     /**

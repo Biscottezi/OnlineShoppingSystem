@@ -36,14 +36,15 @@ public class addToCartServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String urlRewriting = "viewAllProduct";
-        if (request.getParameter("LastSearchProduct") != null) {
-            urlRewriting = "searchProduct"
-                    + "&txtSearchedProduct=" + request.getParameter("LastSearchProduct");
-        }
+        String urlRewriting = "viewProductDetails"
+                + "&productID=" + Integer.parseInt(request.getParameter("productID"));
+//        if (request.getParameter("LastSearchProduct") != null) {
+//            urlRewriting = "searchProduct"
+//                    + "&txtSearchedProduct=" + request.getParameter("LastSearchProduct");
+//        }
         
         
-        try (PrintWriter out = response.getWriter()) {
+        try{
             HttpSession session = request.getSession(true);//??????? true hay false
             //2. Cust takes a cart
             Cart cart = (Cart) session.getAttribute("CART");
@@ -52,7 +53,7 @@ public class addToCartServlet extends HttpServlet {
             }//end if cart is existed
             //3. Cust select/chooses a book
             int ID = Integer.parseInt(request.getParameter("productID"));
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            int quantity = Integer.parseInt(request.getParameter("txtQuantity"));
 
             //4. Cust drops item into cart
             cart.addToCart(ID, quantity);

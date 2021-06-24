@@ -42,7 +42,7 @@ public class searchProductServlet extends HttpServlet {
         String url = ERROR_PAGE;
         
         try{
-            String searchedProduct = request.getParameter("txtSearchedProduct");
+            String searchedProduct = request.getParameter("txtSearchProduct");
             ProductDAO dao = new ProductDAO();
             dao.searchProductName(searchedProduct);
             List<ProductDTO> productList = dao.getProductList();
