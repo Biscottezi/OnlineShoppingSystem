@@ -35,8 +35,8 @@ public class PostCategoryDAO implements Serializable{
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "SELECT PosttCategoryID, Name "
-                        + "FROM PosttCategory "
+                String sql = "SELECT PostCategoryID, Name "
+                        + "FROM PostCategory "
                         + "ORDER BY Name ASC";
                 stm = con.prepareCall(sql);
                 rs = stm.executeQuery();

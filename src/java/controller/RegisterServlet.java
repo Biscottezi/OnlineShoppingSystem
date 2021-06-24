@@ -34,8 +34,8 @@ public class RegisterServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private final String REGISTER_PAGE = "registerPage";
-    private final String SUCCESS_PAGE = "registerSuccess";
+    private final String REGISTER_PAGE = "registerPage.jsp";
+    private final String SUCCESS_PAGE = "registerSuccess.jsp";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
