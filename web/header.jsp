@@ -100,7 +100,7 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="row droplist-btn">
+                        <div class="row droplist-btn" onclick="location.href='logout'">
                             <img src="img/sign_out.png" alt="" class="droplist-avatar">
                             <div class="d-flex flex-column justify-content-center droplist-btn-txt">
                                 <h6>Sign Out</h6>

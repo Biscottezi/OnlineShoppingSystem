@@ -63,6 +63,7 @@
                                 <div class="row">
                                     <div id="quantity-input">
                                         <input type="number" name="txtQuantity" value="1" class="quantity-input" min="1">
+                                        <input type="hidden" name="productID" value="${product.id}"/>
                                     </div>
                                     <button type="submit" class="btn-add-to-cart" name="btAction">
                                         <i class="fas fa-shopping-cart"></i>

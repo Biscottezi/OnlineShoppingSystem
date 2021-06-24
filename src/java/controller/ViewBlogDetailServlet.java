@@ -37,8 +37,8 @@ public class ViewBlogDetailServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private final String DETAIL_LIST_PAGE = "BlogDetail.jsp";
-    private final String ERROR_PAGE = "error";
+    private final String DETAIL_LIST_PAGE = "BlogDetails.jsp";
+    private final String ERROR_PAGE = "error.html";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
