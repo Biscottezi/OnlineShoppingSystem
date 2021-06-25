@@ -23,3 +23,5 @@ searchProduct = searchProductServlet
 removeFromCart = removeFromCartServlet
 logout= LogoutServlet
 addToCart = addToCartServlet
+userlist = userlist.jsp
+userlistedit = userlistedit.jsp
