@@ -96,7 +96,7 @@ public class UserDAO implements Serializable {
             if (con != null) {
                 //B2. create SQL string 
 
-                String sql = "INSERT INTO tblUser "
+                String sql = "INSERT INTO [User] "
                         + " (Email, Password, Name, "
                         + " Address, Gender, Phone) "
                         + " VALUES (?,?,?,?,?,?)";
