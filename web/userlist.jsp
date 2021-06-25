@@ -104,7 +104,7 @@
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
-                                <div class="col align-self-baseline"><img src="img/users-chosen.png" alt=""/></div>
+                                <div class="col align-self-baseline"><img src="img/users.png" alt=""/></div>
                                 <div class="col align-self-baseline" style="font-size: 19px;">Users</div>
                             </div>
                           </div>
@@ -165,8 +165,8 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
+                        <tr style="height: 92px;" onclick="location.href='userlistedit.jsp';">
+                          <td class="align-middle" style="text-align: center">00001</td>
                           <td class="align-middle">Trần Tân Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
@@ -179,7 +179,7 @@
                           </td>
                         </tr>
                         <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle" style="text-align: center">00001</td>
                           <td class="align-middle">Trần Tân Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
@@ -192,7 +192,7 @@
                           </td>
                         </tr>
                         <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle" style="text-align: center">00001</td>
                           <td class="align-middle">Trần Tân Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
@@ -205,7 +205,7 @@
                           </td>
                         </tr>
                         <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle" style="text-align: center">00001</td>
                           <td class="align-middle">Trần Tân Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
@@ -218,7 +218,7 @@
                           </td>
                         </tr>
                         <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle" style="text-align: center">00001</td>
                           <td class="align-middle">Trần Tân Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
@@ -231,7 +231,7 @@
                           </td>
                         </tr>
                         <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle" style="text-align: center">00001</td>
                           <td class="align-middle">Trần Tân Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
@@ -244,7 +244,7 @@
                           </td>
                         </tr>
                         <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle" style="text-align: center">00001</td>
                           <td class="align-middle">Quân</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
@@ -257,7 +257,7 @@
                           </td>
                         </tr>
                         <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle" style="text-align: center">00001</td>
                           <td class="align-middle">Trần Tân Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
@@ -270,7 +270,7 @@
                           </td>
                         </tr>
                         <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle" style="text-align: center">00001</td>
                           <td class="align-middle">Trần Tân Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
@@ -283,7 +283,7 @@
                           </td>
                         </tr>
                         <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle" style="text-align: center">00001</td>
                           <td class="align-middle">Trần Tân Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
@@ -296,7 +296,7 @@
                           </td>
                         </tr>
                         <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
+                          <td class="align-middle" style="text-align: center">00001</td>
                           <td class="align-middle">Trần Tân Long</td>
                           <td class="align-middle">Male</td>
                           <td class="align-middle">longttse150883@fpt.edu.vn</td>
@@ -335,7 +335,7 @@
                 <div class="col-9 d-flex align-items-center description menu-itemtitle">Change Your Password</div>
             </div>
             <div class="menu-divider"></div>
-            <div class="signout row popupitem" onclick="location.href='homepage.jsp';">
+            <div class="signout row popupitem" onclick="location.href='logout';">
                 <div class="col-3 d-flex align-items-center justify-content-center" id="signout">
                     <div class="menuitemicon" style="background-image: url(img/signout.png);"></div>
                 </div>
@@ -348,11 +348,11 @@
             <div class="info row">
                 <div class="col">
                     Fullname<br>
-                    <input class="inputbox" type="text" name="txtFullname" value="" form="createform"/>
+                    <input class="inputbox" type="text" name="txtFullName" value="" form="createform"/>
                 </div>
                 <div class="col">
                     Gender<br>
-                    <select id="gender" class="inputbox" form="createform">
+                    <select id="gender" class="inputbox" form="createform" name="txtGender">
                         <option value="" selected disabled hidden>Select gender</option>
                             <option value="1">Male</option>
                             <option value="2">Female</option>
@@ -388,14 +388,16 @@
                 </div>
                 <div class="col">
                     Role<br>
-                    <select id="gender" class="inputbox" form="createform">
-                        <option value="" selected disabled hidden>Select role</option>
-                            <option value="1">Customer</option>
-                            <option value="2">Marketing</option>
-                            <option value="3">Sale</option>
-                            <option value="4">Sale Manager</option>
-                            <option value="5">Admin</option>
-                    </select>
+                    <div class="select-wrapper">
+                        <select id="role" class="inputbox" form="createform" name="txtRole">
+                            <option value="" selected disabled hidden>Select role</option>
+                                <option value="1">Customer</option>
+                                <option value="2">Marketing</option>
+                                <option value="3">Sale</option>
+                                <option value="4">Sale Manager</option>
+                                <option value="5">Admin</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="info row">
@@ -418,6 +420,6 @@
             </div>
         </div>
         
-        <form action="createUser" id="createform"></form>
+        <form action="createUser" id="createform" method="POST"></form>
     </body>
 </html>
