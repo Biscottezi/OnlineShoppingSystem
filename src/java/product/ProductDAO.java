@@ -252,7 +252,10 @@ public class ProductDAO implements Serializable{
                     int Status = rs.getInt("Status");
                     Date DateCreated = rs.getDate("DateCreated");
                     ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated);
-                    this.product = dto;
+                    if(this.productList == null){
+                        this.productList = new ArrayList<>();
+                    }
+                    this.productList.add(dto);
                     }
                 }
             }finally{

@@ -6,11 +6,13 @@
 package user;
 
 import java.io.Serializable;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
 import utils.DBHelper;
@@ -25,6 +27,12 @@ public class UserDAO implements Serializable {
 
     public UserDTO getUser() {
         return user;
+    }
+    
+    private List<UserDTO> userList;
+
+    public List<UserDTO> getUserList() {
+        return userList;
     }
 
     public boolean checkLogin(String email, String password)
@@ -88,7 +96,7 @@ public class UserDAO implements Serializable {
             if (con != null) {
                 //B2. create SQL string 
 
-                String sql = "INSERT INTO tblUser "
+                String sql = "INSERT INTO [User] "
                         + " (Email, Password, Name, "
                         + " Address, Gender, Phone) "
                         + " VALUES (?,?,?,?,?,?)";
@@ -121,5 +129,93 @@ public class UserDAO implements Serializable {
         }
 
         return false;
+    }
+    
+    public void getAllUser() throws SQLException, NamingException{
+        Connection con = null;
+        CallableStatement stm = null;
+        ResultSet rs = null;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT UserID, Name, Gender, Address, Email, Phone, Status, DateCreated, Avatar, Role, Password "
+                        + "FROM [User] ";
+                stm = con.prepareCall(sql);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int UserID = rs.getInt("UserID");
+                    String Name = rs.getString("Name");
+                    int Gender = rs.getInt("Gender");
+                    String Address = rs.getString("Address");
+                    String Email = rs.getString("Email");
+                    String Phone = rs.getString("Phone");
+                    int Status = rs.getInt("Status");
+                    Date DateCreated = rs.getDate("DateCreated");
+                    String Avatar = rs.getString("Avatar");
+                    int Role = rs.getInt("Role");
+                    String Password = rs.getString("Password");
+
+                    UserDTO dto = new UserDTO(UserID, Name, Gender, Address, Email, Phone, Status, DateCreated, Avatar, Role, Password);
+                    if(this.userList == null){
+                        this.userList = new ArrayList<>();
+                    }
+                    this.userList.add(dto);
+                }
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+    
+    public void getUserByID(int ID) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT UserID, Name, Gender, Address, Email, Phone, Status, DateCreated, Avatar, Role, Password "
+                        + "FROM [User] "
+                        + "Where UserID = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, ID);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int UserID = rs.getInt("UserID");
+                    String Name = rs.getString("Name");
+                    int Gender = rs.getInt("Gender");
+                    String Address = rs.getString("Address");
+                    String Email = rs.getString("Email");
+                    String Phone = rs.getString("Phone");
+                    int Status = rs.getInt("Status");
+                    Date DateCreated = rs.getDate("DateCreated");
+                    String Avatar = rs.getString("Avatar");
+                    int Role = rs.getInt("Role");
+                    String Password = rs.getString("Password");
+
+                    this.user = new UserDTO(UserID, Name, Gender, Address, Email, Phone, Status, DateCreated, Avatar, Role, Password);
+                }
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
     }
 }
