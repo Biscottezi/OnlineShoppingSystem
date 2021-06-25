@@ -47,7 +47,7 @@ public class ViewBlogListServlet extends HttpServlet {
                 
         try {
             PostDAO dao = new PostDAO();
-            dao.getPostDetail();
+            dao.getPostCustomer();
             List<PostDTO> dto = dao.getPostList();
             if(dto != null){
                 request.setAttribute("ALL_POST_LIST", dto);
