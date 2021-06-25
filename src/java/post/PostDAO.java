@@ -78,7 +78,7 @@ public class PostDAO implements Serializable {
 
     public void getPostbyID(int PostID) throws SQLException, NamingException {
         Connection con = null;
-        CallableStatement stm = null;
+        PreparedStatement stm = null;
         ResultSet rs = null;
         try {
             con = DBHelper.makeConnection();
@@ -124,7 +124,7 @@ public class PostDAO implements Serializable {
 
     public void getPostCustomer() throws SQLException, NamingException {
         Connection con = null;
-        CallableStatement stm = null;
+        PreparedStatement stm = null;
         ResultSet rs = null;
         try {
             con = DBHelper.makeConnection();
