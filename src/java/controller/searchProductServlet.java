@@ -6,7 +6,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import javax.naming.NamingException;
@@ -47,7 +46,7 @@ public class searchProductServlet extends HttpServlet {
             dao.searchProductName(searchedProduct);
             List<ProductDTO> productList = dao.getProductList();
             if(productList != null){
-                request.setAttribute("SEARCHED_PRODUCT_LIST", productList);
+                request.setAttribute("ALL_PRODUCT_LIST", productList);
             }
             
             url = PRODUCT_PAGE;

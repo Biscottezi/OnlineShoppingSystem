@@ -61,7 +61,7 @@
                             <div class="product row container">
                                 <img src="img/product-thumbnail.jpg" alt="product" class="col-3">
                                 <div class="product-info container col-9">
-                                    <form action="">
+                                    <form action="removeFromCart">
                                         <div class="d-flex justify-content-between">
                                             <h4>Vintage Typewriter</h4>
                                             <h5>$49.50</h5>

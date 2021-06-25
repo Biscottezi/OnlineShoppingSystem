@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "removeFromCartServlet", urlPatterns = {"/removeFromCartServlet"})
 public class removeFromCartServlet extends HttpServlet {
     private final String ERROR = "error";
-    private final String CART_DETAILS = "CartDetails.jsp";
+    private final String CART_DETAILS = "CartDetails";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -52,7 +52,7 @@ public class removeFromCartServlet extends HttpServlet {
                     if (itemsList != null) {
                         //4. Cust chooses removed book
                         int removedProductID = 0;
-                        removedProductID = Integer.parseInt(request.getParameter("removedProductID"));
+                        removedProductID = Integer.parseInt(request.getParameter("txtProductId"));
                         if (removedProductID != 0) {
                             //5. Remove from cart
                             cart.removeFromCart(removedProductID);

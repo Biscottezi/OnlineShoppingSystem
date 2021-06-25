@@ -218,4 +218,52 @@ public class UserDAO implements Serializable {
             }
         }
     }
+    
+    public void getAllCustomer() throws SQLException, NamingException{
+        Connection con = null;
+        CallableStatement stm = null;
+        ResultSet rs = null;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT UserID, Name, Gender, Address, Email, Phone, Status, DateCreated, Avatar, Role, Password "
+                        + "FROM [User] "
+                        + "WHERE Role = 4 AND Status = 1";
+                stm = con.prepareCall(sql);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int UserID = rs.getInt("UserID");
+                    String Name = rs.getString("Name");
+                    int Gender = rs.getInt("Gender");
+                    String Address = rs.getString("Address");
+                    String Email = rs.getString("Email");
+                    String Phone = rs.getString("Phone");
+                    int Status = rs.getInt("Status");
+                    Date DateCreated = rs.getDate("DateCreated");
+                    String Avatar = rs.getString("Avatar");
+                    int Role = rs.getInt("Role");
+                    String Password = rs.getString("Password");
+
+                    UserDTO dto = new UserDTO(UserID, Name, Gender, Address, Email, Phone, Status, DateCreated, Avatar, Role, Password);
+                    if(this.userList == null){
+                        this.userList = new ArrayList<>();
+                    }
+                    this.userList.add(dto);
+                }
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+    
+    
 }
