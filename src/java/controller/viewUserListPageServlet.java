@@ -8,7 +8,6 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -17,24 +16,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import post.PostDAO;
-import post.PostDTO;
-import product.ProductDAO;
-import product.ProductDTO;
-import productCategory.ProductCategoryDAO;
-import productCategory.ProductCategoryDTO;
-import slider.SliderDAO;
-import slider.SliderDTO;
-import sliderContent.SliderContentDAO;
+import user.UserDAO;
+import user.UserDTO;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "viewHomePageServlet", urlPatterns = {"/viewHomePageServlet"})
-public class viewHomePageServlet extends HttpServlet {
+@WebServlet(name = "viewUserListPageServlet", urlPatterns = {"/viewUserListPageServlet"})
+public class viewUserListPageServlet extends HttpServlet {
+    private final String USER_LiST_PAGE = "userlist.jsp";
     private final String ERROR_PAGE = "Error.html";
-    private final String HOME_PAGE = "homepage.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -49,43 +41,18 @@ public class viewHomePageServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR_PAGE;
         
-        try {
-            ProductDAO productDao = new ProductDAO();
-            productDao.getFeaturedProduct();
-            List<ProductDTO> productList = productDao.getProductList();
-            if(productList != null){
-                request.setAttribute("FEATURED_PRODUCT", productList);
+        try{
+            UserDAO dao = new UserDAO();
+            dao.getAllUser();
+            List<UserDTO> userList = dao.getUserList();
+            if(userList != null){
+                request.setAttribute("USER_LIST", userList);
             }
-            
-            PostDAO postDao = new PostDAO();
-            postDao.getFeaturedPost();
-            List<PostDTO> postList = postDao.getPostList();
-            if(postList != null){
-                request.setAttribute("FEATURED_POST", postList);
-            }
-            
-            SliderDAO sliderDao = new SliderDAO();
-            SliderDTO slider = sliderDao.getSlider();
-            if(slider != null){
-                request.setAttribute("SLIDER", slider);
-                SliderContentDAO sliderContentDao = new SliderContentDAO();
-                sliderContentDao.getProductID(slider.getId());
-                List<Integer> productIDList = sliderContentDao.getProductIDList();
-                if(productIDList != null){
-                    List<ProductDTO> sliderProducts = new ArrayList<>();
-                    for(int i = 0; i < productIDList.size(); i++){
-                        productDao.searchProductID(productIDList.get(i));
-                        sliderProducts.add(productDao.getProduct());
-                    }
-                    request.setAttribute("SLIDER_PRODUCTS", sliderProducts);
-                }
-            }
-        
-            url = HOME_PAGE;
+            url = USER_LiST_PAGE;
         }catch(SQLException ex){
-            log("viewHomePageServlet _ SQL:" + ex.getMessage());
+            log("viewUserListPageServlet _ SQL:" + ex.getMessage());
         }catch(NamingException ex){
-            log("viewHomePageServlet _ Naming:" + ex.getMessage());
+            log("viewUserListPageServlet _ Naming:" + ex.getMessage());
         }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
