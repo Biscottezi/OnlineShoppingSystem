@@ -7,6 +7,7 @@ package orderDetail;
 
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,9 +40,9 @@ public class OrderDetailDAO implements Serializable{
                 while (rs.next()) {
                     
                     ProductDAO productDAO = new ProductDAO();
-                    //ProductDTO productDTO = productDAO.searchProductID(rs.getInt("ProductID"));
-                    //OrderItemObj OrderItemObj = new OrderItemObj(productDTO, rs.getInt("Quantity"));
-                    //result.add(OrderItemObj);
+                    ProductDTO productDTO = productDAO.GetProductbyID(rs.getInt("ProductID"));
+                    OrderItemObj OrderItemObj = new OrderItemObj(productDTO, rs.getInt("Quantity"));
+                    result.add(OrderItemObj);
                 }
                 return result;
             }
@@ -57,5 +58,5 @@ public class OrderDetailDAO implements Serializable{
             }
         }
         return null;
-    }
+    }    
 }
