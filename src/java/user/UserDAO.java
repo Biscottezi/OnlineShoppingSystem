@@ -270,8 +270,8 @@ public class UserDAO implements Serializable {
         }
     }
     
-    public void updateUser(String email, String pass, String fullname, int gender, String phone, String address)
-            throws SQLException, ClassNotFoundException, NamingException {
+    public boolean updateUser(int userID, int role, int status)
+            throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -280,20 +280,19 @@ public class UserDAO implements Serializable {
             if (con != null) {
                 //B2. create SQL string 
 
-                String sql = "INSERT INTO [User] "
-                        + " (Email, Password, Name, "
-                        + " Address, Gender, Phone) "
-                        + " VALUES (?,?,?,?,?,?)";
+                String sql = "UPDATE [User] "
+                        + "SET Role = ?, Status = ? "
+                        + "WHERE UserID = ?";
 
                 stm = con.prepareStatement(sql);
-                stm.setString(1, email);
-                stm.setString(2, pass);
-                stm.setString(3, fullname);
-                stm.setString(4, address);
-                stm.setInt(5, gender);
-                stm.setString(6, phone);
+                stm.setInt(1, role);
+                stm.setInt(2, status);
+                stm.setInt(3, userID);
                 
                 int rowAffect = stm.executeUpdate();
+                if(rowAffect == 1){
+                    return true;
+                }
             }
 
         } finally {
@@ -307,6 +306,55 @@ public class UserDAO implements Serializable {
                 con.close();
             }
         }
+        return false;
+    }
+    
+    public boolean AddUserByAdmin(String name, int gender, String address, String email, String phone, int status, String avatar, int role, String password)
+            throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                //B2. create SQL string 
+
+                String sql = "INSERT INTO [User] "
+                        + "(Name, Gender, Address, Email, Phone, Status, DateCreated, Avatar, Role, Password) "
+                        + "VALUES(?, ?, ?, ?, ?, ?, GETDATE(), ?, ?, ?)";
+
+                stm = con.prepareStatement(sql);
+                stm.setString(1, name);
+                stm.setInt(2, gender);
+                stm.setString(3, address);
+                stm.setString(4, email);
+                stm.setString(5, phone);
+                stm.setInt(6, status);
+                stm.setString(7, avatar);
+                stm.setInt(8, role);
+                stm.setString(9, password);
+                
+                int rowAffect = stm.executeUpdate();
+
+                if (rowAffect == 1) {
+                    return true;
+                }
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return false;
     }
 
     
