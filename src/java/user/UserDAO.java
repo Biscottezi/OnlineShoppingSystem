@@ -8,7 +8,7 @@ package user;
 import java.io.Serializable;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.util.Date;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -86,8 +86,8 @@ public class UserDAO implements Serializable {
         return false;
     }
 
-    public boolean createNewCustomer(String email, String pass, String fullname, int gender, String phone, 
-            String address,int status, Date dateCreated, int role)
+    public boolean createNewCustomer(String email, String password, String name, int gender, String phone, 
+            String address,int status, Date dateCreated, int role, String avatar)
             throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -98,20 +98,20 @@ public class UserDAO implements Serializable {
                 //B2. create SQL string 
 
                 String sql = "INSERT INTO [User] "
-                        + " (Name, Gender, Address, "
-                        + " Email, Phone, Status, DateCreated, Role, Password) "
-                        + " VALUES (?,?,?,?,?,?)";
+                        + "(Name, Gender, Address, Email, Phone, Status, DateCreated, Avatar, Role, Password) "
+                        + "VALUES(?, ?, ?, ?, ?, ?, GETDATE(), ?, ?, ?)";
 
                 stm = con.prepareStatement(sql);
-                stm.setString(1, fullname);
+                stm.setString(1, name);
                 stm.setInt(2, gender);
                 stm.setString(3, address);
                 stm.setString(4, email);
                 stm.setString(5, phone);
                 stm.setInt(6, status);
-                stm.setDate(7, new java.sql.Date(dateCreated.getTime()));
+                stm.setString(7, avatar);
                 stm.setInt(8, role);
-                stm.setString(9, pass);
+                stm.setString(9, password);
+                
                                
                 
                 int rowAffect = stm.executeUpdate();
