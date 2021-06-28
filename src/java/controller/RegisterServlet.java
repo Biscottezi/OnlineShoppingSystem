@@ -8,6 +8,7 @@ package controller;
 import error.CustomerError;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.sql.SQLException;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -48,6 +49,9 @@ public class RegisterServlet extends HttpServlet {
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
         int gender = Integer.parseInt(request.getParameter("gender"));
+        int role = 4;
+        Date dateCreated = new Date();
+        int status = 1;
         String url = REGISTER_PAGE;
         CustomerError errObj = new CustomerError();
         boolean founderror = false;
@@ -103,7 +107,7 @@ public class RegisterServlet extends HttpServlet {
 
             } else {
                 UserDAO dao = new UserDAO();
-                boolean result = dao.createNewCustomer(email, password, fullname, gender,phone ,address);
+                boolean result = dao.createNewCustomer(email, url, fullname, gender, phone, address, status, dateCreated, role);
                 if (result) {
                     url = SUCCESS_PAGE;
                 }

@@ -8,7 +8,7 @@ package user;
 import java.io.Serializable;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -86,7 +86,8 @@ public class UserDAO implements Serializable {
         return false;
     }
 
-    public boolean createNewCustomer(String email, String pass, String fullname, int gender, String phone, String address)
+    public boolean createNewCustomer(String email, String pass, String fullname, int gender, String phone, 
+            String address,int status, Date dateCreated, int role)
             throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -97,17 +98,21 @@ public class UserDAO implements Serializable {
                 //B2. create SQL string 
 
                 String sql = "INSERT INTO [User] "
-                        + " (Email, Password, Name, "
-                        + " Address, Gender, Phone) "
+                        + " (Name, Gender, Address, "
+                        + " Email, Phone, Status, DateCreated, Role, Password) "
                         + " VALUES (?,?,?,?,?,?)";
 
                 stm = con.prepareStatement(sql);
-                stm.setString(1, email);
-                stm.setString(2, pass);
-                stm.setString(3, fullname);
-                stm.setString(4, address);
-                stm.setInt(5, gender);
-                stm.setString(6, phone);
+                stm.setString(1, fullname);
+                stm.setInt(2, gender);
+                stm.setString(3, address);
+                stm.setString(4, email);
+                stm.setString(5, phone);
+                stm.setInt(6, status);
+                stm.setDate(7, new java.sql.Date(dateCreated.getTime()));
+                stm.setInt(8, role);
+                stm.setString(9, pass);
+                               
                 
                 int rowAffect = stm.executeUpdate();
 
@@ -303,4 +308,6 @@ public class UserDAO implements Serializable {
             }
         }
     }
+
+    
 }
