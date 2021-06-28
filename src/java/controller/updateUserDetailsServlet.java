@@ -38,15 +38,21 @@ public class updateUserDetailsServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR_PAGE;
+        String userID = request.getParameter("");
+        String role = request.getParameter("");
+        String status = request.getParameter("");
         
         try {
             UserDAO dao = new UserDAO();
+            boolean result = dao.updateUser(Integer.parseInt(userID), Integer.parseInt(role), Integer.parseInt(status));
+            if(result){
+                url = USER_DETAILS_PAGE;
+            }
             
-            url = USER_DETAILS_PAGE;
-//        }catch(SQLException ex){
-//            log("updateUserDetailsServlet _ SQL:" + ex.getMessage());
-//        }catch(NamingException ex){
-//            log("updateUserDetailsServlet _ Naming:" + ex.getMessage());
+        }catch(SQLException ex){
+            log("updateUserDetailsServlet _ SQL:" + ex.getMessage());
+        }catch(NamingException ex){
+            log("updateUserDetailsServlet _ Naming:" + ex.getMessage());
         }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
