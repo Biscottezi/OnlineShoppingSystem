@@ -59,4 +59,32 @@ public class OrderDetailDAO implements Serializable{
         }
         return null;
     }    
+     public boolean CreateOrderDetail(int OrderID, int ProductID, int quantity) throws
+            SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "INSERT INTO OrderDetail(OrderID, ProductID, quantity) "
+                        + "VALUES (?, ?, ?)";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, OrderID);
+                stm.setInt(2, ProductID);
+                stm.setInt(3, quantity);
+                int result = stm.executeUpdate();
+                if (result > 0) {
+                    return true;
+                }
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
 }

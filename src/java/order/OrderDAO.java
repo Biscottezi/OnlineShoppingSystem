@@ -116,4 +116,43 @@ public class OrderDAO implements Serializable{
         }
         return null;
     }
+    public int CreateOrder(int custId, String ReceiverName,int ReceiverGender, String ReceiverAddress, String ReceiverEmail, String ReceiverPhone, String Note) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = DBHelper.makeConnection();
+
+        String sql = "INSERT INTO tblOrder(OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note)"
+                + " VALUES (GETDATE() , ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        Integer newlyAddedOrderID = 0;
+        try {
+            stm = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            stm.setInt(1, custId);
+            stm.setString(2, ReceiverName);
+            stm.setInt(3, ReceiverGender);
+            stm.setString(4, ReceiverAddress);
+            stm.setString(5, ReceiverEmail);
+            stm.setString(6, ReceiverPhone);
+            stm.setString(7, Note);
+            
+
+            stm.executeUpdate();
+            rs = stm.getGeneratedKeys();
+
+            if (rs.next()) {
+                newlyAddedOrderID = rs.getInt(1);
+                System.out.println("We have just added " + newlyAddedOrderID + " to database");
+            }
+        } finally {
+            if (rs != null) {
+                con.close();
+            }
+            if (stm != null) {
+                con.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return newlyAddedOrderID;
+    }
 }
