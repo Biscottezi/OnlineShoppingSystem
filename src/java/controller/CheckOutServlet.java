@@ -5,13 +5,24 @@
  */
 package controller;
 
+import cart.Cart;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import order.OrderDAO;
+import orderDetail.OrderDetailDAO;
 
 /**
  *
@@ -29,20 +40,52 @@ public class CheckOutServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private final String SUCCESS_PAGE = "CartCompletion.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CheckOutServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CheckOutServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String custId = request.getParameter("custId");
+        String Receivername = request.getParameter("txtReceiverName");
+        String Receivergender = request.getParameter("txtReceiverGender");
+        String email = request.getParameter("txtReceiverEmail");
+        String phone = request.getParameter("txtReceiverMobile");
+        String address = request.getParameter("txtReceiverAddress");
+        String note = request.getParameter("txtNote");
+        HttpSession session = request.getSession();
+        String url = SUCCESS_PAGE;
+        try {
+//            request.setAttribute("ORDER_ID_ATTRI", newOrderID);
+//            System.out.println("newOrderID is " + newOrderID);
+            
+            if (session != null) {
+                //2.Take customer's cart
+                Cart cart = (Cart) session.getAttribute("CART");
+                if (cart != null) {
+                    Map<Integer, Integer> items = cart.getItems();
+                    if (items != null) {
+                        //3.Create order
+                         OrderDAO orderDAO = new OrderDAO();
+                        int newOrderID = orderDAO.CreateOrder(Integer.parseInt(custId), Receivername, Integer.parseInt(Receivergender), address, email, phone, note);
+                        //4.Get each item and add to order
+                        OrderDetailDAO detailDAO = new OrderDetailDAO();
+                        for (int ID : items.keySet()) {
+                            detailDAO.CreateOrderDetail(newOrderID, ID, items.get(ID));
+                        }//end for items.keySet
+                    }//end if items is not null
+                    session.removeAttribute("CART");
+                }//end if cart is not null
+            }//end if session is not null
+        } catch (SQLException ex) {
+            log(" CheckoutServlet SQLException " + ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            log(" CheckoutServlet SQLException " + ex.getMessage());
+        } catch (NamingException ex) {
+            log(" CheckoutServlet NamingException " + ex.getMessage());
+        } finally {
+            RequestDispatcher rd = request.getRequestDispatcher(SUCCESS_PAGE);
+            rd.forward(request, response);
+
         }
     }
 
