@@ -68,6 +68,19 @@
             .show {
                 display:block;
             }
+            .input-title{
+                padding: 0;
+                font-size: 14px;
+                font-weight: 600;
+                color: #9FA2B4;
+            }
+            #prod-dscrpt{
+                width: 1055px;
+                height: 150px;
+            }
+            #createpopup{
+                overflow: auto
+            }
         </style>
     </head>
     <body style="width: 100%; height:100%; margin: 0; padding: 0; background-color: #F7F8FC">
@@ -506,25 +519,26 @@
         </div>
         
         <div class="popupwrapperadd" id="createpopup">
-            <div class="title row">Create Account</div>
+            <div class="title row">Add Product</div>
             <div class="info row">
                 <div class="col">
-                    Fullname<br>
-                    <input class="inputbox" type="text" name="txtFullname" value="" form="createform"/>
+                    Title<br>
+                    <input class="inputbox" type="text" name="txtTitle" value="" form="createform"/>
                 </div>
                 <div class="col">
-                    Gender<br>
-                    <select id="gender" class="inputbox" form="createform">
-                        <option value="" selected disabled hidden>Select gender</option>
-                            <option value="1">Male</option>
-                            <option value="2">Female</option>
-                            <option value="3">I prefer not to say</option>
+                    Category<br>
+                    <select id="gender" class="inputbox" form="createform" name="txtCategory">
+                        <option value="" selected disabled hidden>Select category</option>
+                            <option value="1">Smartphone</option>
+                            <option value="1">Laptop</option>
+                            <option value="2">Smartwatch</option>
+                            <option value="3">Earphone</option>
                     </select>
                 </div>
             </div>
             <div class="info row">
                 <div class="col">
-                    Avatar<br>
+                    Thumbnail<br>
                     <div class="avawrapper row">
                         <img id="avapreview" class="col-3" src="http://placehold.it/180" onchange="showPreview();">
                         <input type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="createform"/>
@@ -536,11 +550,11 @@
                     </div>
                 </div>
                 <div class="col">
-                    Email<br>
-                    <input class="inputbox" type="text" name="txtEmail" value="" form="createform"/>
+                    Quantity<br>
+                    <input class="inputbox" type="number" name="txtEmail" value="" form="createform"/>
                     <br>
-                    <div style="margin-top:12px;">Mobile</div>
-                    <input class="inputbox" type="text" name="txtMobile" value="" form="createform"/>
+                    <div style="margin-top:12px;">Price</div>
+                    <input class="inputbox" type="number" name="txtPrice" value="" form="createform"/>
                 </div>
             </div>
             <div class="info row">
@@ -549,17 +563,15 @@
                     <textarea class="inputbox" id="address" type="text" name="txtAddress" value="" form="createform"></textarea>
                 </div>
                 <div class="col">
-                    Role<br>
-                    <select id="gender" class="inputbox" form="createform">
-                        <option value="" selected disabled hidden>Select role</option>
-                            <option value="1">Customer</option>
-                            <option value="2">Marketing</option>
-                            <option value="3">Sale</option>
-                            <option value="4">Sale Manager</option>
-                            <option value="5">Admin</option>
-                    </select>
+                    Sale Price<br>
+                    <input class="inputbox" type="number" name="txtSalePrice" value="" form="createform"/>
+                    <br>
+                    <div style="margin-top:12px;">Featured</div>
+                    <input type="checkbox" name="chkFeatured" value="ON" checked="checked" id="" class="col-1"  form="createform" style="zoom: 2; margin-top: 1em"/>
                 </div>
             </div>
+            <p class="input-title">Description</p>
+            <textarea class="inputbox" id="prod-dscrpt" form="createform"></textarea>
             <div class="info row">
                 <div class="col-6">
                     Status<br>
@@ -580,6 +592,6 @@
             </div>
         </div>
         
-        <form action="createUser" id="createform"></form>
+        <form action="" id="createform"></form>
     </body>
 </html>
