@@ -28,3 +28,4 @@ userlistedit = userlistedit.jsp
 mktCustDetails = MarketingCustomerDetails.jsp
 mktProductList = MarketingProductList.jsp
 mktProdDetails = MarketingProductDetails.jsp
+mktPostDetails = MarketingPostDetails.jsp
