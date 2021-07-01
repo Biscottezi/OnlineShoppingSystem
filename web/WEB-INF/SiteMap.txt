@@ -29,3 +29,4 @@ mktCustDetails = MarketingCustomerDetails.jsp
 mktProductList = MarketingProductList.jsp
 mktProdDetails = MarketingProductDetails.jsp
 mktPostDetails = MarketingPostDetails.jsp
+mktFeedbackDetails = MarketingFeedbackDetails.jsp

@@ -21,7 +21,7 @@
         <link rel="stylesheet" href="css/editinfo.css"/>
         <script src="js/managerpopup.js"></script>
         <script src="js/upload.js"></script>
-        <script src="js/statuschange.js"></script>
+        <script src="js/statusChangeFeedback.js"></script>
         <style>
             .status{
                 width:100px;
@@ -60,7 +60,7 @@
                 height: 500px;
                 font-weight: 400;
             }
-            .input-title{
+            #fb-title{
                 padding: 0;
                 font-size: 19px;
                 font-weight: 600;
@@ -71,6 +71,10 @@
             }
             #post-info{
                 height: 152px;
+            }
+            .fb-img img{
+                height: 250px;
+                margin-top: 2em;
             }
         </style>
     </head>
@@ -128,11 +132,11 @@
                   </li>
                   
                   <!-- item 4 -->
-                  <li class="nav-item naviitem row" id="active">
+                  <li class="nav-item naviitem row">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
-                                <div class="col align-self-baseline"><img src="img/posts-chosen.png" alt=""/></div>
+                                <div class="col align-self-baseline"><img src="img/posts.png" alt=""/></div>
                                 <div class="col align-self-baseline" style="font-size: 19px;">Posts</div>
                             </div>
                           </div>
@@ -140,11 +144,11 @@
                   </li>
                   
                   <!-- item 5 -->
-                  <li class="nav-item naviitem row">
+                  <li class="nav-item naviitem row" id="active">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
-                                <div class="col align-self-baseline"><img src="img/mkt-feedbacks.png" alt=""/></div>
+                                <div class="col align-self-baseline"><img src="img/mkt-feedbacks-chosen.png" alt=""/></div>
                                 <div class="col align-self-baseline" style="font-size: 19px;">Feedbacks</div>
                             </div>
                           </div>
@@ -171,7 +175,7 @@
                 <!-- main title -->
                 <div class="maintitle row">
                     <div class="col-2" id="title" onclick="location.href='userlist.jsp';">
-                        <span class="back"><i class="fas fa-angle-left"></i>&nbsp; Back to posts</span>
+                        <span class="back"><i class="fas fa-angle-left"></i>&nbsp; Back to feedbacks</span>
                     </div>
                     <div class="col-7"></div>
                     <div class="col row">
@@ -188,53 +192,46 @@
                 <div class="listwrapper">
                     <!-- list header -->
                     <div class="listheader row">
-                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Post ID: 00001 <!--${param.id} --></div>
+                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Feedback ID: 00001 <!--${param.id} --></div>
                         <div class="col-6 row"></div>
                         <div class="extended col-4 row d-flex"></div>
                     </div>
                     <div class="infor row">
                         <div class="col">
-                            Title<br>
-                            <textarea class="editbox" form="updateform" id="post-title">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</textarea>
+                            Feedbacker<br>
+                            <div class="userinfo">Tran Tan Long</div>
                         </div>
                         <div class="col">
                             Featured<br>
-                            <input type="checkbox" form="updateform" checked="checked" value="ON" style="margin-top: 10px; zoom: 2"/>
-                            <div style="margin-top:18px;">Category</div>
-                            <div class="userinfo" style="padding-left: 10px">Tu van</div>
+                            <div class="userinfo">0975926021</div>
                         </div>
                     </div>
                     <div class="infor row">
                         <div class="col">
                             Brief Info<br>
-                            <textarea class="editbox" form="updateform" id="post-info">Ngày xửa ngày xưa có con chim cánh cụt thở bằng mông, một ngày nọ nó ngồi xuống và chết.</textarea>
+                            <div class="userinfo">Vintage Typewriter</div>
                         </div>
                         <div class="col">
-                            <div style="margin-top:18px;">Thumbnail</div>
-                            <div class="avawrapper row">
-                                <img id="avapreview" class="col-3" src="http://placehold.it/180" onchange="showPreview();">
-                                <input type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="createform"/>
-                                <div class="col-4 d-flex align-items-end" style="padding-top: 117px;">
-                                    <label for="upload" class="d-flex align-items-center justify-content-center uplbtn">
-                                        <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
-                                    </label>
-                                </div>
-                            </div>
+                            <div style="margin-top:18px;">Category</div>
+                            <div class="userinfo">longttse150883@fpt.edu.vn</div>
                         </div>
                     </div>
-                        <hr>
-                    <div class="info row">
+                    <div class="infor row">
                         <div class="col">
-                            <h6 class="input-title">Description</h6>
-                            <textarea id="prod-dscrpt" class="editbox">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
+                            Brief Info<br>
+                            <div class="userinfo">This product is incredible!</div>
+                        </div>
+                        <div class="col">
+                            <div style="margin-top:18px;">Category</div>
+                            <div class="userinfo">4 / 5 stars</div>
                         </div>
                     </div>
-                        <br>
+                        <br><br><br><br><br><br>
                     <div class="infor row" id="lastrow">
                         <div class="col-6">
                             Status<br>
                             <div class="statuswrapper row d-flex align-items-end" style="margin:0;">
-                                <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">ENABLED</div>
+                                <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">RESOLVED</div>
                                 <input type="checkbox" name="chkStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
                             </div>
                         </div>
@@ -250,7 +247,26 @@
                             </div>
                         </div>
                     </div>
-                    
+                        <hr>
+                    <div class="infor row">
+                        <div class="col">
+                            <h6 id="fb-title">Attached Images</h6>    
+                            <div class="row">
+                                <div class="fb-img col-3">
+                                    <img src="img/product-thumbnail.jpg" alt="feedback images"/>
+                                </div>
+                                <div class="fb-img col-3">
+                                    <img src="img/product-thumbnail.jpg" alt="feedback images"/>
+                                </div>
+                                <div class="fb-img col-3">
+                                    <img src="img/product-thumbnail.jpg" alt="feedback images"/>
+                                </div>
+                                <div class="fb-img col-3">
+                                    <img src="img/product-thumbnail.jpg" alt="feedback images"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
             </div>
