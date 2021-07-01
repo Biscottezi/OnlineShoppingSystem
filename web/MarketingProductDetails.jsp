@@ -58,6 +58,13 @@
                 border: 1px solid #9FA2B4;
                 border-radius: 11px;
                 height: 250px;
+                font-weight: 400;
+            }
+            .input-title{
+                padding: 0;
+                font-size: 19px;
+                font-weight: 600;
+                color: black;
             }
         </style>
     </head>
@@ -224,14 +231,22 @@
                         <hr>
                     <div class="info row">
                         <div class="col">
-                            <h6>Description</h6>
+                            <h6 class="input-title">Description</h6>
                             <textarea id="prod-dscrpt" class="editbox">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
                         </div>
                     </div>
                         <hr>
                     <div class="info row">
                         <div class="col">
-                            Attached Images<br>
+                            <h6 class="input-title">Attached Images</h6>
+                            <div class="avawrapper" style="margin-top: 20px; margin-bottom: 1.5em">
+                                <input type="file" id="upload-attached" form="updateform" multiple>
+                                <div class="col-4 d-flex align-items-end">
+                                    <label for="upload-attached" class="d-flex align-items-center justify-content-center uplbtn">
+                                        <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                         <br>

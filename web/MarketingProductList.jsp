@@ -75,12 +75,17 @@
                 color: black;
             }
             #prod-dscrpt{
-                width: 1055px;
+                width: 1080px;
                 height: 170px;
+                color: black;
+                font-size: 22px;
             }
             #createpopup{
                 overflow: auto;
                 padding-bottom: 35px;
+            }
+            .info{
+                margin-left: 4em;
             }
         </style>
     </head>
@@ -571,17 +576,19 @@
                     <input type="checkbox" name="chkFeatured" value="ON" checked="checked" id="" class="col-1"  form="createform" style="zoom: 2; margin-top: 1em"/>
                 </div>
             </div>
-            <p class="input-title">Description</p>
-            <textarea class="inputbox" id="prod-dscrpt" form="createform"></textarea>
-            <p class="input-title" style="margin-top: 1em">Attached Images</p>
-            <div class="avawrapper" style="margin-top: 20px; margin-left: 4.7em; margin-bottom: 1.5em">
-                <input type="file" id="upload-attached" form="createform" hidden="hidden">
-                <div class="col-4 d-flex align-items-end">
-                    <label for="upload-attached" class="d-flex align-items-center justify-content-center uplbtn">
-                        <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
-                    </label>
+            <div class="info">
+                <p class="input-title">Description</p>
+                <textarea class="inputbox" id="prod-dscrpt" form="createform"></textarea>
+                <p class="input-title" style="margin-top: 1em">Attached Images</p>
+                <div class="avawrapper" style="margin-top: 20px; margin-bottom: 1.5em">
+                    <input type="file" id="upload-attached" form="createform" multiple>
+                    <div class="col-4 d-flex align-items-end">
+                        <label for="upload-attached" class="d-flex align-items-center justify-content-center uplbtn">
+                            <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
+                        </label>
+                    </div>
                 </div>
-             </div>
+            </div>
             <div class="info row">
                 <div class="col-6">
                     Status<br>
