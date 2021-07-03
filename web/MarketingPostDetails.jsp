@@ -195,11 +195,11 @@
                     <div class="infor row">
                         <div class="col">
                             Title<br>
-                            <textarea class="editbox" form="updateform" id="post-title">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</textarea>
+                            <textarea class="editbox" form="updateform" id="post-title" name="postTitle">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</textarea>
                         </div>
                         <div class="col">
                             Featured<br>
-                            <input type="checkbox" form="updateform" checked="checked" value="ON" style="margin-top: 10px; zoom: 2"/>
+                            <input name="postFeatured" type="checkbox" form="updateform" checked="checked" value="ON" style="margin-top: 10px; zoom: 2"/>
                             <div style="margin-top:18px;">Category</div>
                             <div class="userinfo" style="padding-left: 10px">Tu van</div>
                         </div>
@@ -207,13 +207,13 @@
                     <div class="infor row">
                         <div class="col">
                             Brief Info<br>
-                            <textarea class="editbox" form="updateform" id="post-info">Ngày xửa ngày xưa có con chim cánh cụt thở bằng mông, một ngày nọ nó ngồi xuống và chết.</textarea>
+                            <textarea name="postBriefInfo" class="editbox" form="updateform" id="post-info">Ngày xửa ngày xưa có con chim cánh cụt thở bằng mông, một ngày nọ nó ngồi xuống và chết.</textarea>
                         </div>
                         <div class="col">
                             <div style="margin-top:18px;">Thumbnail</div>
                             <div class="avawrapper row">
                                 <img id="avapreview" class="col-3" src="http://placehold.it/180" onchange="showPreview();">
-                                <input type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="createform"/>
+                                <input name="postThumbnail" type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="createform"/>
                                 <div class="col-4 d-flex align-items-end" style="padding-top: 117px;">
                                     <label for="upload" class="d-flex align-items-center justify-content-center uplbtn">
                                         <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
@@ -226,7 +226,7 @@
                     <div class="info row">
                         <div class="col">
                             <h6 class="input-title">Description</h6>
-                            <textarea id="prod-dscrpt" class="editbox">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
+                            <textarea name="postDescription" id="prod-dscrpt" class="editbox">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
                         </div>
                     </div>
                         <br>
@@ -235,7 +235,7 @@
                             Status<br>
                             <div class="statuswrapper row d-flex align-items-end" style="margin:0;">
                                 <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">ENABLED</div>
-                                <input type="checkbox" name="chkStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
+                                <input type="checkbox" name="postStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
                             </div>
                         </div>
                         <div class="col-2">
@@ -276,7 +276,7 @@
                 <div class="col-9 d-flex align-items-center description menu-itemtitle">Change Your Password</div>
             </div>
             <div class="menu-divider"></div>
-            <div class="signout row popupitem" onclick="location.href='homepage.jsp';">
+            <div class="signout row popupitem" onclick="location.href='logout';">
                 <div class="col-3 d-flex align-items-center justify-content-center" id="signout">
                     <div class="menuitemicon" style="background-image: url(img/signout.png);"></div>
                 </div>

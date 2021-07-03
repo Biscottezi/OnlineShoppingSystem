@@ -86,8 +86,8 @@ public class PostDAO implements Serializable {
                         + "FROM Post "
                         + "WHERE PostID = ? ";
 
-                stm = con.prepareCall(sql);
-                stm.setInt(PostID, 1);
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, PostID);
                 rs = stm.executeQuery();
 
                 while (rs.next()) {
@@ -102,10 +102,8 @@ public class PostDAO implements Serializable {
                     int PostCategoryID = rs.getInt("PostCategoryID");
                     Date DateCreated = rs.getDate("DateCreated");
                     PostDTO dto = new PostDTO(PostID, Title, Thumbnail, BriefInfo, Author, Description, Featured, Status, PostCategoryID, DateCreated);
-                    if (this.postList == null) {
-                        this.postList = new ArrayList<>();
-                    }
-                    this.postList.add(dto);
+                    
+                    this.post = dto;
                 }
             }
         } finally {
@@ -262,4 +260,50 @@ public class PostDAO implements Serializable {
             }
         }
     }
+    public void getPostbyCategory(int PostCategoryID) throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT  PostID, Title, Thumbnail, BriefInfo, Author, Description, Featured, Status, PostCategoryID, DateCreated "
+                        + "FROM Post "
+                        + "WHERE PostCategoryID = ? ";
+
+                stm = con.prepareCall(sql);
+                stm.setInt(PostCategoryID, 1);
+                rs = stm.executeQuery();
+
+                while (rs.next()) {
+                    int PostID = rs.getInt("PostID");
+                    String Title = rs.getString("Title");
+                    String Thumbnail = rs.getString("Thumbnail");
+                    String BriefInfo = rs.getString("BriefInfo");
+                    String Author = rs.getString("Author");
+                    String Description = rs.getString("Description");
+                    int Featured = rs.getInt("Featured");
+                    int Status = rs.getInt("Status");
+                    
+                    Date DateCreated = rs.getDate("DateCreated");
+                    PostDTO dto = new PostDTO(PostID, Title, Thumbnail, BriefInfo, Author, Description, Featured, Status, PostCategoryID, DateCreated);
+                    if (this.postList == null) {
+                        this.postList = new ArrayList<>();
+                    }
+                    this.postList.add(dto);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+
 }
