@@ -56,7 +56,7 @@ public class ViewBlogListServlet extends HttpServlet {
             postCategoryDao.getAllCategory();
             List<PostCategoryDTO> postCategoryDto = postCategoryDao.getPostCateList();
             if(postCategoryDto != null){
-                request.setAttribute("PRODUCT_CATEGORY", postCategoryDto);
+                request.setAttribute("POST_CATEGORY", postCategoryDto);
             }
             url = BLOG_LIST;
         }catch(SQLException ex){

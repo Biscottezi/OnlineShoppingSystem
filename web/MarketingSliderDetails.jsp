@@ -196,11 +196,11 @@
                     <div class="infor row">
                         <div class="col">
                             Title<br>
-                            <input class="editbox" form="updateform" value="Sale">
+                            <input name="sliderTitle" class="editbox" form="updateform" value="Sale">
                         </div>
                         <div class="col">
                             Description<br>
-                            <input class="editbox" form="updateform" value="Showing On sale products">
+                            <input name="sliderDescription" class="editbox" form="updateform" value="Showing On sale products">
                         </div>
                     </div>
                     <div class="infor row" id="lastrow">
@@ -208,7 +208,7 @@
                             Status<br>
                             <div class="statuswrapper row d-flex align-items-end" style="margin:0;">
                                 <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">ENABLED</div>
-                                <input type="checkbox" name="chkStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
+                                <input type="checkbox" name="sliderStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
                             </div>
                         </div>
                         <div class="col-2">
@@ -227,7 +227,7 @@
                     <div class="listheader row justify-content-between">
                         <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Slider content</div>
                         <div class="d-flex justify-content-end col-8" id="add-prod-wrapper">
-                            <input id="add-prod" nane="txtProductId" placeholder="Enter Product ID" value="" form="add-product-form"/>
+                            <input id="add-prod" nane="productId" placeholder="Enter Product ID" value="" form="add-product-form"/>
                             <button class="addbtn d-flex align-items-center justify-content-center" id="adduser" type="submit" form="add-product-form">Add Product</button>
                         </div>
                     </div>
@@ -324,7 +324,7 @@
                 <div class="col-9 d-flex align-items-center description menu-itemtitle">Change Your Password</div>
             </div>
             <div class="menu-divider"></div>
-            <div class="signout row popupitem" onclick="location.href='homepage.jsp';">
+            <div class="signout row popupitem" onclick="location.href='logout';">
                 <div class="col-3 d-flex align-items-center justify-content-center" id="signout">
                     <div class="menuitemicon" style="background-image: url(img/signout.png);"></div>
                 </div>

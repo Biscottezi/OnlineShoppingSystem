@@ -42,7 +42,7 @@
                         <a href="viewAllProduct">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a href="">Blogs</a>
+                        <a href="viewBlogList">Blogs</a>
                     </li>
                 </ul>
                 <i class="fas fa-shopping-cart col-1"></i>

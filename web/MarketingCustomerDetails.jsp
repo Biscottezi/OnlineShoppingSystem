@@ -175,12 +175,12 @@
                     <div class="infor row">
                         <div class="col">
                             Fullname<br>
-                            <input class="editbox" form="updateform" value="Tran Tan Long">
+                            <input name="cusName" class="editbox" form="updateform" value="Tran Tan Long">
                         </div>
                         <div class="col">
                             Gender<br>
                             <div class="select-wrapper">
-                                <select id="role" class="editbox" form="updateform" name="slRole">
+                                <select id="role" class="editbox" form="updateform" name="cusGender">
                                     <option value="0" selected="">Male</option>
                                     <option value="1">Female</option>
                                 </select>
@@ -190,13 +190,13 @@
                     <div class="infor row">
                         <div class="col">
                             Address<br>
-                            <textarea class="editbox" form="updateform" style="height: 160px">228 Đường Man Thiện, Phường Tân Phú, Quận 9, Thành phố Hồ Chí Minh</textarea>
+                            <textarea name="cusAddress" class="editbox" form="updateform" style="height: 160px">228 Đường Man Thiện, Phường Tân Phú, Quận 9, Thành phố Hồ Chí Minh</textarea>
                         </div>
                         <div class="col">
                             Email<br>
                             <div class="userinfo" style="padding-left: 10px">longttse150883@fpt.edu.vn</div>
                             <div style="margin-top:18px;">Mobile</div>
-                            <input class="editbox" form="updateform" value="0975926021"/>
+                            <input name="cusMobile" class="editbox" form="updateform" value="0975926021"/>
                         </div>
                     </div>
                     <div class="infor row" id="lastrow">
