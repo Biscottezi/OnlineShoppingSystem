@@ -38,16 +38,16 @@ public class ViewBlogDetailServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     private final String DETAIL_LIST_PAGE = "BlogDetails.jsp";
-    private final String ERROR_PAGE = "error.html";
+    private final String ERROR_PAGE = "Error.html";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String selectedOrderID = request.getParameter("selectedOrderID");
+        String selectedPostID = request.getParameter("selectedOrderID");
         
         String url = ERROR_PAGE;
         try  {
             PostDAO dao = new PostDAO();
-            dao.getPostbyID(Integer.parseInt(selectedOrderID));
+            dao.getPostbyID(Integer.parseInt(selectedPostID));
              PostDTO postDto = dao.getPost();
             if(postDto != null){
                 request.setAttribute("POST_DETAILS", postDto);
@@ -55,9 +55,9 @@ public class ViewBlogDetailServlet extends HttpServlet {
             
             PostCategoryDAO postCategoryDao = new PostCategoryDAO();
             postCategoryDao.getAllCategory();
-            List<PostCategoryDTO> productCategoryDto = postCategoryDao.getPostCateList();
-            if(productCategoryDto != null){
-                request.setAttribute("POST_CATEGORY", productCategoryDto);
+            List<PostCategoryDTO> postCategoryDto = postCategoryDao.getPostCateList();
+            if(postCategoryDto != null){
+                request.setAttribute("POST_CATEGORY", postCategoryDto);
             }
             
             url = DETAIL_LIST_PAGE;
