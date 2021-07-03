@@ -18,15 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import post.PostDAO;
 import post.PostDTO;
-import postCategory.PostCategoryDAO;
-import postCategory.PostCategoryDTO;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "ViewBlogDetailServlet", urlPatterns = {"/ViewBlogDetailServlet"})
-public class ViewBlogDetailServlet extends HttpServlet {
+@WebServlet(name = "SearchBlogListServlet", urlPatterns = {"/SearchBlogListServlet"})
+public class SearchBlogListServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,36 +35,28 @@ public class ViewBlogDetailServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private final String DETAIL_LIST_PAGE = "BlogDetails.jsp";
     private final String ERROR_PAGE = "Error.html";
+    private final String POST_PAGE = "BlogPage.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String selectedPostID = request.getParameter("selectedPostID");
-        
         String url = ERROR_PAGE;
-        try  {
-            PostDAO dao = new PostDAO();
-            dao.getPostbyID(Integer.parseInt(selectedPostID));
-             PostDTO postDto = dao.getPost();
-            if(postDto != null){
-                request.setAttribute("POST_DETAILS", postDto);
+        
+        try{
+            String searchedProduct = request.getParameter("txtSearchPost");
+            PostDAO dao= new PostDAO();
+            dao.searchPostName(searchedProduct);
+            List<PostDTO> postList = dao.getPostList();
+            if(postList != null){
+                request.setAttribute("ALL_POST_LIST", postList);
             }
             
-            PostCategoryDAO postCategoryDao = new PostCategoryDAO();
-            postCategoryDao.getAllCategory();
-            List<PostCategoryDTO> postCategoryDto = postCategoryDao.getPostCateList();
-            if(postCategoryDto != null){
-                request.setAttribute("POST_CATEGORY", postCategoryDto);
-            }
-            
-            url = DETAIL_LIST_PAGE;
+            url = POST_PAGE;
         }catch (SQLException ex) {
-            log("ViewOlderOrderDetailServlet SQLException: " + ex.getMessage());
-        } catch(NamingException ex){
-            log("viewProductDetailsServlet _ Naming:" + ex.getMessage());
-        }
-        finally {
+            log("searchProductServlet_SQLException: " + ex.getMessage());
+        } catch (NamingException ex) {
+            log("searchProductServlet_NamingException: " + ex.getMessage());
+        } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
