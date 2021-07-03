@@ -1,0 +1,72 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 2, 2021, 12:57:16 PM
+    Author     : Admin
+*/
+
+#datepicker{
+    height: 40px;
+    border: 1px #e3e3e3 solid;
+    border-left-width: 0;
+    padding-left:5px;
+    border-radius: 0px 4px 4px 0px;
+}
+
+input.datepicker:focus{
+    outline-width: 0px;
+}
+
+.picker-title{
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+.picker-wrapper{
+    margin-left: 15px;
+}
+
+#statussl {
+    padding-left:10px;
+    width: 318px;
+    height: 40px;
+    border-radius: 4px;
+    border-color: #e3e3e3;
+}
+
+.graphwrapper{
+    margin-left: 0px;
+    border: 1px #DFE0EB solid;
+    border-radius: 8px;
+    background: #ffffff;
+    height: 628px;
+    margin-bottom: 50px;
+}
+
+.graphwrapper > *{
+    margin-left: 32px;
+}
+
+.graph-header {
+    padding-top: 24px;
+}
+
+.graph-desc {
+    font-size: 13px;
+    font-weight: 400;
+    padding-bottom: 40px;
+    color: #9FA2B4;
+}
+
+.graphtitle{
+    padding:0;
+    font-size: 19px;
+    font-weight: 500;
+}
+
+.graphwrapper:last-of-type{
+    margin-bottom: 0px;
+}

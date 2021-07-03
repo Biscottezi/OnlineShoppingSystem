@@ -1,0 +1,37 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 26, 2021, 2:26:34 PM
+    Author     : Admin
+*/
+
+.session-user{
+    margin:0;
+    margin-bottom: 20px;
+}
+
+#session-role{
+    font-size: 18px;
+}
+
+.sale-member, br {
+    line-height: 200%;
+}
+
+.hiddensm{
+    display:none;
+}
+
+#table-filter{
+    height: 50px;
+    width: 400px;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: 600;
+    border:1px solid #ccc;
+    padding-left:10px;
+    margin-bottom: 15px;
+}
