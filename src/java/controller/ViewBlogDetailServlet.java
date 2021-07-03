@@ -62,9 +62,9 @@ public class ViewBlogDetailServlet extends HttpServlet {
             
             url = DETAIL_LIST_PAGE;
         }catch (SQLException ex) {
-            log("ViewOlderOrderDetailServlet SQLException: " + ex.getMessage());
+            log("ViewBlogDetailServlet SQLException: " + ex.getMessage());
         } catch(NamingException ex){
-            log("viewProductDetailsServlet _ Naming:" + ex.getMessage());
+            log("ViewBlogDetailServlet NamingException:" + ex.getMessage());
         }
         finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
