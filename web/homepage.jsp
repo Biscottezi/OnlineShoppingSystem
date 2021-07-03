@@ -153,7 +153,7 @@
                     <div class="row">
                         <div class="col-5">
                             <c:forEach var="post" items="${postList}" begin="0" end="0">
-                                <div class="card" style="height: 500px;" onclick="location.href='viewBlogDetails?selectedOrderID=${post.id}';">
+                                <div class="card" style="height: 500px;" onclick="location.href='viewBlogDetails?selectedPostID=${post.id}';">
                                     <img src="img/${post.thumbnail}" alt="post-thumbnail" class="card-img-top">
                                     <div class="card-body">
                                         <h3 class="card-title">${post.title}</h3>
@@ -164,7 +164,7 @@
                         </div>
                         <div class="col-7 container">
                             <c:forEach var="post" items="${postList}" begin="1" end="4">
-                                <div class="row" style="height: 120px; margin-bottom: 5px;" onclick="location.href='viewBlogDetails?selectedOrderID=${post.id}';">
+                                <div class="row" style="height: 120px; margin-bottom: 5px;" onclick="location.href='viewBlogDetails?selectedPostID=${post.id}';">
                                     <img src="img/${post.thumbnail}" alt="post-thumbnail" class="col-3">
                                     <h5 class="col-9" style="overflow: hidden;">${post.title}</h5>
                                 </div>

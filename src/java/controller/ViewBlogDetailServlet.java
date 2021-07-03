@@ -42,7 +42,7 @@ public class ViewBlogDetailServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String selectedPostID = request.getParameter("selectedOrderID");
+        String selectedPostID = request.getParameter("selectedPostID");
         
         String url = ERROR_PAGE;
         try  {
