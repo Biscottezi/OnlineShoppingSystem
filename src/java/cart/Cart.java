@@ -31,9 +31,6 @@ public class Cart implements Serializable{
         ProductDAO  dao = new ProductDAO();
         dao.searchProductByID(ID);
         ProductDTO dto= dao.getProduct();
-        if (this.items.containsKey(dto)) {
-            quantity = this.items.get(dto) + quantity;
-        }
         //3. updtae producct in cart
         this.items.put(dto, quantity);
 

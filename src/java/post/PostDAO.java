@@ -122,7 +122,7 @@ public class PostDAO implements Serializable {
 
     public void getPostCustomer() throws SQLException, NamingException {
         Connection con = null;
-        PreparedStatement stm = null;
+        CallableStatement stm = null;
         ResultSet rs = null;
         try {
             con = DBHelper.makeConnection();

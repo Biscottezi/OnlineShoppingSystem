@@ -8,7 +8,6 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,21 +15,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import product.ProductDAO;
-import product.ProductDTO;
-import productAttachedImage.ProductAttachedImageDAO;
-import productAttachedImage.ProductAttachedImageDTO;
-import productCategory.ProductCategoryDAO;
-import productCategory.ProductCategoryDTO;
+import org.omg.PortableServer.POA;
+import post.PostDAO;
+import post.PostDTO;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "viewProductDetailsServlet", urlPatterns = {"/viewProductDetailsServlet"})
-public class viewProductDetailsServlet extends HttpServlet {
+@WebServlet(name = "viewPostDetailsMarketingServlet", urlPatterns = {"/viewPostDetailsMarketingServlet"})
+public class viewPostDetailsMarketingServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
-    private final String PRODUCT_DETAILS_PAGE = "ProductDetails.jsp";
+    private final String POST_DETAILS_MARKETING_PAGE = "MarketingPostList.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,35 +39,22 @@ public class viewProductDetailsServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String productID = request.getParameter("productID");
         String url = ERROR_PAGE;
+        String postID = request.getParameter("postID");
+        
         try{
-            ProductDAO productDao = new ProductDAO();
-            productDao.searchProductByID(Integer.parseInt(productID));
-            ProductDTO productDto = productDao.getProduct();
-            if(productDto != null){
-                request.setAttribute("PRODUCT_DETAILS", productDto);
+            PostDAO dao = new PostDAO();
+            dao.getPostbyID(Integer.parseInt(postID));
+            PostDTO post = dao.getPost();
+            if(post != null){
+                request.setAttribute("POST_DETAILS", post);
             }
             
-            ProductCategoryDAO productCategoryDao = new ProductCategoryDAO();
-            productCategoryDao.getAllCategory();
-            List<ProductCategoryDTO> productCategoryDto = productCategoryDao.getCategoryList();
-            if(productCategoryDto != null){
-                request.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
-            }
-            
-            ProductAttachedImageDAO imageDao = new ProductAttachedImageDAO();
-            imageDao.getProductImages(Integer.parseInt(productID));
-            List<ProductAttachedImageDTO> imageDto = imageDao.getProductImageList();
-            if(imageDto != null){
-                request.setAttribute("PRODUCT_IMAGES", imageDto);
-            }
-            
-            url = PRODUCT_DETAILS_PAGE;
+            url = POST_DETAILS_MARKETING_PAGE;
         }catch(SQLException ex){
-            log("viewProductDetailsServlet _ SQL:" + ex.getMessage());
+            log("viewPostDetailsMarketingServlet _ SQL:" + ex.getMessage());
         }catch(NamingException ex){
-            log("viewProductDetailsServlet _ Naming:" + ex.getMessage());
+            log("viewPostDetailsMarketingServlet _ Naming:" + ex.getMessage());
         }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
