@@ -86,8 +86,8 @@ public class PostDAO implements Serializable {
                         + "FROM Post "
                         + "WHERE PostID = ? ";
 
-                stm = con.prepareCall(sql);
-                stm.setInt(PostID, 1);
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, PostID);
                 rs = stm.executeQuery();
 
                 while (rs.next()) {
@@ -102,10 +102,8 @@ public class PostDAO implements Serializable {
                     int PostCategoryID = rs.getInt("PostCategoryID");
                     Date DateCreated = rs.getDate("DateCreated");
                     PostDTO dto = new PostDTO(PostID, Title, Thumbnail, BriefInfo, Author, Description, Featured, Status, PostCategoryID, DateCreated);
-                    if (this.postList == null) {
-                        this.postList = new ArrayList<>();
-                    }
-                    this.postList.add(dto);
+                    
+                    this.post = dto;
                 }
             }
         } finally {

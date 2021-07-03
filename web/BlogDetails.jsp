@@ -37,44 +37,32 @@
                         </form>
                         <br>
                         <h4>Categories</h4>
-                        <div class="category">
-                            <a href="">Smartphone</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Laptop</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Smartwatch</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Earphone</a>
-                        </div>
+                        <c:set var="postCategoryList" value="${requestScope.POST_CATEGORY}"/>
+                        <c:forEach var="category" items="${postCategoryList}">
+                            <div class="category">
+                                <a href="">${category.name}</a>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
 
                 <!--Main content-->
                 <div class="main-content container col-10">
-                    <div class="col">
-                        <h1>Tư vấn</h1>
-                        <h3>Đã có giá bán dự kiến iPad Pro M1 2021 tại Thế Giới Di Động, giá khởi điểm vẫn tốt như thế hệ tiền nhiệm</h3>
-                        <p>Tân Long - 19/2/2020</p>
-                        <img src="img/post-thumbnail.jpg" alt="" class="post-img">
-                        <p class="post-body">
-                            Apple trong sự kiện Spring Load đã bất ngờ cho ra mắt dòng iPad Pro 2021 trang bị chip tự phát triển Apple M1 và loại màn hình mini-LED mới. Dòng iPad Pro M1 đã được đông đảo người dùng đón nhận và đánh giá tốt. Đáp ứng mong đợi của khách hàng, Thế Giới Di Động sẽ kinh doanh chính hãng iPad Pro M1 mới.
-                            Hiện tại, Thế Giới Di Động đã liệt kê các mẫu iPad Pro M1 2021 với hai bản 11 inch và 12.9 inch trên trang sản phẩm, khách hàng đã có thể đăng ký nhận thông tin ngay khi hàng về. 
-
-                            Đặc biệt Thế Giới Di Động cũng đã đưa ra mức giá dự kiến của iPad Pro M1 2021, khởi điểm từ 21.990.000 đồng, nâng lên 37.990.000 đồng cho bản có cấu hình cao nhất. Một mức giá tốt bởi giá khởi điểm của iPad Pro M1 2021 không tăng nhiều so với thế hệ tiền nhiệm iPad Pro 2020.
-
-                            Đã có giá dự kiến iPad Pro M1 2021
-                            Có rất nhiều nâng cấp trên dòng iPad Pro M1 2021, như trang bị chip M1 với 8 nhân CPU và 8 nhân GPU, 16 nhân xử lý AI. Apple tự tin khẳng định iPad Pro M1 2021 có hiệu năng CPU nhanh hơn 50% và khả năng xử lý đồ họa tốt hơn 40% so với thế hệ tiền nhiệm.
-
-                            Với phiên bản 12.9 inch, người dùng sẽ được sử dụng loại màn hình Liquid Retina XDR có tỷ lệ tương phản 1.000.000:1, cho chất lượng hình ảnh và các thước phim sống động một cách hoàn hảo. Đó chính là loại màn hình mini-LED mới dự kiến sẽ được sử dụng nhiều trong tương lai.
-
-                            Apple đã mang 5G đến iPad Pro M1 2021, hứa hẹn khả năng tải xuống tệp tin, video, ứng dụng một cách nhanh chóng và tiện hơn. Dòng iPad Pro M1 2021 cũng có chuẩn kết nối Wi-Fi 6 mới, cho kết nối thêm nhanh và ổn định.
-
-                            Bạn sẽ sắm iPad Pro M1 2021 chứ?
-                        </p>
-                    </div>
+                    <c:choose>
+                        <c:when test="${not empty requestScope.POST_DETAILS}">
+                            <c:set var="post" value="${requestScope.POST_DETAILS}"/>
+                                <div class="col">
+                                    <h3>${post.title}</h3>
+                                    <p>${post.author} - ${post.createdDate}</p>
+                                    <img src="img/${post.thumbnail}" alt="" class="post-img">
+                                    <p class="post-body">${post.description}</p>
+                                </div>
+                        </c:when>
+                        <c:otherwise>
+                            <h3>Nothing</h3>
+                        </c:otherwise>
+                    </c:choose>
+                    
                 </div>
             </div>
         </main>
