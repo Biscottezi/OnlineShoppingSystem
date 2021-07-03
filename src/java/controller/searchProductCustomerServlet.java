@@ -22,8 +22,8 @@ import product.ProductDTO;
  *
  * @author ASUS
  */
-@WebServlet(name = "searchProductServlet", urlPatterns = {"/searchProductServlet"})
-public class searchProductServlet extends HttpServlet {
+@WebServlet(name = "searchProductCustomerServlet", urlPatterns = {"/searchProductCustomerServlet"})
+public class searchProductCustomerServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
     private final String PRODUCT_PAGE = "ProductPage.jsp";
     /**
@@ -43,7 +43,7 @@ public class searchProductServlet extends HttpServlet {
         try{
             String searchedProduct = request.getParameter("txtSearchProduct");
             ProductDAO dao = new ProductDAO();
-            dao.searchProductName(searchedProduct);
+            dao.searchProductNameByCustomer(searchedProduct);
             List<ProductDTO> productList = dao.getProductList();
             if(productList != null){
                 request.setAttribute("ALL_PRODUCT_LIST", productList);

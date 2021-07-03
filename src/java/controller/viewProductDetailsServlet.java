@@ -45,7 +45,7 @@ public class viewProductDetailsServlet extends HttpServlet {
         String url = ERROR_PAGE;
         try{
             ProductDAO productDao = new ProductDAO();
-            productDao.searchProductID(Integer.parseInt(productID));
+            productDao.searchProductByID(Integer.parseInt(productID));
             ProductDTO productDto = productDao.getProduct();
             if(productDto != null){
                 request.setAttribute("PRODUCT_DETAILS", productDto);

@@ -81,7 +81,7 @@ public class ProductDAO implements Serializable{
         }
     }
     
-    public void searchProductID(int productID)
+    public void searchProductByID(int productID)
             throws SQLException, NamingException{
             Connection con = null;
             PreparedStatement stm = null;
@@ -174,7 +174,7 @@ public class ProductDAO implements Serializable{
         }
     }
     
-    public void getProductByCategory(int categoryID) throws SQLException, NamingException{
+    public void getProductByCategoryCustomer(int categoryID) throws SQLException, NamingException{
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -222,7 +222,7 @@ public class ProductDAO implements Serializable{
         }
     }
     
-    public void searchProductName(String productName)
+    public void searchProductNameByCustomer(String productName)
             throws SQLException, NamingException{
             Connection con = null;
             PreparedStatement stm = null;
@@ -270,6 +270,7 @@ public class ProductDAO implements Serializable{
                 }
             }
     }
+    
     public ProductDTO GetProductbyID(int productID)
             throws SQLException, NamingException{
             Connection con = null;
@@ -317,5 +318,49 @@ public class ProductDAO implements Serializable{
             return  null;
     }
     
-    
+    public void getProducts() throws SQLException, NamingException{
+        Connection con = null;
+        CallableStatement stm = null;
+        ResultSet rs = null;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated "
+                        + "FROM Product "
+                        + "ORDER by DateCreated desc";
+                stm = con.prepareCall(sql);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int ProductID = rs.getInt("ProductID");
+                    String Title = rs.getString("Title");
+                    int ProductCategoryID = rs.getInt("ProductCategoryID");
+                    String Thumbnail = rs.getString("Thumbnail");
+                    String BriefInfo = rs.getString("BriefInfo");
+                    String Description = rs.getString("Description");
+                    int Quantity = rs.getInt("Quantity");
+                    float ListPrice = rs.getFloat("ListPrice");
+                    float SalePrice = rs.getFloat("SalePrice");
+                    int Featured = rs.getInt("Featured");
+                    int Status = rs.getInt("Status");
+                    Date DateCreated = rs.getDate("DateCreated");
+                    ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated);
+                    if(this.productList == null){
+                        this.productList = new ArrayList<>();
+                    }
+                    this.productList.add(dto);
+                }
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
 }

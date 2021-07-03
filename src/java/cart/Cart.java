@@ -10,15 +10,17 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.naming.NamingException;
+import product.ProductDAO;
+import product.ProductDTO;
 
 /**
  *
  * @author ASUS
  */
 public class Cart implements Serializable{
-    private Map<Integer, Integer> items;
-    
-    public Map<Integer, Integer> getItems() {
+    private Map<ProductDTO,Integer> items;
+
+    public Map<ProductDTO, Integer> getItems() {
         return items;
     }
     
@@ -26,22 +28,28 @@ public class Cart implements Serializable{
         if (this.items == null) {
             this.items = new HashMap<>();
         }
-        if (this.items.containsKey(ID)) {
-            quantity = this.items.get(ID) + quantity;
+        ProductDAO  dao = new ProductDAO();
+        dao.searchProductByID(ID);
+        ProductDTO dto= dao.getProduct();
+        if (this.items.containsKey(dto)) {
+            quantity = this.items.get(dto) + quantity;
         }
         //3. updtae producct in cart
-        this.items.put(ID, quantity);
+        this.items.put(dto, quantity);
 
     }
 
     public void removeFromCart(int ID) throws SQLException, NamingException {
         //1. Check existing cart
+        ProductDAO  dao = new ProductDAO(); 
+        dao.searchProductByID(ID);
+        ProductDTO dto = dao.getProduct();
         if (this.items == null) {
             return;
         } else //2. Check existing item
         {
-            if (this.items.containsKey(ID)) {
-                this.items.remove(ID);
+            if (this.items.containsKey(dto)) {
+                this.items.remove(dto);
                 if (this.items.isEmpty()) {
                     this.items = null;
                 }

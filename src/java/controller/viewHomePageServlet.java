@@ -74,7 +74,7 @@ public class viewHomePageServlet extends HttpServlet {
                 if(productIDList != null){
                     List<ProductDTO> sliderProducts = new ArrayList<>();
                     for(int i = 0; i < productIDList.size(); i++){
-                        productDao.searchProductID(productIDList.get(i));
+                        productDao.searchProductByID(productIDList.get(i));
                         sliderProducts.add(productDao.getProduct());
                     }
                     request.setAttribute("SLIDER_PRODUCTS", sliderProducts);
