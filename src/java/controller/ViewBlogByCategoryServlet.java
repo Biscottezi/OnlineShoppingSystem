@@ -21,13 +21,12 @@ import post.PostDTO;
 import postCategory.PostCategoryDAO;
 import postCategory.PostCategoryDTO;
 
-
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "ViewBlogDetail", urlPatterns = {"/ViewBlogDetail"})
-public class ViewBlogListServlet extends HttpServlet {
+@WebServlet(name = "ViewBlogByCategoryServlet", urlPatterns = {"/ViewBlogByCategoryServlet"})
+public class ViewBlogByCategoryServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +43,11 @@ public class ViewBlogListServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR_PAGE;
-                
+        
         try {
+            String PostCate = request.getParameter("txtSearchPost");
             PostDAO dao = new PostDAO();
-            dao.getPostCustomer();
+            dao.getPostbyCategory(Integer.parseInt(PostCate));
             List<PostDTO> dto = dao.getPostList();
             if(dto != null){
                 request.setAttribute("ALL_POST_LIST", dto);
@@ -56,7 +56,7 @@ public class ViewBlogListServlet extends HttpServlet {
             postCategoryDao.getAllCategory();
             List<PostCategoryDTO> postCategoryDto = postCategoryDao.getPostCateList();
             if(postCategoryDto != null){
-                request.setAttribute("POST_CATEGORY", postCategoryDto);
+                request.setAttribute("PRODUCT_CATEGORY", postCategoryDto);
             }
             url = BLOG_LIST;
         }catch(SQLException ex){
