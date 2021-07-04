@@ -41,7 +41,7 @@ public class ProductDAO implements Serializable{
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "SELECT TOP 8 ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated "
+                String sql = "SELECT TOP 8 ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated, RatedStar "
                         + "FROM Product "
                         + "WHERE Featured = 1 AND Status = 1 "
                         + "ORDER by DateCreated desc";
@@ -61,7 +61,8 @@ public class ProductDAO implements Serializable{
                     int Featured = rs.getInt("Featured");
                     int Status = rs.getInt("Status");
                     Date DateCreated = rs.getDate("DateCreated");
-                    ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated);
+                    int RatedStar = rs.getInt("RatedStar");
+                    ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated, RatedStar);
                     if(this.productList == null){
                         this.productList = new ArrayList<>();
                     }
@@ -89,7 +90,7 @@ public class ProductDAO implements Serializable{
             try{
                 con = DBHelper.makeConnection();
                 if(con != null){
-                    String sql = "Select ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated "
+                    String sql = "Select ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated, RatedStar "
                             + "From Product "
                             + "Where ProductID = ?";
                     
@@ -110,7 +111,8 @@ public class ProductDAO implements Serializable{
                     int Featured = rs.getInt("Featured");
                     int Status = rs.getInt("Status");
                     Date DateCreated = rs.getDate("DateCreated");
-                    ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated);
+                    int RatedStar = rs.getInt("RatedStar");
+                    ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated, RatedStar);
                     this.product = dto;
                     }
                 }
@@ -134,7 +136,7 @@ public class ProductDAO implements Serializable{
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "SELECT ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated "
+                String sql = "SELECT ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated, RatedStar "
                         + "FROM Product "
                         + "WHERE Featured = 1 AND Status = 1 "
                         + "ORDER by DateCreated desc";
@@ -154,7 +156,8 @@ public class ProductDAO implements Serializable{
                     int Featured = rs.getInt("Featured");
                     int Status = rs.getInt("Status");
                     Date DateCreated = rs.getDate("DateCreated");
-                    ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated);
+                    int RatedStar = rs.getInt("RatedStar");
+                    ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated, RatedStar);
                     if(this.productList == null){
                         this.productList = new ArrayList<>();
                     }
@@ -181,7 +184,7 @@ public class ProductDAO implements Serializable{
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "SELECT ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated "
+                String sql = "SELECT ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated, RatedStar "
                         + "FROM Product "
                         + "WHERE ProductCategoryID = ? "
                         + "ORDER by DateCreated desc";
@@ -202,7 +205,8 @@ public class ProductDAO implements Serializable{
                     int Featured = rs.getInt("Featured");
                     int Status = rs.getInt("Status");
                     Date DateCreated = rs.getDate("DateCreated");
-                    ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated);
+                    int RatedStar = rs.getInt("RatedStar");
+                    ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated, RatedStar);
                     if(this.productList == null){
                         this.productList = new ArrayList<>();
                     }
@@ -230,7 +234,7 @@ public class ProductDAO implements Serializable{
             try{
                 con = DBHelper.makeConnection();
                 if(con != null){
-                    String sql = "Select ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated "
+                    String sql = "Select ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated, RatedStar "
                             + "From Product "
                             + "Where Title LIKE ?";
                     
@@ -251,7 +255,8 @@ public class ProductDAO implements Serializable{
                     int Featured = rs.getInt("Featured");
                     int Status = rs.getInt("Status");
                     Date DateCreated = rs.getDate("DateCreated");
-                    ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated);
+                    int RatedStar = rs.getInt("RatedStar");
+                    ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated, RatedStar);
                     if(this.productList == null){
                         this.productList = new ArrayList<>();
                     }
@@ -279,7 +284,7 @@ public class ProductDAO implements Serializable{
             try{
                 con = DBHelper.makeConnection();
                 if(con != null){
-                    String sql = "Select ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated "
+                    String sql = "Select ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated, RatedStar "
                             + "From Product "
                             + "Where ProductID = ?";
                     
@@ -300,7 +305,8 @@ public class ProductDAO implements Serializable{
                     int Featured = rs.getInt("Featured");
                     int Status = rs.getInt("Status");
                     Date DateCreated = rs.getDate("DateCreated");
-                    ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated);
+                    int RatedStar = rs.getInt("RatedStar");
+                    ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated, RatedStar);
                     return dto;
                     }
                 }
@@ -325,7 +331,7 @@ public class ProductDAO implements Serializable{
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "SELECT ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated "
+                String sql = "SELECT ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated, RatedStar "
                         + "FROM Product "
                         + "ORDER by DateCreated desc";
                 stm = con.prepareCall(sql);
@@ -344,7 +350,8 @@ public class ProductDAO implements Serializable{
                     int Featured = rs.getInt("Featured");
                     int Status = rs.getInt("Status");
                     Date DateCreated = rs.getDate("DateCreated");
-                    ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated);
+                    int RatedStar = rs.getInt("RatedStar");
+                    ProductDTO dto = new ProductDTO(ProductID, Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated, RatedStar);
                     if(this.productList == null){
                         this.productList = new ArrayList<>();
                     }
