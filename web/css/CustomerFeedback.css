@@ -1,0 +1,44 @@
+.contact-input{
+    border: 1px solid #E3E3E3;
+    border-radius: 4px;
+    width: 300px;
+    height: 40px;
+    font-size: 18px;
+    font-weight: 500;
+    padding-left: 12px;
+}
+
+h6{
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+    font-size: 18px;
+}
+
+#contact-gender{
+    width: 110px;
+}
+
+#input-rating{
+    width: 90px;
+    height: 40px;
+    border: 1px solid #E3E3E3;
+    border-radius: 4px;
+    text-align: center;
+}
+
+#sbm-btn{
+    background-color: #274156;
+    color: white;
+    height: 45px;
+    width: 140px;
+    border: none;
+    border-radius: 10px;
+    margin-top: 2em;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+#contact-dscrpt{
+    width: 380px;
+    height: 150px;
+}
