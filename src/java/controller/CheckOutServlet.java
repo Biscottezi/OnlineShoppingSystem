@@ -54,7 +54,7 @@ public class CheckOutServlet extends HttpServlet {
         String note = request.getParameter("txtNote");
         HttpSession session = request.getSession();
         String url = SUCCESS_PAGE;
-        try {
+/*        try {
 //            request.setAttribute("ORDER_ID_ATTRI", newOrderID);
 //            System.out.println("newOrderID is " + newOrderID);
             
@@ -86,7 +86,7 @@ public class CheckOutServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher(SUCCESS_PAGE);
             rd.forward(request, response);
 
-        }
+        }*/
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
