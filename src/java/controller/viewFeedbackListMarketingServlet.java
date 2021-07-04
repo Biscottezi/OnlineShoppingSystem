@@ -5,6 +5,8 @@
  */
 package controller;
 
+import feedBack.FeedBackDAO;
+import feedBack.FeedBackDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -16,18 +18,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import post.PostDAO;
-import post.PostDTO;
-import postCategory.PostCategoryDAO;
-import postCategory.PostCategoryDTO;
 
 /**
  *
- * @author Admin
+ * @author ASUS
  */
-@WebServlet(name = "ViewBlogDetailServlet", urlPatterns = {"/ViewBlogDetailServlet"})
-public class ViewBlogDetailServlet extends HttpServlet {
-
+@WebServlet(name = "viewFeedbackListMarketingServlet", urlPatterns = {"/viewFeedbackListMarketingServlet"})
+public class viewFeedbackListMarketingServlet extends HttpServlet {
+    private final String ERROR_PAGE = "Error.html";
+    private final String FEEDBACK_LIST_MARKETING_PAGE = "MarketingFeedbackList.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,38 +36,28 @@ public class ViewBlogDetailServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private final String DETAIL_LIST_PAGE = "BlogDetails.jsp";
-    private final String ERROR_PAGE = "Error.html";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String selectedPostID = request.getParameter("selectedPostID");
-        
         String url = ERROR_PAGE;
-        try  {
-            PostDAO dao = new PostDAO();
-            dao.getPostbyID(Integer.parseInt(selectedPostID));
-             PostDTO postDto = dao.getPost();
-            if(postDto != null){
-                request.setAttribute("POST_DETAILS", postDto);
+        
+        try{
+            FeedBackDAO dao = new FeedBackDAO();
+            dao.getAllFeedBack();
+            List<FeedBackDTO> feedbackList = dao.getFeedbackList();
+            if(feedbackList != null){
+                request.setAttribute("FEEDBACK_LIST", feedbackList);
             }
             
-            PostCategoryDAO postCategoryDao = new PostCategoryDAO();
-            postCategoryDao.getAllCategory();
-            List<PostCategoryDTO> postCategoryDto = postCategoryDao.getPostCateList();
-            if(postCategoryDto != null){
-                request.setAttribute("POST_CATEGORY", postCategoryDto);
-            }
-            
-            url = DETAIL_LIST_PAGE;
-        }catch (SQLException ex) {
-            log("ViewBlogDetailServlet SQLException: " + ex.getMessage());
-        } catch(NamingException ex){
-            log("ViewBlogDetailServlet NamingException:" + ex.getMessage());
-        }
-        finally {
+            url = FEEDBACK_LIST_MARKETING_PAGE;
+        }catch(SQLException ex){
+            log("viewFeedbackListMarketingServlet _ SQL:" + ex.getMessage());
+        }catch(NamingException ex){
+            log("viewFeedbackListMarketingServlet _ Naming:" + ex.getMessage());
+        }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
+            
         }
     }
 

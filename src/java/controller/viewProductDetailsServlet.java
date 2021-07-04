@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import product.ProductDAO;
 import product.ProductDTO;
+import productAttachedImage.ProductAttachedImageDAO;
+import productAttachedImage.ProductAttachedImageDTO;
 import productCategory.ProductCategoryDAO;
 import productCategory.ProductCategoryDTO;
 
@@ -56,6 +58,13 @@ public class viewProductDetailsServlet extends HttpServlet {
             List<ProductCategoryDTO> productCategoryDto = productCategoryDao.getCategoryList();
             if(productCategoryDto != null){
                 request.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
+            }
+            
+            ProductAttachedImageDAO imageDao = new ProductAttachedImageDAO();
+            imageDao.getProductImages(Integer.parseInt(productID));
+            List<ProductAttachedImageDTO> imageDto = imageDao.getProductImageList();
+            if(imageDto != null){
+                request.setAttribute("PRODUCT_IMAGES", imageDto);
             }
             
             url = PRODUCT_DETAILS_PAGE;
