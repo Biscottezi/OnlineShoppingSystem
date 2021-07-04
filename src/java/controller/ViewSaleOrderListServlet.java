@@ -7,11 +7,19 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import order.OrderDAO;
+import order.OrderDTO;
 
 /**
  *
@@ -29,20 +37,27 @@ public class ViewSaleOrderListServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+     private final String SALE_ORDER_LIST_PAGE = "SaleViewOrderList.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ViewSaleOrderListServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ViewSaleOrderListServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String url = SALE_ORDER_LIST_PAGE;
+        try {
+            OrderDAO dao = new OrderDAO();
+            ArrayList<OrderDTO> orderList = dao.GetAllOrder();
+            request.setAttribute("orderList", orderList);
+           
+        } catch (SQLException ex) {
+          log("ViewSaleOrderListServlet SQLException: " + ex.getMessage());
+        } catch (NamingException ex) {
+          log("ViewSaleOrderListServlet NamingException: " + ex.getMessage());
+        } catch (ClassNotFoundException ex) { 
+            log("ViewSaleOrderListServlet ClassNotFoundException: " + ex.getMessage());
+         } 
+        finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+         
         }
     }
 

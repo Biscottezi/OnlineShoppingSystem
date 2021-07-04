@@ -8,6 +8,7 @@ package postCategory;
 import java.io.Serializable;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class PostCategoryDAO implements Serializable{
     
     public void getAllCategory()throws SQLException, NamingException{
         Connection con = null;
-        CallableStatement stm = null;
+        PreparedStatement stm = null;
         ResultSet rs = null;
         try{
             con = DBHelper.makeConnection();
@@ -38,7 +39,7 @@ public class PostCategoryDAO implements Serializable{
                 String sql = "SELECT PostCategoryID, Name "
                         + "FROM PostCategory "
                         + "ORDER BY Name ASC";
-                stm = con.prepareCall(sql);
+                stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 
                 while(rs.next()){

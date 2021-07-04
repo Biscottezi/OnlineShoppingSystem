@@ -155,4 +155,51 @@ public class OrderDAO implements Serializable{
         }
         return newlyAddedOrderID;
     }
+    public ArrayList<OrderDTO> GetAllOrder() throws SQLException, ClassNotFoundException, NamingException {
+        Connection connection = null;
+        PreparedStatement prestm = null;
+        ResultSet rs = null;
+        try {
+            connection = DBHelper.makeConnection();
+            if (connection != null) {
+                String orderSQLString = "SELECT OrderID, Status, OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID "
+                        + "FROM Order "
+                        + "ORDER by DateCreated desc";
+
+                prestm = connection.prepareStatement(orderSQLString);
+               
+                rs = prestm.executeQuery();
+                ArrayList<OrderDTO> result = new ArrayList<>();
+                while (rs.next()) {
+
+                    int OrderID = rs.getInt("OrderID");
+                    int Status = rs.getInt("Status");
+                    Date OrderedDate = rs.getDate("OrderedDate");
+                    int CustomerID = rs.getInt("CustomerID");
+                    String ReceiverName = rs.getString("ReceiverName");
+                    int ReceiverGender = rs.getInt("ReceiverGender");
+                    String ReceiverAddress = rs.getString("ReceiverAddress");
+                    String ReceiverEmail = rs.getString("ReceiverEmail");
+                    String ReceiverPhone = rs.getString("ReceiverPhone");
+                    String Note = rs.getString("Note");
+                    int SaleMemberID= rs.getInt("SaleMemberID");
+
+                    OrderDTO oDTO = new OrderDTO(OrderID, Status, OrderedDate , CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note,SaleMemberID);
+                    result.add(oDTO);
+                }
+                return result;
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (prestm != null) {
+                prestm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return null;
+    }
 }
