@@ -56,32 +56,32 @@ public class CheckOutServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String url = SUCCESS_PAGE;
         try {         
-            if (session != null) {
-                //2.Take customer's cart
-                Cart cart = (Cart) session.getAttribute("CART");
-                if (cart != null) {
-                    Map<ProductDTO, Integer> items = cart.getItems();
-                    if (items != null) {
-                        //3.Create order
-                         OrderDAO orderDAO = new OrderDAO();
-                        int newOrderID = orderDAO.CreateOrder(Integer.parseInt(custId), Receivername, Integer.parseInt(Receivergender), address, email, phone, note);
-                        //4.Get each item and add to order
-                        OrderDetailDAO detailDAO = new OrderDetailDAO();
-                       
-                        for (ProductDTO product : items.keySet()) {
-                            
-//                            detailDAO.CreateOrderDetail(newOrderID, product, items.get(ID));
-                        }//end for items.keySet
-                    }//end if items is not null  
-                    session.removeAttribute("CART");
-                }//end if cart is not null
-            }//end if session is not null
-        } catch (SQLException ex) {
-            log(" CheckoutServlet SQLException " + ex.getMessage());
-        } catch (ClassNotFoundException ex) {
-            log(" CheckoutServlet SQLException " + ex.getMessage());
-        } catch (NamingException ex) {
-            log(" CheckoutServlet NamingException " + ex.getMessage());
+//            if (session != null) {
+//                //2.Take customer's cart
+//                Cart cart = (Cart) session.getAttribute("CART");
+//                if (cart != null) {
+//                    Map<ProductDTO, Integer> items = cart.getItems();
+//                    if (items != null) {
+//                        //3.Create order
+//                         OrderDAO orderDAO = new OrderDAO();
+//                        int newOrderID = orderDAO.CreateOrder(Integer.parseInt(custId), Receivername, Integer.parseInt(Receivergender), address, email, phone, note);
+//                        //4.Get each item and add to order
+//                        OrderDetailDAO detailDAO = new OrderDetailDAO();
+//                       
+//                        for (ProductDTO product : items.keySet()) {
+//                            
+////                            detailDAO.CreateOrderDetail(newOrderID, product, items.get(ID));
+//                        }//end for items.keySet
+//                    }//end if items is not null  
+//                    session.removeAttribute("CART");
+//                }//end if cart is not null
+//            }//end if session is not null
+//        } catch (SQLException ex) {
+//            log(" CheckoutServlet SQLException " + ex.getMessage());
+//        } catch (ClassNotFoundException ex) {
+//            log(" CheckoutServlet SQLException " + ex.getMessage());
+//        } catch (NamingException ex) {
+//            log(" CheckoutServlet NamingException " + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(SUCCESS_PAGE);
             rd.forward(request, response);

@@ -24,7 +24,7 @@ public class Cart implements Serializable{
         return items;
     }
     
-    public void addToCart(int ID, int quantity) throws SQLException, NamingException {
+    public void addToCart(int ID, int addedQuantity) throws SQLException, NamingException {
         if (this.items == null) {
             this.items = new HashMap<>();
         }
@@ -33,12 +33,14 @@ public class Cart implements Serializable{
         //3. updtae producct in cart
         if(this.items.containsKey(ID)){
             dto = this.items.get(ID);
+            int quantity = dto.getQuantity();
+            quantity = quantity + addedQuantity;
             dto.setQuantity(quantity);
         }else{
             ProductDAO  dao = new ProductDAO();
             dao.searchProductByID(ID);
             dto = dao.getProduct();
-            dto.setQuantity(quantity);
+            dto.setQuantity(addedQuantity);
         }
         this.items.put(ID, dto);
     }
@@ -56,5 +58,12 @@ public class Cart implements Serializable{
                 }
             }
         }
+    }
+    
+    public void modifyQuantity(int ID, int quantity) throws SQLException, NamingException {
+        ProductDTO dto = new ProductDTO();
+        dto = this.items.get(ID);
+        dto.setQuantity(quantity);
+        this.items.put(ID, dto);
     }
 }
