@@ -122,7 +122,7 @@ public class PostDAO implements Serializable {
 
     public void getPostCustomer() throws SQLException, NamingException {
         Connection con = null;
-        PreparedStatement stm = null;
+         CallableStatement stm = null;
         ResultSet rs = null;
         try {
             con = DBHelper.makeConnection();
@@ -219,7 +219,7 @@ public class PostDAO implements Serializable {
     
     public void getAllPost() throws SQLException, NamingException{
         Connection con = null;
-        CallableStatement stm = null;
+        PreparedStatement stm = null;
         ResultSet rs = null;
         try{
             con = DBHelper.makeConnection();
@@ -227,7 +227,7 @@ public class PostDAO implements Serializable {
                 String sql = "SELECT PostID, Title, Thumbnail, BriefInfo, Author, Description, Featured, Status, PostCategoryID, DateCreated "
                         + "FROM Post "
                         + "ORDER by DateCreated desc";
-                stm = con.prepareCall(sql);
+                stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 
                 while(rs.next()){
@@ -271,8 +271,8 @@ public class PostDAO implements Serializable {
                         + "FROM Post "
                         + "WHERE PostCategoryID = ? ";
 
-                stm = con.prepareCall(sql);
-                stm.setInt(PostCategoryID, 1);
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, PostCategoryID);
                 rs = stm.executeQuery();
 
                 while (rs.next()) {

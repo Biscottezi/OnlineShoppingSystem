@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import order.OrderDAO;
 import orderDetail.OrderDetailDAO;
+import product.ProductDTO;
 
 /**
  *
@@ -54,23 +55,23 @@ public class CheckOutServlet extends HttpServlet {
         String note = request.getParameter("txtNote");
         HttpSession session = request.getSession();
         String url = SUCCESS_PAGE;
-        try {
-//            request.setAttribute("ORDER_ID_ATTRI", newOrderID);
-//            System.out.println("newOrderID is " + newOrderID);
+        try {         
             
             if (session != null) {
                 //2.Take customer's cart
                 Cart cart = (Cart) session.getAttribute("CART");
                 if (cart != null) {
-                    Map<Integer, Integer> items = cart.getItems();
+                    Map<ProductDTO, Integer> items = cart.getItems();
                     if (items != null) {
                         //3.Create order
                          OrderDAO orderDAO = new OrderDAO();
                         int newOrderID = orderDAO.CreateOrder(Integer.parseInt(custId), Receivername, Integer.parseInt(Receivergender), address, email, phone, note);
                         //4.Get each item and add to order
                         OrderDetailDAO detailDAO = new OrderDetailDAO();
-                        for (int ID : items.keySet()) {
-                            detailDAO.CreateOrderDetail(newOrderID, ID, items.get(ID));
+                       
+                        for (ProductDTO product : items.keySet()) {
+                            
+//                            detailDAO.CreateOrderDetail(newOrderID, product, items.get(ID));
                         }//end for items.keySet
                     }//end if items is not null
                     session.removeAttribute("CART");
