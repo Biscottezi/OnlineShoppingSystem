@@ -7,26 +7,24 @@ package controller;
 
 import cart.Cart;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Map;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import product.ProductDTO;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "removeFromCartServlet", urlPatterns = {"/removeFromCartServlet"})
-public class removeFromCartServlet extends HttpServlet {
-    private final String ERROR = "error";
-    private final String CART_DETAILS = "viewCart";
+@WebServlet(name = "modifyQuantityCartServlet", urlPatterns = {"/modifyQuantityCartServlet"})
+public class modifyQuantityCartServlet extends HttpServlet {
+    private final String ERROR_PAGE = "Error.html";
+    private final String CART_DETAILS_PAGE = "CartDetails.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,37 +37,26 @@ public class removeFromCartServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
+        String url = ERROR_PAGE;
         
         try{
-            //1. Cust goes to his/her cart place
-            HttpSession session = request.getSession(false);
-            if (session != null) {
-                //2. Cust takes his here cart
-                Cart cart = (Cart) session.getAttribute("CART");
-                if (cart != null) {
-                    //3.Cust gets items
-                    Map<Integer, ProductDTO> itemsList = cart.getItems();
-                    if (itemsList != null) {
-                        //4. Cust chooses removed book
-                        int removedProductID = 0;
-                        removedProductID = Integer.parseInt(request.getParameter("txtProductId"));
-                        if (removedProductID != 0) {
-                            //5. Remove from cart
-                            cart.removeFromCart(removedProductID);
-                            session.setAttribute("CART", cart);
-                        }//items are chosen
-                    } //end if 
-                }//end if cart existed
-            }//session is existed
+            HttpSession session = request.getSession(true);
+            //2. Cust takes a cart
+            Cart cart = (Cart) session.getAttribute("CART");
+            int ID = Integer.parseInt(request.getParameter("txtProductId"));
+            int quantity = Integer.parseInt(request.getParameter("txtQuantity"));
+            cart.modifyQuantity(ID, quantity);
+
+            session.setAttribute("CART", cart);
+            url = CART_DETAILS_PAGE;
+        }catch(SQLException ex){
+            log("modifyQuantityCartServlet _ SQL:" + ex.getMessage());
+        }catch(NamingException ex){
+            log("modifyQuantityCartServlet _ Naming:" + ex.getMessage());
+        }finally{
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
             
-            url = CART_DETAILS;
-        }catch (SQLException ex) {
-            log("removeFromCartServlet_SQLException: " + ex.getMessage());
-        } catch (NamingException ex) {
-            log("removeFromCartServlet_NamingException: " + ex.getMessage());
-        } finally {
-            response.sendRedirect(url);
         }
     }
 

@@ -18,40 +18,52 @@ import product.ProductDTO;
  * @author ASUS
  */
 public class Cart implements Serializable{
-    private Map<ProductDTO,Integer> items;
+    private Map<Integer, ProductDTO> items;
 
-    public Map<ProductDTO, Integer> getItems() {
+    public Map<Integer, ProductDTO> getItems() {
         return items;
     }
     
-    public void addToCart(int ID, int quantity) throws SQLException, NamingException {
+    public void addToCart(int ID, int addedQuantity) throws SQLException, NamingException {
         if (this.items == null) {
             this.items = new HashMap<>();
         }
-        ProductDAO  dao = new ProductDAO();
-        dao.searchProductByID(ID);
-        ProductDTO dto= dao.getProduct();
+        
+        ProductDTO dto = new ProductDTO();
         //3. updtae producct in cart
-        this.items.put(dto, quantity);
-
+        if(this.items.containsKey(ID)){
+            dto = this.items.get(ID);
+            int quantity = dto.getQuantity();
+            quantity = quantity + addedQuantity;
+            dto.setQuantity(quantity);
+        }else{
+            ProductDAO  dao = new ProductDAO();
+            dao.searchProductByID(ID);
+            dto = dao.getProduct();
+            dto.setQuantity(addedQuantity);
+        }
+        this.items.put(ID, dto);
     }
 
     public void removeFromCart(int ID) throws SQLException, NamingException {
         //1. Check existing cart
-        ProductDAO  dao = new ProductDAO(); 
-        dao.searchProductByID(ID);
-        ProductDTO dto = dao.getProduct();
+        
         if (this.items == null) {
             return;
-        } else //2. Check existing item
-        {
-            if (this.items.containsKey(dto)) {
-                this.items.remove(dto);
+        } else {
+                if (this.items.containsKey(ID)) {
+                this.items.remove(ID);
                 if (this.items.isEmpty()) {
                     this.items = null;
                 }
             }
-
         }
+    }
+    
+    public void modifyQuantity(int ID, int quantity) throws SQLException, NamingException {
+        ProductDTO dto = new ProductDTO();
+        dto = this.items.get(ID);
+        dto.setQuantity(quantity);
+        this.items.put(ID, dto);
     }
 }

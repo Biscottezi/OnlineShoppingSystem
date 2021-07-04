@@ -5,14 +5,11 @@
  */
 package controller;
 
-import cart.Cart;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,18 +17,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import order.OrderDAO;
 import orderDetail.OrderDetailDAO;
-import product.ProductDTO;
-import user.UserDAO;
+import orderDetail.OrderItemObj;
+import product.ProductDAO;
+import productCategory.ProductCategoryDAO;
+import productCategory.ProductCategoryDTO;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "CheckOutServlet", urlPatterns = {"/CheckOutServlet"})
-public class CheckOutServlet extends HttpServlet {
+@WebServlet(name = "ViewSaleOrderDetailServlet", urlPatterns = {"/ViewSaleOrderDetailServlet"})
+public class ViewSaleOrderDetailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,56 +39,34 @@ public class CheckOutServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private final String SUCCESS_PAGE = "CartCompletion.jsp";
-
+     private final String DETAIL_LIST_PAGE = "SaleOrderDetails.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String custId = request.getParameter("custId");
-        String Receivername = request.getParameter("txtReceiverName");
-        String Receivergender = request.getParameter("txtReceiverGender");
-        String email = request.getParameter("txtReceiverEmail");
-        String phone = request.getParameter("txtReceiverMobile");
-        String address = request.getParameter("txtReceiverAddress");
-        String note = request.getParameter("txtNote");
-        HttpSession session = request.getSession();
-        String url = SUCCESS_PAGE;
-        try {         
+        String selectedOrderID = request.getParameter("selectedOrderID");
+        String url = DETAIL_LIST_PAGE;
+        try {
+            OrderDetailDAO dao = new OrderDetailDAO();
+            ArrayList<OrderItemObj> detailList = dao.GetOrderDetailByOrderID(Integer.parseInt(selectedOrderID));
 
-            
-            if (session != null) {
-                //2.Take customer's cart
-                Cart cart = (Cart) session.getAttribute("CART");
-                if (cart != null) {
-                    Map<Integer,ProductDTO> items = cart.getItems();
-                    if (items != null) {
-                        //3.Create order
-                        UserDAO dao= new UserDAO();
-                        int saleID = dao.getSaleMemberActive();
-                         OrderDAO orderDAO = new OrderDAO();
-                        int newOrderID = orderDAO.CreateOrder(Integer.parseInt(custId), Receivername, Integer.parseInt(Receivergender), address, email, phone, note, saleID);
-                        //4.Get each item and add to order
-                        OrderDetailDAO detailDAO = new OrderDetailDAO();
-                        
-                        
-                        for (int ID : items.keySet()) {
-                            
-//                            detailDAO.CreateOrderDetail(newOrderID, product, items.get(ID));
-                        }//end for items.keySet
-                    }//end if items is not null  
-                    session.removeAttribute("CART");
-                }//end if cart is not null
-            }//end if session is not null
+            ProductDAO productDAO = new ProductDAO();
+
+            productDAO.getAllProduct();
+            ProductCategoryDAO cate = new ProductCategoryDAO();
+            List<ProductCategoryDTO> categoryList = cate.getCategoryList();
+
+            request.setAttribute("detailList", detailList);
+            request.setAttribute("categoryList", categoryList);
+
         } catch (SQLException ex) {
-            log(" CheckoutServlet SQLException " + ex.getMessage());
+            log("ViewOlderOrderDetailServlet SQLException: " + ex.getMessage());
         } catch (ClassNotFoundException ex) {
-            log(" CheckoutServlet SQLException " + ex.getMessage());
+            log("ViewOlderOrderDetailServlet ClassNotFoundException: " + ex.getMessage());
         } catch (NamingException ex) {
-            log(" CheckoutServlet NamingException " + ex.getMessage());
+            log("ViewOlderOrderDetailServlet NamingException: " + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(SUCCESS_PAGE);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
-
         }
     }
 

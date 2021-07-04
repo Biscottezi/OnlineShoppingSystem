@@ -33,3 +33,4 @@ mktFeedbackDetails = MarketingFeedbackDetails.jsp
 mktSliderDetails = MarketingSliderDetails.jsp
 viewBlogList = ViewBlogListServlet
 custFeedback = customerLoadFeedbackFormServlet
+modifyQuantityCart = modifyQuantityCartServlet

@@ -2,6 +2,12 @@
 <Context path="/OnlineShoppingSystem">
     <Resource name="logname" auth="Container" type="javax.sql.DataSource"
                 driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+<<<<<<< HEAD
                 url="jdbc:sqlserver://localhost:1433;databaseName=OnlineShopping"
                 username="quannpm" password="admin"/>
 </Context>
+=======
+                url="jdbc:sqlserver://localhost:1433;databaseName=OnlineShoppingSystem"
+                username="lamdh" password="123"/>
+</Context>
+>>>>>>> bb2b2788b4260d0f44dc3721496c40b934f34bdb

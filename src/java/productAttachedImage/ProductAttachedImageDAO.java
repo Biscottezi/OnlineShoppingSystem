@@ -21,9 +21,9 @@ import utils.DBHelper;
  * @author ASUS
  */
 public class ProductAttachedImageDAO implements Serializable{
-    private List<ProductAttachedImageDTO> productImageList;
+    private List<String> productImageList;
 
-    public List<ProductAttachedImageDTO> getProductImageList() {
+    public List<String> getProductImageList() {
         return productImageList;
     }
     
@@ -34,21 +34,20 @@ public class ProductAttachedImageDAO implements Serializable{
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "SELECT ImageID, Name "
+                String sql = "SELECT Name "
                         + "FROM ProductAttachedImage "
-                        + "WHERE productID = ? ";
+                        + "WHERE ProductID = ? ";
 
                 stm = con.prepareStatement(sql);
+                stm.setInt(1, productID);
                 rs = stm.executeQuery();
 
                 while (rs.next()) {
-                    int id = rs.getInt("PostID");
-                    String name = rs.getString("Title");
-                    ProductAttachedImageDTO dto = new ProductAttachedImageDTO(id, name);
+                    String name = rs.getString("Name");
                     if (this.productImageList == null) {
                         this.productImageList = new ArrayList<>();
                     }
-                    this.productImageList.add(dto);
+                    this.productImageList.add(name);
                 }
             }
         } finally {

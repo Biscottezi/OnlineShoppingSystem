@@ -62,11 +62,10 @@ public class viewProductDetailsServlet extends HttpServlet {
             
             ProductAttachedImageDAO imageDao = new ProductAttachedImageDAO();
             imageDao.getProductImages(Integer.parseInt(productID));
-            List<ProductAttachedImageDTO> imageDto = imageDao.getProductImageList();
+            List<String> imageDto = imageDao.getProductImageList();
             if(imageDto != null){
                 request.setAttribute("PRODUCT_IMAGES", imageDto);
             }
-            
             url = PRODUCT_DETAILS_PAGE;
         }catch(SQLException ex){
             log("viewProductDetailsServlet _ SQL:" + ex.getMessage());

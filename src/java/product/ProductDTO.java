@@ -25,11 +25,12 @@ public class ProductDTO implements Serializable{
     private int featured;
     private int status;
     private Date createdDate;
+    private int RatedStar;
 
     public ProductDTO() {
     }
 
-    public ProductDTO(int id, String title, int categoryId, String thumbnail, String briefInfo, String description, int quantity, float listPrice, float salePrice, int featured, int status, Date createdDate) {
+    public ProductDTO(int id, String title, int categoryId, String thumbnail, String briefInfo, String description, int quantity, float listPrice, float salePrice, int featured, int status, Date createdDate, int RatedStar) {
         this.id = id;
         this.title = title;
         this.categoryId = categoryId;
@@ -42,6 +43,7 @@ public class ProductDTO implements Serializable{
         this.featured = featured;
         this.status = status;
         this.createdDate = createdDate;
+        this.RatedStar = RatedStar;
     }
 
     public int getId() {
@@ -139,5 +141,15 @@ public class ProductDTO implements Serializable{
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
+
+    public int getRatedStar() {
+        return RatedStar;
+    }
+
+    public void setRatedStar(int RatedStar) {
+        this.RatedStar = RatedStar;
+    }
+
+    
     
 }

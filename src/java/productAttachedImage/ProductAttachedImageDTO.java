@@ -12,23 +12,25 @@ import java.io.Serializable;
  * @author ASUS
  */
 public class ProductAttachedImageDTO implements Serializable{
-    private int id;
+    private int imageId;
     private String name;
+    private String productId;
 
     public ProductAttachedImageDTO() {
     }
 
-    public ProductAttachedImageDTO(int id, String name) {
-        this.id = id;
+    public ProductAttachedImageDTO(int imageId, String name, String productId) {
+        this.imageId = imageId;
         this.name = name;
+        this.productId = productId;
     }
 
-    public int getId() {
-        return id;
+    public int getImageId() {
+        return imageId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
     }
 
     public String getName() {
@@ -38,5 +40,15 @@ public class ProductAttachedImageDTO implements Serializable{
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    
     
 }
