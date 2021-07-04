@@ -45,7 +45,7 @@
                         <a href="viewBlogList">Blogs</a>
                     </li>
                 </ul>
-                <i class="fas fa-shopping-cart col-1"></i>
+                <i class="fas fa-shopping-cart col-1" onclick="location.href='viewCart'"></i>
                 <c:choose>
                     <c:when test="${not empty sessionScope.USER}">
                         <!--Customer welcome-->

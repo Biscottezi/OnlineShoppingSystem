@@ -44,7 +44,7 @@ public class CheckOutServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+/*        response.setContentType("text/html;charset=UTF-8");
         String custId = request.getParameter("custId");
         String Receivername = request.getParameter("txtReceiverName");
         String Receivergender = request.getParameter("txtReceiverGender");
@@ -72,7 +72,7 @@ public class CheckOutServlet extends HttpServlet {
                         for (int ID : items.keySet()) {
                             detailDAO.CreateOrderDetail(newOrderID, ID, items.get(ID));
                         }//end for items.keySet
-                    }//end if items is not null
+                    }//end if items is not null  
                     session.removeAttribute("CART");
                 }//end if cart is not null
             }//end if session is not null
@@ -86,7 +86,7 @@ public class CheckOutServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher(SUCCESS_PAGE);
             rd.forward(request, response);
 
-        }
+        }*/
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -37,7 +37,7 @@ public class addToCartServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String urlRewriting = "viewProductDetails"
-                + "&productID=" + Integer.parseInt(request.getParameter("txtProductId"));
+                + "?productID=" + Integer.parseInt(request.getParameter("txtProductId"));
 //        if (request.getParameter("LastSearchProduct") != null) {
 //            urlRewriting = "searchProduct"
 //                    + "&txtSearchedProduct=" + request.getParameter("LastSearchProduct");

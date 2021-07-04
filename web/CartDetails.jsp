@@ -56,53 +56,55 @@
                 <!--Main content-->
                 <div class="main-content container col-10" style="min-height: 700px;">
                     <h1>Your Cart</h1>
+                    <c:set var="cart" value="${sessionScope.CART}"/>
+                    <c:set var="products" value="${cart.items}"/>
+                    <c:set var="sum" value="${0}"/>
                     <div class="row">
                         <div class="product-in-cart col-8">
-                            <div class="product row container">
-                                <img src="img/product-thumbnail.jpg" alt="product" class="col-3">
-                                <div class="product-info container col-9">
-                                    <form action="removeFromCart">
-                                        <div class="d-flex justify-content-between">
-                                            <h4>Vintage Typewriter</h4>
-                                            <h5>$49.50</h5>
-                                        </div>
-                                        <input type="hidden" value="product-id-here" name="txtProductId">
-                                        <label for="txtQuantity">Quantity</label><br>
-                                        <div class="d-flex justify-content-between">
-                                            <input type="number" name="txtQuantity" value="1">
-                                            <button type="submit" name="btAction" class="btn-remove">Remove</button>
-                                        </div>
-                                    </form>
+                        <c:if test="${not empty products}">
+                            <c:forEach var="product" items="${products}">
+                                <div class="product row container">
+                                    <img src="img/${product.key.thumbnail}" alt="product" class="col-3">
+                                    <div class="product-info container col-9">
+                                        <form action="removeFromCart" method="POST">
+                                            <div class="d-flex justify-content-between">
+                                                <h4>${product.key.title}</h4>
+                                                <h5>Unit Price: 
+                                                    <c:choose>
+                                                        <c:when test="${not empty product.key.salePrice}">
+                                                            ${product.key.salePrice}
+                                                            <c:set var="sum" value="${sum + product.key.salePrice * product.value}"/>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            ${product.key.listPrice}
+                                                            <c:set var="sum" value="${sum + product.key.listPrice * product.value}"/>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </h5>
+                                            </div>
+                                            <input type="hidden" value="${product.key.id}" name="txtProductId">
+                                            <label for="txtQuantity">Quantity</label><br>
+                                            <div class="d-flex justify-content-between">
+                                                <input type="number" name="txtQuantity" value="${product.value}">
+                                                <button type="submit" name="btAction" class="btn-remove">Remove</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="product row container">
-                                <img src="img/product-thumbnail.jpg" alt="product" class="col-3">
-                                <div class="product-info container col-9">
-                                    <form action="">
-                                        <div class="d-flex justify-content-between">
-                                            <h4>Plastic Plugs</h4>
-                                            <h5>$24.96</h5>
-                                        </div>
-                                        <input type="hidden" value="product-id-here" name="txtProductId">
-                                        <label for="txtQuantity">Quantity</label><br>
-                                        <div class="d-flex justify-content-between">
-                                            <input type="number" name="txtQuantity" value="2">
-                                            <button type="submit" name="btAction" class="btn-remove">Remove</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+                            </c:forEach>
+                        </c:if>
+                           
                         </div>
 
                         <div class="summary col-4 d-flex flex-column">
                             <h3 class="mb-auto">SUMMARY</h3>
                             <div class="d-flex justify-content-between">
                                 <span>Total:</span>
-                                <span>$81.91</span>
+                                <span>$${sum}</span>
                             </div>
                             <br>
                             <div class="d-flex justify-content-between">
-                                <button class="btn-buy-more">BUY MORE</button>
+                                <button class="btn-buy-more" onclick="location.href='viewAllProduct'">BUY MORE</button>
                                 <button class="btn-checkout" name="btAction">CHECKOUT</button>
                             </div>
                         </div>
