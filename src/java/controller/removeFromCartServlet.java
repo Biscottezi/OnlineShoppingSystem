@@ -49,7 +49,7 @@ public class removeFromCartServlet extends HttpServlet {
                 Cart cart = (Cart) session.getAttribute("CART");
                 if (cart != null) {
                     //3.Cust gets items
-                    Map<ProductDTO, Integer> itemsList = cart.getItems();
+                    Map<Integer, ProductDTO> itemsList = cart.getItems();
                     if (itemsList != null) {
                         //4. Cust chooses removed book
                         int removedProductID = 0;

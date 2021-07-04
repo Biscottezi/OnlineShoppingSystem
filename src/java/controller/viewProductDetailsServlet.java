@@ -22,6 +22,7 @@ import productAttachedImage.ProductAttachedImageDAO;
 import productAttachedImage.ProductAttachedImageDTO;
 import productCategory.ProductCategoryDAO;
 import productCategory.ProductCategoryDTO;
+import productImage.ProductImageDAO;
 
 /**
  *
@@ -60,13 +61,19 @@ public class viewProductDetailsServlet extends HttpServlet {
                 request.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
             }
             
-            ProductAttachedImageDAO imageDao = new ProductAttachedImageDAO();
-            imageDao.getProductImages(Integer.parseInt(productID));
-            List<ProductAttachedImageDTO> imageDto = imageDao.getProductImageList();
-            if(imageDto != null){
-                request.setAttribute("PRODUCT_IMAGES", imageDto);
+            ProductImageDAO imageDao = new ProductImageDAO();
+            imageDao.getProductImagesID(Integer.parseInt(productID));
+            List<Integer> imageIDList = imageDao.getProductImageIDList();
+            if(imageIDList != null){
+                ProductAttachedImageDAO attachedImageDao = new ProductAttachedImageDAO();
+                for(int i=0 ; i<imageIDList.size(); i++){
+                    attachedImageDao.getProductImages(imageIDList.get(i));
+                    List<ProductAttachedImageDTO> imageDto = attachedImageDao.getProductImageList();
+                    if(imageDto != null){
+                        request.setAttribute("PRODUCT_IMAGES", imageDto);
+                    }
+                }
             }
-            
             url = PRODUCT_DETAILS_PAGE;
         }catch(SQLException ex){
             log("viewProductDetailsServlet _ SQL:" + ex.getMessage());
