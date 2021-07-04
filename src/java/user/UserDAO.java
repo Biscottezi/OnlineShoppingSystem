@@ -357,5 +357,38 @@ public class UserDAO implements Serializable {
         return false;
     }
 
-    
+    public int getSaleMemberActive() throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT UserID "
+                        + "FROM [User] "
+                        + "Where Role = 1 AND Status = 1 AND rownum = 1";
+                stm = con.prepareStatement(sql);
+                
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int UserID = rs.getInt("UserID");
+                    return UserID;
+                }
+                //return UserID;
+                
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return  0;
+    }
 }
