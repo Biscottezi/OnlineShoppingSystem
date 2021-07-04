@@ -57,12 +57,13 @@ public class CheckOutServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String url = SUCCESS_PAGE;
         try {         
+
             
             if (session != null) {
                 //2.Take customer's cart
                 Cart cart = (Cart) session.getAttribute("CART");
                 if (cart != null) {
-                    Map<ProductDTO, Integer> items = cart.getItems();
+                    Map<Integer,ProductDTO> items = cart.getItems();
                     if (items != null) {
                         //3.Create order
                         UserDAO dao= new UserDAO();
@@ -73,7 +74,7 @@ public class CheckOutServlet extends HttpServlet {
                         OrderDetailDAO detailDAO = new OrderDetailDAO();
                         
                         
-                        for (ProductDTO product : items.keySet()) {
+                        for (int ID : items.keySet()) {
                             
 //                            detailDAO.CreateOrderDetail(newOrderID, product, items.get(ID));
                         }//end for items.keySet

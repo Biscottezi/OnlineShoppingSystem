@@ -27,7 +27,7 @@ public class ProductAttachedImageDAO implements Serializable{
         return productImageList;
     }
     
-    public void getProductImages(int productID) throws SQLException, NamingException {
+    public void getProductImages(int imageID) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -36,9 +36,10 @@ public class ProductAttachedImageDAO implements Serializable{
             if (con != null) {
                 String sql = "SELECT ImageID, Name "
                         + "FROM ProductAttachedImage "
-                        + "WHERE productID = ? ";
+                        + "WHERE ImageID = ? ";
 
                 stm = con.prepareStatement(sql);
+                stm.setInt(1, imageID);
                 rs = stm.executeQuery();
 
                 while (rs.next()) {

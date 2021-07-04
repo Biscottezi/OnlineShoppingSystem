@@ -5,10 +5,9 @@
  */
 package controller;
 
+import cart.Cart;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,22 +15,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import product.ProductDAO;
-import product.ProductDTO;
-import productAttachedImage.ProductAttachedImageDAO;
-import productAttachedImage.ProductAttachedImageDTO;
-import productCategory.ProductCategoryDAO;
-import productCategory.ProductCategoryDTO;
-import productImage.ProductImageDAO;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "viewProductDetailsServlet", urlPatterns = {"/viewProductDetailsServlet"})
-public class viewProductDetailsServlet extends HttpServlet {
+@WebServlet(name = "modifyQuantityCartServlet", urlPatterns = {"/modifyQuantityCartServlet"})
+public class modifyQuantityCartServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
-    private final String PRODUCT_DETAILS_PAGE = "ProductDetails.jsp";
+    private final String CART_DETAILS_PAGE = "CartDetails.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,41 +37,22 @@ public class viewProductDetailsServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String productID = request.getParameter("productID");
         String url = ERROR_PAGE;
+        
         try{
-            ProductDAO productDao = new ProductDAO();
-            productDao.searchProductByID(Integer.parseInt(productID));
-            ProductDTO productDto = productDao.getProduct();
-            if(productDto != null){
-                request.setAttribute("PRODUCT_DETAILS", productDto);
-            }
-            
-            ProductCategoryDAO productCategoryDao = new ProductCategoryDAO();
-            productCategoryDao.getAllCategory();
-            List<ProductCategoryDTO> productCategoryDto = productCategoryDao.getCategoryList();
-            if(productCategoryDto != null){
-                request.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
-            }
-            
-            ProductImageDAO imageDao = new ProductImageDAO();
-            imageDao.getProductImagesID(Integer.parseInt(productID));
-            List<Integer> imageIDList = imageDao.getProductImageIDList();
-            if(imageIDList != null){
-                ProductAttachedImageDAO attachedImageDao = new ProductAttachedImageDAO();
-                for(int i=0 ; i<imageIDList.size(); i++){
-                    attachedImageDao.getProductImages(imageIDList.get(i));
-                    List<ProductAttachedImageDTO> imageDto = attachedImageDao.getProductImageList();
-                    if(imageDto != null){
-                        request.setAttribute("PRODUCT_IMAGES", imageDto);
-                    }
-                }
-            }
-            url = PRODUCT_DETAILS_PAGE;
+            HttpSession session = request.getSession(true);
+            //2. Cust takes a cart
+            Cart cart = (Cart) session.getAttribute("CART");
+            int ID = Integer.parseInt(request.getParameter("txtProductId"));
+            int quantity = Integer.parseInt(request.getParameter("txtQuantity"));
+            cart.modifyQuantity(ID, quantity);
+
+            session.setAttribute("CART", cart);
+            url = CART_DETAILS_PAGE;
         }catch(SQLException ex){
-            log("viewProductDetailsServlet _ SQL:" + ex.getMessage());
+            log("modifyQuantityCartServlet _ SQL:" + ex.getMessage());
         }catch(NamingException ex){
-            log("viewProductDetailsServlet _ Naming:" + ex.getMessage());
+            log("modifyQuantityCartServlet _ Naming:" + ex.getMessage());
         }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
