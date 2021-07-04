@@ -38,7 +38,7 @@ public class ViewBlogListServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private final String ERROR_PAGE="error.html";
+    private final String ERROR_PAGE="Error.html";
     private final String BLOG_LIST="BlogList.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
