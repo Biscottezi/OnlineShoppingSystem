@@ -55,15 +55,22 @@
                         <div class="col-6 product-info">
                             <h2>${product.title}</h2>
                             <span>Star: 4/5</span>
-                            <h4 style="text-decoration: line-through">$${product.listPrice}</h4>
-                            <h1>$${product.salePrice}</h1>
+                            <c:choose>
+                                <c:when test="${not empty product.listPrice}">
+                                    <h4 style="text-decoration: line-through">$${product.listPrice}</h4>
+                                    <h1>$${product.salePrice}</h1>
+                                </c:when>
+                                <c:otherwise>
+                                    <h1>$${product.listPrice}</h1>
+                                </c:otherwise>
+                            </c:choose>
                             <p>${product.briefInfo}</p>
-                            <form action="">
+                            <form action="addToCart" method="POST">
                                 <label for="quantity-input">Quantity</label><br>
                                 <div class="row">
                                     <div id="quantity-input">
                                         <input type="number" name="txtQuantity" value="1" class="quantity-input" min="1">
-                                        <input type="hidden" name="productID" value="${product.id}"/>
+                                        <input type="hidden" name="txtProductId" value="${product.id}"/>
                                     </div>
                                     <button type="submit" class="btn-add-to-cart" name="btAction">
                                         <i class="fas fa-shopping-cart"></i>

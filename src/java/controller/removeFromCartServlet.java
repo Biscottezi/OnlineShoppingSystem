@@ -26,7 +26,7 @@ import product.ProductDTO;
 @WebServlet(name = "removeFromCartServlet", urlPatterns = {"/removeFromCartServlet"})
 public class removeFromCartServlet extends HttpServlet {
     private final String ERROR = "error";
-    private final String CART_DETAILS = "CartDetails";
+    private final String CART_DETAILS = "viewCart";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

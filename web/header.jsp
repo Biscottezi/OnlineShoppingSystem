@@ -32,7 +32,7 @@
                     </a>
                 </div>
                 <form action="searchProduct" class="col-3 searchbar">
-                    <input type="text" placeholder="Search" class="search-input col-10" name="txtSearchProduct" value="">
+                    <input type="text" placeholder="Search" class="search-input col-10" name="txtSearchProduct" value="${param.txtSearchProduct}">
                     <button type="submit" id="search-button" class="col-2" name="btAction">
                         <i class="fas fa-search"></i>
                     </button>
@@ -45,7 +45,7 @@
                         <a href="viewBlogList">Blogs</a>
                     </li>
                 </ul>
-                <i class="fas fa-shopping-cart col-1"></i>
+                <i class="fas fa-shopping-cart col-1" onclick="location.href='viewCart'"></i>
                 <c:choose>
                     <c:when test="${not empty sessionScope.USER}">
                         <!--Customer welcome-->

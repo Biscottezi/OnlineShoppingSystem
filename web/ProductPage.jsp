@@ -31,7 +31,7 @@
                 <div class="sider col-2">
                     <div class="col">
                         <form action="searchProduct" class="col-sm-12 searchbar">
-                            <input type="text" placeholder="Search" class="search-input col-sm-10" name="txtSearchProduct" value="">
+                            <input type="text" placeholder="Search" class="search-input col-sm-10" name="txtSearchProduct" value="${param.txtSearchProduct}">
                             <button type="submit" id="search-button" class="col-sm-2">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -49,14 +49,14 @@
 
                 <div class="main-content col-10">
                     <div class="container" style="padding-left: 24px;">
-                        <h1>Latest products</h1>
-                        <c:if test="${not empty requestScope.txtSearchedProduct}">
-                            <h3>Results for "${requestScope.txtSearchedProduct}"</h3>
-                        </c:if>
-                        <select name="" id="">
-                            <option value="" selected>Newest</option>
-                            <option value="">Oldest</option>
-                        </select>
+                        <c:choose>
+                            <c:when test="${not empty param.txtSearchProduct}">
+                                <h3>Results for "${param.txtSearchProduct}"</h3>
+                            </c:when>
+                            <c:otherwise>
+                                <h1>Latest products</h1>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                     <div class="row product-row">
                         <c:set var="productList" value="${requestScope.ALL_PRODUCT_LIST}"/>
@@ -65,8 +65,16 @@
                             <div class="card">
                                 <img src="img/${product.thumbnail}" alt="product-thumbnail" class="card-img-top">
                                 <div class="card-body">
-                                    <h5 class="card-title">${product.title}</h5>
-                                    <h3 class="card-title card-price">$${product.salePrice}</h3>
+                                    <h4 class="card-title">${product.title}</h4>
+                                    <c:choose>
+                                        <c:when test="${not empty product.salePrice}">
+                                            <h5 class="card-title card-price" style="text-decoration: line-through; font-size: 18px">$${product.listPrice}</h5>
+                                            <h3 class="card-title card-price">$${product.salePrice}</h3>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <h3 class="card-title card-price">$${product.listPrice}</h3>
+                                        </c:otherwise>
+                                    </c:choose>
                                     <p class="card-text">${product.briefInfo}</p>
                                     <p class="card-text">Star: 4/5</p>
                                 </div>

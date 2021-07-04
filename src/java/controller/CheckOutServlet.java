@@ -73,7 +73,7 @@ public class CheckOutServlet extends HttpServlet {
                             
 //                            detailDAO.CreateOrderDetail(newOrderID, product, items.get(ID));
                         }//end for items.keySet
-                    }//end if items is not null
+                    }//end if items is not null  
                     session.removeAttribute("CART");
                 }//end if cart is not null
             }//end if session is not null
