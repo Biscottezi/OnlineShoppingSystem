@@ -46,7 +46,7 @@ public class viewUserDetailsPageServlet extends HttpServlet {
             dao.getUserByID(Integer.parseInt(userID));
             UserDTO user = dao.getUser();
             if(user != null){
-                request.setAttribute("USER", user);
+                request.setAttribute("USER_DETAILS", user);
             }
             url = USER_DETAILS_PAGE;
         }catch(SQLException ex){
