@@ -310,7 +310,7 @@ public class UserDAO implements Serializable {
     }
     
     public boolean AddUserByAdmin(String name, int gender, String address, String email, String phone, int status, String avatar, int role, String password)
-            throws SQLException, ClassNotFoundException, NamingException {
+            throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
