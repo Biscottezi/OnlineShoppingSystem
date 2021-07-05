@@ -119,8 +119,8 @@ public class OrderDAO implements Serializable{
     public int CreateOrder(int custId, String ReceiverName,int ReceiverGender, String ReceiverAddress, String ReceiverEmail, String ReceiverPhone, String Note, int SaleID) throws SQLException, ClassNotFoundException, NamingException {
         Connection con = DBHelper.makeConnection();
 
-        String sql = "INSERT INTO tblOrder(OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID)"
-                + " VALUES (GETDATE() , ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO tblOrder(OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID,Status)"
+                + " VALUES (GETDATE() , ?, ?, ?, ?, ?, ?, ?, ?, 0)";
         PreparedStatement stm = null;
         ResultSet rs = null;
         Integer newlyAddedOrderID = 0;
