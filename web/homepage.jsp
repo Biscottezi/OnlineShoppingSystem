@@ -69,7 +69,7 @@
                                                         <h5 class="card-title">${product.title}</h5>
                                                         <h3 class="card-title">${product.salePrice}</h3>
                                                         <p class="card-text">${product.briefInfo}</p>
-                                                        <p class="card-text">Star: 4/5</p>
+                                                        <p class="card-text">Star: ${product.ratedStar}/5</p>
                                                     </div>
                                                 </div>
                                             </div>

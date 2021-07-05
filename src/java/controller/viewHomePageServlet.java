@@ -21,8 +21,6 @@ import post.PostDAO;
 import post.PostDTO;
 import product.ProductDAO;
 import product.ProductDTO;
-import productCategory.ProductCategoryDAO;
-import productCategory.ProductCategoryDTO;
 import slider.SliderDAO;
 import slider.SliderDTO;
 import sliderContent.SliderContentDAO;
