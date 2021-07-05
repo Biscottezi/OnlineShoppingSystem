@@ -72,11 +72,11 @@ public class CheckOutServlet extends HttpServlet {
                         int newOrderID = orderDAO.CreateOrder(Integer.parseInt(custId), Receivername, Integer.parseInt(Receivergender), address, email, phone, note, saleID);
                         //4.Get each item and add to order
                         OrderDetailDAO detailDAO = new OrderDetailDAO();
-                        
+                        ProductDTO dto =new ProductDTO();
                         
                         for (int ID : items.keySet()) {
-                            
-//                            detailDAO.CreateOrderDetail(newOrderID, product, items.get(ID));
+                            int quantity = dto.getQuantity();
+                            detailDAO.CreateOrderDetail(newOrderID, ID, quantity);
                         }//end for items.keySet
                     }//end if items is not null  
                     session.removeAttribute("CART");
