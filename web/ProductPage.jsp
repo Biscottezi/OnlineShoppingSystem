@@ -67,7 +67,7 @@
                                 <div class="card-body">
                                     <h4 class="card-title">${product.title}</h4>
                                     <c:choose>
-                                        <c:when test="${not empty product.salePrice}">
+                                        <c:when test="${product.salePrice != 0}">
                                             <h5 class="card-title card-price" style="text-decoration: line-through; font-size: 18px">$${product.listPrice}</h5>
                                             <h3 class="card-title card-price">$${product.salePrice}</h3>
                                         </c:when>

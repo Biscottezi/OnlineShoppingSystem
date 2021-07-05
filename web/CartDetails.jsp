@@ -38,18 +38,12 @@
                         </form>
                         <br>
                         <h4>Categories</h4>
-                        <div class="category">
-                            <a href="">Smartphone</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Laptop</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Smartwatch</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Earphone</a>
-                        </div>
+                        <c:set var="productCategoryList" value="${requestScope.PRODUCT_CATEGORY}"/>
+                        <c:forEach var="category" items="${productCategoryList}">
+                            <div class="category">
+                                <a href="">${category.name}</a>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
 
@@ -64,28 +58,28 @@
                         <c:if test="${not empty products}">
                             <c:forEach var="product" items="${products}">
                                 <div class="product row container">
-                                    <img src="img/${product.key.thumbnail}" alt="product" class="col-3">
+                                    <img src="img/${product.value.thumbnail}" alt="product" class="col-3">
                                     <div class="product-info container col-9">
                                         <form action="removeFromCart" method="POST">
                                             <div class="d-flex justify-content-between">
-                                                <h4>${product.key.title}</h4>
+                                                <h4>${product.value.title}</h4>
                                                 <h5>Unit Price: 
                                                     <c:choose>
-                                                        <c:when test="${not empty product.key.salePrice}">
-                                                            ${product.key.salePrice}
-                                                            <c:set var="sum" value="${sum + product.key.salePrice * product.value}"/>
+                                                        <c:when test="${product.value.salePrice != 0}">
+                                                            ${product.value.salePrice}
+                                                            <c:set var="sum" value="${sum + product.value.salePrice * product.value.quantity}"/>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            ${product.key.listPrice}
-                                                            <c:set var="sum" value="${sum + product.key.listPrice * product.value}"/>
+                                                            ${product.value.listPrice}
+                                                            <c:set var="sum" value="${sum + product.value.listPrice * product.value.quantity}"/>
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </h5>
                                             </div>
-                                            <input type="hidden" value="${product.key.id}" name="txtProductId">
+                                            <input type="hidden" value="${product.key}" name="txtProductId">
                                             <label for="txtQuantity">Quantity</label><br>
                                             <div class="d-flex justify-content-between">
-                                                <input type="number" name="txtQuantity" value="${product.value}">
+                                                <input type="number" name="txtQuantity" value="${product.value.quantity}" class="quantity-input" onchange="location.href='modifyQuantityCart?txtProductId=${product.key}&txtQuantity='+this.value">
                                                 <button type="submit" name="btAction" class="btn-remove">Remove</button>
                                             </div>
                                         </form>
