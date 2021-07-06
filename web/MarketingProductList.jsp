@@ -535,10 +535,11 @@
                     Category<br>
                     <select id="gender" class="inputbox" form="createform" name="productCategory">
                         <option value="" selected disabled hidden>Select category</option>
-                            <option value="1">Smartphone</option>
-                            <option value="1">Laptop</option>
-                            <option value="2">Smartwatch</option>
-                            <option value="3">Earphone</option>
+                        <option value="1">Phone</option>
+                        <option value="2">Laptop</option>
+                        <option value="3">Tablet</option>
+                        <option value="4">Smartwatch</option>
+                        <option value="5">Earphone</option>
                     </select>
                 </div>
             </div>
