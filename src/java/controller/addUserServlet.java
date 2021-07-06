@@ -57,7 +57,7 @@ public class addUserServlet extends HttpServlet {
         String email = request.getParameter("txtEmail");
         String phone = request.getParameter("txtMobile");
         String chkStatus = request.getParameter("chkStatus");
-        String avatar = uploadFile.uploadFile(request);
+        String avatar = uploadFile.uploadFile(request, "avatar");
         String role = request.getParameter("txtRole");
         String password;
         int status = 0;

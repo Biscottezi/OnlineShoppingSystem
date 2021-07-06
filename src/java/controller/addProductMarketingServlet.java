@@ -49,7 +49,7 @@ public class addProductMarketingServlet extends HttpServlet {
         
         String Title = request.getParameter("txtTitle");
         String ProductCategoryID = request.getParameter("txtCategory");
-        String Thumbnail = uploadFile.uploadFile(request);
+        String Thumbnail = uploadFile.uploadFile(request, "productThumbnail");
         String BriefInfo = request.getParameter("txtBriefInfo");
         String Description = request.getParameter("");
         String Quantity = request.getParameter("");

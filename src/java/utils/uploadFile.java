@@ -31,10 +31,10 @@ import javax.servlet.http.Part;
 public class uploadFile implements Serializable{
     private static final String UPLOAD_DIR = "img";
     
-    public static String uploadFile(HttpServletRequest request) throws IOException, ServletException {
+    public static String uploadFile(HttpServletRequest request, String paramName) throws IOException, ServletException {
                 String fileName = "";
                 try {
-                    Part filePart = request.getPart("photo");
+                    Part filePart = request.getPart(paramName);
                     fileName = (String) getFileName(filePart);
 
                     String applicationPath = request.getServletContext().getRealPath("");
