@@ -201,7 +201,11 @@
                             Featured<br>
                             <input name="postFeatured" type="checkbox" form="updateform" checked="checked" value="ON" style="margin-top: 10px; zoom: 2"/>
                             <div style="margin-top:18px;">Category</div>
-                            <div class="userinfo" style="padding-left: 10px">Tu van</div>
+                            <select name="postCategory" form="updateform" class="editbox">
+                                <option value="1">Đánh giá</option>
+                                <option value="2">Mẹo hay</option>
+                                <option value="3">Tư vấn</option>
+                            </select>
                         </div>
                     </div>
                     <div class="infor row">
@@ -239,7 +243,7 @@
                             </div>
                         </div>
                         <div class="col-2">
-                            <input type="hidden" form="updateform" value=""/>
+                            <input type="hidden" name="postID" form="updateform" value=""/>
                         </div>
                         <div class="col-4">
                             <div class="savewrapper row d-flex align-items-end justify-content-end">
@@ -284,6 +288,6 @@
             </div>
         </div>
         
-        <form action="" id="updateform"></form>
+        <form action="" id="updateform" method="POST" enctype="multipart/form-data"></form>
     </body>
 </html>

@@ -42,3 +42,8 @@ h6{
     width: 380px;
     height: 150px;
 }
+
+span{
+    font-size: 18px;
+    font-weight: 600;
+}

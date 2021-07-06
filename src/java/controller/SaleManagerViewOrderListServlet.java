@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,8 +23,8 @@ import order.OrderDTO;
  *
  * @author Admin
  */
-@WebServlet(name = "ViewSaleOrderListServlet", urlPatterns = {"/ViewSaleOrderListServlet"})
-public class ViewSaleOrderListServlet extends HttpServlet {
+@WebServlet(name = "SaleManagerViewOrderListServlet", urlPatterns = {"/SaleManagerViewOrderListServlet"})
+public class SaleManagerViewOrderListServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,15 +35,14 @@ public class ViewSaleOrderListServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-     private final String SALE_ORDER_LIST_PAGE = "SaleViewOrderList.jsp";
+    private final String SALE_ORDER_LIST_PAGE = "SaleManagerViewOrderList.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String saleID = request.getParameter("SaleMemberID");
-        String url = SALE_ORDER_LIST_PAGE;
+         String url = SALE_ORDER_LIST_PAGE;
         try {
             OrderDAO dao = new OrderDAO();
-            ArrayList<OrderDTO> orderList = dao.GetOrderListBySaleID(saleID);
+            ArrayList<OrderDTO> orderList = dao.GetAllOrder();
             request.setAttribute("orderList", orderList);
            
         } catch (SQLException ex) {

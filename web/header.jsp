@@ -76,7 +76,7 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="row droplist-btn">
+                        <div class="row droplist-btn" onclick="location.href='custFeedback'">
                             <div class="icon-bg">
                                 <img src="img/feedback.png" alt="">
                             </div>
