@@ -189,27 +189,33 @@
                     <div class="infor row">
                         <div class="col">
                             Title<br>
-                            <input class="editbox" form="updateform" value="Vintage typewriter">
+                            <input class="editbox" form="updateform" value="Vintage typewriter" name="productTitle">
                         </div>
                         <div class="col">
                             Featured<br>
-                            <input type="checkbox" form="updateform" checked="checked" value="ON" style="margin-top: 10px; zoom: 2"/>
+                            <input type="checkbox" name="productFeatured" form="updateform" checked="checked" value="ON" style="margin-top: 10px; zoom: 2"/>
                         </div>
                     </div>
                     <div class="infor row">
                         <div class="col">
                             Brief Info<br>
-                            <textarea class="editbox" form="updateform" style="height: 124px">228 Đường Man Thiện, Phường Tân Phú, Quận 9, Thành phố Hồ Chí Minh</textarea>
+                            <textarea class="editbox" name="productBriefInfo" form="updateform" style="height: 124px">228 Đường Man Thiện, Phường Tân Phú, Quận 9, Thành phố Hồ Chí Minh</textarea>
                             <div style="margin-top: 18px"> Quantity</div>
-                            <input class="editbox" form="updateform" value="481" type="number">
+                            <input class="editbox" form="updateform" value="481" type="number" name="productQuantity">
                         </div>
                         <div class="col">
                             Category<br>
-                            <div class="userinfo" style="padding-left: 10px">Typewriter</div>
+                            <select name="productCategory" form="updateform" class="editbox">
+                                <option value="1">Phone</option>
+                                <option value="2">Laptop</option>
+                                <option value="3">Tablet</option>
+                                <option value="4">Smartwatch</option>
+                                <option value="5">Earphone</option>
+                            </select>
                             <div style="margin-top:18px;">Thumbnail</div>
                             <div class="avawrapper row">
                                 <img id="avapreview" class="col-3" src="http://placehold.it/180" onchange="showPreview();">
-                                <input type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="createform"/>
+                                <input type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="updateform" name="productThumbnail"/>
                                 <div class="col-4 d-flex align-items-end" style="padding-top: 117px;">
                                     <label for="upload" class="d-flex align-items-center justify-content-center uplbtn">
                                         <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
@@ -221,18 +227,18 @@
                     <div class="infor row">
                         <div class="col">
                             Base Price<br>
-                            <input class="editbox" form="updateform" value="$49.50">
+                            <input class="editbox" name="productBasePrice" form="updateform" value="$49.50">
                         </div>
                         <div class="col">
                             Sale Price<br>
-                            <input class="editbox" form="updateform" value="$40.99">
+                            <input class="editbox" name="productSalePrice" form="updateform" value="$40.99">
                         </div>
                     </div>
                         <hr>
                     <div class="info row">
                         <div class="col">
                             <h6 class="input-title">Description</h6>
-                            <textarea id="prod-dscrpt" class="editbox">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
+                            <textarea name="productDescription" id="prod-dscrpt" class="editbox">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
                         </div>
                     </div>
                         <hr>
@@ -240,7 +246,7 @@
                         <div class="col">
                             <h6 class="input-title">Attached Images</h6>
                             <div class="avawrapper" style="margin-top: 20px; margin-bottom: 1.5em">
-                                <input type="file" id="upload-attached" form="updateform" multiple>
+                                <input type="file" id="upload-attached" form="updateform" multiple name="productAttachedImage">
                                 <div class="col-4 d-flex align-items-end">
                                     <label for="upload-attached" class="d-flex align-items-center justify-content-center uplbtn">
                                         <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
@@ -255,7 +261,7 @@
                             Status<br>
                             <div class="statuswrapper row d-flex align-items-end" style="margin:0;">
                                 <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">SELLING</div>
-                                <input type="checkbox" name="chkStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
+                                <input type="checkbox" name="productStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
                             </div>
                         </div>
                         <div class="col-2">
@@ -304,6 +310,6 @@
             </div>
         </div>
         
-        <form action="" id="updateform"></form>
+        <form action="" id="updateform" method="POST" enctype="multipart/form-data"></form>
     </body>
 </html>

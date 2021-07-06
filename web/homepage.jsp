@@ -138,7 +138,7 @@
                                                 </c:otherwise>
                                             </c:choose>
                                             <p class="card-text">${product.briefInfo}</p>
-                                            <p class="card-text">Rated: 4/5 stars</p>
+                                            <p class="card-text">Rated: ${product.ratedStar}/5 stars</p>
                                         </div>
                                     </div>
                                 </div>

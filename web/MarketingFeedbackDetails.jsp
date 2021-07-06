@@ -232,11 +232,11 @@
                             Status<br>
                             <div class="statuswrapper row d-flex align-items-end" style="margin:0;">
                                 <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">RESOLVED</div>
-                                <input type="checkbox" name=" feedbackStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
+                                <input type="checkbox" name="feedbackStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
                             </div>
                         </div>
                         <div class="col-2">
-                            <input type="hidden" form="updateform" value=""/>
+                            <input type="hidden" name="feedbackID" form="updateform" value=""/>
                         </div>
                         <div class="col-4">
                             <div class="savewrapper row d-flex align-items-end justify-content-end">
