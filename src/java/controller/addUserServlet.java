@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import user.UserDAO;
+import utils.sendMail;
 import utils.uploadFile;
 
 /**
@@ -81,6 +82,8 @@ public class addUserServlet extends HttpServlet {
             
             UserDAO dao = new UserDAO();
             dao.AddUserByAdmin(fullName, Integer.parseInt(gender), address, email, phone, status, avatar, Integer.parseInt(role), password);
+            
+            sendMail.mailCreatedUser(email, password);
             
             url = USER_LiST_PAGE;
         }catch(SQLException ex){
