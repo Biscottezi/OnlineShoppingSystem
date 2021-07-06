@@ -371,6 +371,38 @@ public class ProductDAO implements Serializable{
         }
     }
     
+    public boolean addNewProduct()
+            throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "";
+                
+                stm = con.prepareStatement(sql);
+                
+                
+                int rowAffect = stm.executeUpdate();
+                if(rowAffect == 1){
+                    return true;
+                }
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return false;
+    }
+    
 //    public boolean updateProduct(String productTitle, int role, int status)
 //            throws SQLException, NamingException {
 //        Connection con = null;

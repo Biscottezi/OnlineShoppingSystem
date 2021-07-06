@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
@@ -20,13 +21,20 @@ import javax.servlet.http.Part;
  *
  * @author ASUS
  */
+
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 10,
+        maxFileSize = 1024 * 1024 * 50,
+        maxRequestSize = 1024 * 1024 * 100
+)
+
 public class uploadFile implements Serializable{
     private static final String UPLOAD_DIR = "img";
     
-    public static String uploadFile(HttpServletRequest request) throws IOException, ServletException {
+    public static String uploadFile(HttpServletRequest request, String paramName) throws IOException, ServletException {
                 String fileName = "";
                 try {
-                    Part filePart = request.getPart("photo");
+                    Part filePart = request.getPart(paramName);
                     fileName = (String) getFileName(filePart);
 
                     String applicationPath = request.getServletContext().getRealPath("");
@@ -59,8 +67,9 @@ public class uploadFile implements Serializable{
         return fileName;
     }
     
-    public static String uploadFiles(HttpServletRequest request) throws IOException, ServletException {
+    public static ArrayList<String> uploadFiles(HttpServletRequest request, int index) throws IOException, ServletException {
                 String fileName = "";
+                ArrayList<String> fileNameList = new ArrayList<>();
                 try {
                     String applicationPath = request.getServletContext().getRealPath("");
                     String basePath = applicationPath + File.separator + UPLOAD_DIR + File.separator;
@@ -68,8 +77,9 @@ public class uploadFile implements Serializable{
                     OutputStream outputStream = null;
                     
                     ArrayList<Part> filePart = (ArrayList<Part>)request.getParts();
-                    for(int i = 0; i<filePart.size(); i++){
+                    for(int i = index; i<filePart.size(); i++){
                         fileName = (String) getFileName(filePart.get(i));
+                        fileNameList.add(fileName);
                         try {
                             File outputFilePath = new File(basePath + fileName);
                             inputStream = filePart.get(i).getInputStream();
@@ -93,7 +103,7 @@ public class uploadFile implements Serializable{
                 } catch (IOException | ServletException e) {
                     fileName = "";
                 }
-                return fileName;
+                return fileNameList;
     }
     
     
