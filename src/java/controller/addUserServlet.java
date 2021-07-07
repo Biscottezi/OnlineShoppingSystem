@@ -61,6 +61,7 @@ public class addUserServlet extends HttpServlet {
         String role = request.getParameter("txtRole");
         String password;
         int status = 0;
+        System.out.println(request.getHeader("content-disposition")+ "asdasda");
         
         try{
             if(chkStatus != null){
