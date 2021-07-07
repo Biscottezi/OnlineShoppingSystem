@@ -5,10 +5,10 @@
  */
 package controller;
 
-import feedBack.FeedBackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,15 +16,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import order.OrderDAO;
+import order.OrderDTO;
+import post.PostDAO;
+import post.PostDTO;
 
 /**
  *
- * @author nguye
+ * @author Admin
  */
-@WebServlet(name = "submitFeedbackServlet", urlPatterns = {"/submitFeedbackServlet"})
-public class submitFeedbackServlet extends HttpServlet {
-    private final String ERROR_PAGE = "Error.html";
-    private final String HOMEPAGE = "viewHomePageServlet";
+@WebServlet(name = "SearchOrderListServlet", urlPatterns = {"/SearchOrderListServlet"})
+public class SearchOrderListServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,45 +37,31 @@ public class submitFeedbackServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private final String ERROR_PAGE = "Error.html";
+    private final String ORDER_PAGE = "SaleMemberOrders.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         String url = ERROR_PAGE;
         try{
-            String productID = request.getParameter("txtProductId");
-            String name = request.getParameter("txtName");
-            String email = request.getParameter("txtEmail");
-            String phone = request.getParameter("txtMobile");
-            String rating = request.getParameter("txtRating");
-            int ratedStar = Integer.parseInt(rating);
-            String content = request.getParameter("txtFeedbackContent");
-            if(productID != null){
-                int prodID = Integer.parseInt(productID);
-                FeedBackDAO dao = new FeedBackDAO();
-                boolean result = dao.addNewProductFeedback(name, content, email, phone, ratedStar, prodID);
-                if(result){
-                    url = HOMEPAGE;
-                }
+            String searchedCust = request.getParameter("txtSearchCustomerName");
+            OrderDAO dao = new OrderDAO();
+            dao.searchCustName(searchedCust);
+            List<OrderDTO> orderList = dao.getOrderList();
+            if(orderList != null){
+                request.setAttribute("ORDER_LIST", orderList);
             }
-            else{
-                FeedBackDAO dao = new FeedBackDAO();
-                boolean result = dao.addNewGeneralFeedback(name, content, email, phone, ratedStar);
-                if(result){
-                    url = HOMEPAGE;
-                }
-            }
-        }
-        catch(SQLException ex){
-            log("SubmitFeedbackServlet_SQL: " + ex.getMessage());
-        }
-        catch(NamingException ex){
-            log("SubmitFeedbackServlet_Naming: " + ex.getMessage());
-        }
-        finally{
+            
+            url = ORDER_PAGE;
+        }catch (SQLException ex) {
+            log("searchProductServlet_SQLException: " + ex.getMessage());
+        } catch (NamingException ex) {
+            log("searchProductServlet_NamingException: " + ex.getMessage());
+        } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

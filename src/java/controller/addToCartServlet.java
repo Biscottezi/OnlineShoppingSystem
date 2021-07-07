@@ -51,7 +51,7 @@ public class addToCartServlet extends HttpServlet {
             if (cart == null) {
                 cart = new Cart();
             }//end if cart is existed
-            //3. Cust select/chooses a book
+            //3. Cust select/chooses a product
             int ID = Integer.parseInt(request.getParameter("txtProductId"));
             int quantity = Integer.parseInt(request.getParameter("txtQuantity"));
 
