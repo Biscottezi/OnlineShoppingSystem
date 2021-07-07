@@ -211,10 +211,15 @@
                       <c:set var="feedbacks" value="${requestScope.FEEDBACK_LIST}"/>
                       <tbody>
                             <c:forEach var="feedback" items="${feedbacks}">
-                                <tr style="height: 92px;" onclick="location.href='mktFeedbackDetails?productID=${feedback.id}'">
+                                <tr style="height: 92px;" onclick="location.href='mktFeedbackDetails?feedbackID=${feedback.id}'">
                                     <td class="align-middle" style="text-align: center">${feedback.id}</th>
                                     <td class="align-middle">${feedback.name}</td>
-                                    <td class="align-middle">Vintage Typewriter</td>
+                                    <td class="align-middle">
+                                        <c:choose>
+                                            <c:when test="${not empty feedback.productTitle}">${feedback.productTitle}</c:when>
+                                            <c:otherwise>None (General Feedback)</c:otherwise>
+                                        </c:choose>
+                                    </td>
                                     <td class="align-middle">${feedback.ratedStar}/5 stars</td>
                                     <td class="align-middle" style="width:150px;">
                                     <c:choose>

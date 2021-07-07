@@ -83,7 +83,7 @@
                             <input type="text" name="txtMobile" value="" form="feedback-form" required class="contact-input">
                         </div>
                         
-                        <form action="submitFeedback" method="POST" id="feedback-form" enctype="multipart/form-data"></form>
+                        <form action="submitFeedback" method="POST" id="feedback-form"></form>
                     </div>
                 </div>
             </div>

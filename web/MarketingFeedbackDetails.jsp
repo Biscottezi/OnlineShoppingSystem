@@ -211,7 +211,12 @@
                     <div class="infor row">
                         <div class="col">
                             Product<br>
-                            <div class="userinfo">Vintage Typewriter</div>
+                            <div class="userinfo">
+                                <c:choose>
+                                    <c:when test="${not empty feedback.productTitle}">${feedback.productTitle}</c:when>
+                                    <c:otherwise>None (General Feedback)</c:otherwise>
+                                </c:choose>
+                            </div>
                         </div>
                         <div class="col">
                             <div style="margin-top:18px;">Email</div>
@@ -250,7 +255,7 @@
                         </div>
                         <div class="col-4">
                             <div class="savewrapper row d-flex align-items-end justify-content-end">
-                                <div class="col d-flex justify-content-end" id="cancelbtn" onclick="location.href='mktFeedbackDetails?productID=${feedback.id}'"">Discard change</div>
+                                <div class="col d-flex justify-content-end" id="cancelbtn" onclick="location.href='mktFeedbackDetails?feedbackID=${feedback.id}'">Discard change</div>
                                 <div class="col d-flex justify-content-end" style="padding:0;">
                                     <input type="submit" value="Save" name="btAction" id="createbtn" form="updateform"/>
                                 </div>
@@ -310,6 +315,6 @@
             </div>
         </div>
         
-        <form action="" id="updateform"></form>
+        <form action="updateFeedback" id="updateform"></form>
     </body>
 </html>

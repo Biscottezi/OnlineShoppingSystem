@@ -37,3 +37,4 @@ modifyQuantityCart = modifyQuantityCartServlet
 mktFeedbackList = viewFeedbackListMarketingServlet
 submitFeedback = submitFeedbackServlet
 createUser = addUserServlet
+updateFeedback = updateFeedbackServlet
