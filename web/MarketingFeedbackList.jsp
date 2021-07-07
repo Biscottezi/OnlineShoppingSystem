@@ -138,7 +138,7 @@
                   
                   <!-- item 5 -->
                   <li class="nav-item naviitem row" id="active">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktFeedbackList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/mkt-feedbacks-chosen.png" alt=""/></div>
@@ -208,183 +208,28 @@
                           <th scope="col">Status</th>
                         </tr>
                       </thead>
+                      <c:set var="feedbacks" value="${requestScope.FEEDBACK_LIST}"/>
                       <tbody>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">4/5 stars</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  RESOLVED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">4/5 stars</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status disable">
-                                  UNRESOLVED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">4/5 stars</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  RESOLVED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">4/5 stars</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  RESOLVED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">4/5 stars</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  RESOLVED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">4/5 stars</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  RESOLVED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">4/5 stars</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  RESOLVED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">4/5 stars</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  RESOLVED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">4/5 stars</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  RESOLVED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">4/5 stars</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  RESOLVED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">4/5 stars</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  RESOLVED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">4/5 stars</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  RESOLVED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">4/5 stars</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  RESOLVED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">4/5 stars</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  RESOLVED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">4/5 stars</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  RESOLVED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">4/5 stars</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  RESOLVED
-                              </div>
-                          </td>
-                        </tr>
+                            <c:forEach var="feedback" items="${feedbacks}">
+                                <tr style="height: 92px;" onclick="location.href='mktFeedbackDetails?productID=${feedback.id}'">
+                                    <td class="align-middle" style="text-align: center">${feedback.id}</th>
+                                    <td class="align-middle">${feedback.name}</td>
+                                    <td class="align-middle">Vintage Typewriter</td>
+                                    <td class="align-middle">${feedback.ratedStar}/5 stars</td>
+                                    <td class="align-middle" style="width:150px;">
+                                    <c:choose>
+                                        <c:when test="${feedback.status == 0}">
+                                            <div class="d-flex align-items-center justify-content-center status disable">UNRESOLVED</div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div class="d-flex align-items-center justify-content-center status enable">RESOLVED</div>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        
+                        
                       </tbody>
                     </table> 
                 </div>

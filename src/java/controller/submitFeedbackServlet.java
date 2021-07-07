@@ -5,8 +5,12 @@
  */
 package controller;
 
+import feedBack.FeedBackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "submitFeedbackServlet", urlPatterns = {"/submitFeedbackServlet"})
 public class submitFeedbackServlet extends HttpServlet {
+    private final String ERROR_PAGE = "Error.html";
+    private final String HOMEPAGE = "viewHomePageServlet";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,8 +37,40 @@ public class submitFeedbackServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
+        String url = ERROR_PAGE;
+        try{
+            String productID = request.getParameter("txtProductId");
+            String name = request.getParameter("txtName");
+            String email = request.getParameter("txtEmail");
+            String phone = request.getParameter("txtMobile");
+            int ratedStar = Integer.parseInt(request.getParameter("txtRating"));
+            String content = request.getParameter("txtFeedbackContent");
+            if(productID != null){
+                int prodID = Integer.parseInt(productID);
+                FeedBackDAO dao = new FeedBackDAO();
+                boolean result = dao.addNewProductFeedback(name, content, email, phone, ratedStar, prodID);
+                if(result){
+                    url = HOMEPAGE;
+                }
+            }
+            else{
+                FeedBackDAO dao = new FeedBackDAO();
+                boolean result = dao.addNewGeneralFeedback(name, content, email, phone, ratedStar);
+                if(result){
+                    url = HOMEPAGE;
+                }
+            }
+        }
+        catch(SQLException ex){
+            log("SubmitFeedbackServlet_SQL: " + ex.getMessage());
+        }
+        catch(NamingException ex){
+            log("SubmitFeedbackServlet_Naming: " + ex.getMessage());
+        }
+        finally{
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

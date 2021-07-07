@@ -64,7 +64,7 @@
                                 <input type="hidden" name="txtProductId" value="${product.id}"/>
                             </c:if>
                             <h6>Rating</h6>
-                            <input type="number" name="txtRating" min="1" max="5" value="" form="feedback-form" id="input-rating" class="contact-input">
+                            <input type="number" name="txtRating" min="1" max="5" value="" form="feedback-form" id="input-rating" class="contact-input" required>
                             <span> stars</span>
                             <h6>Description</h6>
                             <textarea name="txtFeedbackContent" form="feedback-form" required class="contact-input" id="contact-dscrpt"></textarea>
@@ -77,19 +77,13 @@
                             <h4>Contact Information</h4>
                             <h6>Full Name</h6>
                             <input type="text" name="txtName" value="" form="feedback-form" required class="contact-input">
-                            <h6>Gender</h6>
-                            <select name="txtGender" form="feedback-form" required class="contact-input" id="contact-gender">
-                                <option selected disabled>Gender</option>
-                                <option value="0">Male</option>
-                                <option value="1">Female</option>
-                            </select>
                             <h6>Email</h6>
                             <input type="text" name="txtEmail" value="" form="feedback-form" required class="contact-input">
                             <h6>Mobile</h6>
                             <input type="text" name="txtMobile" value="" form="feedback-form" required class="contact-input">
                         </div>
                         
-                        <form action="" method="POST" id="feedback-form"></form>
+                        <form action="submitFeedback" method="POST" id="feedback-form" enctype="multipart/form-data"></form>
                     </div>
                 </div>
             </div>
