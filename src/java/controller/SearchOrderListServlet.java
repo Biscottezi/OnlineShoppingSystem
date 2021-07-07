@@ -5,24 +5,28 @@
  */
 package controller;
 
-import cart.Cart;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import order.OrderDAO;
+import order.OrderDTO;
+import post.PostDAO;
+import post.PostDTO;
 
 /**
  *
- * @author ASUS
+ * @author Admin
  */
-@WebServlet(name = "addToCartServlet", urlPatterns = {"/addToCartServlet"})
-public class addToCartServlet extends HttpServlet {
+@WebServlet(name = "SearchOrderListServlet", urlPatterns = {"/SearchOrderListServlet"})
+public class SearchOrderListServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,41 +37,31 @@ public class addToCartServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private final String ERROR_PAGE = "Error.html";
+    private final String ORDER_PAGE = "SaleMemberOrders.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String urlRewriting = "viewProductDetails"
-                + "?productID=" + Integer.parseInt(request.getParameter("txtProductId"));
-//        if (request.getParameter("LastSearchProduct") != null) {
-//            urlRewriting = "searchProduct"
-//                    + "&txtSearchedProduct=" + request.getParameter("LastSearchProduct");
-//        }
-        
-        
+        String url = ERROR_PAGE;
         try{
-            HttpSession session = request.getSession(true);//??????? true hay false
-            //2. Cust takes a cart
-            Cart cart = (Cart) session.getAttribute("CART");
-            if (cart == null) {
-                cart = new Cart();
-            }//end if cart is existed
-            //3. Cust select/chooses a product
-            int ID = Integer.parseInt(request.getParameter("txtProductId"));
-            int quantity = Integer.parseInt(request.getParameter("txtQuantity"));
-
-            //4. Cust drops item into cart
-            cart.addToCart(ID, quantity);
-
-            session.setAttribute("CART", cart);
+            String searchedCust = request.getParameter("txtSearchCustomerName");
+            OrderDAO dao = new OrderDAO();
+            dao.searchCustName(searchedCust);
+            List<OrderDTO> orderList = dao.getOrderList();
+            if(orderList != null){
+                request.setAttribute("ORDER_LIST", orderList);
+            }
+            
+            url = ORDER_PAGE;
         }catch (SQLException ex) {
-            log("AddToCartServlet_SQLException: " + ex.getMessage());
+            log("searchProductServlet_SQLException: " + ex.getMessage());
         } catch (NamingException ex) {
-            log("AddToCartServlet_NamingException: " + ex.getMessage());
+            log("searchProductServlet_NamingException: " + ex.getMessage());
         } finally {
-            response.sendRedirect(urlRewriting);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

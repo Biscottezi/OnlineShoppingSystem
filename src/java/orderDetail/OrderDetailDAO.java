@@ -91,6 +91,7 @@ public class OrderDetailDAO implements Serializable{
         Connection connection = null;
         PreparedStatement prestm = null;
         ResultSet rs = null;
+        Integer quantity = 0;
         try {
             connection = DBHelper.makeConnection();
             if (connection != null) {
@@ -101,10 +102,10 @@ public class OrderDetailDAO implements Serializable{
                 prestm = connection.prepareStatement(orderSQLString);
                 prestm.setInt(1, OrderID);
                 rs = prestm.executeQuery();
-                ArrayList<OrderItemObj> result = new ArrayList<>();
-                while (rs.next()) {
-                    int quantity = rs.getInt("Quantity");
-                    return quantity;
+                
+                if (rs.next()) {
+                     quantity = rs.getInt("Quantity");
+                    
                 }
                 
             }
@@ -119,6 +120,6 @@ public class OrderDetailDAO implements Serializable{
                 connection.close();
             }
         }
-        return 0;
+        return quantity;
     }    
 }

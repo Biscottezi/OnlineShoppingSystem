@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import order.OrderDAO;
 import orderDetail.OrderDetailDAO;
 import orderDetail.OrderItemObj;
 import product.ProductDAO;
@@ -49,10 +50,12 @@ public class SaleConfirmOrderServlet extends HttpServlet {
         try {
             OrderDetailDAO dao = new OrderDetailDAO();
             ArrayList<OrderItemObj> detailList = dao.GetOrderDetailByOrderID(Integer.parseInt(selectedOrderID));
-
+            int quantity = dao.GetQuantityByOrderID(Integer.parseInt(selectedOrderID));
             ProductDAO productDAO = new ProductDAO();
-
+            
             productDAO.getAllProduct();
+            
+            
             ProductCategoryDAO cate = new ProductCategoryDAO();
             List<ProductCategoryDTO> categoryList = cate.getCategoryList();
 
