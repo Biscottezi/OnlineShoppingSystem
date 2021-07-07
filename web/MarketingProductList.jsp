@@ -90,6 +90,7 @@
         </style>
     </head>
     <body style="width: 100%; height:100%; margin: 0; padding: 0; background-color: #F7F8FC">
+        <c:set var="user" value="${sessionScope.USER}"/>
         <div class="wrapper row" style="margin:0;padding:0; max-width: 100%;">
             <div class="wrapper col-2" style="background-color: #363740; min-height:937px; padding-right: 0;">
               <ul class="nav flex-column col">
@@ -189,10 +190,10 @@
                     <div class="col-7"></div>
                     <div class="col row">
                         <div class="d-flex justify-content-end col-10 align-items-center" id="user">
-                            Trần Tân Long <!-- input jstl session user here! -->
+                            ${user.name} <!-- input jstl session user here! -->
                         </div>
                         <div class="profile col-2">
-                            <div id="avatar" class="ava" style="background-image: url(img/tanlong.png);" onclick="showPopup()"></div> <!-- get session's avatar -->
+                            <div id="avatar" class="ava" style="background-image: url(img/${user.avatar});" onclick="showPopup()"></div> <!-- get session's avatar -->
                         </div>
                     </div>
                 </div>
@@ -499,11 +500,11 @@
         <div class="popupwrapper" id="usermenu" style="padding:0;margin:0;">
             <div class="pro5 row popupitem">
                 <div class="col-3 d-flex align-items-center justify-content-center" style="padding:0;">
-                    <div id="menuavatar" style="background-image: url(img/tanlong.png);"></div>
+                    <div id="menuavatar" style="background-image: url(img/${user.avatar});"></div>
                 </div>
                 <div class="col-9 d-flex align-items-center description">
                     <div class="descwrapper">
-                        <p class="menu-itemtitle">Trần Tân Long</p>
+                        <p class="menu-itemtitle">${user.name}</p>
                         <p>See your profile</p>
                     </div>
                 </div>
@@ -529,16 +530,17 @@
             <div class="info row">
                 <div class="col">
                     Title<br>
-                    <input class="inputbox" type="text" name="txtTitle" value="" form="createform"/>
+                    <input class="inputbox" type="text" name="productTitle" value="" form="createform"/>
                 </div>
                 <div class="col">
                     Category<br>
-                    <select id="gender" class="inputbox" form="createform" name="txtCategory">
+                    <select id="gender" class="inputbox" form="createform" name="productCategory">
                         <option value="" selected disabled hidden>Select category</option>
-                            <option value="1">Smartphone</option>
-                            <option value="1">Laptop</option>
-                            <option value="2">Smartwatch</option>
-                            <option value="3">Earphone</option>
+                        <option value="1">Phone</option>
+                        <option value="2">Laptop</option>
+                        <option value="3">Tablet</option>
+                        <option value="4">Smartwatch</option>
+                        <option value="5">Earphone</option>
                     </select>
                 </div>
             </div>
@@ -547,7 +549,7 @@
                     Thumbnail<br>
                     <div class="avawrapper row">
                         <img id="avapreview" class="col-3" src="http://placehold.it/180" onchange="showPreview();">
-                        <input type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="createform"/>
+                        <input type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="createform" name="productThumbnail"/>
                         <div class="col-4 d-flex align-items-end" style="padding-top: 117px;">
                             <label for="upload" class="d-flex align-items-center justify-content-center uplbtn">
                                 <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
@@ -557,31 +559,31 @@
                 </div>
                 <div class="col">
                     Quantity<br>
-                    <input class="inputbox" type="number" name="txtEmail" value="" form="createform"/>
+                    <input class="inputbox" type="number" name="productQuantity" value="" form="createform"/>
                     <br>
                     <div style="margin-top:12px;">Price</div>
-                    <input class="inputbox" type="number" name="txtPrice" value="" form="createform"/>
+                    <input class="inputbox" type="number" name="productBasePrice" value="" form="createform"/>
                 </div>
             </div>
             <div class="info row">
                 <div class="col">
-                    Address<br>
-                    <textarea class="inputbox" id="address" type="text" name="txtAddress" value="" form="createform"></textarea>
+                    Brief Info<br>
+                    <textarea class="inputbox" id="address" type="text" name="productBriefInfo" value="" form="createform"></textarea>
                 </div>
                 <div class="col">
                     Sale Price<br>
-                    <input class="inputbox" type="number" name="txtSalePrice" value="" form="createform"/>
+                    <input class="inputbox" type="number" name="productSalePrice" value="" form="createform"/>
                     <br>
                     <div style="margin-top:12px;">Featured</div>
-                    <input type="checkbox" name="chkFeatured" value="ON" checked="checked" id="" class="col-1"  form="createform" style="zoom: 2; margin-top: 1em"/>
+                    <input type="checkbox" name="productFeatured" value="ON" checked="checked" id="" class="col-1"  form="createform" style="zoom: 2; margin-top: 1em"/>
                 </div>
             </div>
             <div class="info">
                 <p class="input-title">Description</p>
-                <textarea class="inputbox" id="prod-dscrpt" form="createform"></textarea>
+                <textarea class="inputbox" id="prod-dscrpt" form="createform" name="productDescription"></textarea>
                 <p class="input-title" style="margin-top: 1em">Attached Images</p>
                 <div class="avawrapper" style="margin-top: 20px; margin-bottom: 1.5em">
-                    <input type="file" id="upload-attached" form="createform" multiple>
+                    <input type="file" id="upload-attached" form="createform" multiple name="productAttachedImage">
                     <div class="col-4 d-flex align-items-end">
                         <label for="upload-attached" class="d-flex align-items-center justify-content-center uplbtn">
                             <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
@@ -594,7 +596,7 @@
                     Status<br>
                     <div class="statuswrapper row d-flex align-items-end">
                         <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">ENABLED</div>
-                        <input type="checkbox" name="chkStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="createform"/>
+                        <input type="checkbox" name="productStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="createform"/>
                     </div>
                 </div>
                 <div class="col-2"></div>
@@ -609,6 +611,6 @@
             </div>
         </div>
         
-        <form action="" id="createform"></form>
+        <form action="" id="createform" method="POST" enctype="multipart/form-data"></form>
     </body>
 </html>

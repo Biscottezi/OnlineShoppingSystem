@@ -71,6 +71,7 @@
         </style>
     </head>
     <body style="width: 100%; height:100%; margin: 0; padding: 0; background-color: #F7F8FC">
+        <c:set var="user" value="${sessionScope.USER}"/>
         <div class="wrapper row" style="margin:0;padding:0; max-width: 100%;">
             <div class="wrapper col-2" style="background-color: #363740; min-height:937px; padding-right: 0;">
               <ul class="nav flex-column col">
@@ -122,10 +123,10 @@
                     <div class="col-7"></div>
                     <div class="col row">
                         <div class="d-flex justify-content-end col-10 align-items-center" id="user">
-                            Trần Tân Long <!-- input jstl session user here! -->
+                            ${user.name} <!-- input jstl session user here! -->
                         </div>
                         <div class="profile col-2">
-                            <div id="avatar" class="ava" style="background-image: url(img/tanlong.png);" onclick="showPopup()"></div> <!-- get session's avatar -->
+                            <div id="avatar" class="ava" style="background-image: url(img/${user.avatar});" onclick="showPopup()"></div> <!-- get session's avatar -->
                         </div>
                     </div>
                 </div>
@@ -318,11 +319,11 @@
         <div class="popupwrapper" id="usermenu" style="padding:0;margin:0;">
             <div class="pro5 row popupitem">
                 <div class="col-3 d-flex align-items-center justify-content-center" style="padding:0;">
-                    <div id="menuavatar" style="background-image: url(img/tanlong.png);"></div>
+                    <div id="menuavatar" style="background-image: url(img/${user.avatar});"></div>
                 </div>
                 <div class="col-9 d-flex align-items-center description">
                     <div class="descwrapper">
-                        <p class="menu-itemtitle">Trần Tân Long</p>
+                        <p class="menu-itemtitle">${user.name}</p>
                         <p>See your profile</p>
                     </div>
                 </div>
@@ -365,7 +366,7 @@
                     Avatar<br>
                     <div class="avawrapper row">
                         <img id="avapreview" class="col-3" src="http://placehold.it/180" onchange="showPreview();">
-                        <input type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="createform" name="photo"/>
+                        <input type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="createform" name="avatar"/>
                         <div class="col-4 d-flex align-items-end" style="padding-top: 117px;">
                             <label for="upload" class="d-flex align-items-center justify-content-center uplbtn">
                                 <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file

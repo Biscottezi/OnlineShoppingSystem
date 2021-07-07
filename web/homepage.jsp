@@ -64,10 +64,18 @@
                                         <c:forEach var="product" items="${onsaleProducts}" begin="0" end="3">
                                             <div class="col-3" onclick="location.href='viewProductDetails?productID=${product.id}';">
                                                 <div class="card" style="min-height: 530px; margin: auto;">
-                                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
+                                                    <img src="img/${product.thumbnail}" alt="product-thumbnail" class="card-img-top">
                                                     <div class="card-body">
                                                         <h5 class="card-title">${product.title}</h5>
-                                                        <h3 class="card-title">${product.salePrice}</h3>
+                                                        <c:choose>
+                                                            <c:when test="${product.salePrice != 0}">
+                                                                <h5 class="card-title" style="text-decoration: line-through">$${product.listPrice}</h5>
+                                                                <h3 class="card-title">$${product.salePrice}</h3>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <h3 class="card-title">$${product.listPrice}</h3>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                         <p class="card-text">${product.briefInfo}</p>
                                                         <p class="card-text">Star: ${product.ratedStar}/5</p>
                                                     </div>
@@ -86,9 +94,17 @@
                                                     <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
                                                     <div class="card-body">
                                                         <h5 class="card-title">${product.title}</h5>
-                                                        <h3 class="card-title">${product.salePrice}</h3>
+                                                        <c:choose>
+                                                            <c:when test="${product.salePrice != 0}">
+                                                                <h5 class="card-title" style="text-decoration: line-through">$${product.listPrice}</h5>
+                                                                <h3 class="card-title">$${product.salePrice}</h3>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <h3 class="card-title">$${product.listPrice}</h3>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                         <p class="card-text">${product.briefInfo}</p>
-                                                        <p class="card-text">Star: 4/5</p>
+                                                        <p class="card-text">Star: ${product.ratedStar}/5</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -138,7 +154,7 @@
                                                 </c:otherwise>
                                             </c:choose>
                                             <p class="card-text">${product.briefInfo}</p>
-                                            <p class="card-text">Rated: 4/5 stars</p>
+                                            <p class="card-text">Rated: ${product.ratedStar}/5 stars</p>
                                         </div>
                                     </div>
                                 </div>

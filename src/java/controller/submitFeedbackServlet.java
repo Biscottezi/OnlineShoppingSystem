@@ -5,6 +5,7 @@
  */
 package controller;
 
+import feedBack.FeedBackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -15,22 +16,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import user.UserDAO;
-import user.UserDTO;
 
 /**
  *
- * @author ASUS
+ * @author nguye
  */
-@WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
-public class loginServlet extends HttpServlet {
-    private final String INVALID_PAGE = "Error.html";
-    private final String HOME_PAGE = "viewHomePageServlet";
-    private final String MARKETING_DASHBOARD = "MarketingCustomerList.jsp";
-    private final String SALE_MANAGER_DASHBOARD = "";
-    private final String SALE_MEMBER_DASHBOARD = "";
-    private final String ADMIN_DASHBOARD = "AdminDashboard.jsp";
+@WebServlet(name = "submitFeedbackServlet", urlPatterns = {"/submitFeedbackServlet"})
+public class submitFeedbackServlet extends HttpServlet {
+    private final String ERROR_PAGE = "Error.html";
+    private final String HOMEPAGE = "viewHomePageServlet";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,48 +37,39 @@ public class loginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String url = INVALID_PAGE;
-        
+        String url = ERROR_PAGE;
         try{
-                String email = request.getParameter("txtEmail");
-                String password = request.getParameter("txtPassword");
-                UserDAO dao = new UserDAO();
-                boolean result = dao.checkLogin(email, password);
-                
+            String productID = request.getParameter("txtProductId");
+            String name = request.getParameter("txtName");
+            String email = request.getParameter("txtEmail");
+            String phone = request.getParameter("txtMobile");
+            int ratedStar = Integer.parseInt(request.getParameter("txtRating"));
+            String content = request.getParameter("txtFeedbackContent");
+            if(productID != null){
+                int prodID = Integer.parseInt(productID);
+                FeedBackDAO dao = new FeedBackDAO();
+                boolean result = dao.addNewProductFeedback(name, content, email, phone, ratedStar, prodID);
                 if(result){
-                    HttpSession session = request.getSession(true);
-                    UserDTO user = dao.getUser();
-                    session.setAttribute("USER", user);
-                    
-                    int role = user.getRole();
-                    switch (role){
-                        case 0:
-                            url = MARKETING_DASHBOARD;
-                            break;
-                        case 1:
-                            url = SALE_MEMBER_DASHBOARD;
-                            break;
-                        case 2:
-                            url = SALE_MANAGER_DASHBOARD;
-                            break;
-                        case 3:
-                            url = ADMIN_DASHBOARD;
-                            break;
-                        case 4:
-                            url = HOME_PAGE;
-                            break;
-                    }
+                    url = HOMEPAGE;
                 }
-            
-        }catch(SQLException ex){
-            log("LoginServlet _ SQL:" + ex.getMessage());
-        }catch(NamingException ex){
-            log("LoginServlet _ Naming:" + ex.getMessage());
-        }finally{
+            }
+            else{
+                FeedBackDAO dao = new FeedBackDAO();
+                boolean result = dao.addNewGeneralFeedback(name, content, email, phone, ratedStar);
+                if(result){
+                    url = HOMEPAGE;
+                }
+            }
+        }
+        catch(SQLException ex){
+            log("SubmitFeedbackServlet_SQL: " + ex.getMessage());
+        }
+        catch(NamingException ex){
+            log("SubmitFeedbackServlet_Naming: " + ex.getMessage());
+        }
+        finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
-//                response.sendRedirect(url);
         }
     }
 

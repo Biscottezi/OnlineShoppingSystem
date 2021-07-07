@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -79,6 +80,7 @@
         </style>
     </head>
     <body style="width: 100%; height:100%; margin: 0; padding: 0; background-color: #F7F8FC">
+        <c:set var="user" value="${sessionScope.USER}"/>
         <div class="wrapper row" style="margin:0;padding:0; max-width: 100%;">
             <div class="wrapper col-2" style="background-color: #363740; min-height:937px; padding-right: 0;">
               <ul class="nav flex-column col">
@@ -145,7 +147,7 @@
                   
                   <!-- item 5 -->
                   <li class="nav-item naviitem row" id="active">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktFeedbackList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/mkt-feedbacks-chosen.png" alt=""/></div>
@@ -174,56 +176,56 @@
             <div class="wrapper col" style="background-color: #F7F8FC; padding: 30px 33px 30px 45px;" id="maincontent">
                 <!-- main title -->
                 <div class="maintitle row">
-                    <div class="col-2" id="title" onclick="location.href='userlist.jsp';">
+                    <div class="col-2" id="title" onclick="location.href='mktFeedbackList';">
                         <span class="back"><i class="fas fa-angle-left"></i>&nbsp; Back to feedbacks</span>
                     </div>
                     <div class="col-7"></div>
                     <div class="col row">
                         <div class="d-flex justify-content-end col-10 align-items-center" id="user">
-                            Trần Tân Long <!-- input jstl session user here! -->
+                            ${user.name} <!-- input jstl session user here! -->
                         </div>
                         <div class="profile col-2">
-                            <div id="avatar" class="ava" style="background-image: url(img/tanlong.png);" onclick="showPopup()"></div> <!-- get session's avatar -->
+                            <div id="avatar" class="ava" style="background-image: url(img/${user.avatar});" onclick="showPopup()"></div> <!-- get session's avatar -->
                         </div>
                     </div>
                 </div>
-                
+                <c:set var="feedback" value="${requestScope.FEEDBACK_DETAILS}"/>
                 <!-- main list -->
                 <div class="listwrapper">
                     <!-- list header -->
                     <div class="listheader row">
-                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Feedback ID: 00001 <!--${param.id} --></div>
+                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Feedback ID: ${feedback.id} <!--${param.id} --></div>
                         <div class="col-6 row"></div>
                         <div class="extended col-4 row d-flex"></div>
                     </div>
                     <div class="infor row">
                         <div class="col">
                             Feedbacker<br>
-                            <div class="userinfo">Tran Tan Long</div>
+                            <div class="userinfo">${feedback.name}</div>
                         </div>
                         <div class="col">
-                            Featured<br>
-                            <div class="userinfo">0975926021</div>
+                            Mobile<br>
+                            <div class="userinfo">${feedback.phone}</div>
                         </div>
                     </div>
                     <div class="infor row">
                         <div class="col">
-                            Brief Info<br>
+                            Product<br>
                             <div class="userinfo">Vintage Typewriter</div>
                         </div>
                         <div class="col">
-                            <div style="margin-top:18px;">Category</div>
-                            <div class="userinfo">longttse150883@fpt.edu.vn</div>
+                            <div style="margin-top:18px;">Email</div>
+                            <div class="userinfo">${feedback.email}</div>
                         </div>
                     </div>
                     <div class="infor row">
                         <div class="col">
-                            Brief Info<br>
-                            <div class="userinfo">This product is incredible!</div>
+                            Description<br>
+                            <div class="userinfo">${feedback.content}</div>
                         </div>
                         <div class="col">
-                            <div style="margin-top:18px;">Category</div>
-                            <div class="userinfo">4 / 5 stars</div>
+                            <div style="margin-top:18px;">Rated</div>
+                            <div class="userinfo">${feedback.ratedStar} / 5 stars</div>
                         </div>
                     </div>
                         <br><br><br><br><br><br>
@@ -231,16 +233,24 @@
                         <div class="col-6">
                             Status<br>
                             <div class="statuswrapper row d-flex align-items-end" style="margin:0;">
-                                <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">RESOLVED</div>
-                                <input type="checkbox" name=" feedbackStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
+                                <c:choose>
+                                    <c:when test="${feedback.status == 0}">
+                                        <div class="status disable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">UNRESOLVED</div>
+                                        <input type="checkbox" name="feedbackStatus" value="ON" id="statuschkbox" class="col-1"  form="updateform"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">RESOLVED</div>
+                                        <input type="checkbox" name="feedbackStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                         <div class="col-2">
-                            <input type="hidden" form="updateform" value=""/>
+                            <input type="hidden" name="feedbackID" form="updateform" value="${feedback.id}"/>
                         </div>
                         <div class="col-4">
                             <div class="savewrapper row d-flex align-items-end justify-content-end">
-                                <div class="col d-flex justify-content-end" id="cancelbtn" onclick="location.href='';">Discard change</div>
+                                <div class="col d-flex justify-content-end" id="cancelbtn" onclick="location.href='mktFeedbackDetails?productID=${feedback.id}'"">Discard change</div>
                                 <div class="col d-flex justify-content-end" style="padding:0;">
                                     <input type="submit" value="Save" name="btAction" id="createbtn" form="updateform"/>
                                 </div>
@@ -275,11 +285,11 @@
         <div class="popupwrapper" id="usermenu" style="padding:0;margin:0;">
             <div class="pro5 row popupitem">
                 <div class="col-3 d-flex align-items-center justify-content-center" style="padding:0;">
-                    <div id="menuavatar" style="background-image: url(img/tanlong.png);"></div>
+                    <div id="menuavatar" style="background-image: url(img/${user.avatar});"></div>
                 </div>
                 <div class="col-9 d-flex align-items-center description">
                     <div class="descwrapper">
-                        <p class="menu-itemtitle">Trần Tân Long</p>
+                        <p class="menu-itemtitle">${user.name}</p>
                         <p>See your profile</p>
                     </div>
                 </div>

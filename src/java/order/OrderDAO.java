@@ -8,6 +8,7 @@ package order;
 
 
 import java.io.Serializable;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
+import user.UserDTO;
 import utils.DBHelper;
 
 /**
@@ -256,6 +258,7 @@ public class OrderDAO implements Serializable{
         }
         return null;
     }
+
     public int GetOrderStatusByOrderID(int OrderID) throws SQLException, ClassNotFoundException, NamingException {
         Connection connection = null;
         PreparedStatement prestm = null;
@@ -407,10 +410,53 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if (con != null) {
-                con.close();
             }
         }
     }
-
     
+    private List<UserDTO> potentialCus;
+    
+    public List<UserDTO> getPotentialCusList(){
+        return potentialCus;
+    }
+    
+    public void getPotentialCustomers() throws SQLException, NamingException{
+        Connection con = null;
+        CallableStatement stm = null;
+        ResultSet rs = null;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT DISTINCT ReceiverName, ReceiverAddress, ReceiverEmail, ReceiverGender, ReceiverPhone "
+                        + "FROM [Order] ";
+                stm = con.prepareCall(sql);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    String Name = rs.getString("Name");
+                    int Gender = rs.getInt("Gender");
+                    String Address = rs.getString("Address");
+                    String Email = rs.getString("Email");
+                    String Phone = rs.getString("Phone");
+
+                    UserDTO dto = new UserDTO(Name, Address, Email, Gender, Phone);
+                    if(this.potentialCus == null){
+                        this.potentialCus = new ArrayList<>();
+                    }
+                    this.potentialCus.add(dto);
+                }
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+
+            }
+        }
+    }
 }
+

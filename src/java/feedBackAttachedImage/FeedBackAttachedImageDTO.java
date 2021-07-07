@@ -14,13 +14,15 @@ import java.io.Serializable;
 public class FeedBackAttachedImageDTO implements Serializable{
     private int id;
     private String name;
-
+    private int feedbackId;
+    
     public FeedBackAttachedImageDTO() {
     }
 
-    public FeedBackAttachedImageDTO(int id, String name) {
+    public FeedBackAttachedImageDTO(int id, String name, int feedbackId) {
         this.id = id;
         this.name = name;
+        this.feedbackId = feedbackId;
     }
 
     public int getId() {
@@ -39,5 +41,11 @@ public class FeedBackAttachedImageDTO implements Serializable{
         this.name = name;
     }
     
-    
+    public int getFeedbackId() {
+        return feedbackId;
+    }
+
+    public void setFeedbackId(int feedbackId) {
+        this.feedbackId = feedbackId;
+    }
 }

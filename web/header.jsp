@@ -27,9 +27,7 @@
         <header class="container wrapper">
             <nav class="navbar navbar-expand">
                 <div class="navbar-branch col-2">
-                    <a href="viewHomePage" id="logo">
-                        <img src="" alt="Logo">
-                    </a>
+                    <a href="viewHomePage" id="logo">LOGOS</a>
                 </div>
                 <form action="searchProduct" class="col-3 searchbar">
                     <input type="text" placeholder="Search" class="search-input col-10" name="txtSearchProduct" value="${param.txtSearchProduct}">
@@ -48,11 +46,12 @@
                 <i class="fas fa-shopping-cart col-1" onclick="location.href='viewCart'"></i>
                 <c:choose>
                     <c:when test="${not empty sessionScope.USER}">
+                        <c:set var="user" value="${sessionScope.USER}"/>
                         <!--Customer welcome-->
                         <div class="col-2 welcome-customer container">
                             <div class="d-flex flex-row align-items-center">
-                                <img src="img/avatar.png" alt="avatar" class="droplist-avatar ava" onclick="showPopup()">
                                 <p style="font-size: 20px; margin: auto 1em;">Welcome!</p>
+                                <img src="img/${user.avatar}" alt="avatar" class="droplist-avatar ava" onclick="showPopup()">
                             </div>
                         </div>
                     </c:when>
@@ -69,14 +68,14 @@
                 <div class="droplist container float-right popupwrapper" id="usermenu">
                     <div class="col">
                         <div class="row droplist-btn">
-                            <img src="img/avatar.png" alt="" class="droplist-avatar">
+                            <img src="img/${user.avatar}" alt="" class="droplist-avatar">
                             <div class="d-flex flex-column justify-content-center droplist-btn-txt">
-                                <h6>Tran Tan Long</h6>
+                                <h6>${user.name}</h6>
                                 <span>See your profile</span>
                             </div>
                         </div>
                         <hr>
-                        <div class="row droplist-btn">
+                        <div class="row droplist-btn" onclick="location.href='custFeedback'">
                             <div class="icon-bg">
                                 <img src="img/feedback.png" alt="">
                             </div>

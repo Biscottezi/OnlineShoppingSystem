@@ -43,7 +43,7 @@ public class FeedBackDAO implements Serializable{
             if (con != null) {
                 String sql = "SELECT  FeedBackID, Name, FeedbackContent, Email, Phone, Status, RatedStar, ProductID "
                         + "FROM FeedBack "
-                        + "ORDER by DateCreated desc";
+                        + "ORDER by [Status] desc";
 
                 stm = con.prepareCall(sql);
                 rs = stm.executeQuery();
@@ -75,5 +75,115 @@ public class FeedBackDAO implements Serializable{
                 con.close();
             }
         }
+    }
+    
+    public void getFeedBackById(int feedbackID) throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT  FeedBackID, Name, FeedbackContent, Email, Phone, Status, RatedStar, ProductID "
+                        + "FROM FeedBack "
+                        + "WHERE FeedbackID = ? ";
+
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, feedbackID);
+                rs = stm.executeQuery();
+
+                while (rs.next()) {
+                    int FeedBackID = rs.getInt("FeedBackID");
+                    String Name = rs.getString("Name");
+                    String FeedbackContent = rs.getString("FeedbackContent");
+                    String Email = rs.getString("Email");
+                    String Phone = rs.getString("Phone");
+                    int Status = rs.getInt("Status");
+                    int RatedStar = rs.getInt("RatedStar");
+                    int ProductID = rs.getInt("ProductID");
+                    FeedBackDTO dto = new FeedBackDTO(FeedBackID, Name, FeedbackContent, Email, Phone, Status, RatedStar, ProductID);
+                    this.feedback = dto;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+    
+    public boolean addNewGeneralFeedback(String name, String content, String email, String phone, int ratedStar) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "INSERT INTO Feedback (Name, FeedbackContent, Email, Phone, [Status], RatedStar) "
+                        + "VALUES (?, ?, ?, ?, 0, ?) ";
+                
+                stm = con.prepareStatement(sql);
+                stm.setString(1, name);
+                stm.setString(2, content);
+                stm.setString(3, email);
+                stm.setString(4, phone);
+                stm.setInt(5, ratedStar);
+                
+                int rowAffected = stm.executeUpdate();
+                if(rowAffected > 0){
+                    return true;
+                }
+            }
+        }
+        finally{
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return false;
+    }
+    
+    public boolean addNewProductFeedback(String name, String content, String email, String phone, int ratedStar, int productID) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "INSERT INTO Feedback (Name, FeedbackContent, Email, Phone, [Status], RatedStar, ProductID) "
+                        + "VALUES (?, ?, ?, ?, 0, ?, ?) ";
+                
+                stm = con.prepareStatement(sql);
+                stm.setString(1, name);
+                stm.setString(2, content);
+                stm.setString(3, email);
+                stm.setString(4, phone);
+                stm.setInt(5, ratedStar);
+                stm.setInt(6, productID);
+                
+                int rowAffected = stm.executeUpdate();
+                if(rowAffected > 0){
+                    return true;
+                }
+            }
+        }
+        finally{
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return false;
     }
 }

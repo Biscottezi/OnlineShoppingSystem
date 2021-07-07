@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -75,6 +76,7 @@
         </style>
     </head>
     <body style="width: 100%; height:100%; margin: 0; padding: 0; background-color: #F7F8FC">
+        <c:set var="user" value="${sessionScope.USER}"/>
         <div class="wrapper row" style="margin:0;padding:0; max-width: 100%;">
             <div class="wrapper col-2" style="background-color: #363740; min-height:937px; padding-right: 0;">
               <ul class="nav flex-column col">
@@ -176,10 +178,10 @@
                     <div class="col-7"></div>
                     <div class="col row">
                         <div class="d-flex justify-content-end col-10 align-items-center" id="user">
-                            Trần Tân Long <!-- input jstl session user here! -->
+                            ${user.name} <!-- input jstl session user here! -->
                         </div>
                         <div class="profile col-2">
-                            <div id="avatar" class="ava" style="background-image: url(img/tanlong.png);" onclick="showPopup()"></div> <!-- get session's avatar -->
+                            <div id="avatar" class="ava" style="background-image: url(img/${user.avatar});" onclick="showPopup()"></div> <!-- get session's avatar -->
                         </div>
                     </div>
                 </div>
@@ -201,7 +203,11 @@
                             Featured<br>
                             <input name="postFeatured" type="checkbox" form="updateform" checked="checked" value="ON" style="margin-top: 10px; zoom: 2"/>
                             <div style="margin-top:18px;">Category</div>
-                            <div class="userinfo" style="padding-left: 10px">Tu van</div>
+                            <select name="postCategory" form="updateform" class="editbox">
+                                <option value="1">Đánh giá</option>
+                                <option value="2">Mẹo hay</option>
+                                <option value="3">Tư vấn</option>
+                            </select>
                         </div>
                     </div>
                     <div class="infor row">
@@ -239,7 +245,7 @@
                             </div>
                         </div>
                         <div class="col-2">
-                            <input type="hidden" form="updateform" value=""/>
+                            <input type="hidden" name="postID" form="updateform" value=""/>
                         </div>
                         <div class="col-4">
                             <div class="savewrapper row d-flex align-items-end justify-content-end">
@@ -259,11 +265,11 @@
         <div class="popupwrapper" id="usermenu" style="padding:0;margin:0;">
             <div class="pro5 row popupitem">
                 <div class="col-3 d-flex align-items-center justify-content-center" style="padding:0;">
-                    <div id="menuavatar" style="background-image: url(img/tanlong.png);"></div>
+                    <div id="menuavatar" style="background-image: url(img/${user.avatar});"></div>
                 </div>
                 <div class="col-9 d-flex align-items-center description">
                     <div class="descwrapper">
-                        <p class="menu-itemtitle">Trần Tân Long</p>
+                        <p class="menu-itemtitle">${user.name}</p>
                         <p>See your profile</p>
                     </div>
                 </div>
@@ -284,6 +290,6 @@
             </div>
         </div>
         
-        <form action="" id="updateform"></form>
+        <form action="" id="updateform" method="POST" enctype="multipart/form-data"></form>
     </body>
 </html>

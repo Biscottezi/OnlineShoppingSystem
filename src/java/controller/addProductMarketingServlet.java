@@ -6,31 +6,33 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import user.UserDAO;
-import user.UserDTO;
+import product.ProductDAO;
+import utils.uploadFile;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
-public class loginServlet extends HttpServlet {
-    private final String INVALID_PAGE = "Error.html";
-    private final String HOME_PAGE = "viewHomePageServlet";
-    private final String MARKETING_DASHBOARD = "MarketingCustomerList.jsp";
-    private final String SALE_MANAGER_DASHBOARD = "";
-    private final String SALE_MEMBER_DASHBOARD = "";
-    private final String ADMIN_DASHBOARD = "AdminDashboard.jsp";
+@WebServlet(name = "addProductMarketingServlet", urlPatterns = {"/addProductMarketingServlet"})
+
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 10,
+        maxFileSize = 1024 * 1024 * 50,
+        maxRequestSize = 1024 * 1024 * 100
+)
+
+public class addProductMarketingServlet extends HttpServlet {
+    private final String ERROR_PAGE = "Error.html";
+    private final String PRODUCT_MARKETING_PAGE = "MarketingProductList.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,47 +45,37 @@ public class loginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = INVALID_PAGE;
+        String url = ERROR_PAGE;
+        
+        String Title = request.getParameter("txtTitle");
+        String ProductCategoryID = request.getParameter("txtCategory");
+        String Thumbnail = uploadFile.uploadFile(request, "productThumbnail");
+        String BriefInfo = request.getParameter("txtBriefInfo");
+        String Description = request.getParameter("");
+        String Quantity = request.getParameter("");
+        String ListPrice = request.getParameter("");
+        String SalePrice = request.getParameter("");
+        String Featured = request.getParameter("");
+        String chkStatus = request.getParameter("");
+        ArrayList<String> attachedImageList = uploadFile.uploadFiles(request, 1);
+        int status = 0;
         
         try{
-                String email = request.getParameter("txtEmail");
-                String password = request.getParameter("txtPassword");
-                UserDAO dao = new UserDAO();
-                boolean result = dao.checkLogin(email, password);
-                
-                if(result){
-                    HttpSession session = request.getSession(true);
-                    UserDTO user = dao.getUser();
-                    session.setAttribute("USER", user);
-                    
-                    int role = user.getRole();
-                    switch (role){
-                        case 0:
-                            url = MARKETING_DASHBOARD;
-                            break;
-                        case 1:
-                            url = SALE_MEMBER_DASHBOARD;
-                            break;
-                        case 2:
-                            url = SALE_MANAGER_DASHBOARD;
-                            break;
-                        case 3:
-                            url = ADMIN_DASHBOARD;
-                            break;
-                        case 4:
-                            url = HOME_PAGE;
-                            break;
-                    }
-                }
+            if(chkStatus != null){
+                status = 1;
+            }
+            ProductDAO productDao = new ProductDAO();
+            productDao.addNewProduct();
             
-        }catch(SQLException ex){
-            log("LoginServlet _ SQL:" + ex.getMessage());
-        }catch(NamingException ex){
-            log("LoginServlet _ Naming:" + ex.getMessage());
-        }finally{
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
-//                response.sendRedirect(url);
+            
+            
+            url = PRODUCT_MARKETING_PAGE;
+        }catch (SQLException ex) {
+            log("addProductMarketingServlet_SQLException: " + ex.getMessage());
+        } catch (NamingException ex) {
+            log("addProductMarketingServlet_NamingException: " + ex.getMessage());
+        } finally {
+            response.sendRedirect(url);
         }
     }
 
