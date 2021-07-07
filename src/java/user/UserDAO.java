@@ -391,4 +391,45 @@ public class UserDAO implements Serializable {
         }
         return  0;
     }
+    
+    public boolean updateCustomer(int cusID, String name, int gender, String address, String phone)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                //B2. create SQL string 
+
+                String sql = "UPDATE [User] "
+                        + "SET Name = ?, Gender = ?, Address = ?, Phone = ?,  "
+                        + "WHERE UserID = ?";
+
+                stm = con.prepareStatement(sql);
+                stm.setString(1, name);
+                stm.setInt(2, gender);
+                stm.setString(3, address);
+                stm.setString(4, phone);
+                stm.setInt(5, cusID);
+                
+                int rowAffect = stm.executeUpdate();
+                if(rowAffect == 1){
+                    return true;
+                }
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
 }

@@ -11,6 +11,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.naming.NamingException;
 import utils.DBHelper;
 
@@ -20,10 +22,10 @@ import utils.DBHelper;
  */
 public class CustomerOldDetailsDAO implements Serializable{
     
-    private CustomerOldDetailsDTO oldDetails;
+    private List<CustomerOldDetailsDTO> oldDetailsList;
     
-    public CustomerOldDetailsDTO getOldDetails(){
-        return oldDetails;
+    public List<CustomerOldDetailsDTO> getOldDetailsList(){
+        return oldDetailsList;
     }
     
     public void getCustomerOldDetailsByID(int ID) throws SQLException, NamingException{
@@ -48,8 +50,12 @@ public class CustomerOldDetailsDAO implements Serializable{
                     String Phone = rs.getString("Phone");
                     Date DateCreated = rs.getDate("DateCreated");
                     int CustomerID = rs.getInt("CustomerID");
-
-                    this.oldDetails = new CustomerOldDetailsDTO(OldID, Name, Gender, Address, Phone, DateCreated, CustomerID);
+                    if(this.oldDetailsList == null){
+                        this.oldDetailsList = new ArrayList<>();
+                    }
+                    CustomerOldDetailsDTO dto = new CustomerOldDetailsDTO(OldID, Name, Gender, Address, Phone, DateCreated, CustomerID);
+                    
+                    this.oldDetailsList.add(dto);
                 }
             }
         }finally{
