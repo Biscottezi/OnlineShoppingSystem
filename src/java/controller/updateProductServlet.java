@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import product.ProductDAO;
 
 /**
  *
@@ -38,6 +39,7 @@ public class updateProductServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR_PAGE;
         try{
+            ProductDAO productDao = new ProductDAO();
             
             
             url = PRODUCT_MARKETING_PAGE;

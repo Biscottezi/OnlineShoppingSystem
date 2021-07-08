@@ -5,11 +5,10 @@
  */
 package controller;
 
-import feedBack.FeedBackDAO;
-import feedBack.FeedBackDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,16 +16,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import slider.SliderDAO;
+import slider.SliderDTO;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "viewFeedbackDetailsMarketingServlet", urlPatterns = {"/viewFeedbackDetailsMarketingServlet"})
-public class viewFeedbackDetailsMarketingServlet extends HttpServlet {
-    private final String ERROR_PAGE = "Error.html";
-    private final String FEEDBACK_DETAILS_PAGE = "MarketingFeedbackDetails.jsp";
-
+@WebServlet(name = "viewSliderListMarketing", urlPatterns = {"/viewSliderListMarketing"})
+public class viewSliderListMarketing extends HttpServlet {
+    private final String ERROR_PAGE="Error.html";
+    private final String SLIDER_LIST_PAGE="MarketingSliderList.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,26 +40,24 @@ public class viewFeedbackDetailsMarketingServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR_PAGE;
-        String productID = request.getParameter("feedbackID");
+        
         try{
-            int prodID = Integer.parseInt(productID);
-            FeedBackDAO dao = new FeedBackDAO();
-            dao.getFeedBackById(prodID);
-            FeedBackDTO dto = dao.getFeedback();
-            if(dto != null){
-                request.setAttribute("FEEDBACK_DETAILS", dto);
+            SliderDAO sliderDao = new SliderDAO();
+            sliderDao.getAllSlider();
+            List<SliderDTO> sliderList = sliderDao.getSliderList();
+            if(sliderList != null){
+                request.setAttribute("SLIDER_LIST", sliderList);
             }
-            url = FEEDBACK_DETAILS_PAGE;
-        }
-        catch(SQLException ex){
-            log("ViewFeedbackDetailsMarketingServlet_SQL: " + ex.getMessage());
-        }
-        catch(NamingException ex){
-            log("ViewFeedbackDetailsMarketingServlet_Naming: " + ex.getMessage());
-        }
-        finally{
+            
+            url = SLIDER_LIST_PAGE;
+        }catch(SQLException ex){
+            log("viewSliderListMarketing _ SQL:" + ex.getMessage());
+        }catch(NamingException ex){
+            log("viewSliderListMarketing _ Naming:" + ex.getMessage());
+        }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
+            
         }
     }
 

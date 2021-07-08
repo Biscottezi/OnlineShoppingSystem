@@ -6,7 +6,6 @@
 package controller;
 
 import feedBack.FeedBackDAO;
-import feedBack.FeedBackDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -20,13 +19,13 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ASUS
+ * @author nguye
  */
-@WebServlet(name = "viewFeedbackDetailsMarketingServlet", urlPatterns = {"/viewFeedbackDetailsMarketingServlet"})
-public class viewFeedbackDetailsMarketingServlet extends HttpServlet {
+@WebServlet(name = "updateFeedbackServlet", urlPatterns = {"/updateFeedbackServlet"})
+public class updateFeedbackServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
-    private final String FEEDBACK_DETAILS_PAGE = "MarketingFeedbackDetails.jsp";
-
+    private final String FEEDBACK_DETAILS_PAGE = "viewFeedbackDetailsMarketingServlet";
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,22 +39,30 @@ public class viewFeedbackDetailsMarketingServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR_PAGE;
-        String productID = request.getParameter("feedbackID");
+        String fbID = request.getParameter("feedbackID");
+        String fbStatus = request.getParameter("feedbackStatus");
         try{
-            int prodID = Integer.parseInt(productID);
+            int feedbackID = Integer.parseInt(fbID);
             FeedBackDAO dao = new FeedBackDAO();
-            dao.getFeedBackById(prodID);
-            FeedBackDTO dto = dao.getFeedback();
-            if(dto != null){
-                request.setAttribute("FEEDBACK_DETAILS", dto);
+            boolean result = false;
+            if(fbStatus != null){
+                result = dao.updateFeedback(feedbackID, 1);
             }
-            url = FEEDBACK_DETAILS_PAGE;
+            else{
+                result = dao.updateFeedback(feedbackID, 0);
+            }
+            if(result){
+                url = FEEDBACK_DETAILS_PAGE;
+            }
+        }
+        catch(NumberFormatException ex){
+            log("UpdateFeedbackServlet_NumberFormat: " + ex.getMessage());
         }
         catch(SQLException ex){
-            log("ViewFeedbackDetailsMarketingServlet_SQL: " + ex.getMessage());
+            log("UpdateFeedbackServlet_SQL: " + ex.getMessage());
         }
         catch(NamingException ex){
-            log("ViewFeedbackDetailsMarketingServlet_Naming: " + ex.getMessage());
+            log("UpdateFeedbackServlet_Naming: " + ex.getMessage());
         }
         finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);

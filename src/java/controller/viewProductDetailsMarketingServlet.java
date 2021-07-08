@@ -5,11 +5,10 @@
  */
 package controller;
 
-import feedBack.FeedBackDAO;
-import feedBack.FeedBackDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,16 +16,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import product.ProductDAO;
+import product.ProductDTO;
+import productAttachedImage.ProductAttachedImageDAO;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "viewFeedbackDetailsMarketingServlet", urlPatterns = {"/viewFeedbackDetailsMarketingServlet"})
-public class viewFeedbackDetailsMarketingServlet extends HttpServlet {
+@WebServlet(name = "viewProductDetailsMarketingServlet", urlPatterns = {"/viewProductDetailsMarketingServlet"})
+public class viewProductDetailsMarketingServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
-    private final String FEEDBACK_DETAILS_PAGE = "MarketingFeedbackDetails.jsp";
-
+    private final String PRODUCT_DETAILS_PAGE = "MarketingProductDetails.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,27 +40,32 @@ public class viewFeedbackDetailsMarketingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String id = request.getParameter("");
         String url = ERROR_PAGE;
-        String productID = request.getParameter("feedbackID");
+        
         try{
-            int prodID = Integer.parseInt(productID);
-            FeedBackDAO dao = new FeedBackDAO();
-            dao.getFeedBackById(prodID);
-            FeedBackDTO dto = dao.getFeedback();
+            ProductDAO productDao = new ProductDAO();
+            ProductDTO dto = productDao.GetProductbyID(Integer.parseInt(id));
             if(dto != null){
-                request.setAttribute("FEEDBACK_DETAILS", dto);
+                request.setAttribute("PRODUCT", dto);
             }
-            url = FEEDBACK_DETAILS_PAGE;
-        }
-        catch(SQLException ex){
-            log("ViewFeedbackDetailsMarketingServlet_SQL: " + ex.getMessage());
-        }
-        catch(NamingException ex){
-            log("ViewFeedbackDetailsMarketingServlet_Naming: " + ex.getMessage());
-        }
-        finally{
+            
+            ProductAttachedImageDAO imageDao = new ProductAttachedImageDAO();
+            imageDao.getProductImages(Integer.parseInt(id));
+            List<String> imageDto = imageDao.getProductImageList();
+            if(imageDto != null){
+                request.setAttribute("PRODUCT_IMAGES", imageDto);
+            }
+            
+            url = PRODUCT_DETAILS_PAGE;
+        }catch(SQLException ex){
+            log("viewProductDetailsMarketingServlet _ SQL:" + ex.getMessage());
+        }catch(NamingException ex){
+            log("viewProductDetailsMarketingServlet _ Naming:" + ex.getMessage());
+        }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
+            
         }
     }
 

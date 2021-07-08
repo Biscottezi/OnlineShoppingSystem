@@ -41,9 +41,9 @@ public class FeedBackDAO implements Serializable{
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "SELECT  FeedBackID, Name, FeedbackContent, Email, Phone, Status, RatedStar, ProductID "
-                        + "FROM FeedBack "
-                        + "ORDER by [Status] desc";
+                String sql = "SELECT  FeedBackID, Name, FeedbackContent, Email, Phone, Feedback.[Status], Feedback.RatedStar, Feedback.ProductID, Title "
+                        + "FROM FeedBack left join Product on Feedback.ProductID = Product.ProductID "
+                        + "ORDER by [Status] asc";
 
                 stm = con.prepareCall(sql);
                 rs = stm.executeQuery();
@@ -57,7 +57,8 @@ public class FeedBackDAO implements Serializable{
                     int Status = rs.getInt("Status");
                     int RatedStar = rs.getInt("RatedStar");
                     int ProductID = rs.getInt("ProductID");
-                    FeedBackDTO dto = new FeedBackDTO(FeedBackID, Name, FeedbackContent, Email, Phone, Status, RatedStar, ProductID);
+                    String ProductTitle  = rs.getString("Title");
+                    FeedBackDTO dto = new FeedBackDTO(FeedBackID, Name, FeedbackContent, Email, Phone, Status, RatedStar, ProductID, ProductTitle);
                     if (this.feedbackList == null) {
                         this.feedbackList = new ArrayList<>();
                     }
@@ -84,8 +85,8 @@ public class FeedBackDAO implements Serializable{
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "SELECT  FeedBackID, Name, FeedbackContent, Email, Phone, Status, RatedStar, ProductID "
-                        + "FROM FeedBack "
+                String sql = "SELECT  FeedBackID, Name, FeedbackContent, Email, Phone, Feedback.[Status], Feedback.RatedStar, Feedback.ProductID, Title "
+                        + "FROM FeedBack left join Product on Feedback.ProductID = Product.ProductID "
                         + "WHERE FeedbackID = ? ";
 
                 stm = con.prepareStatement(sql);
@@ -101,7 +102,8 @@ public class FeedBackDAO implements Serializable{
                     int Status = rs.getInt("Status");
                     int RatedStar = rs.getInt("RatedStar");
                     int ProductID = rs.getInt("ProductID");
-                    FeedBackDTO dto = new FeedBackDTO(FeedBackID, Name, FeedbackContent, Email, Phone, Status, RatedStar, ProductID);
+                    String ProductTitle  = rs.getString("Title");
+                    FeedBackDTO dto = new FeedBackDTO(FeedBackID, Name, FeedbackContent, Email, Phone, Status, RatedStar, ProductID, ProductTitle);
                     this.feedback = dto;
                 }
             }
@@ -171,6 +173,37 @@ public class FeedBackDAO implements Serializable{
                 stm.setInt(6, productID);
                 
                 int rowAffected = stm.executeUpdate();
+                if(rowAffected > 0){
+                    return true;
+                }
+            }
+        }
+        finally{
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return false;
+    }
+    
+    public boolean updateFeedback(int id, int status) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "UPDATE Feedback "
+                        + "SET [Status] = ? "
+                        + "WHERE FeedbackID = ? ";
+                
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, status);
+                stm.setInt(2, id);
+                int rowAffected = stm.executeUpdate();
+                
                 if(rowAffected > 0){
                     return true;
                 }

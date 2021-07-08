@@ -20,11 +20,12 @@ public class FeedBackDTO implements Serializable{
     private int status;
     private int ratedStar;
     private int productId;
+    private String productTitle;
 
     public FeedBackDTO() {
     }
 
-    public FeedBackDTO(int id, String name, String content, String email, String phone, int status, int ratedStar, int productId) {
+    public FeedBackDTO(int id, String name, String content, String email, String phone, int status, int ratedStar, int productId, String productTitle) {
         this.id = id;
         this.name = name;
         this.content = content;
@@ -33,6 +34,7 @@ public class FeedBackDTO implements Serializable{
         this.status = status;
         this.ratedStar = ratedStar;
         this.productId = productId;
+        this.productTitle = productTitle;
     }
 
     public int getId() {
@@ -97,6 +99,14 @@ public class FeedBackDTO implements Serializable{
 
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    public String getProductTitle() {
+        return productTitle;
+    }
+
+    public void setProductTitle(String productTitle) {
+        this.productTitle = productTitle;
     }
     
     

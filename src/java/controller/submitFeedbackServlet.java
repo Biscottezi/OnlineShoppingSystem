@@ -37,40 +37,7 @@ public class submitFeedbackServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String url = ERROR_PAGE;
-        try{
-            String productID = request.getParameter("txtProductId");
-            String name = request.getParameter("txtName");
-            String email = request.getParameter("txtEmail");
-            String phone = request.getParameter("txtMobile");
-            int ratedStar = Integer.parseInt(request.getParameter("txtRating"));
-            String content = request.getParameter("txtFeedbackContent");
-            if(productID != null){
-                int prodID = Integer.parseInt(productID);
-                FeedBackDAO dao = new FeedBackDAO();
-                boolean result = dao.addNewProductFeedback(name, content, email, phone, ratedStar, prodID);
-                if(result){
-                    url = HOMEPAGE;
-                }
-            }
-            else{
-                FeedBackDAO dao = new FeedBackDAO();
-                boolean result = dao.addNewGeneralFeedback(name, content, email, phone, ratedStar);
-                if(result){
-                    url = HOMEPAGE;
-                }
-            }
-        }
-        catch(SQLException ex){
-            log("SubmitFeedbackServlet_SQL: " + ex.getMessage());
-        }
-        catch(NamingException ex){
-            log("SubmitFeedbackServlet_Naming: " + ex.getMessage());
-        }
-        finally{
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -99,7 +66,41 @@ public class submitFeedbackServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String url = ERROR_PAGE;
+        try{
+            String productID = request.getParameter("txtProductId");
+            String name = request.getParameter("txtName");
+            String email = request.getParameter("txtEmail");
+            String phone = request.getParameter("txtMobile");
+            String rating = request.getParameter("txtRating");
+            int ratedStar = Integer.parseInt(rating);
+            String content = request.getParameter("txtFeedbackContent");
+            if(productID != null){
+                int prodID = Integer.parseInt(productID);
+                FeedBackDAO dao = new FeedBackDAO();
+                boolean result = dao.addNewProductFeedback(name, content, email, phone, ratedStar, prodID);
+                if(result){
+                    url = HOMEPAGE;
+                }
+            }
+            else{
+                FeedBackDAO dao = new FeedBackDAO();
+                boolean result = dao.addNewGeneralFeedback(name, content, email, phone, ratedStar);
+                if(result){
+                    url = HOMEPAGE;
+                }
+            }
+        }
+        catch(SQLException ex){
+            log("SubmitFeedbackServlet_SQL: " + ex.getMessage());
+        }
+        catch(NamingException ex){
+            log("SubmitFeedbackServlet_Naming: " + ex.getMessage());
+        }
+        finally{
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+        }
     }
 
     /**

@@ -64,4 +64,38 @@ public class SliderContentDAO implements Serializable{
             }
         }
     }
+    
+    public boolean addProductToSlider(int sliderID, int productID)
+            throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "INSERT INTO SliderContent(SliderID, ProductID) "
+                        + "VALUES (?, ?)";
+                
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, sliderID);
+                stm.setInt(2, productID);
+                
+                int rowAffect = stm.executeUpdate();
+                if(rowAffect == 1){
+                    return true;
+                }
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return false;
+    }
 }

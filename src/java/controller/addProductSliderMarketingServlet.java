@@ -5,8 +5,6 @@
  */
 package controller;
 
-import feedBack.FeedBackDAO;
-import feedBack.FeedBackDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -17,16 +15,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import sliderContent.SliderContentDAO;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "viewFeedbackDetailsMarketingServlet", urlPatterns = {"/viewFeedbackDetailsMarketingServlet"})
-public class viewFeedbackDetailsMarketingServlet extends HttpServlet {
-    private final String ERROR_PAGE = "Error.html";
-    private final String FEEDBACK_DETAILS_PAGE = "MarketingFeedbackDetails.jsp";
-
+@WebServlet(name = "addProductSliderMarketingServlet", urlPatterns = {"/addProductSliderMarketingServlet"})
+public class addProductSliderMarketingServlet extends HttpServlet {
+    private final String ERROR_PAGE="Error.html";
+    private final String SLIDER_DETAILS_PAGE="MarketingSliderDetails.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,27 +37,24 @@ public class viewFeedbackDetailsMarketingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String sliderID = request.getParameter("");
+        String productID = request.getParameter("");
         String url = ERROR_PAGE;
-        String productID = request.getParameter("feedbackID");
-        try{
-            int prodID = Integer.parseInt(productID);
-            FeedBackDAO dao = new FeedBackDAO();
-            dao.getFeedBackById(prodID);
-            FeedBackDTO dto = dao.getFeedback();
-            if(dto != null){
-                request.setAttribute("FEEDBACK_DETAILS", dto);
+        
+        try {
+            SliderContentDAO dao = new SliderContentDAO();
+            boolean result = dao.addProductToSlider(Integer.parseInt(sliderID), Integer.parseInt(productID));
+            if(result){
+                url = SLIDER_DETAILS_PAGE;
             }
-            url = FEEDBACK_DETAILS_PAGE;
-        }
-        catch(SQLException ex){
-            log("ViewFeedbackDetailsMarketingServlet_SQL: " + ex.getMessage());
-        }
-        catch(NamingException ex){
-            log("ViewFeedbackDetailsMarketingServlet_Naming: " + ex.getMessage());
-        }
-        finally{
+        }catch(SQLException ex){
+            log("addProductSliderMarketingServlet _ SQL:" + ex.getMessage());
+        }catch(NamingException ex){
+            log("addProductSliderMarketingServlet _ Naming:" + ex.getMessage());
+        }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
+            
         }
     }
 
