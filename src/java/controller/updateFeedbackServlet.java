@@ -5,25 +5,27 @@
  */
 package controller;
 
-import cart.Cart;
+import feedBack.FeedBackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author ASUS
+ * @author nguye
  */
-@WebServlet(name = "addToCartServlet", urlPatterns = {"/addToCartServlet"})
-public class addToCartServlet extends HttpServlet {
-
+@WebServlet(name = "updateFeedbackServlet", urlPatterns = {"/updateFeedbackServlet"})
+public class updateFeedbackServlet extends HttpServlet {
+    private final String ERROR_PAGE = "Error.html";
+    private final String FEEDBACK_DETAILS_PAGE = "viewFeedbackDetailsMarketingServlet";
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,35 +38,35 @@ public class addToCartServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String urlRewriting = "viewProductDetails"
-                + "?productID=" + Integer.parseInt(request.getParameter("txtProductId"));
-//        if (request.getParameter("LastSearchProduct") != null) {
-//            urlRewriting = "searchProduct"
-//                    + "&txtSearchedProduct=" + request.getParameter("LastSearchProduct");
-//        }
-        
-        
+        String url = ERROR_PAGE;
+        String fbID = request.getParameter("feedbackID");
+        String fbStatus = request.getParameter("feedbackStatus");
         try{
-            HttpSession session = request.getSession(true);//??????? true hay false
-            //2. Cust takes a cart
-            Cart cart = (Cart) session.getAttribute("CART");
-            if (cart == null) {
-                cart = new Cart();
-            }//end if cart is existed
-            //3. Cust select/chooses a product
-            int ID = Integer.parseInt(request.getParameter("txtProductId"));
-            int quantity = Integer.parseInt(request.getParameter("txtQuantity"));
-
-            //4. Cust drops item into cart
-            cart.addToCart(ID, quantity);
-
-            session.setAttribute("CART", cart);
-        }catch (SQLException ex) {
-            log("AddToCartServlet_SQLException: " + ex.getMessage());
-        } catch (NamingException ex) {
-            log("AddToCartServlet_NamingException: " + ex.getMessage());
-        } finally {
-            response.sendRedirect(urlRewriting);
+            int feedbackID = Integer.parseInt(fbID);
+            FeedBackDAO dao = new FeedBackDAO();
+            boolean result = false;
+            if(fbStatus != null){
+                result = dao.updateFeedback(feedbackID, 1);
+            }
+            else{
+                result = dao.updateFeedback(feedbackID, 0);
+            }
+            if(result){
+                url = FEEDBACK_DETAILS_PAGE;
+            }
+        }
+        catch(NumberFormatException ex){
+            log("UpdateFeedbackServlet_NumberFormat: " + ex.getMessage());
+        }
+        catch(SQLException ex){
+            log("UpdateFeedbackServlet_SQL: " + ex.getMessage());
+        }
+        catch(NamingException ex){
+            log("UpdateFeedbackServlet_Naming: " + ex.getMessage());
+        }
+        finally{
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

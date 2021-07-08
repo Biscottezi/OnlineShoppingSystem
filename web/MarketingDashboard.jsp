@@ -10,22 +10,26 @@
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Feedback List</title>
+        <title>User List</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
         <link rel="stylesheet" href="css/managersider.css">
         <link rel="stylesheet" href="css/userlist.css">
         <link rel="stylesheet" href="css/managerprofile.css"/>
-        <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css"/>
-        <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-        <script src="js/tbllist.js"></script>
+        <link rel="stylesheet" href="css/salelist.css"/>
+        <link rel="stylesheet" href="css/dashboard.css"/>
+        <link rel="stylesheet" href="css/admindashboard.css"/>
         <script src="js/managerpopup.js"></script>
         <script src="js/upload.js"></script>
         <script src="js/statuschange.js"></script>
+        <script src="js/datepicker.js"></script>
         <style>
             .status{
                 width:100px;
@@ -68,10 +72,35 @@
             .show {
                 display:block;
             }
+            .picker-wrapper{
+                margin-bottom: 50px;
+            }
+            .select-wrapper{
+                width: 354px;
+            }
+            .select-wrapper::after{
+                top: 0px;
+            }
+            #saleselect::after{
+                top: -2px;
+            }
+            #saleselect{
+                 width: 400px;
+            }
+            .admin-stats:hover{
+                border: 1px solid #3751FF;
+                box-shadow: 0 0 0 2px #DDE2FF;
+                transition: all .2s ease;
+                -webkit-transition: all .2s ease;
+            }
+            .admin-stats:hover .details-header, .admin-stats:hover .details{
+                color: #3751FF;
+                transition: all .2s ease;
+                -webkit-transition: all .2s ease;
+            }
         </style>
     </head>
     <body style="width: 100%; height:100%; margin: 0; padding: 0; background-color: #F7F8FC">
-        <c:set var="user" value="${sessionScope.USER}"/>
         <div class="wrapper row" style="margin:0;padding:0; max-width: 100%;">
             <div class="wrapper col-2" style="background-color: #363740; min-height:937px; padding-right: 0;">
               <ul class="nav flex-column col">
@@ -82,18 +111,18 @@
                         <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col"><img src="img/logo.png" alt=""/></div>
-                                <div class="col">Marketing <br> Dashboard</div>
+                                <div class="col">Admin <br> Dashboard</div>
                             </div>
                         </div>
                     </div>
                   </li>
                   
                   <!-- item 1 -->
-                  <li class="nav-item naviitem row">
+                  <li class="nav-item naviitem row" id="active">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
-                                <div class="col align-self-baseline"><img src="img/dashboard.png" alt=""/></div>
+                                <div class="col align-self-baseline"><img src="img/dashboard-chosen.png" alt=""/></div>
                                 <div class="col align-self-baseline" style="font-size: 19px;">Overview</div>
                             </div>
                           </div>
@@ -137,11 +166,11 @@
                   </li>
                   
                   <!-- item 5 -->
-                  <li class="nav-item naviitem row" id="active">
-                      <a class="navbar-brand overview" href="mktFeedbackList">
+                  <li class="nav-item naviitem row">
+                      <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
-                                <div class="col align-self-baseline"><img src="img/mkt-feedbacks-chosen.png" alt=""/></div>
+                                <div class="col align-self-baseline"><img src="img/mkt-feedbacks.png" alt=""/></div>
                                 <div class="col align-self-baseline" style="font-size: 19px;">Feedbacks</div>
                             </div>
                           </div>
@@ -166,77 +195,68 @@
 
             <div class="wrapper col" style="background-color: #F7F8FC; padding: 30px 33px 30px 45px;" id="maincontent">
                 <!-- main title -->
-                <div class="maintitle row">
-                    <div class="col-2" id="title"><span>Feedbacks</span></div>
+                <div class="maintitle row" style="margin-bottom: 30px;">
+                    <div class="col-2" id="title"><span>Overview</span></div>
                     <div class="col-7"></div>
                     <div class="col row">
                         <div class="d-flex justify-content-end col-10 align-items-center" id="user">
-                            ${user.name} <!-- input jstl session user here! -->
+                            Trần Tân Long <!-- input jstl session user here! -->
                         </div>
                         <div class="profile col-2">
-                            <div id="avatar" class="ava" style="background-image: url(img/${user.avatar});" onclick="showPopup()"></div> <!-- get session's avatar -->
+                            <div id="avatar" class="ava" style="background-image: url(img/tanlong.png);" onclick="showPopup()"></div> <!-- get session's avatar -->
+                        </div>
+                    </div>
+                </div>
+                <!-- session -->
+                <div class="input-group col-3 row" style="margin-right: 10px; margin-bottom: 30px;">
+                    <div class="input-group-prepend" style="height: 38px;">
+                        <span class="input-group-text" id="basic-addon1" style="background-color:white; border: 1px #e3e3e3 solid; border-right-style: none;">
+                            <i class="far fa-calendar-alt" style="font-size:22px;"></i>
+                        </span>
+                        <input type="text" name="daterange" id="datepicker" class="datepicker" style="height: 38px; width: 310px;"/>
+                    </div>
+                </div>
+                
+                <div class="picker row" style="margin-bottom: 40px;">
+                    <div class="col-3 sale-member picker-title">
+                        <div class="admin-stats d-flex align-items-center justify-content-center">
+                            <div class="details-header">Posts<br>
+                                <span class="details">60</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 sale-member picker-title">
+                        <div class="admin-stats d-flex align-items-center justify-content-center">
+                            <div class="details-header">Products<br>
+                                <span class="details">16</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 sale-member picker-title">
+                        <div class="admin-stats d-flex align-items-center justify-content-center">
+                            <div class="details-header">Customers<br>
+                                <span class="details">43</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 sale-member picker-title">
+                        <div class="admin-stats d-flex align-items-center justify-content-center">
+                            <div class="details-header">Feedbacks<br>
+                                <span class="details">64</span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- main list -->
-                <div class="listwrapper">
-                    <!-- list header -->
-                    <div class="listheader row">
-                        <div class="col-2 d-flex justify-content-start align-items-center" id="listtitle">All Feedbacks</div>
-                        <div class="col-6 row">
-                            <form action="" class="col-8 searchbar row">
-                                <input type="text" placeholder="Search feedback" class="search-input col-10" name="txtSearchProduct" id="searchtable">
-                                <button type="submit" id="search-button" class="col-2 button" name="btAction">
-                                    <i class="fas fa-search" style="color: #C5C7CD"></i>
-                                </button>
-                            </form>
-                        </div>
-                        <div class="extended col-4 row d-flex justify-content-end">
-                            <div class="col-3 d-flex align-items-center justify-content-end"><i class="fas fa-sort-amount-up"></i>Sort</div>
-                            <div class="col-3 d-flex align-items-center justify-content-end"><i class="fas fa-filter"></i>Filter</div>
-                        </div>
+                <!-- main graph -->
+                <div class="graphwrapper">
+                    <!-- graph header -->
+                    <div class="graph-header row">
+                        <div class="col-12 d-flex justify-content-start align-items-center graphtitle">New customers trends</div>
                     </div>
-                    
-                    <table class="table table-hover" id="tbllist">
-                      <thead>
-                        <tr>
-                          <th scope="col" style="text-align: center">ID</th>
-                          <th scope="col">Customer Name</th>
-                          <th scope="col">Product Name</th>
-                          <th scope="col">Rated Stars</th>
-                          <th scope="col">Status</th>
-                        </tr>
-                      </thead>
-                      <c:set var="feedbacks" value="${requestScope.FEEDBACK_LIST}"/>
-                      <tbody>
-                            <c:forEach var="feedback" items="${feedbacks}">
-                                <tr style="height: 92px;" onclick="location.href='mktFeedbackDetails?feedbackID=${feedback.id}'">
-                                    <td class="align-middle" style="text-align: center">${feedback.id}</th>
-                                    <td class="align-middle">${feedback.name}</td>
-                                    <td class="align-middle">
-                                        <c:choose>
-                                            <c:when test="${not empty feedback.productTitle}">${feedback.productTitle}</c:when>
-                                            <c:otherwise>None (General Feedback)</c:otherwise>
-                                        </c:choose>
-                                    </td>
-                                    <td class="align-middle">${feedback.ratedStar}/5 stars</td>
-                                    <td class="align-middle" style="width:150px;">
-                                    <c:choose>
-                                        <c:when test="${feedback.status == 0}">
-                                            <div class="d-flex align-items-center justify-content-center status disable">UNRESOLVED</div>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <div class="d-flex align-items-center justify-content-center status enable">RESOLVED</div>
-                                        </c:otherwise>
-                                    </c:choose>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        
-                        
-                      </tbody>
-                    </table> 
+                    <div class="graph-desc">
+                        From 18 May 2021 to 25 May 2021
+                    </div>
                 </div>
                 
             </div>
@@ -245,11 +265,11 @@
         <div class="popupwrapper" id="usermenu" style="padding:0;margin:0;">
             <div class="pro5 row popupitem">
                 <div class="col-3 d-flex align-items-center justify-content-center" style="padding:0;">
-                    <div id="menuavatar" style="background-image: url(img/${user.avatar});"></div>
+                    <div id="menuavatar" style="background-image: url(img/tanlong.png);"></div>
                 </div>
                 <div class="col-9 d-flex align-items-center description">
                     <div class="descwrapper">
-                        <p class="menu-itemtitle">${user.name}</p>
+                        <p class="menu-itemtitle">Trần Tân Long</p>
                         <p>See your profile</p>
                     </div>
                 </div>
@@ -262,14 +282,22 @@
                 <div class="col-9 d-flex align-items-center description menu-itemtitle">Change Your Password</div>
             </div>
             <div class="menu-divider"></div>
-            <div class="signout row popupitem" onclick="location.href='logout';">
+            <div class="signout row popupitem" onclick="location.href='homepage.jsp';">
                 <div class="col-3 d-flex align-items-center justify-content-center" id="signout">
                     <div class="menuitemicon" style="background-image: url(img/signout.png);"></div>
                 </div>
                 <div class="col-9 d-flex align-items-center description menu-itemtitle">Sign Out</div>
             </div>
         </div>
-        
+        <script>
+            $('#datepicker').daterangepicker({
+                "showDropdowns": true,
+                "startDate": "06/26/2021",
+                "endDate": "07/02/2021"
+            }, function(start, end, label) {
+              console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+            },);           
+        </script>
         
     </body>
 </html>

@@ -5,24 +5,31 @@
  */
 package controller;
 
-import cart.Cart;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import order.OrderDAO;
+import orderDetail.OrderDetailDAO;
+import orderDetail.OrderItemObj;
+import product.ProductDAO;
+import productCategory.ProductCategoryDAO;
+import productCategory.ProductCategoryDTO;
 
 /**
  *
- * @author ASUS
+ * @author Admin
  */
-@WebServlet(name = "addToCartServlet", urlPatterns = {"/addToCartServlet"})
-public class addToCartServlet extends HttpServlet {
+@WebServlet(name = "CustomerCancelOrderServlet", urlPatterns = {"/CustomerCancelOrderServlet"})
+public class CustomerCancelOrderServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,38 +40,37 @@ public class addToCartServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private final String DETAIL_LIST_PAGE = "CustomerOrderDetails.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String urlRewriting = "viewProductDetails"
-                + "?productID=" + Integer.parseInt(request.getParameter("txtProductId"));
-//        if (request.getParameter("LastSearchProduct") != null) {
-//            urlRewriting = "searchProduct"
-//                    + "&txtSearchedProduct=" + request.getParameter("LastSearchProduct");
-//        }
-        
-        
-        try{
-            HttpSession session = request.getSession(true);//??????? true hay false
-            //2. Cust takes a cart
-            Cart cart = (Cart) session.getAttribute("CART");
-            if (cart == null) {
-                cart = new Cart();
-            }//end if cart is existed
-            //3. Cust select/chooses a product
-            int ID = Integer.parseInt(request.getParameter("txtProductId"));
-            int quantity = Integer.parseInt(request.getParameter("txtQuantity"));
+        String selectedOrderID = request.getParameter("selectedOrderID");
+        String url = DETAIL_LIST_PAGE;
+        try {
+            OrderDetailDAO dao = new OrderDetailDAO();
+            ArrayList<OrderItemObj> detailList = dao.GetOrderDetailByOrderID(Integer.parseInt(selectedOrderID));
+            OrderDAO oDAO= new OrderDAO();
+            
+            ProductDAO productDAO = new ProductDAO();
+            
+            productDAO.getAllProduct();
+            oDAO.updateCancelStatus(Integer.parseInt(selectedOrderID));
+            ProductCategoryDAO cate = new ProductCategoryDAO();
+            List<ProductCategoryDTO> categoryList = cate.getCategoryList();
+            
+            request.setAttribute("detailList", detailList);
+            request.setAttribute("categoryList", categoryList);
 
-            //4. Cust drops item into cart
-            cart.addToCart(ID, quantity);
-
-            session.setAttribute("CART", cart);
-        }catch (SQLException ex) {
-            log("AddToCartServlet_SQLException: " + ex.getMessage());
+        } catch (SQLException ex) {
+            log("ViewOlderOrderDetailServlet SQLException: " + ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            log("ViewOlderOrderDetailServlet ClassNotFoundException: " + ex.getMessage());
         } catch (NamingException ex) {
-            log("AddToCartServlet_NamingException: " + ex.getMessage());
+            log("ViewOlderOrderDetailServlet NamingException: " + ex.getMessage());
         } finally {
-            response.sendRedirect(urlRewriting);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

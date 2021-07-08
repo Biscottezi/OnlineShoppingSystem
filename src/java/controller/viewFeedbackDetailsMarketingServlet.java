@@ -5,8 +5,13 @@
  */
 package controller;
 
+import feedBack.FeedBackDAO;
+import feedBack.FeedBackDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "viewFeedbackDetailsMarketingServlet", urlPatterns = {"/viewFeedbackDetailsMarketingServlet"})
 public class viewFeedbackDetailsMarketingServlet extends HttpServlet {
+    private final String ERROR_PAGE = "Error.html";
+    private final String FEEDBACK_DETAILS_PAGE = "MarketingFeedbackDetails.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,17 +39,27 @@ public class viewFeedbackDetailsMarketingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet viewFeedbackDetailsMarketingServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet viewFeedbackDetailsMarketingServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String url = ERROR_PAGE;
+        String productID = request.getParameter("feedbackID");
+        try{
+            int prodID = Integer.parseInt(productID);
+            FeedBackDAO dao = new FeedBackDAO();
+            dao.getFeedBackById(prodID);
+            FeedBackDTO dto = dao.getFeedback();
+            if(dto != null){
+                request.setAttribute("FEEDBACK_DETAILS", dto);
+            }
+            url = FEEDBACK_DETAILS_PAGE;
+        }
+        catch(SQLException ex){
+            log("ViewFeedbackDetailsMarketingServlet_SQL: " + ex.getMessage());
+        }
+        catch(NamingException ex){
+            log("ViewFeedbackDetailsMarketingServlet_Naming: " + ex.getMessage());
+        }
+        finally{
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

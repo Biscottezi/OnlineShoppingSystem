@@ -25,6 +25,11 @@ import utils.DBHelper;
  * @author ASUS
  */
 public class OrderDAO implements Serializable{
+     private List<OrderDTO> orderList;
+     
+    public List<OrderDTO> getOrderList() {
+        return orderList;
+    }
     public ArrayList<OrderDTO> GetOrderListByCustID(String custID) throws SQLException, ClassNotFoundException, NamingException {
         Connection connection = null;
         PreparedStatement prestm = null;
@@ -253,6 +258,161 @@ public class OrderDAO implements Serializable{
         }
         return null;
     }
+
+    public int GetOrderStatusByOrderID(int OrderID) throws SQLException, ClassNotFoundException, NamingException {
+        Connection connection = null;
+        PreparedStatement prestm = null;
+        ResultSet rs = null;
+        Integer status = 0;
+        try {
+            connection = DBHelper.makeConnection();
+            if (connection != null) {
+                String orderSQLString = "SELECT OrderID, Status "
+                        + "FROM tblOrder "
+                        + "WHERE OrderID = ?";
+
+                prestm = connection.prepareStatement(orderSQLString);
+                prestm.setInt(1, OrderID);
+                rs = prestm.executeQuery();
+                
+                if (rs.next()) {
+                     status = rs.getInt("Status");
+                    
+                }
+                
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (prestm != null) {
+                prestm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return status;
+    }    
+    public boolean updateCancelStatus(int OrderID)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                //B2. create SQL string 
+
+                String sql = "UPDATE tblOrder "
+                        + "SET Status = 3 "
+                        + "WHERE OrderID = ?";
+
+                stm = con.prepareStatement(sql);                               
+                stm.setInt(1, OrderID);
+                
+                int rowAffect = stm.executeUpdate();
+                if(rowAffect == 1){
+                    return true;
+                }
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
+    public boolean updateStatus(int OrderID, int status)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                //B2. create SQL string 
+
+                String sql = "UPDATE tblOrder "
+                        + "SET Status = ? "
+                        + "WHERE OrderID = ?";
+
+                stm = con.prepareStatement(sql);                               
+                stm.setInt(1, status);
+                stm.setInt(2, OrderID);
+                
+                int rowAffect = stm.executeUpdate();
+                if(rowAffect == 1){
+                    return true;
+                }
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
+    public void searchCustName(String custName)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT  OrderID, Status, OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID "
+                        + "From tblOrder "
+                        + "Where ReceiverName LIKE ?";
+
+                stm = con.prepareStatement(sql);
+                stm.setString(1, "%" + custName + "%");
+                rs = stm.executeQuery();
+
+               while (rs.next()) {
+                    int OrderID = rs.getInt("OrderID");
+                    int Status = rs.getInt("Status");
+                    Date OrderedDate = rs.getDate("OrderedDate");
+                    int CustomerID = rs.getInt("CustomerID");
+                    String ReceiverName = rs.getString("ReceiverName");
+                    int ReceiverGender = rs.getInt("ReceiverGender");
+                    String ReceiverAddress = rs.getString("ReceiverAddress");
+                    String ReceiverEmail = rs.getString("ReceiverEmail");
+                    String ReceiverPhone = rs.getString("ReceiverPhone");
+                    String Note = rs.getString("Note");
+                    int SaleMemberID= rs.getInt("SaleMemberID");
+                    OrderDTO dto = new OrderDTO();
+                    if(this.orderList == null){
+                        this.orderList = new ArrayList<>();
+                    }
+                    this.orderList.add(dto);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+            }
+        }
+    }
     
     private List<UserDTO> potentialCus;
     
@@ -294,8 +454,9 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
-                con.close();
+
             }
         }
     }
 }
+

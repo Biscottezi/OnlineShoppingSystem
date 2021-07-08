@@ -58,10 +58,10 @@
                             </c:otherwise>
                         </c:choose>
                     </div>
-                    <div class="row product-row">
+                    <div class="row product-row" id="data-container">
                         <c:set var="productList" value="${requestScope.ALL_PRODUCT_LIST}"/>
-                        <c:forEach var="product" items="${productList}">
-                            <div class="col-3" onclick="location.href='viewProductDetails?productID=${product.id}';" style="margin-top: 1em">
+                        <c:forEach var="product" items="${productList}" varStatus="counter">
+                            <div class="col-3 product-wrapper" id="prod${counter.count}" onclick="location.href='viewProductDetails?productID=${product.id}';" style="margin-top: 1em">
                             <div class="card">
                                 <img src="img/${product.thumbnail}" alt="product-thumbnail" class="card-img-top">
                                 <div class="card-body">
@@ -86,18 +86,57 @@
                     <div class="container">
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">
-                              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                              <li class="page-item"><a class="page-link" href="#">1</a></li>
-                              <li class="page-item"><a class="page-link" href="#">2</a></li>
-                              <li class="page-item"><a class="page-link" href="#">3</a></li>
-                              <li class="page-item"><a class="page-link" href="#">Next</a></li>
                             </ul>
-                          </nav>
+                        </nav>
                     </div>
                 </div>
             </div>
         </main>
         
+        <script type="text/javascript">
+            $(document).ready(function(){
+                const pageSize = 2;
+
+                let noOfProd = $(".product-wrapper").length;
+                let noOfPage = Math.ceil(noOfProd / pageSize);
+                for(let i = 1; i <= noOfPage; ++i){
+                    $(".pagination").append("<li class=\"page-item\"><a class=\"page-link\" href=\"#\">" + i + "</a></li>")
+                }
+
+                //Hide all product
+                $(".product-wrapper").each(function(index, value){
+                    $(".product-wrapper").hide();
+                });
+
+                $(".page-link").first().parent().addClass("active");
+                var trimEnd1 = parseInt($(".page-link").first().text(), 10) * pageSize;
+                var trimStart1 = trimEnd1 - (pageSize - 1);
+                for(let i = trimStart1; i <= trimEnd1; ++i){
+                    var cardId = "#prod" + i.toString();
+                    $(cardId).show();
+                }
+
+                $(".page-link").on('click', function(){
+                    $(".page-link").each(function(index, value){
+                        $(value).parent().removeClass("active");
+    		    });
+
+                    //Hide all cards
+                    $(".product-wrapper").each(function(index, value){
+                        $('.product-wrapper').hide();
+                    })
+  
+                    $(this).parent().addClass("active");
+                    var trimEnd = parseInt($(this).text(), 10) * pageSize;
+                    var trimStart = trimEnd - (pageSize - 1);
+                    for(let i = trimStart; i <= trimEnd; ++i){
+                        var cardId = "#prod" + i.toString();
+                        $(cardId).show();
+                    }
+                });
+            });
+        </script>
+                        
         <!--Footer-->
         <%@include file="footer.html" %>
     </body>
