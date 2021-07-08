@@ -26,7 +26,7 @@ import postCategory.PostCategoryDTO;
  *
  * @author Admin
  */
-@WebServlet(name = "ViewBlogDetail", urlPatterns = {"/ViewBlogDetail"})
+@WebServlet(name = "ViewBlogListServlet", urlPatterns = {"/ViewBlogListServlet"})
 public class ViewBlogListServlet extends HttpServlet {
 
     /**
