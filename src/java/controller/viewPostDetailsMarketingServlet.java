@@ -26,7 +26,7 @@ import post.PostDTO;
 @WebServlet(name = "viewPostDetailsMarketingServlet", urlPatterns = {"/viewPostDetailsMarketingServlet"})
 public class viewPostDetailsMarketingServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
-    private final String POST_DETAILS_MARKETING_PAGE = "MarketingPostList.jsp";
+    private final String POST_DETAILS_MARKETING_PAGE = "MarketingPostDetails.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

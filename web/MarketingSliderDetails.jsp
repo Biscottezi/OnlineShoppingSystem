@@ -96,7 +96,7 @@
                   
                   <!-- item 1 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktDashboard">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/dashboard.png" alt=""/></div>
@@ -108,7 +108,7 @@
                   
                   <!-- item 2 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktCustomerList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/users.png" alt=""/></div>
@@ -120,7 +120,7 @@
                   
                   <!-- item 3 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktProductList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/products.png" alt=""/></div>
@@ -132,7 +132,7 @@
                   
                   <!-- item 4 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktPostList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/posts.png" alt=""/></div>
@@ -144,7 +144,7 @@
                   
                   <!-- item 5 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktFeedbackList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/mkt-feedbacks.png" alt=""/></div>
@@ -156,7 +156,7 @@
                   
                   <!-- item 6 -->
                   <li class="nav-item naviitem row" id="active">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktSliderList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/sliders-chosen.png" alt=""/></div>

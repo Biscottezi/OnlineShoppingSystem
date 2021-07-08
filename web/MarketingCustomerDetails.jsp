@@ -75,7 +75,7 @@
                   
                   <!-- item 1 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktDashboard">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/dashboard.png" alt=""/></div>
@@ -87,7 +87,7 @@
                   
                   <!-- item 2 -->
                   <li class="nav-item naviitem row" id="active">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktCustomerList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/users-chosen.png" alt=""/></div>
@@ -99,7 +99,7 @@
                   
                   <!-- item 3 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktProductList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/products.png" alt=""/></div>
@@ -111,7 +111,7 @@
                   
                   <!-- item 4 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktPostList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/posts.png" alt=""/></div>
@@ -123,7 +123,7 @@
                   
                   <!-- item 5 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktFeedbackList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/mkt-feedbacks.png" alt=""/></div>
@@ -135,7 +135,7 @@
                   
                   <!-- item 6 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktSliderList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/sliders.png" alt=""/></div>
@@ -152,7 +152,7 @@
             <div class="wrapper col" style="background-color: #F7F8FC; padding: 30px 33px 30px 45px;" id="maincontent">
                 <!-- main title -->
                 <div class="maintitle row">
-                    <div class="col-2" id="title" onclick="location.href='userlist.jsp';">
+                    <div class="col-2" id="title" onclick="location.href='mktCustomerList';">
                         <span class="back"><i class="fas fa-angle-left"></i>&nbsp; Back to customers</span>
                     </div>
                     <div class="col-7"></div>
@@ -168,23 +168,24 @@
                 
                 <!-- main list -->
                 <div class="listwrapper">
+                    <c:set var="customer" value="${requestScope.CUSTOMER_DETAILS}"/>
                     <!-- list header -->
                     <div class="listheader row">
-                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Customer ID: 00001 <!--${param.id} --></div>
+                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Customer ID: ${customer.id} <!--${param.id} --></div>
                         <div class="col-6 row"></div>
                         <div class="extended col-4 row d-flex"></div>
                     </div>
                     <div class="infor row">
                         <div class="col">
                             Full Name<br>
-                            <input name="cusName" class="editbox" form="updateform" value="Tran Tan Long">
+                            <input name="cusName" class="editbox" form="updateform" value="${customer.name}">
                         </div>
                         <div class="col">
                             Gender<br>
                             <div class="select-wrapper">
                                 <select id="role" class="editbox" form="updateform" name="cusGender">
-                                    <option value="0" selected="">Male</option>
-                                    <option value="1">Female</option>
+                                    <option value="0" <c:if test="${customer.gender == 0}">selected</c:if>>Male</option>
+                                    <option value="1" <c:if test="${customer.gender == 1}">selected</c:if>>Female</option>
                                 </select>
                             </div>
                         </div>
@@ -192,13 +193,13 @@
                     <div class="infor row">
                         <div class="col">
                             Address<br>
-                            <textarea name="cusAddress" class="editbox" form="updateform" style="height: 160px">228 Đường Man Thiện, Phường Tân Phú, Quận 9, Thành phố Hồ Chí Minh</textarea>
+                            <textarea name="cusAddress" class="editbox" form="updateform" style="height: 160px">${customer.address}</textarea>
                         </div>
                         <div class="col">
                             Email<br>
-                            <div class="userinfo" style="padding-left: 10px">longttse150883@fpt.edu.vn</div>
+                            <div class="userinfo" style="padding-left: 10px">${customer.email}</div>
                             <div style="margin-top:18px;">Mobile</div>
-                            <input name="cusMobile" class="editbox" form="updateform" value="0975926021"/>
+                            <input name="cusMobile" class="editbox" form="updateform" value="${customer.phone}"/>
                         </div>
                     </div>
                     <div class="infor row" id="lastrow">
@@ -209,11 +210,11 @@
                             </div>
                         </div>
                         <div class="col-2">
-                            <input type="hidden" name="cusID" form="updateform" value=""/>
+                            <input type="hidden" name="cusID" form="updateform" value="${customer.id}"/>
                         </div>
                         <div class="col-4">
                             <div class="savewrapper row d-flex align-items-end justify-content-end">
-                                <div class="col d-flex justify-content-end" id="cancelbtn" onclick="location.href='';">Discard change</div>
+                                <div class="col d-flex justify-content-end" id="cancelbtn" onclick="location.href='mktCustDetails?cusID=${customer.id}';">Discard change</div>
                                 <div class="col d-flex justify-content-end" style="padding:0;">
                                     <input type="submit" value="Save" name="btAction" id="createbtn" form="updateform"/>
                                 </div>
@@ -221,8 +222,9 @@
                         </div>
                     </div>
                         
+                        <c:if test="${not empty requestScope.OLD_DETAILS_LIST}">
                         <hr>
-
+                        
                     <div class="listheader row">
                         <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Changes History</div>
                     </div>
@@ -237,50 +239,24 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr style="height: 100px;">
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">123, Binh Tien, phuong 4, quan 6, TPHCM</td>
-                          <td class="align-middle">0987654321</td>
-                          <td class="align-middle" style="width:150px;">26/05/2021</td>
-                        </tr> 
-                        <tr style="height: 100px;">
-                          <td class="align-middle">Nguyen Pham Minh Quan</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">25C4, khu pho 11, phuong Tan Phong, thanh pho Bien Hoa, tinh Dong Nai</td>
-                          <td class="align-middle">0987654321</td>
-                          <td class="align-middle" style="width:150px;">26/05/2021</td>
-                        </tr> 
-                        <tr style="height: 100px;">
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">123, Binh Tien, phuong 4, quan 6, TPHCM</td>
-                          <td class="align-middle">0987654321</td>
-                          <td class="align-middle" style="width:150px;">26/05/2021</td>
-                        </tr> 
-                        <tr style="height: 100px;">
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">123, Binh Tien, phuong 4, quan 6, TPHCM</td>
-                          <td class="align-middle">0987654321</td>
-                          <td class="align-middle" style="width:150px;">26/05/2021</td>
-                        </tr> 
-                        <tr style="height: 100px;">
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">123, Binh Tien, phuong 4, quan 6, TPHCM</td>
-                          <td class="align-middle">0987654321</td>
-                          <td class="align-middle" style="width:150px;">26/05/2021</td>
-                        </tr> 
-                        <tr style="height: 100px;">
-                          <td class="align-middle">Tran Tan Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">123, Binh Tien, phuong 4, quan 6, TPHCM</td>
-                          <td class="align-middle">0987654321</td>
-                          <td class="align-middle" style="width:150px;">26/05/2021</td>
-                        </tr> 
+                            <c:set var="olds" value="${requestScope.OLD_DETAILS_LIST}"/>
+                            <c:forEach var="old" items="${olds}">
+                                <tr style="height: 100px;">
+                                    <td class="align-middle">${old.name}</td>
+                                    <td class="align-middle">
+                                        <c:choose>
+                                            <c:when test="${old.gender == 0}">Male</c:when>
+                                            <c:otherwise>Female</c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td class="align-middle">${old.address}</td>
+                                    <td class="align-middle">${old.phone}</td>
+                                    <td class="align-middle" style="width:150px;">${old.createdDate}</td>
+                                </tr>
+                            </c:forEach>
                       </tbody>
                     </table>
+                            </c:if>
                 </div>
                 
             </div>

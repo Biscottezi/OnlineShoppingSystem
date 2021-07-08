@@ -132,7 +132,7 @@
                     <div class="row">
                         <h2 class="slider-title col-8">Featured Products</h2>
                         <div class="view-more col-4">
-                            <a href="">View more</a>
+                            <a href="viewAllProduct">View more</a>
                         </div>
                     </div>
                     <div class="col-12">       
@@ -171,13 +171,13 @@
                     <div class="row">
                         <h2 class="slider-title col-8">Blogs</h2>
                         <div class="view-more col-4">
-                            <a href="">View more</a>
+                            <a href="viewBlogList">View more</a>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-5">
                             <c:forEach var="post" items="${postList}" begin="0" end="0">
-                                <div class="card" style="height: 500px;" onclick="location.href='viewBlogDetails?selectedPostID=${post.id}';">
+                                <div class="card" style="height: 500px; overflow: hidden;" onclick="location.href='viewBlogDetails?selectedPostID=${post.id}';">
                                     <img src="img/${post.thumbnail}" alt="post-thumbnail" class="card-img-top">
                                     <div class="card-body">
                                         <h3 class="card-title">${post.title}</h3>

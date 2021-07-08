@@ -60,6 +60,7 @@
                 border-radius: 11px;
                 height: 500px;
                 font-weight: 400;
+                padding: 0.5em 1em;
             }
             .input-title{
                 padding: 0;
@@ -95,7 +96,7 @@
                   
                   <!-- item 1 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktDashboard">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/dashboard.png" alt=""/></div>
@@ -107,7 +108,7 @@
                   
                   <!-- item 2 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktCustomerList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/users.png" alt=""/></div>
@@ -119,7 +120,7 @@
                   
                   <!-- item 3 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktProductList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/products.png" alt=""/></div>
@@ -131,7 +132,7 @@
                   
                   <!-- item 4 -->
                   <li class="nav-item naviitem row" id="active">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktPostList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/posts-chosen.png" alt=""/></div>
@@ -143,7 +144,7 @@
                   
                   <!-- item 5 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktFeedbackList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/mkt-feedbacks.png" alt=""/></div>
@@ -155,7 +156,7 @@
                   
                   <!-- item 6 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktSliderList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/sliders.png" alt=""/></div>
@@ -172,7 +173,7 @@
             <div class="wrapper col" style="background-color: #F7F8FC; padding: 30px 33px 30px 45px;" id="maincontent">
                 <!-- main title -->
                 <div class="maintitle row">
-                    <div class="col-2" id="title" onclick="location.href='userlist.jsp';">
+                    <div class="col-2" id="title" onclick="location.href='mktPostList';">
                         <span class="back"><i class="fas fa-angle-left"></i>&nbsp; Back to posts</span>
                     </div>
                     <div class="col-7"></div>
@@ -188,25 +189,26 @@
                 
                 <!-- main list -->
                 <div class="listwrapper">
+                    <c:set var="post" value="${requestScope.POST_DETAILS}"/>
                     <!-- list header -->
                     <div class="listheader row">
-                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Post ID: 00001 <!--${param.id} --></div>
+                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Post ID: ${post.id} <!--${param.id} --></div>
                         <div class="col-6 row"></div>
                         <div class="extended col-4 row d-flex"></div>
                     </div>
                     <div class="infor row">
                         <div class="col">
                             Title<br>
-                            <textarea class="editbox" form="updateform" id="post-title" name="postTitle">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</textarea>
+                            <textarea class="editbox" form="updateform" id="post-title" name="postTitle">${post.title}</textarea>
                         </div>
                         <div class="col">
                             Featured<br>
-                            <input name="postFeatured" type="checkbox" form="updateform" checked="checked" value="ON" style="margin-top: 10px; zoom: 2"/>
+                            <input name="postFeatured" type="checkbox" form="updateform" <c:if test="${post.featured == 1}">checked="checked"</c:if> value="ON" style="margin-top: 10px; zoom: 2"/>
                             <div style="margin-top:18px;">Category</div>
                             <select name="postCategory" form="updateform" class="editbox">
-                                <option value="1">Đánh giá</option>
-                                <option value="2">Mẹo hay</option>
-                                <option value="3">Tư vấn</option>
+                                <option value="1" <c:if test="${post.featured == 1}">selected</c:if> >Đánh giá</option>
+                                <option value="2" <c:if test="${post.featured == 2}">selected</c:if> >Mẹo hay</option>
+                                <option value="3" <c:if test="${post.featured == 3}">selected</c:if> >Tư vấn</option>
                             </select>
                         </div>
                     </div>
@@ -216,9 +218,9 @@
                             <textarea name="postBriefInfo" class="editbox" form="updateform" id="post-info">Ngày xửa ngày xưa có con chim cánh cụt thở bằng mông, một ngày nọ nó ngồi xuống và chết.</textarea>
                         </div>
                         <div class="col">
-                            <div style="margin-top:18px;">Thumbnail</div>
+                            <div style="margin-top:6px;">Thumbnail</div><br>
                             <div class="avawrapper row">
-                                <img id="avapreview" class="col-3" src="http://placehold.it/180" onchange="showPreview();">
+                                <img id="avapreview" class="col-3" src="img/${post.thumbnail}" onchange="showPreview();" style="display: block"> <!--http://placehold.it/180-->
                                 <input name="postThumbnail" type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="createform"/>
                                 <div class="col-4 d-flex align-items-end" style="padding-top: 117px;">
                                     <label for="upload" class="d-flex align-items-center justify-content-center uplbtn">
@@ -232,7 +234,7 @@
                     <div class="info row">
                         <div class="col">
                             <h6 class="input-title">Description</h6>
-                            <textarea name="postDescription" id="prod-dscrpt" class="editbox">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
+                            <textarea name="postDescription" id="prod-dscrpt" class="editbox">${post.description}</textarea>
                         </div>
                     </div>
                         <br>
@@ -241,7 +243,7 @@
                             Status<br>
                             <div class="statuswrapper row d-flex align-items-end" style="margin:0;">
                                 <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">ENABLED</div>
-                                <input type="checkbox" name="postStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
+                                <input type="checkbox" name="postStatus" value="ON" <c:if test="${post.featured == 1}">checked="checked"</c:if> id="statuschkbox" class="col-1"  form="updateform"/>
                             </div>
                         </div>
                         <div class="col-2">
@@ -249,7 +251,7 @@
                         </div>
                         <div class="col-4">
                             <div class="savewrapper row d-flex align-items-end justify-content-end">
-                                <div class="col d-flex justify-content-end" id="cancelbtn" onclick="location.href='';">Discard change</div>
+                                <div class="col d-flex justify-content-end" id="cancelbtn" onclick="location.href='mktPostDetails?postID=${post.id}';">Discard change</div>
                                 <div class="col d-flex justify-content-end" style="padding:0;">
                                     <input type="submit" value="Save" name="btAction" id="createbtn" form="updateform"/>
                                 </div>

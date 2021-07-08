@@ -60,17 +60,18 @@
                         
                 <div class="main-content col-10 container">
                     <div class="container">
+                    <h1>Latest Posts</h1>
                     <table class="table table-hover" id="custBlogTable">
                         <thead>
                             <tr>
-                                <th><h1>Latest Posts</h1></th>
+                                <th></th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:set var="postList" value="${requestScope.ALL_POST_LIST}"/>
                             <c:forEach var="post" items="${postList}">
-                                <tr onclick="location.href='viewBlogDetails?selectedOrderID=${post.id}'">
+                                <tr onclick="location.href='viewBlogDetails?selectedPostID=${post.id}'">
                                     <td>
                                         <img src="img/${post.thumbnail}" alt="post thumbnail" class="post-thumb">
                                     </td>

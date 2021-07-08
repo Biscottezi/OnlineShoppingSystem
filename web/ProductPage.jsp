@@ -19,6 +19,21 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" href="css/sider.css">
         <link rel="stylesheet" href="css/ProductPage.css">
+        <style>
+            .pagination > li > a {
+                background-color: #EBF2FF;
+                border-radius: 8px;
+                color: black;
+            }
+            
+            .pagination > li {
+                margin-right: 0.7em;
+            }
+            
+            .pagination > .active > a{
+                background-color: #274156;
+            }
+        </style>
     </head>
 
     <body>
@@ -61,7 +76,7 @@
                     <div class="row product-row" id="data-container">
                         <c:set var="productList" value="${requestScope.ALL_PRODUCT_LIST}"/>
                         <c:forEach var="product" items="${productList}" varStatus="counter">
-                            <div class="col-3 product-wrapper" id="prod${counter.count}" onclick="location.href='viewProductDetails?productID=${product.id}';" style="margin-top: 1em">
+                            <div class="col-3 product-wrapper" id="prod${counter.count}" onclick="location.href='viewProductDetails?productID=${product.id}';" style="margin-top: 1em; overflow: hidden">
                             <div class="card">
                                 <img src="img/${product.thumbnail}" alt="product-thumbnail" class="card-img-top">
                                 <div class="card-body">
@@ -75,7 +90,7 @@
                                             <h3 class="card-title card-price">$${product.listPrice}</h3>
                                         </c:otherwise>
                                     </c:choose>
-                                    <p class="card-text">${product.briefInfo}</p>
+                                    <p class="card-text" style="max-height: 90px">${product.briefInfo}</p>
                                     <p class="card-text">Rated: ${product.ratedStar}/5 stars</p>
                                 </div>
                             </div>

@@ -90,7 +90,7 @@
                   
                   <!-- item 1 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktDashboard">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/dashboard.png" alt=""/></div>
@@ -102,10 +102,10 @@
                   
                   <!-- item 2 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktCustomerList">
                           <div class="container">
                             <div class="row justify-content-md-center">
-                                <div class="col align-self-baseline"><img src="img/users-chosen.png" alt=""/></div>
+                                <div class="col align-self-baseline"><img src="img/users.png" alt=""/></div>
                                 <div class="col align-self-baseline" style="font-size: 19px;">Customers</div>
                             </div>
                           </div>
@@ -114,10 +114,10 @@
                   
                   <!-- item 3 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktProductList">
                           <div class="container">
                             <div class="row justify-content-md-center">
-                                <div class="col align-self-baseline"><img src="img/products-chosen.png" alt=""/></div>
+                                <div class="col align-self-baseline"><img src="img/products.png" alt=""/></div>
                                 <div class="col align-self-baseline" style="font-size: 19px;">Products</div>
                             </div>
                           </div>
@@ -126,10 +126,10 @@
                   
                   <!-- item 4 -->
                   <li class="nav-item naviitem row" id="active">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktPostList">
                           <div class="container">
                             <div class="row justify-content-md-center">
-                                <div class="col align-self-baseline"><img src="img/posts.png" alt=""/></div>
+                                <div class="col align-self-baseline"><img src="img/posts-chosen.png" alt=""/></div>
                                 <div class="col align-self-baseline" style="font-size: 19px;">Posts</div>
                             </div>
                           </div>
@@ -138,7 +138,7 @@
                   
                   <!-- item 5 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktFeedbackList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/mkt-feedbacks.png" alt=""/></div>
@@ -150,7 +150,7 @@
                   
                   <!-- item 6 -->
                   <li class="nav-item naviitem row">
-                      <a class="navbar-brand overview" href="#">
+                      <a class="navbar-brand overview" href="mktSliderList">
                           <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col align-self-baseline"><img src="img/sliders.png" alt=""/></div>
@@ -214,246 +214,40 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/post-thumbnail.jpg" alt="post thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</td>
-                          <td class="align-middle">Tu van</td>
-                          <td class="align-middle">Tan Long</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/post-thumbnail.jpg" alt="post thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">Dù LG đã ngừng sản xuất smartphone, dòng Velvet 2 Pro vẫn bị rò rỉ với cụm 3 camera sau, không phím vật lý.</td>
-                          <td class="align-middle">Tu van</td>
-                          <td class="align-middle">Tan Long</td>
-                          <td class="align-middle">Off</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status disable">
-                                  DISABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/post-thumbnail.jpg" alt="post thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</td>
-                          <td class="align-middle">Tu van</td>
-                          <td class="align-middle">Tan Long</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/post-thumbnail.jpg" alt="post thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</td>
-                          <td class="align-middle">Tu van</td>
-                          <td class="align-middle">Tan Long</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/post-thumbnail.jpg" alt="post thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</td>
-                          <td class="align-middle">Tu van</td>
-                          <td class="align-middle">Tan Long</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/post-thumbnail.jpg" alt="post thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</td>
-                          <td class="align-middle">Tu van</td>
-                          <td class="align-middle">Tan Long</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/post-thumbnail.jpg" alt="post thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</td>
-                          <td class="align-middle">Tu van</td>
-                          <td class="align-middle">Tan Long</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/post-thumbnail.jpg" alt="post thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</td>
-                          <td class="align-middle">Tu van</td>
-                          <td class="align-middle">Tan Long</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/post-thumbnail.jpg" alt="post thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</td>
-                          <td class="align-middle">Tu van</td>
-                          <td class="align-middle">Tan Long</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/post-thumbnail.jpg" alt="post thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</td>
-                          <td class="align-middle">Tu van</td>
-                          <td class="align-middle">Tan Long</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/post-thumbnail.jpg" alt="post thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</td>
-                          <td class="align-middle">Tu van</td>
-                          <td class="align-middle">Tan Long</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/post-thumbnail.jpg" alt="post thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</td>
-                          <td class="align-middle">Tu van</td>
-                          <td class="align-middle">Tan Long</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/post-thumbnail.jpg" alt="post thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</td>
-                          <td class="align-middle">Tu van</td>
-                          <td class="align-middle">Tan Long</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/post-thumbnail.jpg" alt="post thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</td>
-                          <td class="align-middle">Tu van</td>
-                          <td class="align-middle">Tan Long</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/post-thumbnail.jpg" alt="post thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</td>
-                          <td class="align-middle">Tu van</td>
-                          <td class="align-middle">Tan Long</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/post-thumbnail.jpg" alt="post thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">TOP 5 chiếc laptop có cấu hình tốt nhất tầm giá dưới 15 triệu, rất phù hợp để học tập, làm việc tại nhà mùa Covid</td>
-                          <td class="align-middle">Tu van</td>
-                          <td class="align-middle">Tan Long</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
+                            <c:set var="posts" value="${requestScope.POST_LIST}"/>
+                            <c:forEach var="post" items="${posts}">
+                                <tr style="height: 92px;" onclick="location.href='mktPostDetails?postID=${post.id}'">
+                                    <td class="align-middle" style="text-align: center">${post.id}</th>
+                                    <td class="align-middle">
+                                        <img src="img/${post.thumbnail}" alt="post thumbnail" style="height: 92px">
+                                    </td>
+                                    <td class="align-middle">${post.title}</td>
+                                    <td class="align-middle">
+                                        <c:choose>
+                                            <c:when test="${post.postCategoryId == 1}">Đánh giá</c:when>
+                                            <c:when test="${post.postCategoryId == 2}">Mẹo hay</c:when>
+                                            <c:otherwise>Tư vấn</c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td class="align-middle">${post.author}</td>
+                                    <td class="align-middle">
+                                        <c:choose>
+                                            <c:when test="${post.featured == 1}">On</c:when>
+                                            <c:otherwise>Off</c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td class="align-middle" style="width:150px;">
+                                        <c:choose>
+                                            <c:when test="${post.status == 1}">
+                                                <div class="d-flex align-items-center justify-content-center status enable">ENABLED</div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="d-flex align-items-center justify-content-center status disable">DISABLED</div>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                       </tbody>
                     </table> 
                 </div>

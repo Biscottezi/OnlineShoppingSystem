@@ -433,11 +433,11 @@ public class OrderDAO implements Serializable{
                 rs = stm.executeQuery();
                 
                 while(rs.next()){
-                    String Name = rs.getString("Name");
-                    int Gender = rs.getInt("Gender");
-                    String Address = rs.getString("Address");
-                    String Email = rs.getString("Email");
-                    String Phone = rs.getString("Phone");
+                    String Name = rs.getString("ReceiverName");
+                    int Gender = rs.getInt("ReceiverGender");
+                    String Address = rs.getString("ReceiverAddress");
+                    String Email = rs.getString("ReceiverEmail");
+                    String Phone = rs.getString("ReceiverPhone");
 
                     UserDTO dto = new UserDTO(Name, Address, Email, Gender, Phone);
                     if(this.potentialCus == null){

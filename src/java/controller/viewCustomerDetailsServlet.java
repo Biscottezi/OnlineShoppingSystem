@@ -41,7 +41,7 @@ public class viewCustomerDetailsServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String id = request.getParameter("");
+        String id = request.getParameter("cusID");
         String url = ERROR_PAGE;
         
         try{
