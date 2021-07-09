@@ -403,42 +403,41 @@ public class ProductDAO implements Serializable{
         return false;
     }
     
-//    public boolean updateProduct(String productTitle, int role, int status)
-//            throws SQLException, NamingException {
-//        Connection con = null;
-//        PreparedStatement stm = null;
-//        ResultSet rs = null;
-//        try {
-//            con = DBHelper.makeConnection();
-//            if (con != null) {
-//                //B2. create SQL string 
-//
-//                String sql = "UPDATE [User] "
-//                        + "SET Role = ?, Status = ? "
-//                        + "WHERE UserID = ?";
-//
-//                stm = con.prepareStatement(sql);
-//                stm.setInt(1, role);
-//                stm.setInt(2, status);
-//                stm.setInt(3, userID);
-//                
-//                int rowAffect = stm.executeUpdate();
-//                if(rowAffect == 1){
-//                    return true;
-//                }
-//            }
-//
-//        } finally {
-//            if (rs != null) {
-//                rs.close();
-//            }
-//            if (stm != null) {
-//                stm.close();
-//            }
-//            if (con != null) {
-//                con.close();
-//            }
-//        }
-//        return false;
-//    }
+    public boolean updateProduct(String productTitle, int role, int status)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                //B2. create SQL string 
+
+                String sql = "UPDATE [User] "
+                        + "SET Role = ?, Status = ? "
+                        + "WHERE UserID = ?";
+
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, role);
+                stm.setInt(2, status);
+                
+                int rowAffect = stm.executeUpdate();
+                if(rowAffect == 1){
+                    return true;
+                }
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
 }

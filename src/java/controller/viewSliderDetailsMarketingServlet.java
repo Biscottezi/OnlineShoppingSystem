@@ -8,6 +8,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -16,17 +17,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import product.ProductDAO;
+import product.ProductDTO;
 import slider.SliderDAO;
 import slider.SliderDTO;
+import sliderContent.SliderContentDAO;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "viewSliderListMarketing", urlPatterns = {"/viewSliderListMarketing"})
-public class viewSliderListMarketing extends HttpServlet {
+@WebServlet(name = "viewSliderDetailsMarketingServlet", urlPatterns = {"/viewSliderDetailsMarketingServlet"})
+public class viewSliderDetailsMarketingServlet extends HttpServlet {
     private final String ERROR_PAGE="Error.html";
-    private final String SLIDER_LIST_PAGE="MarketingSliderList.jsp";
+    private final String SLIDER_DETAILS_PAGE="MarketingSliderDetails.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,21 +43,33 @@ public class viewSliderListMarketing extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String sliderID = request.getParameter("sliderID");
         String url = ERROR_PAGE;
         
         try{
             SliderDAO sliderDao = new SliderDAO();
-            sliderDao.getAllSlider();
-            List<SliderDTO> sliderList = sliderDao.getSliderList();
-            if(sliderList != null){
-                request.setAttribute("SLIDER_LIST", sliderList);
+            SliderDTO slider = sliderDao.getSliderByID(Integer.parseInt(sliderID));
+            if(slider != null){
+                request.setAttribute("SLIDER", slider);
+                SliderContentDAO sliderContentDao = new SliderContentDAO();
+                sliderContentDao.getProductID(slider.getId());
+                List<Integer> productIDList = sliderContentDao.getProductIDList();
+                if(productIDList != null){
+                    ProductDAO productDao = new ProductDAO();
+                    List<ProductDTO> sliderProducts = new ArrayList<>();
+                    for(int i = 0; i < productIDList.size(); i++){
+                        productDao.searchProductByID(productIDList.get(i));
+                        sliderProducts.add(productDao.getProduct());
+                    }
+                    request.setAttribute("SLIDER_PRODUCTS", sliderProducts);
+                }
             }
             
-            url = SLIDER_LIST_PAGE;
+            url = SLIDER_DETAILS_PAGE;
         }catch(SQLException ex){
-            log("viewSliderListMarketing _ SQL:" + ex.getMessage());
+            log("viewSliderDetailsMarketingServlet _ SQL:" + ex.getMessage());
         }catch(NamingException ex){
-            log("viewSliderListMarketing _ Naming:" + ex.getMessage());
+            log("viewSliderDetailsMarketingServlet _ Naming:" + ex.getMessage());
         }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

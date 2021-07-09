@@ -98,4 +98,38 @@ public class SliderContentDAO implements Serializable{
         }
         return false;
     }
+    
+    public boolean removeProductByID(int sliderID, int productID)
+            throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "DELETE FROM table_name "
+                        + "WHERE SliderID = ? AND ProductID = ?";
+                
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, sliderID);
+                stm.setInt(2, productID);
+                
+                int rowAffect = stm.executeUpdate();
+                if(rowAffect == 1){
+                    return true;
+                }
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return false;
+    }
 }

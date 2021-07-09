@@ -432,4 +432,38 @@ public class UserDAO implements Serializable {
         }
         return false;
     }
+    
+    public int getUserID(String email) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT UserID "
+                        + "FROM [User] "
+                        + "WHERE Email = ?";
+                
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                
+                int UserID = rs.getInt("UserID");
+                
+                return UserID;
+                
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return  0;
+    }
 }

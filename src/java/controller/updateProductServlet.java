@@ -40,13 +40,13 @@ public class updateProductServlet extends HttpServlet {
         String url = ERROR_PAGE;
         try{
             ProductDAO productDao = new ProductDAO();
-            
+            productDao.updateProduct(url, 0, 0);
             
             url = PRODUCT_MARKETING_PAGE;
-//        }catch(SQLException ex){
-//            log("updateUserDetailsServlet _ SQL:" + ex.getMessage());
-//        }catch(NamingException ex){
-//            log("updateUserDetailsServlet _ Naming:" + ex.getMessage());
+        }catch(SQLException ex){
+            log("updateProductServlet _ SQL:" + ex.getMessage());
+        }catch(NamingException ex){
+            log("updateProductServlet _ Naming:" + ex.getMessage());
         }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

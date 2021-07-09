@@ -15,15 +15,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sliderContent.SliderContentDAO;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "addProductSliderMarketingServlet", urlPatterns = {"/addProductSliderMarketingServlet"})
-public class addProductSliderMarketingServlet extends HttpServlet {
-    private final String ERROR_PAGE="Error.html";
+@WebServlet(name = "updatePostMarketingServlet", urlPatterns = {"/updatePostMarketingServlet"})
+public class updatePostMarketingServlet extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,21 +35,14 @@ public class addProductSliderMarketingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String sliderID = request.getParameter("sliderID");
-        String productID = request.getParameter("txtProductID");
-        String SLIDER_DETAILS_PAGE = "viewSliderDetailsMarketingServlet?sliderID=" + sliderID;
-        String url = ERROR_PAGE;
         
-        try {
-            SliderContentDAO dao = new SliderContentDAO();
-            boolean result = dao.addProductToSlider(Integer.parseInt(sliderID), Integer.parseInt(productID));
-            if(result){
-                url = SLIDER_DETAILS_PAGE;
-            }
+        
+        try{
+            
         }catch(SQLException ex){
-            log("addProductSliderMarketingServlet _ SQL:" + ex.getMessage());
+            log("updateProductServlet _ SQL:" + ex.getMessage());
         }catch(NamingException ex){
-            log("addProductSliderMarketingServlet _ Naming:" + ex.getMessage());
+            log("updateProductServlet _ Naming:" + ex.getMessage());
         }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

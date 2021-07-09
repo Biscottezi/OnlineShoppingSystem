@@ -15,15 +15,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sliderContent.SliderContentDAO;
+import user.UserDAO;
+import utils.sendMail;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "addProductSliderMarketingServlet", urlPatterns = {"/addProductSliderMarketingServlet"})
-public class addProductSliderMarketingServlet extends HttpServlet {
-    private final String ERROR_PAGE="Error.html";
+@WebServlet(name = "requestResetLinkServlet", urlPatterns = {"/requestResetLinkServlet"})
+public class requestResetLinkServlet extends HttpServlet {
+    private final String ERROR_PAGE = "Error.html";
+    private final String HOME_PAGE = "homepage.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,25 +38,21 @@ public class addProductSliderMarketingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String sliderID = request.getParameter("sliderID");
-        String productID = request.getParameter("txtProductID");
-        String SLIDER_DETAILS_PAGE = "viewSliderDetailsMarketingServlet?sliderID=" + sliderID;
+        String email = request.getParameter("txtEmail");
         String url = ERROR_PAGE;
         
         try {
-            SliderContentDAO dao = new SliderContentDAO();
-            boolean result = dao.addProductToSlider(Integer.parseInt(sliderID), Integer.parseInt(productID));
-            if(result){
-                url = SLIDER_DETAILS_PAGE;
-            }
-        }catch(SQLException ex){
-            log("addProductSliderMarketingServlet _ SQL:" + ex.getMessage());
-        }catch(NamingException ex){
-            log("addProductSliderMarketingServlet _ Naming:" + ex.getMessage());
-        }finally{
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            UserDAO dao = new UserDAO();
+            int UserID = dao.getUserID(email);
+            sendMail.mailResetLink(email, UserID);
             
+            url = HOME_PAGE;
+        }catch(SQLException ex){
+            log("requestResetLinkServlet _ SQL:" + ex.getMessage());
+        }catch(NamingException ex){
+            log("requestResetLinkServlet _ Naming:" + ex.getMessage());
+        }finally{
+            response.sendRedirect(url);
         }
     }
 
