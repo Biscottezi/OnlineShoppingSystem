@@ -371,23 +371,37 @@ public class ProductDAO implements Serializable{
         }
     }
     
-    public boolean addNewProduct()
+    public int addNewProduct(String title, int categoryID, String thumbnail, String briefInfo, String description, int quantity, float listPrice, float salePrice, int featured, int status)
             throws SQLException, NamingException{
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
+        int newlyAddedProductID = 0;
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "";
+                String sql = "INSERT INTO Product "
+                        + "(Title, ProductCategoryID, Thumbnail, BriefInfo, Description, Quantity, ListPrice, SalePrice, Featured, Status, DateCreated, RatedStar) "
+                        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, GETDATE(), 0)";
                 
-                stm = con.prepareStatement(sql);
+                stm = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+                stm.setString(1, title);
+                stm.setInt(2, categoryID);
+                stm.setString(3, thumbnail);
+                stm.setString(4, briefInfo);
+                stm.setString(5, description);
+                stm.setInt(6, quantity);
+                stm.setFloat(7, listPrice);
+                stm.setFloat(8, salePrice);
+                stm.setInt(9, featured);
+                stm.setInt(10, status);
                 
-                
-                int rowAffect = stm.executeUpdate();
-                if(rowAffect == 1){
-                    return true;
+                stm.executeUpdate();
+                rs = stm.getGeneratedKeys();
+                if (rs.next()) {
+                    newlyAddedProductID = rs.getInt(1);
                 }
+                return newlyAddedProductID;
             }
         }finally{
             if(rs != null){
@@ -400,10 +414,10 @@ public class ProductDAO implements Serializable{
                 con.close();
             }
         }
-        return false;
+        return 0;
     }
     
-    public boolean updateProduct(String productTitle, int role, int status)
+    public boolean updateProduct(int productID, String title, int categoryID, String thumbnail, String briefInfo, String description, int quantity, float listPrice, float salePrice, int featured, int status)
             throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -413,13 +427,22 @@ public class ProductDAO implements Serializable{
             if (con != null) {
                 //B2. create SQL string 
 
-                String sql = "UPDATE [User] "
-                        + "SET Role = ?, Status = ? "
-                        + "WHERE UserID = ?";
+                String sql = "UPDATE Product "
+                        + "SET Title = ?, ProductCategoryID = ?, Thumbnail = ?, BriefInfo = ?, Description = ?, Quantity = ?, ListPrice = ?, SalePrice = ?, Featured = ?, Status = ? "
+                        + "WHERE ProductID = ?";
 
                 stm = con.prepareStatement(sql);
-                stm.setInt(1, role);
-                stm.setInt(2, status);
+                stm.setString(1, title);
+                stm.setInt(2, categoryID);
+                stm.setString(3, thumbnail);
+                stm.setString(4, briefInfo);
+                stm.setString(5, description);
+                stm.setInt(6, quantity);
+                stm.setFloat(7, listPrice);
+                stm.setFloat(8, salePrice);
+                stm.setInt(9, featured);
+                stm.setInt(10, status);
+                stm.setInt(11, productID);
                 
                 int rowAffect = stm.executeUpdate();
                 if(rowAffect == 1){

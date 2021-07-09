@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import product.ProductDAO;
+import productAttachedImage.ProductAttachedImageDAO;
 import utils.uploadFile;
 
 /**
@@ -45,31 +46,38 @@ public class addProductMarketingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String title = request.getParameter("txtTitle");
+        String categoryID = request.getParameter("txtCategoryID");
+        String thumbnail = uploadFile.uploadFile(request, "thumbnail");
+        String briefInfo = request.getParameter("txtBriefInfo");
+        String description = request.getParameter("txtDescription");
+        String quantity = request.getParameter("txtQuantity");
+        String listPrice = request.getParameter("txtListPrice");
+        String salePrice = request.getParameter("txtSalePrice");
+        String chkFeatured = request.getParameter("chkFeatured");
+        String chkStatus = request.getParameter("chkStatus");
+        ArrayList<String> attachedImages = uploadFile.uploadFiles(request, 1);
         String url = ERROR_PAGE;
-        
-        String Title = request.getParameter("txtTitle");
-        String ProductCategoryID = request.getParameter("txtCategory");
-        String Thumbnail = uploadFile.uploadFile(request, "productThumbnail");
-        String BriefInfo = request.getParameter("txtBriefInfo");
-        String Description = request.getParameter("");
-        String Quantity = request.getParameter("");
-        String ListPrice = request.getParameter("");
-        String SalePrice = request.getParameter("");
-        String Featured = request.getParameter("");
-        String chkStatus = request.getParameter("");
-        ArrayList<String> attachedImageList = uploadFile.uploadFiles(request, 1);
         int status = 0;
+        int featured = 0;
         
         try{
             if(chkStatus != null){
                 status = 1;
             }
+            if(chkFeatured != null){
+                featured = 1;
+            }
+            ProductAttachedImageDAO imageDao = new ProductAttachedImageDAO();
             ProductDAO productDao = new ProductDAO();
-            productDao.addNewProduct();
-            
-            
+            int productID = productDao.addNewProduct(title, Integer.parseInt(categoryID), thumbnail, briefInfo, description, Integer.parseInt(quantity), 
+                    Float.parseFloat(listPrice), Float.parseFloat(salePrice), featured, status);
+            for(int i = 0; i < attachedImages.size(); i++){
+                imageDao.addProductImage(attachedImages.get(i), productID);
+            }
             
             url = PRODUCT_MARKETING_PAGE;
+            
         }catch (SQLException ex) {
             log("addProductMarketingServlet_SQLException: " + ex.getMessage());
         } catch (NamingException ex) {

@@ -7,19 +7,23 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import user.UserDAO;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "resetPasswordServlet", urlPatterns = {"/resetPasswordServlet"})
-public class resetPasswordServlet extends HttpServlet {
-
+@WebServlet(name = "resetNewPasswordServlet", urlPatterns = {"/resetNewPasswordServlet"})
+public class resetNewPasswordServlet extends HttpServlet {
+    private final String ERROR_PAGE = "Error.html";
+    private final String HOME_PAGE = "homepage.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -32,9 +36,22 @@ public class resetPasswordServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            
-            
+        String userID = request.getParameter("txtUserID");
+        String password = request.getParameter("txtPassword");
+        String url =ERROR_PAGE;
+        
+        try{
+            UserDAO dao = new UserDAO();
+            boolean result = dao.resetNewPassword(Integer.parseInt(userID), password);
+            if(result){
+                url = HOME_PAGE;
+            }
+        }catch(SQLException ex){
+            log("resetNewPasswordServlet _ SQL:" + ex.getMessage());
+        }catch(NamingException ex){
+            log("resetNewPasswordServlet _ Naming:" + ex.getMessage());
+        }finally{
+            response.sendRedirect(url);
         }
     }
 
