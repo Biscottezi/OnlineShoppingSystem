@@ -22,8 +22,8 @@ import utils.uploadFile;
  *
  * @author ASUS
  */
-@WebServlet(name = "updatePostMarketingServlet", urlPatterns = {"/updatePostMarketingServlet"})
-public class updatePostMarketingServlet extends HttpServlet {
+@WebServlet(name = "addPostMarketingServlet", urlPatterns = {"/addPostMarketingServlet"})
+public class addPostMarketingServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
     private final String POST_MARKETING_PAGE = "MarketingPostList.jsp";
     /**
@@ -38,7 +38,6 @@ public class updatePostMarketingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String postID = request.getParameter("postID");
         String title = request.getParameter("txtTitle");
         String thumbnail = uploadFile.uploadFile(request, "thumnail");
         String briefInfo = request.getParameter("txtBriefInfo");
@@ -59,15 +58,16 @@ public class updatePostMarketingServlet extends HttpServlet {
                 featured = 1;
             }
             PostDAO dao = new PostDAO();
-            boolean result = dao.updatePost(Integer.parseInt(postID), title, thumbnail, briefInfo, author, description, featured, status, Integer.parseInt(categoryID));
+            boolean result = dao.addPost(title, thumbnail, briefInfo, author, description, featured, status, Integer.parseInt(categoryID));
             if(result){
                 url = POST_MARKETING_PAGE;
             }
             
+            
         }catch(SQLException ex){
-            log("updatePostMarketingServlet _ SQL:" + ex.getMessage());
+            log("addPostMarketingServlet _ SQL:" + ex.getMessage());
         }catch(NamingException ex){
-            log("updatePostMarketingServlet _ Naming:" + ex.getMessage());
+            log("addPostMarketingServlet _ Naming:" + ex.getMessage());
         }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
