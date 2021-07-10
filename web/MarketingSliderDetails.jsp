@@ -189,28 +189,37 @@
                 
                 <!-- main list -->
                 <div class="listwrapper">
+                    <c:set var="slider" value="${requestScope.SLIDER}"/>
                     <!-- list header -->
                     <div class="listheader row">
-                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Slider ID: 00001 <!--${param.id} --></div>
+                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Slider ID: ${slider.id} <!--${param.id} --></div>
                         <div class="col-6 row"></div>
                         <div class="extended col-4 row d-flex"></div>
                     </div>
                     <div class="infor row">
                         <div class="col">
                             Title<br>
-                            <input name="sliderTitle" class="editbox" form="updateform" value="Sale">
+                            <input name="sliderTitle" class="editbox" form="updateform" value="${slider.title}">
                         </div>
                         <div class="col">
                             Description<br>
-                            <input name="sliderDescription" class="editbox" form="updateform" value="Showing On sale products">
+                            <input name="sliderDescription" class="editbox" form="updateform" value="${slider.description}">
                         </div>
                     </div>
                     <div class="infor row" id="lastrow">
                         <div class="col-6">
                             Status<br>
                             <div class="statuswrapper row d-flex align-items-end" style="margin:0;">
-                                <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">ENABLED</div>
-                                <input type="checkbox" name="sliderStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
+                                <c:choose>
+                                    <c:when test="${slider.status == 1}">
+                                        <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">ENABLED</div>
+                                        <input type="checkbox" name="sliderStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="status disable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">DISABLED</div>
+                                        <input type="checkbox" name="sliderStatus" value="ON" id="statuschkbox" class="col-1"  form="updateform"/>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                         <div class="col-2">
@@ -244,61 +253,27 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr style="height: 100px;">
-                            <td class="align-middle" style="text-align: center">0001</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$40.99</td>
-                          <td class="align-middle" style="width:280px;">
-                              <div class="status disable action-btn d-flex align-items-center justify-content-center">
-                                  <a href="">Remove</a>
-                              </div>  
-                          </td>
-                        </tr> 
-                        <tr style="height: 100px;">
-                            <td class="align-middle" style="text-align: center">0001</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$40.99</td>
-                          <td class="align-middle" style="width:280px;">
-                              <div class="status disable action-btn d-flex align-items-center justify-content-center">
-                                  <a href="">Remove</a>
-                              </div>  
-                          </td>
-                        </tr> 
-                        <tr style="height: 100px;">
-                            <td class="align-middle" style="text-align: center">0001</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$40.99</td>
-                          <td class="align-middle" style="width:280px;">
-                              <div class="status disable action-btn d-flex align-items-center justify-content-center">
-                                  <a href="">Remove</a>
-                              </div>  
-                          </td>
-                        </tr> 
-                        <tr style="height: 100px;">
-                            <td class="align-middle" style="text-align: center">0001</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$40.99</td>
-                          <td class="align-middle" style="width:280px;">
-                              <div class="status disable action-btn d-flex align-items-center justify-content-center">
-                                  <a href="">Remove</a>
-                              </div>  
-                          </td>
-                        </tr> 
-                        <tr style="height: 100px;">
-                            <td class="align-middle" style="text-align: center">0001</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$40.99</td>
-                          <td class="align-middle" style="width:280px;">
-                              <div class="status disable action-btn d-flex align-items-center justify-content-center">
-                                  <a href="">Remove</a>
-                              </div>  
-                          </td>
-                        </tr> 
+                            <c:set var="contents" value="${requestScope.SLIDER_PRODUCTS}"/>
+                            <c:forEach var="content" items="${contents}">
+                                <tr style="height: 100px;">
+                                    <td class="align-middle" style="text-align: center">${content.id}</td>
+                                    <td class="align-middle">${content.title}</td>
+                                    <td class="align-middle">$${content.listPrice}</td>
+                                    <td class="align-middle">
+                                        <c:choose>
+                                            <c:when test="${content.salePrice == 0}">None</c:when>
+                                            <c:otherwise>$${content.salePrice}</c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td class="align-middle" style="width:280px;">
+                                        <div class="status disable action-btn d-flex align-items-center justify-content-center">
+                                            <a href="">Remove</a>
+                                        </div>  
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        
+                        
                       </tbody>
                     </table>
                 </div>

@@ -242,8 +242,16 @@
                         <div class="col-6">
                             Status<br>
                             <div class="statuswrapper row d-flex align-items-end" style="margin:0;">
-                                <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">ENABLED</div>
-                                <input type="checkbox" name="postStatus" value="ON" <c:if test="${post.featured == 1}">checked="checked"</c:if> id="statuschkbox" class="col-1"  form="updateform"/>
+                                <c:choose>
+                                    <c:when test="${post.status == 1}">
+                                        <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">ENABLED</div>
+                                        <input type="checkbox" name="postStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="status disable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">DISABLED</div>
+                                        <input type="checkbox" name="postStatus" value="ON" id="statuschkbox" class="col-1"  form="updateform"/>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                         <div class="col-2">
