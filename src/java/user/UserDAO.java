@@ -504,4 +504,85 @@ public class UserDAO implements Serializable {
         }
         return false;
     }
+    
+    public boolean updateUserProfile(int userID, String name, int gender, String phone, String address)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                //B2. create SQL string 
+
+                String sql = "UPDATE [User] "
+                        + "SET Name = ?, Gender = ?, Address = ?, Phone = ? "
+                        + "WHERE UserID = ?";
+
+                stm = con.prepareStatement(sql);
+                stm.setString(1, name);
+                stm.setInt(2, gender);
+                stm.setString(3, address);
+                stm.setString(4, phone);
+                stm.setInt(5, userID);
+                        
+                
+                int rowAffect = stm.executeUpdate();
+                if(rowAffect == 1){
+                    return true;
+                }
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
+    
+    public boolean updateUserAvatar(int userID, String avatar)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                //B2. create SQL string 
+
+                String sql = "UPDATE [User] "
+                        + "SET Avatar = ? "
+                        + "WHERE UserID = ?";
+
+                stm = con.prepareStatement(sql);
+                stm.setString(1, avatar);
+                stm.setInt(2, userID);
+                        
+                
+                int rowAffect = stm.executeUpdate();
+                if(rowAffect == 1){
+                    return true;
+                }
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
 }
