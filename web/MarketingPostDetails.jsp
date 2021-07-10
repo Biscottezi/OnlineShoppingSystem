@@ -245,11 +245,11 @@
                                 <c:choose>
                                     <c:when test="${post.status == 1}">
                                         <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">ENABLED</div>
-                                        <input type="checkbox" name="postStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
+                                        <input type="checkbox" name="postStatus" value="1" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
                                     </c:when>
                                     <c:otherwise>
                                         <div class="status disable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">DISABLED</div>
-                                        <input type="checkbox" name="postStatus" value="ON" id="statuschkbox" class="col-1"  form="updateform"/>
+                                        <input type="checkbox" name="postStatus" value="" id="statuschkbox" class="col-1"  form="updateform"/>
                                     </c:otherwise>
                                 </c:choose>
                             </div>
@@ -300,6 +300,6 @@
             </div>
         </div>
         
-        <form action="" id="updateform" method="POST" enctype="multipart/form-data"></form>
+        <form action="updatePost" id="updateform" method="POST" enctype="multipart/form-data"></form>
     </body>
 </html>

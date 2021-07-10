@@ -173,7 +173,7 @@
             <div class="wrapper col" style="background-color: #F7F8FC; padding: 30px 33px 30px 45px;" id="maincontent">
                 <!-- main title -->
                 <div class="maintitle row">
-                    <div class="col-2" id="title" onclick="location.href='userlist.jsp';">
+                    <div class="col-2" id="title" onclick="location.href='mktSliderList';">
                         <span class="back"><i class="fas fa-angle-left"></i>&nbsp; Back to sliders</span>
                     </div>
                     <div class="col-7"></div>
@@ -213,17 +213,17 @@
                                 <c:choose>
                                     <c:when test="${slider.status == 1}">
                                         <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">ENABLED</div>
-                                        <input type="checkbox" name="sliderStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
+                                        <input type="checkbox" name="sliderStatus" value="1" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
                                     </c:when>
                                     <c:otherwise>
                                         <div class="status disable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">DISABLED</div>
-                                        <input type="checkbox" name="sliderStatus" value="ON" id="statuschkbox" class="col-1"  form="updateform"/>
+                                        <input type="checkbox" name="sliderStatus" value="" id="statuschkbox" class="col-1"  form="updateform"/>
                                     </c:otherwise>
                                 </c:choose>
                             </div>
                         </div>
                         <div class="col-2">
-                            <input type="hidden" name="sliderID" form="updateform" value=""/>
+                            <input type="hidden" name="sliderID" form="updateform" value="${slider.id}"/>
                         </div>
                         <div class="col-4">
                             <div class="savewrapper row d-flex align-items-end justify-content-end">
@@ -238,7 +238,8 @@
                     <div class="listheader row justify-content-between">
                         <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Slider content</div>
                         <div class="d-flex justify-content-end col-8" id="add-prod-wrapper">
-                            <input id="add-prod" nane="productId" placeholder="Enter Product ID" value="" form="add-product-form"/>
+                            <input id="add-prod" nane="productID" placeholder="Enter Product ID" value="" form="add-product-form"/>
+                            <input type="hidden" nane="sliderID" value="${slider.id}" form="add-product-form"/>
                             <button class="addbtn d-flex align-items-center justify-content-center" id="adduser" type="submit" form="add-product-form">Add Product</button>
                         </div>
                     </div>
@@ -267,7 +268,7 @@
                                     </td>
                                     <td class="align-middle" style="width:280px;">
                                         <div class="status disable action-btn d-flex align-items-center justify-content-center">
-                                            <a href="">Remove</a>
+                                            <a href="removeSliderProd?sliderID=${slider.id}&productID=${content.id}">Remove</a>
                                         </div>  
                                     </td>
                                 </tr>
@@ -309,7 +310,7 @@
             </div>
         </div>
         
-        <form action="" id="add-product-form"></form>
-        <form action="" id="updateform"></form>
+        <form action="addProdSlider" id="add-product-form"></form>
+        <form action="updateSlider" id="updateform"></form>
     </body>
 </html>

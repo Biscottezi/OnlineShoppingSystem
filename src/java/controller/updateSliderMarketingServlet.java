@@ -37,9 +37,9 @@ public class updateSliderMarketingServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String sliderID = request.getParameter("sliderID");
-        String title = request.getParameter("txtTitle");
-        String description = request.getParameter("txtDescription");
-        String status = request.getParameter("status");
+        String title = request.getParameter("sliderTitle");
+        String description = request.getParameter("sliderDescription");
+        String status = request.getParameter("sliderStatus");
         String SLIDER_DETAILS_PAGE = "viewSliderDetailsMarketingServlet?sliderID=" + sliderID;
         String url = ERROR_PAGE;
         
