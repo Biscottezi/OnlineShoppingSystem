@@ -6,34 +6,26 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import product.ProductDAO;
-import productAttachedImage.ProductAttachedImageDAO;
-import utils.uploadFile;
+import user.UserDAO;
+import utils.sendMail;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "addProductMarketingServlet", urlPatterns = {"/addProductMarketingServlet"})
-
-@MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 10,
-        maxFileSize = 1024 * 1024 * 50,
-        maxRequestSize = 1024 * 1024 * 100
-)
-
-public class addProductMarketingServlet extends HttpServlet {
+@WebServlet(name = "requestResetLinkServlet", urlPatterns = {"/requestResetLinkServlet"})
+public class requestResetLinkServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
-    private final String PRODUCT_MARKETING_PAGE = "MarketingProductList.jsp";
+    private final String HOME_PAGE = "homepage.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,43 +38,20 @@ public class addProductMarketingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String title = request.getParameter("txtTitle");
-        String categoryID = request.getParameter("txtCategoryID");
-        String thumbnail = uploadFile.uploadFile(request, "thumbnail");
-        String briefInfo = request.getParameter("txtBriefInfo");
-        String description = request.getParameter("txtDescription");
-        String quantity = request.getParameter("txtQuantity");
-        String listPrice = request.getParameter("txtListPrice");
-        String salePrice = request.getParameter("txtSalePrice");
-        String chkFeatured = request.getParameter("chkFeatured");
-        String chkStatus = request.getParameter("chkStatus");
-        ArrayList<String> attachedImages = uploadFile.uploadFiles(request, 1);
+        String email = request.getParameter("txtEmail");
         String url = ERROR_PAGE;
-        int status = 0;
-        int featured = 0;
         
-        try{
-            if(chkStatus != null){
-                status = 1;
-            }
-            if(chkFeatured != null){
-                featured = 1;
-            }
-            ProductAttachedImageDAO imageDao = new ProductAttachedImageDAO();
-            ProductDAO productDao = new ProductDAO();
-            int productID = productDao.addNewProduct(title, Integer.parseInt(categoryID), thumbnail, briefInfo, description, Integer.parseInt(quantity), 
-                    Float.parseFloat(listPrice), Float.parseFloat(salePrice), featured, status);
-            for(int i = 0; i < attachedImages.size(); i++){
-                imageDao.addProductImage(attachedImages.get(i), productID);
-            }
+        try {
+            UserDAO dao = new UserDAO();
+            int UserID = dao.getUserID(email);
+            sendMail.mailResetLink(email, UserID);
             
-            url = PRODUCT_MARKETING_PAGE;
-            
-        }catch (SQLException ex) {
-            log("addProductMarketingServlet_SQLException: " + ex.getMessage());
-        } catch (NamingException ex) {
-            log("addProductMarketingServlet_NamingException: " + ex.getMessage());
-        } finally {
+            url = HOME_PAGE;
+        }catch(SQLException ex){
+            log("requestResetLinkServlet _ SQL:" + ex.getMessage());
+        }catch(NamingException ex){
+            log("requestResetLinkServlet _ Naming:" + ex.getMessage());
+        }finally{
             response.sendRedirect(url);
         }
     }

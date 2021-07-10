@@ -308,5 +308,93 @@ public class PostDAO implements Serializable {
             }
         }
     }
+    
+    public boolean updatePost(int postID, String title, String thumbnail, String briefInfo, String author, String description, int featured, int status, int categoryID)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                //B2. create SQL string 
 
+                String sql = "UPDATE Post "
+                        + "SET Title = ?, Thumbnail = ?, BriefInfo = ?, Author = ?, Description = ?, Featured = ?, Status = ?, PostCategoryID = ? "
+                        + "WHERE PostID = ?";
+
+                stm = con.prepareStatement(sql);
+                stm.setString(1, title);
+                stm.setString(2, thumbnail);
+                stm.setString(3, briefInfo);
+                stm.setString(4, author);
+                stm.setString(5, description);
+                stm.setInt(6, featured);
+                stm.setInt(7, status);
+                stm.setInt(8, categoryID);
+                stm.setInt(9, postID);
+                
+                int rowAffect = stm.executeUpdate();
+                if(rowAffect == 1){
+                    return true;
+                }
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
+    
+    public boolean addPost(String title, String thumbnail, String briefInfo, String author, String description, int featured, int status, int categoryID)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                //B2. create SQL string 
+
+                String sql = "INSERT INTO Product "
+                        + "(Title, Thumbnail, BriefInfo, Author, Description, Featured, Status, PostCategoryID, DateCreated) "
+                        + "(?, ?, ?, ?, ?, ?, ?, ?, GETDATE())";
+
+                stm = con.prepareStatement(sql);
+                stm.setString(1, title);
+                stm.setString(2, thumbnail);
+                stm.setString(3, briefInfo);
+                stm.setString(4, author);
+                stm.setString(5, description);
+                stm.setInt(6, featured);
+                stm.setInt(7, status);
+                stm.setInt(8, categoryID);
+                
+                int rowAffect = stm.executeUpdate();
+                if(rowAffect == 1){
+                    return true;
+                }
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
 }

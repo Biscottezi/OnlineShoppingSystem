@@ -8,7 +8,6 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,17 +15,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import slider.SliderDAO;
-import slider.SliderDTO;
+import sliderContent.SliderContentDAO;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "viewSliderListMarketing", urlPatterns = {"/viewSliderListMarketing"})
-public class viewSliderListMarketing extends HttpServlet {
+@WebServlet(name = "removeSliderProductMarketingServlet", urlPatterns = {"/removeSliderProductMarketingServlet"})
+public class removeSliderProductMarketingServlet extends HttpServlet {
     private final String ERROR_PAGE="Error.html";
-    private final String SLIDER_LIST_PAGE="MarketingSliderList.jsp";
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,21 +37,22 @@ public class viewSliderListMarketing extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String sliderID = request.getParameter("sliderID");
+        String productID = request.getParameter("productID");
+        String SLIDER_DETAILS_PAGE = "viewSliderDetailsMarketingServlet?sliderID=" + sliderID;
         String url = ERROR_PAGE;
         
         try{
-            SliderDAO sliderDao = new SliderDAO();
-            sliderDao.getAllSlider();
-            List<SliderDTO> sliderList = sliderDao.getSliderList();
-            if(sliderList != null){
-                request.setAttribute("SLIDER_LIST", sliderList);
+            SliderContentDAO dao = new SliderContentDAO();
+            boolean result = dao.removeProductByID(Integer.parseInt(sliderID), Integer.parseInt(productID));
+            if(result){
+                url = SLIDER_DETAILS_PAGE;
             }
             
-            url = SLIDER_LIST_PAGE;
         }catch(SQLException ex){
-            log("viewSliderListMarketing _ SQL:" + ex.getMessage());
+            log("removeSliderProductMarketingServlet _ SQL:" + ex.getMessage());
         }catch(NamingException ex){
-            log("viewSliderListMarketing _ Naming:" + ex.getMessage());
+            log("removeSliderProductMarketingServlet _ Naming:" + ex.getMessage());
         }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

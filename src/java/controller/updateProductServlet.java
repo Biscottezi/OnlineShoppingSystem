@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import product.ProductDAO;
+import productAttachedImage.ProductAttachedImageDAO;
 
 /**
  *
@@ -37,16 +38,45 @@ public class updateProductServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String productID = request.getParameter("txtProductID");
+        String title = request.getParameter("txtTitle");
+        String categoryID = request.getParameter("txtCategoryID");
+        String thumbnail = "";
+        String briefInfo = request.getParameter("txtBriefInfo");
+        String description = request.getParameter("txtDescription");
+        String quantity = request.getParameter("txtQuantity");
+        String listPrice = request.getParameter("txtListPrice");
+        String salePrice = request.getParameter("txtSalePrice");
+        String chkFeatured = request.getParameter("chkFeatured");
+        String chkStatus = request.getParameter("chkStatus");
         String url = ERROR_PAGE;
+        String[] removedImage = request.getParameterValues("removedImage");
+        int status = 0;
+        int featured = 0;
+        
         try{
+            if(chkStatus != null){
+                status = 1;
+            }
+            if(chkFeatured != null){
+                featured = 1;
+            }
+            ProductAttachedImageDAO imageDao = new ProductAttachedImageDAO();
             ProductDAO productDao = new ProductDAO();
+            boolean productResult = productDao.updateProduct(Integer.parseInt(productID), title, Integer.parseInt(categoryID), thumbnail, briefInfo, description, 
+                    Integer.parseInt(quantity), Float.parseFloat(listPrice), Float.parseFloat(salePrice), featured, status);
+            for(int i = 0; i <= removedImage.length; i++){
+                imageDao.removeProductImage(Integer.parseInt(productID), Integer.parseInt(removedImage[i]));
+            }
             
+            if(productResult){
+                url = PRODUCT_MARKETING_PAGE;
+            }
             
-            url = PRODUCT_MARKETING_PAGE;
-//        }catch(SQLException ex){
-//            log("updateUserDetailsServlet _ SQL:" + ex.getMessage());
-//        }catch(NamingException ex){
-//            log("updateUserDetailsServlet _ Naming:" + ex.getMessage());
+        }catch(SQLException ex){
+            log("updateProductServlet _ SQL:" + ex.getMessage());
+        }catch(NamingException ex){
+            log("updateProductServlet _ Naming:" + ex.getMessage());
         }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

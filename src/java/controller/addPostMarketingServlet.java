@@ -6,34 +6,26 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import product.ProductDAO;
-import productAttachedImage.ProductAttachedImageDAO;
+import post.PostDAO;
 import utils.uploadFile;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "addProductMarketingServlet", urlPatterns = {"/addProductMarketingServlet"})
-
-@MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 10,
-        maxFileSize = 1024 * 1024 * 50,
-        maxRequestSize = 1024 * 1024 * 100
-)
-
-public class addProductMarketingServlet extends HttpServlet {
+@WebServlet(name = "addPostMarketingServlet", urlPatterns = {"/addPostMarketingServlet"})
+public class addPostMarketingServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
-    private final String PRODUCT_MARKETING_PAGE = "MarketingProductList.jsp";
+    private final String POST_MARKETING_PAGE = "MarketingPostList.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -47,19 +39,16 @@ public class addProductMarketingServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String title = request.getParameter("txtTitle");
-        String categoryID = request.getParameter("txtCategoryID");
-        String thumbnail = uploadFile.uploadFile(request, "thumbnail");
+        String thumbnail = uploadFile.uploadFile(request, "thumnail");
         String briefInfo = request.getParameter("txtBriefInfo");
+        String author = request.getParameter("txtAuthor");
         String description = request.getParameter("txtDescription");
-        String quantity = request.getParameter("txtQuantity");
-        String listPrice = request.getParameter("txtListPrice");
-        String salePrice = request.getParameter("txtSalePrice");
         String chkFeatured = request.getParameter("chkFeatured");
         String chkStatus = request.getParameter("chkStatus");
-        ArrayList<String> attachedImages = uploadFile.uploadFiles(request, 1);
-        String url = ERROR_PAGE;
-        int status = 0;
+        String categoryID = request.getParameter("categoryID");
         int featured = 0;
+        int status = 0;
+        String url = ERROR_PAGE;
         
         try{
             if(chkStatus != null){
@@ -68,22 +57,21 @@ public class addProductMarketingServlet extends HttpServlet {
             if(chkFeatured != null){
                 featured = 1;
             }
-            ProductAttachedImageDAO imageDao = new ProductAttachedImageDAO();
-            ProductDAO productDao = new ProductDAO();
-            int productID = productDao.addNewProduct(title, Integer.parseInt(categoryID), thumbnail, briefInfo, description, Integer.parseInt(quantity), 
-                    Float.parseFloat(listPrice), Float.parseFloat(salePrice), featured, status);
-            for(int i = 0; i < attachedImages.size(); i++){
-                imageDao.addProductImage(attachedImages.get(i), productID);
+            PostDAO dao = new PostDAO();
+            boolean result = dao.addPost(title, thumbnail, briefInfo, author, description, featured, status, Integer.parseInt(categoryID));
+            if(result){
+                url = POST_MARKETING_PAGE;
             }
             
-            url = PRODUCT_MARKETING_PAGE;
             
-        }catch (SQLException ex) {
-            log("addProductMarketingServlet_SQLException: " + ex.getMessage());
-        } catch (NamingException ex) {
-            log("addProductMarketingServlet_NamingException: " + ex.getMessage());
-        } finally {
-            response.sendRedirect(url);
+        }catch(SQLException ex){
+            log("addPostMarketingServlet _ SQL:" + ex.getMessage());
+        }catch(NamingException ex){
+            log("addPostMarketingServlet _ Naming:" + ex.getMessage());
+        }finally{
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+            
         }
     }
 

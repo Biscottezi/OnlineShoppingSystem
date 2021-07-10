@@ -97,4 +97,38 @@ public class ProductAttachedImageDAO implements Serializable{
         }
         return false;
     }
+    
+    public boolean removeProductImage(int productID, int imageID) throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "DELETE FROM ProductAttachedImage "
+                        + "WHERE ImageID = ? AND ProductID = ? ";
+
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, imageID);
+                stm.setInt(2, productID);
+
+                int rowAffect = stm.executeUpdate();
+
+                if (rowAffect == 1) {
+                    return true;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
 }

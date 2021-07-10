@@ -24,7 +24,6 @@ import sliderContent.SliderContentDAO;
 @WebServlet(name = "addProductSliderMarketingServlet", urlPatterns = {"/addProductSliderMarketingServlet"})
 public class addProductSliderMarketingServlet extends HttpServlet {
     private final String ERROR_PAGE="Error.html";
-    private final String SLIDER_DETAILS_PAGE="MarketingSliderDetails.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,8 +36,9 @@ public class addProductSliderMarketingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String sliderID = request.getParameter("");
-        String productID = request.getParameter("");
+        String sliderID = request.getParameter("sliderID");
+        String productID = request.getParameter("txtProductID");
+        String SLIDER_DETAILS_PAGE = "viewSliderDetailsMarketingServlet?sliderID=" + sliderID;
         String url = ERROR_PAGE;
         
         try {
