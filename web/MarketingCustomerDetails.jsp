@@ -290,6 +290,6 @@
             </div>
         </div>
         
-        <form action="" id="updateform"></form>
+        <form action="updateCust" id="updateform"></form>
     </body>
 </html>

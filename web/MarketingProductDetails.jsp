@@ -67,6 +67,14 @@
                 font-weight: 600;
                 color: black;
             }
+            .prod-a-img{
+                height: 180px;
+            }
+            .remove-img-link{
+                font-size: 18px;
+                font-weight: 700;
+                color: #9FA2B4;
+            }
         </style>
     </head>
     <body style="width: 100%; height:100%; margin: 0; padding: 0; background-color: #F7F8FC">
@@ -166,7 +174,7 @@
             <div class="wrapper col" style="background-color: #F7F8FC; padding: 30px 33px 30px 45px;" id="maincontent">
                 <!-- main title -->
                 <div class="maintitle row">
-                    <div class="col-2" id="title" onclick="location.href='userlist.jsp';">
+                    <div class="col-2" id="title" onclick="location.href='mktProductList';">
                         <span class="back"><i class="fas fa-angle-left"></i>&nbsp; Back to products</span>
                     </div>
                     <div class="col-7"></div>
@@ -182,41 +190,42 @@
                 
                 <!-- main list -->
                 <div class="listwrapper">
+                    <c:set var="product" value="${requestScope.PRODUCT}"/>
                     <!-- list header -->
                     <div class="listheader row">
-                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Product ID: 00001 <!--${param.id} --></div>
+                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Product ID: ${product.id} <!--${param.id} --></div>
                         <div class="col-6 row"></div>
                         <div class="extended col-4 row d-flex"></div>
                     </div>
                     <div class="infor row">
                         <div class="col">
                             Title<br>
-                            <input class="editbox" form="updateform" value="Vintage typewriter" name="productTitle">
+                            <input class="editbox" form="updateform" value="${product.title}" name="productTitle">
                         </div>
                         <div class="col">
                             Featured<br>
-                            <input type="checkbox" name="productFeatured" form="updateform" checked="checked" value="ON" style="margin-top: 10px; zoom: 2"/>
+                            <input type="checkbox" name="productFeatured" form="updateform" <c:if test="${product.featured == 1}">checked="checked"</c:if> value="ON" style="margin-top: 10px; zoom: 2"/>
                         </div>
                     </div>
                     <div class="infor row">
                         <div class="col">
                             Brief Info<br>
-                            <textarea class="editbox" name="productBriefInfo" form="updateform" style="height: 124px">228 Đường Man Thiện, Phường Tân Phú, Quận 9, Thành phố Hồ Chí Minh</textarea>
+                            <textarea class="editbox" name="productBriefInfo" form="updateform" style="height: 124px">${product.briefInfo}</textarea>
                             <div style="margin-top: 18px"> Quantity</div>
-                            <input class="editbox" form="updateform" value="481" type="number" name="productQuantity">
+                            <input class="editbox" form="updateform" value="${product.quantity}" type="number" name="productQuantity">
                         </div>
                         <div class="col">
                             Category<br>
                             <select name="productCategory" form="updateform" class="editbox">
-                                <option value="1">Phone</option>
-                                <option value="2">Laptop</option>
-                                <option value="3">Tablet</option>
-                                <option value="4">Smartwatch</option>
-                                <option value="5">Earphone</option>
+                                <option value="1" <c:if test="${product.categoryId == 1}">selected</c:if> >Phone</option>
+                                <option value="2" <c:if test="${product.categoryId == 2}">selected</c:if> >Laptop</option>
+                                <option value="3" <c:if test="${product.categoryId == 3}">selected</c:if> >Tablet</option>
+                                <option value="4" <c:if test="${product.categoryId == 4}">selected</c:if> >Smartwatch</option>
+                                <option value="5" <c:if test="${product.categoryId == 5}">selected</c:if> >Earphone</option>
                             </select>
                             <div style="margin-top:18px;">Thumbnail</div>
                             <div class="avawrapper row">
-                                <img id="avapreview" class="col-3" src="http://placehold.it/180" onchange="showPreview();">
+                                <img id="avapreview" class="col-3" src="img/${product.thumbnail}" onchange="showPreview();" style="display: block">
                                 <input type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="updateform" name="productThumbnail"/>
                                 <div class="col-4 d-flex align-items-end" style="padding-top: 117px;">
                                     <label for="upload" class="d-flex align-items-center justify-content-center uplbtn">
@@ -229,18 +238,18 @@
                     <div class="infor row">
                         <div class="col">
                             Base Price<br>
-                            <input class="editbox" name="productBasePrice" form="updateform" value="$49.50">
+                            <input class="editbox" name="productBasePrice" form="updateform" value="${product.listPrice}">
                         </div>
                         <div class="col">
                             Sale Price<br>
-                            <input class="editbox" name="productSalePrice" form="updateform" value="$40.99">
+                            <input class="editbox" name="productSalePrice" form="updateform" value="<c:if test="${product.salePrice != 0}">${product.salePrice}</c:if>">
                         </div>
                     </div>
                         <hr>
                     <div class="info row">
                         <div class="col">
                             <h6 class="input-title">Description</h6>
-                            <textarea name="productDescription" id="prod-dscrpt" class="editbox">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
+                            <textarea name="productDescription" id="prod-dscrpt" class="editbox">${product.description}</textarea>
                         </div>
                     </div>
                         <hr>
@@ -255,6 +264,16 @@
                                     </label>
                                 </div>
                             </div>
+                            <c:set var="images" value="${requestScope.PRODUCT_IMAGES}"/>
+                            <div class="row">
+                                <c:forEach var="image" items="${images}">
+                                    <div class="col-3" style="text-align: center;">
+                                        <img src="img/${image}" alt="product attached image" class="prod-a-img"/><br>
+                                        <a href="" class="remove-img-link">Remove Image</a>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                            
                         </div>
                     </div>
                         <br>
@@ -262,12 +281,21 @@
                         <div class="col-6">
                             Status<br>
                             <div class="statuswrapper row d-flex align-items-end" style="margin:0;">
-                                <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">SELLING</div>
-                                <input type="checkbox" name="productStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
+                                <c:choose>
+                                    <c:when test="${product.status == 1}">
+                                        <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">SELLING</div>
+                                        <input type="checkbox" name="productStatus" value="1" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="status disable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">NOT SELLING</div>
+                                        <input type="checkbox" name="productStatus" value="" id="statuschkbox" class="col-1"  form="updateform"/>
+                                    </c:otherwise>
+                                </c:choose>
+                                
                             </div>
                         </div>
                         <div class="col-2">
-                            <input type="hidden" form="updateform" value=""/>
+                            <input type="hidden" name="productID" form="updateform" value="${product.id}"/>
                         </div>
                         <div class="col-4">
                             <div class="savewrapper row d-flex align-items-end justify-content-end">
@@ -312,6 +340,6 @@
             </div>
         </div>
         
-        <form action="" id="updateform" method="POST" enctype="multipart/form-data"></form>
+        <form action="updateProd" id="updateform" method="POST" enctype="multipart/form-data"></form>
     </body>
 </html>

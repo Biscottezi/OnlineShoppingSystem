@@ -173,7 +173,7 @@
             <div class="wrapper col" style="background-color: #F7F8FC; padding: 30px 33px 30px 45px;" id="maincontent">
                 <!-- main title -->
                 <div class="maintitle row">
-                    <div class="col-2" id="title" onclick="location.href='userlist.jsp';">
+                    <div class="col-2" id="title" onclick="location.href='mktSliderList';">
                         <span class="back"><i class="fas fa-angle-left"></i>&nbsp; Back to sliders</span>
                     </div>
                     <div class="col-7"></div>
@@ -189,32 +189,41 @@
                 
                 <!-- main list -->
                 <div class="listwrapper">
+                    <c:set var="slider" value="${requestScope.SLIDER}"/>
                     <!-- list header -->
                     <div class="listheader row">
-                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Slider ID: 00001 <!--${param.id} --></div>
+                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Slider ID: ${slider.id} <!--${param.id} --></div>
                         <div class="col-6 row"></div>
                         <div class="extended col-4 row d-flex"></div>
                     </div>
                     <div class="infor row">
                         <div class="col">
                             Title<br>
-                            <input name="sliderTitle" class="editbox" form="updateform" value="Sale">
+                            <input name="sliderTitle" class="editbox" form="updateform" value="${slider.title}">
                         </div>
                         <div class="col">
                             Description<br>
-                            <input name="sliderDescription" class="editbox" form="updateform" value="Showing On sale products">
+                            <input name="sliderDescription" class="editbox" form="updateform" value="${slider.description}">
                         </div>
                     </div>
                     <div class="infor row" id="lastrow">
                         <div class="col-6">
                             Status<br>
                             <div class="statuswrapper row d-flex align-items-end" style="margin:0;">
-                                <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">ENABLED</div>
-                                <input type="checkbox" name="sliderStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
+                                <c:choose>
+                                    <c:when test="${slider.status == 1}">
+                                        <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">ENABLED</div>
+                                        <input type="checkbox" name="sliderStatus" value="1" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="status disable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">DISABLED</div>
+                                        <input type="checkbox" name="sliderStatus" value="" id="statuschkbox" class="col-1"  form="updateform"/>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                         <div class="col-2">
-                            <input type="hidden" name="sliderID" form="updateform" value=""/>
+                            <input type="hidden" name="sliderID" form="updateform" value="${slider.id}"/>
                         </div>
                         <div class="col-4">
                             <div class="savewrapper row d-flex align-items-end justify-content-end">
@@ -229,7 +238,8 @@
                     <div class="listheader row justify-content-between">
                         <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Slider content</div>
                         <div class="d-flex justify-content-end col-8" id="add-prod-wrapper">
-                            <input id="add-prod" nane="productId" placeholder="Enter Product ID" value="" form="add-product-form"/>
+                            <input id="add-prod" nane="productID" placeholder="Enter Product ID" value="" form="add-product-form"/>
+                            <input type="hidden" nane="sliderID" value="${slider.id}" form="add-product-form"/>
                             <button class="addbtn d-flex align-items-center justify-content-center" id="adduser" type="submit" form="add-product-form">Add Product</button>
                         </div>
                     </div>
@@ -244,61 +254,27 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr style="height: 100px;">
-                            <td class="align-middle" style="text-align: center">0001</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$40.99</td>
-                          <td class="align-middle" style="width:280px;">
-                              <div class="status disable action-btn d-flex align-items-center justify-content-center">
-                                  <a href="">Remove</a>
-                              </div>  
-                          </td>
-                        </tr> 
-                        <tr style="height: 100px;">
-                            <td class="align-middle" style="text-align: center">0001</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$40.99</td>
-                          <td class="align-middle" style="width:280px;">
-                              <div class="status disable action-btn d-flex align-items-center justify-content-center">
-                                  <a href="">Remove</a>
-                              </div>  
-                          </td>
-                        </tr> 
-                        <tr style="height: 100px;">
-                            <td class="align-middle" style="text-align: center">0001</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$40.99</td>
-                          <td class="align-middle" style="width:280px;">
-                              <div class="status disable action-btn d-flex align-items-center justify-content-center">
-                                  <a href="">Remove</a>
-                              </div>  
-                          </td>
-                        </tr> 
-                        <tr style="height: 100px;">
-                            <td class="align-middle" style="text-align: center">0001</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$40.99</td>
-                          <td class="align-middle" style="width:280px;">
-                              <div class="status disable action-btn d-flex align-items-center justify-content-center">
-                                  <a href="">Remove</a>
-                              </div>  
-                          </td>
-                        </tr> 
-                        <tr style="height: 100px;">
-                            <td class="align-middle" style="text-align: center">0001</td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$40.99</td>
-                          <td class="align-middle" style="width:280px;">
-                              <div class="status disable action-btn d-flex align-items-center justify-content-center">
-                                  <a href="">Remove</a>
-                              </div>  
-                          </td>
-                        </tr> 
+                            <c:set var="contents" value="${requestScope.SLIDER_PRODUCTS}"/>
+                            <c:forEach var="content" items="${contents}">
+                                <tr style="height: 100px;">
+                                    <td class="align-middle" style="text-align: center">${content.id}</td>
+                                    <td class="align-middle">${content.title}</td>
+                                    <td class="align-middle">$${content.listPrice}</td>
+                                    <td class="align-middle">
+                                        <c:choose>
+                                            <c:when test="${content.salePrice == 0}">None</c:when>
+                                            <c:otherwise>$${content.salePrice}</c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td class="align-middle" style="width:280px;">
+                                        <div class="status disable action-btn d-flex align-items-center justify-content-center">
+                                            <a href="removeSliderProd?sliderID=${slider.id}&productID=${content.id}">Remove</a>
+                                        </div>  
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        
+                        
                       </tbody>
                     </table>
                 </div>
@@ -334,7 +310,7 @@
             </div>
         </div>
         
-        <form action="" id="add-product-form"></form>
-        <form action="" id="updateform"></form>
+        <form action="addProdSlider" id="add-product-form"></form>
+        <form action="updateSlider" id="updateform"></form>
     </body>
 </html>

@@ -37,7 +37,7 @@ public class addProductSliderMarketingServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String sliderID = request.getParameter("sliderID");
-        String productID = request.getParameter("txtProductID");
+        String productID = request.getParameter("productID");
         String SLIDER_DETAILS_PAGE = "viewSliderDetailsMarketingServlet?sliderID=" + sliderID;
         String url = ERROR_PAGE;
         
