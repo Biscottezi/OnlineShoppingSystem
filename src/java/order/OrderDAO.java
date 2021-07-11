@@ -584,10 +584,9 @@ public class OrderDAO implements Serializable{
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "SELECT COUNT(ReceiverName) AS TotalCustomer, convert(varchar, OrderedDate, 101) as OrderDate "
-                        + "FROM [Order] "
-                        + "WHERE CustomerID is not null "
-                        + "GROUP BY convert(varchar, OrderedDate, 101) ";
+                String sql = "SELECT sum(od.Quantity*p.SalePrice) AS SalePrice, sum(od.Quantity*p.ListPrice) AS ListPrice, convert(varchar, OrderedDate, 101) AS OrderDate, p.ProductCategoryID "
+                        + "FROM ([Order] o JOIN OrderDetail od ON o.OrderID = od.OrderID) JOIN Product p ON od.ProductID = p.ProductID "
+                        + "GROUP BY convert(varchar, OrderedDate, 101), p.ProductCategoryID ";
                 stm = con.prepareCall(sql);
                 rs = stm.executeQuery();
                 
