@@ -463,4 +463,41 @@ public class ProductDAO implements Serializable{
         }
         return false;
     }
+    
+    public List<averageRatedStar> getAverageRatedStar() throws SQLException, NamingException{
+        Connection con = null;
+        CallableStatement stm = null;
+        ResultSet rs = null;
+        List<averageRatedStar> ratedStarList = new ArrayList<>();
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT Select AVG(RatedStar) as AvgRatedStar, ProductCategoryID "
+                        + "from Product "
+                        + "Group by ProductCategoryID ";
+                stm = con.prepareCall(sql);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    float ratedStar = rs.getFloat("AvgRatedStar");
+                    int categoryID = rs.getInt("ProductCategoryID");
+                    averageRatedStar avgRatedStar = new averageRatedStar(ratedStar, categoryID);
+                    
+                    ratedStarList.add(avgRatedStar);
+                }
+                return ratedStarList;
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return ratedStarList;
+    }
 }
