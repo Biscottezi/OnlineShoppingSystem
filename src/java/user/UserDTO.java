@@ -42,12 +42,13 @@ public class UserDTO implements Serializable{
         this.password = password;
     }
     
-    public UserDTO(String name, String address, String email, int gender, String phone){
+    public UserDTO(String name, String address, String email, int gender, String phone, Date createdDate){
         this.name = name;
         this.address = address;
         this.email = email;
         this.gender = gender;
         this.phone = phone;
+        this.createdDate = createdDate;
     }
 
     public int getId() {

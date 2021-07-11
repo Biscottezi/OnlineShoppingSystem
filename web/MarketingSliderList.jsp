@@ -208,26 +208,26 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Sale</td>
-                          <td class="align-middle">Showing on sale products</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">Categories</td>
-                          <td class="align-middle">Showing featured categories</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status disable">
-                                  DISABLED
-                              </div>
-                          </td>
-                        </tr>
+                            <c:set var="sliders" value="${requestScope.SLIDER_LIST}"/>
+                            <c:forEach var="slider" items="${sliders}">
+                                <tr style="height: 92px;" onclick="location.href='mktSliderDetails?sliderID=${slider.id}'">
+                                    <td class="align-middle" style="text-align: center">${slider.id}</th>
+                                    <td class="align-middle">${slider.title}</td>
+                                    <td class="align-middle">${slider.description}</td>
+                                    <td class="align-middle" style="width:150px;">
+                                        <c:choose>
+                                            <c:when test="${slider.status == 1}">
+                                                <div class="d-flex align-items-center justify-content-center status enable">ENABLED</div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="d-flex align-items-center justify-content-center status disable">DISABLED</div>
+                                            </c:otherwise>
+                                        </c:choose> 
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        
+                        
                       </tbody>
                     </table> 
                 </div>

@@ -5,25 +5,26 @@
  */
 package controller;
 
+import error.changePasswordError;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import slider.SliderDAO;
+import user.UserDAO;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "updateSliderMarketingServlet", urlPatterns = {"/updateSliderMarketingServlet"})
-public class updateSliderMarketingServlet extends HttpServlet {
-    private final String ERROR_PAGE="Error.html";
+@WebServlet(name = "changePasswordServlet", urlPatterns = {"/changePasswordServlet"})
+public class changePasswordServlet extends HttpServlet {
+    private final String ERROR_PAGE = "Error.html";
+    private final String HOME_PAGE = "homepage.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,28 +37,44 @@ public class updateSliderMarketingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String sliderID = request.getParameter("sliderID");
-        String title = request.getParameter("sliderTitle");
-        String description = request.getParameter("sliderDescription");
-        String status = request.getParameter("sliderStatus");
-        String SLIDER_DETAILS_PAGE = "viewSliderDetailsMarketingServlet?sliderID=" + sliderID;
+        String userID = request.getParameter("userID");
+        String password = request.getParameter("password");
+        String oldPassword = request.getParameter("txtOldPassword");
+        String newPassword = request.getParameter("txtNewPassword");
+        String confirmPassword = request.getParameter("txtConfirmPassword");
         String url = ERROR_PAGE;
+        changePasswordError error = new changePasswordError();
+        boolean founderror = false;
         
-        try {
-            SliderDAO sliderDao = new SliderDAO();
-            boolean result = sliderDao.updateSlider(Integer.parseInt(sliderID), title, description, Integer.parseInt(status));
-            if(result){
-                url = SLIDER_DETAILS_PAGE;
+        try{
+            UserDAO dao = new UserDAO();
+            
+            if(!oldPassword.trim().equals(password.trim())){
+                founderror = true;
+                error.setOldPassErr("Old Password is incorrect");
+            }
+            if (newPassword.trim().length() < 5 || newPassword.trim().length() > 20) {
+                founderror = true;
+                error.setNewPassErr("Password is required input from 5 to 20 chars");
+
+            } else if (!newPassword.trim().equals(confirmPassword.trim())) {
+                founderror = true;
+                error.setConfirmPassErr("Confirm password must match with password!");
             }
             
-        }catch(SQLException ex){
-            log("updateSliderMarketingServlet _ SQL:" + ex.getMessage());
-        }catch(NamingException ex){
-            log("updateSliderMarketingServlet _ Naming:" + ex.getMessage());
-        }finally{
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            if(founderror){
+                request.setAttribute("CHANGE_PASS_ERR", error);
+            }else{
+                dao.resetNewPassword(Integer.parseInt(userID), newPassword);
+            }
             
+            url = HOME_PAGE;
+        }catch (SQLException ex) {
+            log("changePasswordServlet_SQLException: " + ex.getMessage());
+        } catch (NamingException ex) {
+            log("changePasswordServlet_NamingException: " + ex.getMessage());
+        } finally {
+            response.sendRedirect(url);
         }
     }
 

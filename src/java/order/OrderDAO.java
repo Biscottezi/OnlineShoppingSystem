@@ -427,19 +427,21 @@ public class OrderDAO implements Serializable{
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "SELECT DISTINCT ReceiverName, ReceiverAddress, ReceiverEmail, ReceiverGender, ReceiverPhone "
-                        + "FROM [Order] ";
+                String sql = "SELECT DISTINCT OrderedDate, ReceiverName, ReceiverAddress, ReceiverEmail, ReceiverGender, ReceiverPhone, "
+                        + "FROM [Order] "
+                        + "WHERE CustomerID is null";
                 stm = con.prepareCall(sql);
                 rs = stm.executeQuery();
                 
                 while(rs.next()){
+                    Date createdDate = rs.getDate("OrderedDate");
                     String Name = rs.getString("ReceiverName");
                     int Gender = rs.getInt("ReceiverGender");
                     String Address = rs.getString("ReceiverAddress");
                     String Email = rs.getString("ReceiverEmail");
                     String Phone = rs.getString("ReceiverPhone");
 
-                    UserDTO dto = new UserDTO(Name, Address, Email, Gender, Phone);
+                    UserDTO dto = new UserDTO(Name, Address, Email, Gender, Phone, createdDate);
                     if(this.potentialCus == null){
                         this.potentialCus = new ArrayList<>();
                     }
@@ -457,6 +459,160 @@ public class OrderDAO implements Serializable{
 
             }
         }
+    }
+    
+    public List<totalInOrderTable> getTotalOrderByStatus(int status) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<totalInOrderTable> totalList = new ArrayList<>();
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT COUNT(OrderID) AS TOTALORDER, convert(varchar, OrderedDate, 101) as OrderDate "
+                        + "FROM [Order] "
+                        + "WHERE Status = ? "
+                        + "GROUP BY convert(varchar, OrderedDate, 101) ";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, status);
+                rs = stm.executeQuery();
+                
+                if(rs.next()){
+                    int TotalOrder = rs.getInt("TotalOrder");
+                    Date date = rs.getDate("OrderDate");
+                    
+                    totalInOrderTable total = new totalInOrderTable(TotalOrder, date);
+                    totalList.add(total);
+                }
+                return totalList;
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+
+            }
+        }
+        return totalList;
+    }
+    
+    public List<totalInOrderTable> getTotalPotentialCustomerByDate() throws SQLException, NamingException{
+        Connection con = null;
+        CallableStatement stm = null;
+        ResultSet rs = null;
+        List<totalInOrderTable> totalList = new ArrayList<>();
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT COUNT(ReceiverName) AS TotalCustomer, convert(varchar, OrderedDate, 101) as OrderDate "
+                        + "FROM [Order] "
+                        + "WHERE CustomerID is null "
+                        + "GROUP BY convert(varchar, OrderedDate, 101) ";
+                stm = con.prepareCall(sql);
+                rs = stm.executeQuery();
+                
+                if(rs.next()){
+                    int TotalOrder = rs.getInt("TotalCustomer");
+                    Date date = rs.getDate("OrderDate");
+                    
+                    totalInOrderTable total = new totalInOrderTable(TotalOrder, date);
+                    totalList.add(total);
+                }
+                return totalList;
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+
+            }
+        }
+        return totalList;
+    }
+    
+    public List<totalInOrderTable> getTotalCustomerByDate() throws SQLException, NamingException{
+        Connection con = null;
+        CallableStatement stm = null;
+        ResultSet rs = null;
+        List<totalInOrderTable> totalList = new ArrayList<>();
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT COUNT(ReceiverName) AS TotalCustomer, convert(varchar, OrderedDate, 101) as OrderDate "
+                        + "FROM [Order] "
+                        + "WHERE CustomerID is not null "
+                        + "GROUP BY convert(varchar, OrderedDate, 101) ";
+                stm = con.prepareCall(sql);
+                rs = stm.executeQuery();
+                
+                if(rs.next()){
+                    int TotalOrder = rs.getInt("TotalCustomer");
+                    Date date = rs.getDate("OrderDate");
+                    
+                    totalInOrderTable total = new totalInOrderTable(TotalOrder, date);
+                    totalList.add(total);
+                }
+                return totalList;
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+
+            }
+        }
+        return totalList;
+    }
+    
+    public List<beforeRevenue> getBeforeRevenue() throws SQLException, NamingException{
+        Connection con = null;
+        CallableStatement stm = null;
+        ResultSet rs = null;
+        List<beforeRevenue> beforeRevenueList = new ArrayList<>();
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT sum(od.Quantity*p.SalePrice) AS SalePrice, sum(od.Quantity*p.ListPrice) AS ListPrice, convert(varchar, OrderedDate, 101) AS OrderDate, p.ProductCategoryID "
+                        + "FROM ([Order] o JOIN OrderDetail od ON o.OrderID = od.OrderID) JOIN Product p ON od.ProductID = p.ProductID "
+                        + "GROUP BY convert(varchar, OrderedDate, 101), p.ProductCategoryID ";
+                stm = con.prepareCall(sql);
+                rs = stm.executeQuery();
+                
+                if(rs.next()){
+                    float salePrice = rs.getFloat("SalePrice");
+                    float listPrice = rs.getFloat("ListPrice");
+                    Date date = rs.getDate("OrderDate");
+                    int categoryID = rs.getInt("ProductCategoryID");
+                    
+                    beforeRevenue beforeRevenue = new beforeRevenue(salePrice, listPrice, date, categoryID);
+                    beforeRevenueList.add(beforeRevenue);
+                }
+                return beforeRevenueList;
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+
+            }
+        }
+        return beforeRevenueList;
     }
 }
 

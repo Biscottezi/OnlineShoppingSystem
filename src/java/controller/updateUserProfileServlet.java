@@ -9,21 +9,21 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import slider.SliderDAO;
+import user.UserDAO;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "updateSliderMarketingServlet", urlPatterns = {"/updateSliderMarketingServlet"})
-public class updateSliderMarketingServlet extends HttpServlet {
-    private final String ERROR_PAGE="Error.html";
+@WebServlet(name = "updateUserProfileServlet", urlPatterns = {"/updateUserProfileServlet"})
+public class updateUserProfileServlet extends HttpServlet {
+    private final String ERROR_PAGE = "Error.html";
+    private final String HOME_PAGE = "homepage.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,28 +36,25 @@ public class updateSliderMarketingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String sliderID = request.getParameter("sliderID");
-        String title = request.getParameter("sliderTitle");
-        String description = request.getParameter("sliderDescription");
-        String status = request.getParameter("sliderStatus");
-        String SLIDER_DETAILS_PAGE = "viewSliderDetailsMarketingServlet?sliderID=" + sliderID;
+        String name = request.getParameter("txtName");
+        String gender = request.getParameter("txtGender");
+        String phone = request.getParameter("txtPhone");
+        String address = request.getParameter("txtAddress");
+        String userID = request.getParameter("userID");
         String url = ERROR_PAGE;
         
         try {
-            SliderDAO sliderDao = new SliderDAO();
-            boolean result = sliderDao.updateSlider(Integer.parseInt(sliderID), title, description, Integer.parseInt(status));
+            UserDAO dao = new UserDAO();
+            boolean result = dao.updateUserProfile(Integer.parseInt(userID), name, Integer.parseInt(gender), phone, address);
             if(result){
-                url = SLIDER_DETAILS_PAGE;
+                url = HOME_PAGE;
             }
-            
-        }catch(SQLException ex){
-            log("updateSliderMarketingServlet _ SQL:" + ex.getMessage());
-        }catch(NamingException ex){
-            log("updateSliderMarketingServlet _ Naming:" + ex.getMessage());
-        }finally{
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
-            
+        } catch (SQLException ex) {
+            log("updateUserProfileServlet_SQLException: " + ex.getMessage());
+        } catch (NamingException ex) {
+            log("updateUserProfileServlet_NamingException: " + ex.getMessage());
+        } finally {
+            response.sendRedirect(url);
         }
     }
 

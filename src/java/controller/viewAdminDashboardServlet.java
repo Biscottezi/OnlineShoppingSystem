@@ -8,6 +8,8 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +17,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import order.OrderDAO;
+import order.Revenue;
+import order.beforeRevenue;
+import order.totalInOrderTable;
+import product.ProductDAO;
+import product.averageRatedStar;
 
 /**
  *
@@ -22,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "viewAdminDashboardServlet", urlPatterns = {"/viewAdminDashboardServlet"})
 public class viewAdminDashboardServlet extends HttpServlet {
-    private final String ADMIN_DASHBOARD = "";
+    private final String ADMIN_DASHBOARD = "AdminDashboard.jsp";
     private final String ERROR_PAGE = "Error.html";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,12 +47,61 @@ public class viewAdminDashboardServlet extends HttpServlet {
         String url = ERROR_PAGE;
         
         try {
+            OrderDAO orderDao = new OrderDAO();
+            List<totalInOrderTable> submittedOrders = orderDao.getTotalOrderByStatus(1);
+            if(submittedOrders.size() > 0){
+                request.setAttribute("SUBMITTED_ORDERS", submittedOrders);
+            }
+            List<totalInOrderTable> confirmedOrders = orderDao.getTotalOrderByStatus(1);
+            if(submittedOrders.size()>0){
+                request.setAttribute("CONFIRMED_ORDERS", confirmedOrders);
+            }
+            List<totalInOrderTable> shippedOrders = orderDao.getTotalOrderByStatus(1);
+            if(submittedOrders.size()>0){
+                request.setAttribute("SHIPPED_ORDERS", shippedOrders);
+            }
+            
+            List<totalInOrderTable> potentialCustomers = orderDao.getTotalPotentialCustomerByDate();
+            if(submittedOrders.size()>0){
+                request.setAttribute("POTENTIAL_CUSTOMERS", potentialCustomers);
+            }
+            List<totalInOrderTable> customers = orderDao.getTotalCustomerByDate();
+            if(submittedOrders.size()>0){
+                request.setAttribute("CUSTOMERS", customers);
+            }
+            
+            ProductDAO productDao = new ProductDAO();
+            List<averageRatedStar>ratedStarList = productDao.getAverageRatedStar();
+            if(ratedStarList.size()>0){
+                float avgRatedStar = 0;
+                for(int i = 0; i < ratedStarList.size(); i++){
+                    avgRatedStar += ratedStarList.get(i).getAvergaeStar();
+                }
+                averageRatedStar ratedStar = new averageRatedStar(avgRatedStar, 0);
+                ratedStarList.add(ratedStar);
+                request.setAttribute("RATED_STAR_LIST", ratedStarList);
+            }
+            
+            List<beforeRevenue> beforeRevenueList = orderDao.getBeforeRevenue();
+            if(beforeRevenueList.size()>0){
+                List<Revenue> revenueList = new ArrayList<>();
+                for(int i=0; i < revenueList.size(); i++){
+                    if(beforeRevenueList.get(i).getSalePrice() == 0){
+                        Revenue revenue = new Revenue(beforeRevenueList.get(i).getListPrice(), beforeRevenueList.get(i).getDate(), beforeRevenueList.get(i).getCategoryID());
+                        revenueList.add(revenue);
+                    }else{
+                        Revenue revenue = new Revenue(beforeRevenueList.get(i).getSalePrice(), beforeRevenueList.get(i).getDate(), beforeRevenueList.get(i).getCategoryID());
+                        revenueList.add(revenue);
+                    }
+                }
+                request.setAttribute("REVENUE", revenueList);
+            }
             
             url = ADMIN_DASHBOARD;
-//        }catch(SQLException ex){
-//            log("viewAdminDashboardServlet _ SQL:" + ex.getMessage());
-//        }catch(NamingException ex){
-//            log("viewAdminDashboardServlet _ Naming:" + ex.getMessage());
+        }catch(SQLException ex){
+            log("viewAdminDashboardServlet _ SQL:" + ex.getMessage());
+        }catch(NamingException ex){
+            log("viewAdminDashboardServlet _ Naming:" + ex.getMessage());
         }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

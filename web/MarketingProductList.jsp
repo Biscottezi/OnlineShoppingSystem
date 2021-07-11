@@ -233,263 +233,49 @@
                           <th scope="col">Status</th>
                         </tr>
                       </thead>
+                      <c:set var="products" value="${requestScope.PRODUCT_LIST}"/>
                       <tbody>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$42.50</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  SELLING
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">Useless Cat</td>
-                          <td class="align-middle">House Cat</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$42.50</td>
-                          <td class="align-middle">Off</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status disable">
-                                  NOT SELLING
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$42.50</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  SELLING
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$42.50</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  SELLING
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$42.50</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  SELLING
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$42.50</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  SELLING
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$42.50</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  SELLING
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$42.50</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  SELLING
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$42.50</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  SELLING
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$42.50</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  SELLING
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$42.50</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  SELLING
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$42.50</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  SELLING
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$42.50</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  SELLING
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$42.50</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  SELLING
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$42.50</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  SELLING
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</th>
-                          <td class="align-middle">
-                              <img src="img/product-thumbnail.jpg" alt="product thumbnail" style="height: 92px">
-                          </td>
-                          <td class="align-middle">Vintage Typewriter</td>
-                          <td class="align-middle">Typewriter</td>
-                          <td class="align-middle">$49.50</td>
-                          <td class="align-middle">$42.50</td>
-                          <td class="align-middle">On</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  SELLING
-                              </div>
-                          </td>
-                        </tr>
+                            <c:forEach var="product" items="${products}">
+                                <tr style="height: 92px;" onclick="location.href='mktProdDetails?productID=${product.id}'">
+                                    <td class="align-middle" style="text-align: center">${product.id}</th>
+                                    <td class="align-middle">
+                                        <img src="img/${product.thumbnail}" alt="product thumbnail" style="height: 92px">
+                                    </td>
+                                    <td class="align-middle">${product.title}</td>
+                                    <td class="align-middle">
+                                        <c:choose>
+                                            <c:when test="${product.categoryId == 1}">Phone</c:when>
+                                            <c:when test="${product.categoryId == 2}">Laptop</c:when>
+                                            <c:when test="${product.categoryId == 3}">Tablet</c:when>
+                                            <c:when test="${product.categoryId == 4}">Smartwatch</c:when>
+                                            <c:when test="${product.categoryId == 5}">Earphone</c:when>
+                                        </c:choose>
+                                    </td>
+                                    <td class="align-middle">$${product.listPrice}</td>
+                                    <td class="align-middle">
+                                        <c:choose>
+                                            <c:when test="${product.salePrice != 0}">$${product.salePrice}</c:when>
+                                            <c:otherwise>None</c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td class="align-middle">
+                                        <c:choose>
+                                            <c:when test="${product.featured == 1}">On</c:when>
+                                            <c:otherwise>Off</c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td class="align-middle" style="width:150px;">
+                                        <c:choose>
+                                            <c:when test="${product.status == 1}">
+                                                <div class="d-flex align-items-center justify-content-center status enable">SELLING</div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="d-flex align-items-center justify-content-center status disable">NOT SELLING</div>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                       </tbody>
                     </table> 
                 </div>
@@ -530,11 +316,11 @@
             <div class="info row">
                 <div class="col">
                     Title<br>
-                    <input class="inputbox" type="text" name="productTitle" value="" form="createform"/>
+                    <input class="inputbox" type="text" name="productTitle" value="" form="createform" required/>
                 </div>
                 <div class="col">
                     Category<br>
-                    <select id="gender" class="inputbox" form="createform" name="productCategory">
+                    <select id="gender" class="inputbox" form="createform" name="productCategory" required>
                         <option value="" selected disabled hidden>Select category</option>
                         <option value="1">Phone</option>
                         <option value="2">Laptop</option>
@@ -559,16 +345,16 @@
                 </div>
                 <div class="col">
                     Quantity<br>
-                    <input class="inputbox" type="number" name="productQuantity" value="" form="createform"/>
+                    <input class="inputbox" type="number" name="productQuantity" value="" form="createform" required/>
                     <br>
                     <div style="margin-top:12px;">Price</div>
-                    <input class="inputbox" type="number" name="productBasePrice" value="" form="createform"/>
+                    <input class="inputbox" type="number" name="productBasePrice" value="" form="createform" required/>
                 </div>
             </div>
             <div class="info row">
                 <div class="col">
                     Brief Info<br>
-                    <textarea class="inputbox" id="address" type="text" name="productBriefInfo" value="" form="createform"></textarea>
+                    <textarea class="inputbox" id="address" type="text" name="productBriefInfo" value="" form="createform" required></textarea>
                 </div>
                 <div class="col">
                     Sale Price<br>
@@ -580,7 +366,7 @@
             </div>
             <div class="info">
                 <p class="input-title">Description</p>
-                <textarea class="inputbox" id="prod-dscrpt" form="createform" name="productDescription"></textarea>
+                <textarea class="inputbox" id="prod-dscrpt" form="createform" name="productDescription" required></textarea>
                 <p class="input-title" style="margin-top: 1em">Attached Images</p>
                 <div class="avawrapper" style="margin-top: 20px; margin-bottom: 1.5em">
                     <input type="file" id="upload-attached" form="createform" multiple name="productAttachedImage">
@@ -596,7 +382,7 @@
                     Status<br>
                     <div class="statuswrapper row d-flex align-items-end">
                         <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">ENABLED</div>
-                        <input type="checkbox" name="productStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="createform"/>
+                        <input type="checkbox" name="productStatus" value="1" checked="checked" id="statuschkbox" class="col-1"  form="createform"/>
                     </div>
                 </div>
                 <div class="col-2"></div>
