@@ -35,7 +35,7 @@ public class uploadFile implements Serializable{
                 String fileName = "";
                 try {
                     Part filePart = request.getPart(paramName);
-                    fileName = (String) getFileName(filePart);
+                    fileName = (String)getFileName(filePart);
 
                     String applicationPath = request.getServletContext().getRealPath("");
                     String basePath = applicationPath + File.separator + UPLOAD_DIR + File.separator;

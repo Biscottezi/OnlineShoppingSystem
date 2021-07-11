@@ -107,7 +107,7 @@ public class SliderContentDAO implements Serializable{
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "DELETE FROM table_name "
+                String sql = "DELETE FROM SliderContent "
                         + "WHERE SliderID = ? AND ProductID = ?";
                 
                 stm = con.prepareStatement(sql);

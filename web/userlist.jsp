@@ -372,6 +372,7 @@
                                 <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
                             </label>
                         </div>
+                        <input type="file" name="avatar"/>
                     </div>
                 </div>
                 <div class="col">
