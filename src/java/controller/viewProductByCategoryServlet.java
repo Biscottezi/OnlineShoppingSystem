@@ -6,8 +6,8 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -16,22 +16,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import post.PostDAO;
-import post.PostDTO;
 import product.ProductDAO;
 import product.ProductDTO;
-import slider.SliderDAO;
-import slider.SliderDTO;
-import sliderContent.SliderContentDAO;
+import productCategory.ProductCategoryDAO;
+import productCategory.ProductCategoryDTO;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "viewHomePageServlet", urlPatterns = {"/viewHomePageServlet"})
-public class viewHomePageServlet extends HttpServlet {
-    private final String ERROR_PAGE = "Error.html";
-    private final String HOME_PAGE = "homepage.jsp";
+@WebServlet(name = "viewProductByCategoryServlet", urlPatterns = {"/viewProductByCategoryServlet"})
+public class viewProductByCategoryServlet extends HttpServlet {
+    private final String ERROR_PAGE="Error.html";
+    private final String PRODUCT_PAGE="ProductPage.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,56 +41,28 @@ public class viewHomePageServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String categoryID = request.getParameter("categoryID");
         String url = ERROR_PAGE;
         
-        try {
+        try{
             ProductDAO productDao = new ProductDAO();
-            productDao.getFeaturedProduct();
-            List<ProductDTO> productList = productDao.getProductList();
-            if(productList != null){
-                request.setAttribute("FEATURED_PRODUCT", productList);
+            productDao.getProductByCategoryCustomer(Integer.parseInt(categoryID));
+            List<ProductDTO> dto = productDao.getProductList();
+            if(dto != null){
+                request.setAttribute("ALL_PRODUCT_LIST", dto);
             }
             
-            PostDAO postDao = new PostDAO();
-            postDao.getFeaturedPost();
-            List<PostDTO> postList = postDao.getPostList();
-            if(postList != null){
-                request.setAttribute("FEATURED_POST", postList);
+            ProductCategoryDAO productCategoryDao = new ProductCategoryDAO();
+            productCategoryDao.getAllCategory();
+            List<ProductCategoryDTO> productCategoryDto = productCategoryDao.getCategoryList();
+            if(productCategoryDto != null){
+                request.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
             }
-            
-            SliderDAO sliderDao = new SliderDAO();
-            sliderDao.getSlider();
-            List<SliderDTO> sliderList = sliderDao.getSliderList();
-            if(sliderList != null){
-                request.setAttribute("SLIDER", sliderList);
-                SliderContentDAO sliderContentDao = new SliderContentDAO();
-                if(sliderList.get(0).getStatus() == 0){
-                    sliderContentDao.getProductID(sliderList.get(0).getId());
-                    List<Integer> productIDList = sliderContentDao.getProductIDList();
-                    List<ProductDTO> sliderProducts = new ArrayList<>();
-                    for(int i = 0; i < productIDList.size(); i++){
-                        productDao.searchProductByID(productIDList.get(i));
-                        sliderProducts.add(productDao.getProduct());
-                    }
-                    request.setAttribute("SLIDER_1_CONTENT", sliderProducts);
-                }
-                if(sliderList.get(1).getStatus() == 0){
-                    sliderContentDao.getProductID(sliderList.get(1).getId());
-                    List<Integer> productIDList = sliderContentDao.getProductIDList();
-                    List<ProductDTO> sliderProducts = new ArrayList<>();
-                    for(int i = 0; i < productIDList.size(); i++){
-                        productDao.searchProductByID(productIDList.get(i));
-                        sliderProducts.add(productDao.getProduct());
-                    }
-                    request.setAttribute("SLIDER_2_CONTENT", sliderProducts);
-                }
-            }
-        
-            url = HOME_PAGE;
+            url = PRODUCT_PAGE;
         }catch(SQLException ex){
-            log("viewHomePageServlet _ SQL:" + ex.getMessage());
+            log("viewProductByCategoryServlet _ SQL:" + ex.getMessage());
         }catch(NamingException ex){
-            log("viewHomePageServlet _ Naming:" + ex.getMessage());
+            log("viewProductByCategoryServlet _ Naming:" + ex.getMessage());
         }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
