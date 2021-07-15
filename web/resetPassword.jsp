@@ -1,9 +1,9 @@
 <%-- 
-    Document   : BlogList
-    Created on : Jul 3, 2021, 3:09:10 PM
+    Document   : resetPassword
+    Created on : Jul 15, 2021, 1:17:17 AM
     Author     : nguye
 --%>
-<!--header-->
+<!--Header-->
 <%@include file="header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -12,81 +12,41 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Blogs</title>
+        <title>Reset Password</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <link rel="stylesheet" href="css/sider.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css"/>
-        <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-        <script src="js/blogTable.js"></script>
-        <style>
-            .post-thumb{
-                height: 120px;
-            }
-            .post-title{
-                font-size: 22px;
-                font-weight: 600;
-            }
-        </style>
+        <link rel="stylesheet" href="css/header-footer.css">
+        <link rel="stylesheet" href="css/resetPassword.css">
     </head>
     <body>
         
         
-        <main class="container">
-            <div class="row">
-                <!--Sider-->
-                <div class="sider col-2">
-                    <div class="col">
-                        <form action="searchProduct" class="col-sm-12 searchbar">
-                            <input type="text" placeholder="Search" class="search-input col-sm-10" name="txtSearchPost" value="">
-                            <button type="submit" id="search-button" class="col-sm-2">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </form>
-                        <br>
-                        <h4>Categories</h4>
-                        <c:set var="postCategoryList" value="${requestScope.POST_CATEGORY}"/>
-                        <c:forEach var="postCategory" items="${postCategoryList}">
-                        <div class="category">
-                            <a href="viewBlogByCate?cateID=${postCategory.id}">${postCategory.name}</a>
-                        </div>
-                        </c:forEach>
-                    </div>
+        <main>
+            <div class="d-flex flex-column" class="total-wrapper">
+                <div class="d-flex flex-row justify-content-center">
+                    <h1>Password Reset</h1>
                 </div>
-                        
-                <div class="main-content col-10 container">
-                    <div class="container">
-                    <h1>Latest Posts</h1>
-                    <table class="table table-hover" id="custBlogTable">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:set var="postList" value="${requestScope.ALL_POST_LIST}"/>
-                            <c:forEach var="post" items="${postList}">
-                                <tr onclick="location.href='viewBlogDetails?selectedPostID=${post.id}'">
-                                    <td>
-                                        <img src="img/${post.thumbnail}" alt="post thumbnail" class="post-thumb">
-                                    </td>
-                                    <td class="post-title">${post.title}</td>
-                                </tr>
-                            </c:forEach>
-                            
-                            
-                        </tbody>
-                    </table>
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="form-wrapper">
+                        <div class="decor"></div>
+                        <div class="form-content">
+                            <h3>Reset Your Password</h3>
+                            <label for="txtPassword" class="label-form">Enter your new password:</label><br>
+                            <input type="password" name="txtPassword" value="" class="input-form" form="reset-form"><br>
+                            <label for="txtConfirm" class="label-form">Confirm new password:</label><br>
+                            <input type="password" name="txtConfirm" value="" class="input-form" form="reset-form"/><br>
+                            <input type="submit" name="btAction" value="RESET PASSWORD" class="reset-btn"/>
+                            <input type="hidden" name="userID" value="${param.userID}"/>
+                            <form id="reset-form" action="" method="POST"></form>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
-                        
+        
         <!--Footer-->
         <footer class="container footer-wrapper">
             <div class="row footer-row-1">

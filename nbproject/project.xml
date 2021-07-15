@@ -11,11 +11,10 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD}</file>
+                    <file>${file.reference.javax.mail.jar}</file>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.javax.mail.jar-1}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
+                    <file>${# Space-separated list of extra javac options}</file>
                 </library>
             </web-module-libraries>
             <web-module-additional-libraries/>

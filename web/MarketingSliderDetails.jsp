@@ -238,8 +238,8 @@
                     <div class="listheader row justify-content-between">
                         <div class="col-2 d-flex justify-content-start align-items-center" id="userid">Slider content</div>
                         <div class="d-flex justify-content-end col-8" id="add-prod-wrapper">
-                            <input id="add-prod" nane="productID" placeholder="Enter Product ID" value="" form="add-product-form"/>
-                            <input type="hidden" nane="sliderID" value="${slider.id}" form="add-product-form"/>
+                            <input id="add-prod" name="productID" placeholder="Enter Product ID" value="" form="add-product-form"/>
+                            <input type="hidden" name="sliderID" value="${slider.id}" form="add-product-form"/>
                             <button class="addbtn d-flex align-items-center justify-content-center" id="adduser" type="submit" form="add-product-form">Add Product</button>
                         </div>
                     </div>
