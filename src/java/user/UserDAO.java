@@ -437,6 +437,7 @@ public class UserDAO implements Serializable {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
+        int UserID=0;
         try{
             con = DBHelper.makeConnection();
             if(con != null){
@@ -447,9 +448,9 @@ public class UserDAO implements Serializable {
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
-                
-                int UserID = rs.getInt("UserID");
-                
+                if (rs.next()){
+                UserID = rs.getInt("UserID");
+                }
                 return UserID;
                 
             }
