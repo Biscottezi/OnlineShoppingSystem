@@ -85,7 +85,7 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="row droplist-btn">
+                        <div class="row droplist-btn" onclick="location.href='custOrderList?customerID=${user.id}'">
                             <img src="img/view_orders.png" alt="" class="droplist-avatar">
                             <div class="d-flex flex-column justify-content-center droplist-btn-txt">
                                 <h6>View Your Orders</h6>

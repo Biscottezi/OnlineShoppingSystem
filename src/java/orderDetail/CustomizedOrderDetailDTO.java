@@ -19,14 +19,14 @@ public class CustomizedOrderDetailDTO implements Serializable{
     private float listPrice;
     private float salePrice;
     private float detailTotal;
-    private String thumnail;
+    private String thumbnail;
 
     public CustomizedOrderDetailDTO(int orderId, int productId, int quantity, String productName, String thumbnail, float listPrice, float salePrice) {
         this.orderId = orderId;
         this.productId = productId;
         this.quantity = quantity;
         this.productName = productName;
-        this.thumnail = thumbnail;
+        this.thumbnail = thumbnail;
         this.listPrice = listPrice;
         this.salePrice = salePrice;
         if(salePrice != 0){
@@ -88,4 +88,13 @@ public class CustomizedOrderDetailDTO implements Serializable{
     public float getDetailTotal() {
         return detailTotal;
     }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+    
 }

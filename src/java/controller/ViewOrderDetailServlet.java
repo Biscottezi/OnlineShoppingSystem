@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import order.CustomizedOrderDTO;
 import order.OrderDAO;
 import order.OrderDTO;
 import orderDetail.OrderDetailDAO;
@@ -42,29 +43,32 @@ public class ViewOrderDetailServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     private final String DETAIL_LIST_PAGE = "CustomerOrderDetails.jsp";
+    private final String ERROR_PAGE = "Error.html";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String selectedOrderID = request.getParameter("selectedOrderID");
-        String url = DETAIL_LIST_PAGE;
+        String orderID = request.getParameter("OrderID");
+        String url = ERROR_PAGE;
         try {
-            OrderDetailDAO dao = new OrderDetailDAO();
-            ArrayList<OrderItemObj> detailList = dao.GetOrderDetailByOrderID(Integer.parseInt(selectedOrderID));
-
-            ProductDAO productDAO = new ProductDAO();
-
-            productDAO.getAllProduct();
-            ProductCategoryDAO cate = new ProductCategoryDAO();
-            List<ProductCategoryDTO> categoryList = cate.getCategoryList();
-
-            request.setAttribute("detailList", detailList);
-            request.setAttribute("categoryList", categoryList);
-
+            ProductCategoryDAO productCategoryDao = new ProductCategoryDAO();
+            productCategoryDao.getAllCategory();
+            List<ProductCategoryDTO> productCategoryDto = productCategoryDao.getCategoryList();
+            if(productCategoryDto != null){
+                request.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
+            }
+            
+            OrderDAO dao1 = new OrderDAO();
+            CustomizedOrderDTO order = dao1.getOrderByOrderId(Integer.parseInt(orderID));
+            OrderDetailDAO dao2 = new OrderDetailDAO();
+            order.setDetails(dao2.getOrderDetailsByOrderID(order.getOrderId()));
+            if(order != null){
+                request.setAttribute("ORDER_DETAIL", order);
+            }
+            
+            url = DETAIL_LIST_PAGE;
         } catch (SQLException ex) {
             log("ViewOlderOrderDetailServlet SQLException: " + ex.getMessage());
-        } catch (ClassNotFoundException ex) {
-            log("ViewOlderOrderDetailServlet ClassNotFoundException: " + ex.getMessage());
         } catch (NamingException ex) {
             log("ViewOlderOrderDetailServlet NamingException: " + ex.getMessage());
         } finally {

@@ -669,5 +669,54 @@ public class OrderDAO implements Serializable{
         }
         return orders;
     }
+    
+    public CustomizedOrderDTO getOrderByOrderId(int id) throws SQLException, NamingException{
+        CustomizedOrderDTO order = null;
+        
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "Select OrderID, [Status], SaleMemberID, CustomerID, OrderedDate, ReceiverName, ReceiverAddress, ReceiverGender, ReceiverEmail, ReceiverPhone, Note "
+                        + "From [Order] "
+                        + "Where OrderID = ? ";
+                
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, id);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int orderId = rs.getInt("OrderID");
+                    int status = rs.getInt("Status");
+                    int saleId = rs.getInt("SaleMemberID");
+                    int custId = rs.getInt("CustomerID");
+                    Date orderedDate = rs.getDate("OrderedDate");
+                    String name = rs.getString("ReceiverName");
+                    String address = rs.getString("ReceiverAddress");
+                    String email = rs.getString("ReceiverEmail");
+                    String phone = rs.getString("ReceiverPhone");
+                    int gender = rs.getInt("ReceiverGender");
+                    String note = rs.getString("Note");
+                    
+                    order = new CustomizedOrderDTO(orderId, status, custId, saleId, orderedDate, name, address, email, phone, note, gender);
+                }
+            }
+        }
+        finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return order;
+    }
 }
 

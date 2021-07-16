@@ -5,6 +5,7 @@
 --%>
 <%@include file="header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -42,18 +43,12 @@
                         </form>
                         <br>
                         <h4>Categories</h4>
+                        <c:set var="productCategoryList" value="${requestScope.PRODUCT_CATEGORY}"/>
+                        <c:forEach var="productCategory" items="${productCategoryList}">
                         <div class="category">
-                            <a href="">Smartphone</a>
+                            <a href="">${productCategory.name}</a>
                         </div>
-                        <div class="category">
-                            <a href="">Laptop</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Smartwatch</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Earphone</a>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
 
@@ -71,126 +66,26 @@
                                     <th scope="col">Status</th>
                                 </tr>
                             </thead>
+                            <c:set var="orders" value="${requestScope.ORDER_LIST}"/>
                             <tbody>
-                                <tr>
-                                    <td><a href="">1234</a></td>
-                                    <td>22/5/2021</td>
-                                    <td>Vintage typewriter and 1 more product</td>
-                                    <td>$81.91</td>
-                                    <td>Submitted</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">1234</a></td>
-                                    <td>22/5/2021</td>
-                                    <td>Vintage typewriter and 1 more product</td>
-                                    <td>$81.91</td>
-                                    <td>Submitted</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">1234</a></td>
-                                    <td>22/5/2021</td>
-                                    <td>Vintage typewriter and 1 more product</td>
-                                    <td>$81.91</td>
-                                    <td>Submitted</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">1234</a></td>
-                                    <td>22/5/2021</td>
-                                    <td>Vintage typewriter and 1 more product</td>
-                                    <td>$81.91</td>
-                                    <td>Submitted</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">1234</a></td>
-                                    <td>22/5/2021</td>
-                                    <td>Vintage typewriter and 1 more product</td>
-                                    <td>$81.91</td>
-                                    <td>Submitted</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">1234</a></td>
-                                    <td>22/5/2021</td>
-                                    <td>Vintage typewriter and 1 more product</td>
-                                    <td>$81.91</td>
-                                    <td>Submitted</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">1234</a></td>
-                                    <td>22/5/2021</td>
-                                    <td>Vintage typewriter and 1 more product</td>
-                                    <td>$81.91</td>
-                                    <td>Submitted</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">1234</a></td>
-                                    <td>22/5/2021</td>
-                                    <td>Vintage typewriter and 1 more product</td>
-                                    <td>$81.91</td>
-                                    <td>Submitted</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">1234</a></td>
-                                    <td>22/5/2021</td>
-                                    <td>Vintage typewriter and 1 more product</td>
-                                    <td>$81.91</td>
-                                    <td>Submitted</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">1234</a></td>
-                                    <td>22/5/2021</td>
-                                    <td>Vintage typewriter and 1 more product</td>
-                                    <td>$81.91</td>
-                                    <td>Submitted</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">1234</a></td>
-                                    <td>22/5/2021</td>
-                                    <td>Vintage typewriter and 1 more product</td>
-                                    <td>$81.91</td>
-                                    <td>Submitted</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">1234</a></td>
-                                    <td>22/5/2021</td>
-                                    <td>Vintage typewriter and 1 more product</td>
-                                    <td>$81.91</td>
-                                    <td>Submitted</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">1234</a></td>
-                                    <td>22/5/2021</td>
-                                    <td>Vintage typewriter and 1 more product</td>
-                                    <td>$81.91</td>
-                                    <td>Submitted</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">1234</a></td>
-                                    <td>22/5/2021</td>
-                                    <td>Vintage typewriter and 1 more product</td>
-                                    <td>$81.91</td>
-                                    <td>Submitted</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">1234</a></td>
-                                    <td>22/5/2021</td>
-                                    <td>Vintage typewriter and 1 more product</td>
-                                    <td>$81.91</td>
-                                    <td>Submitted</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">1234</a></td>
-                                    <td>22/5/2021</td>
-                                    <td>Vintage typewriter and 1 more product</td>
-                                    <td>$81.91</td>
-                                    <td>Submitted</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">1234</a></td>
-                                    <td>22/5/2021</td>
-                                    <td>Vintage typewriter and 1 more product</td>
-                                    <td>$81.91</td>
-                                    <td>Submitted</td>
-                                </tr>
+                                <c:forEach var="order" items="${orders}">
+                                    <tr>
+                                        <td><a href="custOrderDetail?OrderID=${order.orderId}">${order.orderId}</a></td>
+                                        <td>${order.orderedDate}</td>
+                                        <td>
+                                            <c:set var="details" value="${order.details}"/>
+                                            <c:forEach var="detail" items="${details}" begin="0" end="0">${detail.productName}</c:forEach>and ${order.noOfProd} more product(s)
+                                        </td>
+                                        <td>${order.total}</td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${order.status == 0}">Submitted</c:when>
+                                                <c:when test="${order.status == 1}">Confirmed</c:when>
+                                                <c:when test="${order.status == 2}">Completed</c:when>
+                                            </c:choose>
+                                        </td>
+                                    </tr>
+                                </c:forEach>   
                             </tbody>
                         </table>
                     </div>
