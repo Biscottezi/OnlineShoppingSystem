@@ -59,7 +59,7 @@ public class sendMail implements Serializable{
     
     public static void mailResetLink(String recipient, int UserID){
         try {
-            String resetLink = "http://localhost:8084/OnlineShoppingSystem/reqResetLink?userID=" + UserID;
+            String resetLink = "http://localhost:8084/OnlineShoppingSystem/resetPage?userID=" + UserID;
             Properties prop = new Properties();
             
             prop.put("mail.smtp.auth", "true");

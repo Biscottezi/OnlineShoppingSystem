@@ -12,6 +12,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 import product.ProductDAO;
 import product.ProductDTO;
@@ -121,5 +124,54 @@ public class OrderDetailDAO implements Serializable{
             }
         }
         return quantity;
-    }    
+    }   
+     
+    public List<CustomizedOrderDetailDTO> getOrderDetailsByOrderID(int orderId) throws SQLException, NamingException{
+        List<CustomizedOrderDetailDTO> details = null;
+        
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "Select OrderID, od.ProductID, od.Quantity, p.Title, p.Thumbnail, p.ListPrice, p.SalePrice "
+                        + "From OrderDetail od join Product p on od.ProductID = p.ProductID "
+                        + "Where od.OrderID = ? ";
+                
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, orderId);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int orderID = rs.getInt("OrderID");
+                    int prodID = rs.getInt("ProductID");
+                    int quantity = rs.getInt("Quantity");
+                    String title = rs.getString("Title");
+                    String thumb = rs.getString("Thumbnail");
+                    float listPrice = rs.getFloat("ListPrice");
+                    float salePrice = rs.getFloat("SalePrice");
+                    
+                    CustomizedOrderDetailDTO dto = new CustomizedOrderDetailDTO(orderID, prodID, quantity, title, thumb, listPrice, salePrice);
+                    if(details == null){
+                        details = new ArrayList<>();
+                    }
+                    details.add(dto);
+                }
+            }
+        }
+        finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return details;
+    }
 }

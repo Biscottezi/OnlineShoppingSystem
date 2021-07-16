@@ -52,3 +52,4 @@ checkout = CheckOutServlet
 viewBlogByCate = ViewBlogByCategoryServlet
 reqResetLink = requestResetLinkServlet
 resetPwd = resetNewPasswordServlet
+resetPage = resetPassword.jsp

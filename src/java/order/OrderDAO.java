@@ -17,6 +17,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
+import orderDetail.CustomizedOrderDetailDTO;
+import orderDetail.OrderDetailDAO;
+import orderDetail.OrderDetailDTO;
 import user.UserDTO;
 import utils.DBHelper;
 
@@ -613,6 +616,58 @@ public class OrderDAO implements Serializable{
             }
         }
         return beforeRevenueList;
+    }
+    
+    public List<CustomizedOrderDTO> getOrderListByCustomer(int customerId) throws SQLException, NamingException{
+        List<CustomizedOrderDTO> orders = null;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "Select OrderID, [Status], SaleMemberID, CustomerID, OrderedDate, ReceiverName, ReceiverAddress, ReceiverGender, ReceiverEmail, ReceiverPhone, Note "
+                        + "From [Order] "
+                        + "Where CustomerID = ? ";
+                
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, customerId);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int orderId = rs.getInt("OrderID");
+                    int status = rs.getInt("Status");
+                    int saleId = rs.getInt("SaleMemberID");
+                    int custId = rs.getInt("CustomerID");
+                    Date orderedDate = rs.getDate("OrderedDate");
+                    String name = rs.getString("ReceiverName");
+                    String address = rs.getString("ReceiverAddress");
+                    String email = rs.getString("ReceiverEmail");
+                    String phone = rs.getString("ReceiverPhone");
+                    int gender = rs.getInt("ReceiverGender");
+                    String note = rs.getString("Note");
+                    
+                    CustomizedOrderDTO dto = new CustomizedOrderDTO(orderId, status, custId, saleId, orderedDate, name, address, email, phone, note, gender);
+                    if(orders == null){
+                        orders = new ArrayList<>();
+                    }
+                    orders.add(dto);
+                }
+            }
+        }
+        finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return orders;
     }
 }
 

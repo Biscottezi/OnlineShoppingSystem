@@ -61,7 +61,7 @@
                             <c:if test="${not empty param.productID}">
                                 <c:set var="product" value="${requestScope.PRODUCT_DETAILS}"/>
                                 <h6>Product: <a href="viewProductDetails?productID=${product.id}">${product.title}</a></h6>
-                                <input type="hidden" name="txtProductId" value="${product.id}"/>
+                                <input type="hidden" name="txtProductId" value="${product.id}" form="feedback-form"/>
                             </c:if>
                             <h6>Rating</h6>
                             <input type="number" name="txtRating" min="1" max="5" value="" form="feedback-form" id="input-rating" class="contact-input" required>

@@ -41,26 +41,10 @@ public class ViewOrderListServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String custId = request.getParameter("CusttomerID");
+        String custId = request.getParameter("customerID");
        
         String url = ORDER_LIST_PAGE;
-        try {
-            OrderDAO dao = new OrderDAO();
-            ArrayList<OrderDTO> orderList = dao.GetOrderListByCustID(custId);
-            request.setAttribute("orderList", orderList);
-           
-        } catch (SQLException ex) {
-          log("DisplayShoppingPageServlet SQLException: " + ex.getMessage());
-        } catch (ClassNotFoundException ex) {
-          log("DisplayShoppingPageServlet ClassNotFoundException: " + ex.getMessage());
-        } catch (NamingException ex) { 
-             log("DisplayShoppingPageServlet NamingException: " + ex.getMessage());
-         } 
-        finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
-         
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

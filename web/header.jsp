@@ -227,7 +227,7 @@
             <div class="container">
                 <div class="col-12">
                     <h1>Forgot Password</h1>
-                    <form action="resetPassword" method="POST" class="form">
+                    <form action="reqResetLink" method="POST" class="form">
                         <div class="form-group">
                             <input class="form-control" type="text" placeholder="Email" name="txtEmail">
                         </div>

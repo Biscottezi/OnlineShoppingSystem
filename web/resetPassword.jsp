@@ -40,7 +40,7 @@
                             <input type="password" name="txtConfirm" value="" class="input-form" form="reset-form"/><br>
                             <input type="submit" name="btAction" value="RESET PASSWORD" class="reset-btn"/>
                             <input type="hidden" name="userID" value="${param.userID}"/>
-                            <form id="reset-form" action="" method="POST"></form>
+                            <form id="reset-form" action="resetPwd" method="POST"></form>
                         </div>
                     </div>
                 </div>
