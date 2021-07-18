@@ -25,7 +25,7 @@ import user.UserDTO;
  */
 @WebServlet(name = "viewUserListPageServlet", urlPatterns = {"/viewUserListPageServlet"})
 public class viewUserListPageServlet extends HttpServlet {
-    private final String USER_LiST_PAGE = "userlist.jsp";
+    private final String USER_LIST_PAGE = "userlist.jsp";
     private final String ERROR_PAGE = "Error.html";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,7 +48,7 @@ public class viewUserListPageServlet extends HttpServlet {
             if(userList != null){
                 request.setAttribute("USER_LIST", userList);
             }
-            url = USER_LiST_PAGE;
+            url = USER_LIST_PAGE;
         }catch(SQLException ex){
             log("viewUserListPageServlet _ SQL:" + ex.getMessage());
         }catch(NamingException ex){

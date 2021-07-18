@@ -77,7 +77,7 @@
               <ul class="nav flex-column col">
                   
                   <!-- header -->
-                  <li class="nav-item" id="header">
+                  <li class="nav-item" id="header" onclick="location.href='viewAdminDashboard'">
                     <div class="navbar-brand" href="#">
                         <div class="container">
                             <div class="row justify-content-md-center">
@@ -89,7 +89,7 @@
                   </li>
                   
                   <!-- item 1 -->
-                  <li class="nav-item naviitem row">
+                  <li class="nav-item naviitem row" onclick="location.href='viewAdminDashboard'">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
@@ -101,7 +101,7 @@
                   </li>
                   
                   <!-- item 2 -->
-                  <li class="nav-item naviitem row" id="active">
+                  <li class="nav-item naviitem row" id="active" onclick="location.href='viewUserList'">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
@@ -166,149 +166,54 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr style="height: 92px;" onclick="location.href='userlistedit.jsp';">
-                          <td class="align-middle" style="text-align: center">00001</td>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
+                        <c:set var="users" value="${requestScope.USER_LIST}"/>
+                        <c:forEach var="user" items="${users}">
+                        <tr style="height: 92px;" onclick="location.href='viewUserDetails?userID=${user.id}'">
+                          <td class="align-middle" style="text-align: center">${user.id}</td>
+                          <td class="align-middle">${user.name}</td>
+                          <td class="align-middle">
+                              <c:if test="${user.gender==1}">
+                                  Male
+                              </c:if>
+                              <c:if test="${user.gender==0}">
+                                  Female
+                              </c:if>
                           </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</td>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
+                          <td class="align-middle">${user.email}</td>
+                          <td class="align-middle">${user.phone}</td>
+                          <td class="align-middle">
+                              <c:choose>
+                                  <c:when test="${user.role==0}">
+                                      Marketing
+                                  </c:when>
+                                  <c:when test="${user.role==1}">
+                                      Sale
+                                  </c:when>
+                                  <c:when test="${user.role==2}">
+                                      Sale Manager
+                                  </c:when>
+                                  <c:when test="${user.role==3}">
+                                      Admin
+                                  </c:when>
+                                  <c:otherwise>
+                                      Customer
+                                  </c:otherwise>
+                              </c:choose>
+                          </td>
                           <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status disable">
+                              <div class="d-flex align-items-center justify-content-center status 
+                                  <c:if test="${user.status==1}">enable</c:if>
+                                  <c:if test="${user.status==0}">disable</c:if>">
+                                  <c:if test="${user.status==1}">
+                                  ENABLED
+                                  </c:if>
+                                  <c:if test="${user.status==0}">
                                   DISABLED
+                                  </c:if>
                               </div>
                           </td>
                         </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</td>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</td>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</td>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</td>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</td>
-                          <td class="align-middle">Quân</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</td>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</td>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</td>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</td>
-                          <td class="align-middle">Trần Tân Long</td>
-                          <td class="align-middle">Male</td>
-                          <td class="align-middle">longttse150883@fpt.edu.vn</td>
-                          <td class="align-middle">0975926021</td>
-                          <td class="align-middle">Admin</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                        </tr>
+                        </c:forEach>
                       </tbody>
                     </table> 
                 </div>

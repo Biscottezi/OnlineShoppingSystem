@@ -54,3 +54,6 @@ reqResetLink = requestResetLinkServlet
 resetPwd = resetNewPasswordServlet
 resetPage = resetPassword.jsp
 custOrderDetail = ViewOrderDetailServlet
+viewUserList = viewUserListPageServlet
+viewUserDetails = viewUserDetailsPageServlet
+viewAdminDashboard = viewAdminDashboardServlet

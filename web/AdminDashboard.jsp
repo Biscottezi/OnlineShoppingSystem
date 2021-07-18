@@ -107,7 +107,7 @@
               <ul class="nav flex-column col">
                   
                   <!-- header -->
-                  <li class="nav-item" id="header">
+                  <li class="nav-item" id="header" onclick="location.href='viewAdminDashboard'">
                     <div class="navbar-brand" href="#">
                         <div class="container">
                             <div class="row justify-content-md-center">
@@ -119,7 +119,7 @@
                   </li>
                   
                   <!-- item 1 -->
-                  <li class="nav-item naviitem row" id="active">
+                  <li class="nav-item naviitem row" id="active" onclick="location.href='viewAdminDashboard'">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
@@ -131,7 +131,7 @@
                   </li>
                   
                   <!-- item 2 -->
-                  <li class="nav-item naviitem row">
+                  <li class="nav-item naviitem row" onclick="location.href='viewUserList'">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">

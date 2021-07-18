@@ -62,7 +62,7 @@
               <ul class="nav flex-column col">
                   
                   <!-- header -->
-                  <li class="nav-item" id="header">
+                  <li class="nav-item" id="header" onclick="location.href='viewAdminDashboard'">
                     <div class="navbar-brand" href="#">
                         <div class="container">
                             <div class="row justify-content-md-center">
@@ -74,7 +74,7 @@
                   </li>
                   
                   <!-- item 1 -->
-                  <li class="nav-item naviitem row">
+                  <li class="nav-item naviitem row" onclick="location.href='viewAdminDashboard'">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
@@ -86,11 +86,11 @@
                   </li>
                   
                   <!-- item 2 -->
-                  <li class="nav-item naviitem row" id="active">
+                  <li class="nav-item naviitem row" id="active" onclick="location.href='viewUserList'">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
-                                <div class="col align-self-baseline"><img src="img/users.png" alt=""/></div>
+                                <div class="col align-self-baseline"><img src="img/users-chosen.png" alt=""/></div>
                                 <div class="col align-self-baseline" style="font-size: 19px;">Users</div>
                             </div>
                           </div>
@@ -100,17 +100,17 @@
                   <li class="nav-item naviitem row divider"></li>
               </ul>
             </div>
-
+            <c:set var="userdet" value="${requestScope.USER_DETAILS}"/>
             <div class="wrapper col" style="background-color: #F7F8FC; padding: 30px 33px 30px 45px;" id="maincontent">
                 <!-- main title -->
                 <div class="maintitle row">
-                    <div class="col-2" id="title" onclick="location.href='userlist.jsp';">
+                    <div class="col-2" id="title" onclick="location.href='viewUserList';">
                         <span class="back"><i class="fas fa-angle-left"></i>&nbsp; Back to users</span>
                     </div>
                     <div class="col-7"></div>
                     <div class="col row">
                         <div class="d-flex justify-content-end col-10 align-items-center" id="user">
-                            ${user.name} <!-- input jstl session user here! -->
+                            ${session.name} <!-- input jstl session user here! -->
                         </div>
                         <div class="profile col-2">
                             <div id="avatar" class="ava" style="background-image: url(img/${user.avatar});" onclick="showPopup()"></div> <!-- get session's avatar -->
@@ -122,14 +122,14 @@
                 <div class="listwrapper">
                     <!-- list header -->
                     <div class="listheader row">
-                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">User ID: 00001 <!--${param.id} --></div>
+                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">User ID: ${userdet.id}</div>
                         <div class="col-6 row"></div>
                         <div class="extended col-4 row d-flex"></div>
                     </div>
                     <div class="infor row">
                         <div class="col">
                             Fullname<br>
-                            <div class="userinfo">Trần Tân Long</div>
+                            <div class="userinfo">${userdet.name}</div>
                         </div>
                         <div class="col">
                             Gender<br>
@@ -140,31 +140,30 @@
                         <div class="col">
                             Avatar<br>
                             <div class="avawrapper">
-                                <div id="avainfo" style="background-image: url(img/tanlong.png);"></div>
+                                <div id="avainfo" style="background-image: url(img/${userdet.avatar});"></div>
                             </div>
                         </div>
                         <div class="col">
                             Email<br>
-                            <div class="userinfo">longttse150883@fpt.edu.vn</div>
+                            <div class="userinfo">${userdet.email}</div>
                             <div style="margin-top:18px;">Mobile</div>
-                            <div class="userinfo">0975926021</div>
+                            <div class="userinfo">${userdet.phone}</div>
                         </div>
                     </div>
                     <div class="infor row">
                         <div class="col">
                             Address<br>
-                            <div class="userinfo" id="addressinfo">228 Đường Man Thiện, Phường Tân Phú, Quận 9, Thành phố Hồ Chí Minh</div>
+                            <div class="userinfo" id="addressinfo">${userdet.address}</div>
                         </div>
                         <div class="col">
                             Role<br>
                             <div class="select-wrapper">
                                 <select id="role" class="editbox" form="updateform" name="slRole">
-                                    <option value="" selected disabled hidden>Select role</option>
-                                        <option value="1">Customer</option>
-                                        <option value="2">Marketing</option>
-                                        <option value="3">Sale</option>
-                                        <option value="4">Sale Manager</option>
-                                        <option value="5">Admin</option>
+                                    <option value="0" <c:if test="${userdet.role==0}">selected</c:if>>Marketing</option>
+                                    <option value="1" <c:if test="${userdet.role==1}">selected</c:if>>Sale</option>
+                                    <option value="2" <c:if test="${userdet.role==2}">selected</c:if>>Sale Manager</option>
+                                    <option value="3" <c:if test="${userdet.role==3}">selected</c:if>>Admin</option>
+                                    <option value="4" <c:if test="${userdet.role==4}">selected</c:if>>Customer</option>
                                 </select>
                             </div>
                         </div>
@@ -173,14 +172,24 @@
                         <div class="col-6">
                             Status<br>
                             <div class="statuswrapper row d-flex align-items-end" style="margin:0;">
-                                <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">ENABLED</div>
-                                <input type="checkbox" name="chkStatus" value="ON" checked="checked" id="statuschkbox" class="col-1"  form="updateform"/>
+                                <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">
+                                    <c:if test="${user.status==1}">
+                                    ENABLED
+                                    </c:if>
+                                    <c:if test="${user.status==0}">
+                                    DISABLED
+                                    </c:if>
+                                </div>
+                                <input type="checkbox" name="chkStatus" value="ON" 
+                                    <c:if test="${user.status==1}">
+                                    checked="checked"
+                                    </c:if> id="statuschkbox" class="col-1"  form="updateform"/>
                             </div>
                         </div>
                         <div class="col-2"></div>
                         <div class="col-4">
                             <div class="savewrapper row d-flex align-items-end justify-content-end">
-                                <div class="col d-flex justify-content-end" id="cancelbtn" onclick="location.href='userlist.jsp';">Discard change</div>
+                                <div class="col d-flex justify-content-end" id="cancelbtn" onclick="location.href='viewUserList';">Discard change</div>
                                 <div class="col d-flex justify-content-end" style="padding:0;">
                                     <input type="submit" value="Save" name="btAction" id="createbtn" form="updateform"/>
                                 </div>
