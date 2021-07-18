@@ -45,7 +45,7 @@ public class ViewBlogByCategoryServlet extends HttpServlet {
         String url = ERROR_PAGE;
         
         try {
-            String PostCate = request.getParameter("txtSearchPost");
+            String PostCate = request.getParameter("cateID");
             PostDAO dao = new PostDAO();
             dao.getPostbyCategory(Integer.parseInt(PostCate));
             List<PostDTO> dto = dao.getPostList();
@@ -56,7 +56,7 @@ public class ViewBlogByCategoryServlet extends HttpServlet {
             postCategoryDao.getAllCategory();
             List<PostCategoryDTO> postCategoryDto = postCategoryDao.getPostCateList();
             if(postCategoryDto != null){
-                request.setAttribute("PRODUCT_CATEGORY", postCategoryDto);
+                request.setAttribute("POST_CATEGORY", postCategoryDto);
             }
             url = BLOG_LIST;
         }catch(SQLException ex){

@@ -40,7 +40,7 @@
                         <c:set var="postCategoryList" value="${requestScope.POST_CATEGORY}"/>
                         <c:forEach var="category" items="${postCategoryList}">
                             <div class="category">
-                                <a href="">${category.name}</a>
+                                <a href="viewBlogByCate?cateID=${postCategory.id}">${category.name}</a>
                             </div>
                         </c:forEach>
                     </div>

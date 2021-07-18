@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -18,8 +19,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import order.CustomizedOrderDTO;
 import order.OrderDAO;
 import order.OrderDTO;
+import orderDetail.OrderDetailDAO;
+import orderDetail.OrderDetailDTO;
+import productCategory.ProductCategoryDAO;
+import productCategory.ProductCategoryDTO;
 
 /**
  *
@@ -38,28 +44,44 @@ public class ViewOrderListServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
      private final String ORDER_LIST_PAGE = "CustomerOrderList.jsp";
+     private final String ERROR_PAGE = "Error.html";
+     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String custId = request.getParameter("CusttomerID");
-       
-        String url = ORDER_LIST_PAGE;
-        try {
-            OrderDAO dao = new OrderDAO();
-            ArrayList<OrderDTO> orderList = dao.GetOrderListByCustID(custId);
-            request.setAttribute("orderList", orderList);
-           
-        } catch (SQLException ex) {
-          log("DisplayShoppingPageServlet SQLException: " + ex.getMessage());
-        } catch (ClassNotFoundException ex) {
-          log("DisplayShoppingPageServlet ClassNotFoundException: " + ex.getMessage());
-        } catch (NamingException ex) { 
-             log("DisplayShoppingPageServlet NamingException: " + ex.getMessage());
-         } 
-        finally {
+        String custId = request.getParameter("customerID"); 
+        String url = ERROR_PAGE;
+        
+        try{
+            OrderDAO dao1 = new OrderDAO();
+            List<CustomizedOrderDTO> orders = dao1.getOrderListByCustomer(Integer.parseInt(custId));
+            for(int i = 0; i < orders.size(); ++i){
+                OrderDetailDAO dao2 = new OrderDetailDAO();
+                int orderId = orders.get(i).getOrderId();
+                orders.get(i).setDetails(dao2.getOrderDetailsByOrderID(orderId));
+            }
+            if(orders != null){
+                request.setAttribute("ORDER_LIST", orders);
+            }
+            
+            ProductCategoryDAO productCategoryDao = new ProductCategoryDAO();
+            productCategoryDao.getAllCategory();
+            List<ProductCategoryDTO> productCategoryDto = productCategoryDao.getCategoryList();
+            if(productCategoryDto != null){
+                request.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
+            }
+            
+            url = ORDER_LIST_PAGE;
+        }
+        catch(SQLException ex){
+            log("ViewOrderListServlet_SQL: " + ex.getMessage());
+        }
+        catch(NamingException ex){
+            log("ViewOrderListServlet_Naming: " + ex.getMessage());
+        }
+        finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
-         
         }
     }
 

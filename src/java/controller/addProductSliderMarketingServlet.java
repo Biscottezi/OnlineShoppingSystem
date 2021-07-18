@@ -8,6 +8,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -43,10 +44,17 @@ public class addProductSliderMarketingServlet extends HttpServlet {
         
         try {
             SliderContentDAO dao = new SliderContentDAO();
-            boolean result = dao.addProductToSlider(Integer.parseInt(sliderID), Integer.parseInt(productID));
-            if(result){
-                url = SLIDER_DETAILS_PAGE;
+            dao.getProductID(Integer.parseInt(sliderID));
+            List<Integer> productIDList = dao.getProductIDList();
+            if(productIDList.size() < 8){
+                dao.addProductToSlider(Integer.parseInt(sliderID), Integer.parseInt(productID));
+            }else{
+                request.setAttribute("ERROR", "Maximun is 8 products");
             }
+            
+            
+            url = SLIDER_DETAILS_PAGE;
+            
         }catch(SQLException ex){
             log("addProductSliderMarketingServlet _ SQL:" + ex.getMessage());
         }catch(NamingException ex){

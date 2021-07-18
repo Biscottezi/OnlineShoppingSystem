@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -36,94 +37,97 @@
                         </form>
                         <br>
                         <h4>Categories</h4>
+                        <c:set var="productCategoryList" value="${requestScope.PRODUCT_CATEGORY}"/>
+                        <c:forEach var="productCategory" items="${productCategoryList}">
                         <div class="category">
-                            <a href="">Smartphone</a>
+                            <a href="">${productCategory.name}</a>
                         </div>
-                        <div class="category">
-                            <a href="">Laptop</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Smartwatch</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Earphone</a>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
 
                 <!--Main content-->
+                <c:set var="order" value="${requestScope.ORDER_DETAIL}"/>
                 <div class="main-content container col-10">
                     <h1>Your Order</h1>
                     <div class="container order-details-wrapper col" style="padding: 1em 2em 2em 2em">
                         <div class="row d-flex justify-content-between" id="order-basic-info">
                             <div class="col-4">
-                                <h2 style="font-weight: 600; line-height: 1em;">ID: 123456</h2>
-                                <span style="font-weight: 500;">22/05/2021 - 20:13</span>
+                                <h2 style="font-weight: 600; line-height: 1em;">ID: ${order.orderId}</h2>
+                                <span style="font-weight: 500;">${order.orderedDate}</span>
                             </div>
-                            <div class="col-2 justify-content-center" id="order-status">Submitted</div>
+                            <div class="col-2 justify-content-center" id="order-status">
+                                <c:choose>
+                                    <c:when test="${order.status == 0}">Submitted</c:when>
+                                    <c:when test="${order.status == 1}">Confirmed</c:when>
+                                    <c:when test="${order.status == 2}">Completed</c:when>
+                                </c:choose>
+                            </div>
                         </div>
-                        <div class="item-wrapper row">
-                            <img src="img/product-thumbnail.jpg" alt="" class="col-2 align-self-stretch">
-                            <div class="col-5">
-                                <h4>Vintage Typewriter</h4>
-                                <h6>Unit Price: $49.50</h6>
-                                <h6>Quantity: 1</h6>
-                            </div>
-                            <div class="col-5 d-flex flex-column justify-content-between align-items-end">
-                                <h4>$49.50</h4>
-                                <div>
-                                    <button class="btn-feedback">FEEDBACK</button>
-                                    <button class="btn-buy-again">BUY AGAIN</button>
+                        <c:set var="details" value="${order.details}"/>
+                        <c:forEach var="detail" items="${details}">
+                            <div class="item-wrapper row">
+                                <img src="img/${detail.thumbnail}" alt="product thumbnail" class="col-2 align-self-stretch">
+                                <div class="col-5">
+                                    <h4>${detail.productName}</h4>
+                                    <h6>
+                                        <c:choose>
+                                            <c:when test="${detail.salePrice != 0}">Unit price: $${detail.salePrice}</c:when>
+                                            <c:otherwise>Unit price: $${detail.listPrice}</c:otherwise>
+                                        </c:choose>
+                                    </h6>
+                                    <h6>Quantity: ${detail.quantity}</h6>
+                                </div>
+                                <div class="col-5 d-flex flex-column justify-content-between align-items-end">
+                                    <h4>$${detail.detailTotal}</h4>
+                                    <div>
+                                        <button class="btn-feedback" onclick="location.href='custFeedback?productID=${detail.productId}'">FEEDBACK</button>
+                                        <button class="btn-buy-again" onclick="location.href='viewProductDetails?productID=${detail.productId}'">BUY AGAIN</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="item-wrapper row">
-                            <img src="img/product-thumbnail.jpg" alt="" class="col-2 align-self-stretch">
-                            <div class="col-5">
-                                <h4>Plastic Plugs</h4>
-                                <h6>Unit Price: $12.48</h6>
-                                <h6>Quantity: 2</h6>
-                            </div>
-                            <div class="col-5 d-flex flex-column justify-content-between align-items-end">
-                                <h4>$24.96</h4>
-                                <div>
-                                    <button class="btn-feedback">FEEDBACK</button>
-                                    <button class="btn-buy-again">BUY AGAIN</button>
-                                </div>
-                            </div>
-                        </div>
+                        </c:forEach>        
+                        
+                        
                         <div class="d-flex flex-row justify-content-between">
-                            <div class="btn-cancel-update">
-                                <button id="btn-cancel">CANCEL</button>
-                                <button id="btn-update">UPDATE</button>
-                            </div>
-                            <h3 id="order-total-price">Total: $81.91</h3>
+                            <c:if test="${order.status == 0}">
+                                <div class="btn-cancel-update">
+                                    <button id="btn-cancel">CANCEL</button>
+                                    <button id="btn-update">UPDATE</button>
+                                </div>
+                            </c:if>
+                            <h3 id="order-total-price">Total: $${order.total}</h3>
                         </div>
                         <div id="contact-info" class="col-9">
                             <h6 style="font-size: 20px;">Contact info</h6>
                             <div class="row">
                                 <h6 class="col-3">Full Name</h6>
-                                <p>Tran Tan Long</p>
+                                <p>${order.receiverName}</p>
                             </div>
                             <div class="row">
                                 <h6 class="col-3">Gender</h6>
-                                <p>Male</p>
+                                <c:if test="${order.receiverGender == 0}">
+                                    <p>Male</p>
+                                </c:if>
+                                <c:if test="${order.receiverGender == 1}">
+                                    <p>Female</p>
+                                </c:if>
                             </div>
                             <div class="row">
                                 <h6 class="col-3">Email</h6>
-                                <p>tanlong6121@gmail.com</p>
+                                <p>${order.receiverEmail}</p>
                             </div>
                             <div class="row">
                                 <h6 class="col-3">Mobile</h6>
-                                <p>0975926021</p>
+                                <p>${order.receiverPhone}</p>
                             </div>
                             <div class="row">
                                 <h6 class="col-3">Address</h6>
-                                <p>123, Bai Say, Phuong 4, Quan 6, TPHCM</p>
+                                <p>${order.receiverAddress}</p>
                             </div>
                             <div class="row">
                                 <h6 class="col-3">Note</h6>
-                                <p>Giao vao khoang 16h-20h</p>
+                                <p>${order.note}</p>
                             </div>
                         </div>
                     </div>

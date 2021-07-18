@@ -8,7 +8,6 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -17,22 +16,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import order.CustomizedOrderDTO;
-import order.OrderDAO;
-import order.OrderDTO;
-import orderDetail.OrderDetailDAO;
-import orderDetail.OrderItemObj;
 import product.ProductDAO;
+import product.ProductDTO;
 import productCategory.ProductCategoryDAO;
 import productCategory.ProductCategoryDTO;
 
 /**
  *
- * @author Admin
+ * @author ASUS
  */
-@WebServlet(name = "ViewOrderDetailServlet", urlPatterns = {"/ViewOrderDetailServlet"})
-public class ViewOrderDetailServlet extends HttpServlet {
-
+@WebServlet(name = "viewProductByCategoryServlet", urlPatterns = {"/viewProductByCategoryServlet"})
+public class viewProductByCategoryServlet extends HttpServlet {
+    private final String ERROR_PAGE="Error.html";
+    private final String PRODUCT_PAGE="ProductPage.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,36 +38,32 @@ public class ViewOrderDetailServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private final String DETAIL_LIST_PAGE = "CustomerOrderDetails.jsp";
-    private final String ERROR_PAGE = "Error.html";
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String orderID = request.getParameter("OrderID");
+        String categoryID = request.getParameter("categoryID");
         String url = ERROR_PAGE;
-        try {
+        
+        try{
+            ProductDAO productDao = new ProductDAO();
+            productDao.getProductByCategoryCustomer(Integer.parseInt(categoryID));
+            List<ProductDTO> dto = productDao.getProductList();
+            if(dto != null){
+                request.setAttribute("ALL_PRODUCT_LIST", dto);
+            }
+            
             ProductCategoryDAO productCategoryDao = new ProductCategoryDAO();
             productCategoryDao.getAllCategory();
             List<ProductCategoryDTO> productCategoryDto = productCategoryDao.getCategoryList();
             if(productCategoryDto != null){
                 request.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
             }
-            
-            OrderDAO dao1 = new OrderDAO();
-            CustomizedOrderDTO order = dao1.getOrderByOrderId(Integer.parseInt(orderID));
-            OrderDetailDAO dao2 = new OrderDetailDAO();
-            order.setDetails(dao2.getOrderDetailsByOrderID(order.getOrderId()));
-            if(order != null){
-                request.setAttribute("ORDER_DETAIL", order);
-            }
-            
-            url = DETAIL_LIST_PAGE;
-        } catch (SQLException ex) {
-            log("ViewOlderOrderDetailServlet SQLException: " + ex.getMessage());
-        } catch (NamingException ex) {
-            log("ViewOlderOrderDetailServlet NamingException: " + ex.getMessage());
-        } finally {
+            url = PRODUCT_PAGE;
+        }catch(SQLException ex){
+            log("viewProductByCategoryServlet _ SQL:" + ex.getMessage());
+        }catch(NamingException ex){
+            log("viewProductByCategoryServlet _ Naming:" + ex.getMessage());
+        }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }

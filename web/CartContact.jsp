@@ -40,18 +40,12 @@
                         </form>
                         <br>
                         <h4>Categories</h4>
-                        <div class="category">
-                            <a href="">Smartphone</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Laptop</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Smartwatch</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Earphone</a>
-                        </div>
+                        <c:set var="productCategoryList" value="${requestScope.PRODUCT_CATEGORY}"/>
+                        <c:forEach var="category" items="${productCategoryList}">
+                            <div class="category">
+                                <a href="">${category.name}</a>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
 
@@ -60,26 +54,35 @@
                     <h1>Your Cart</h1>
                     <div class="row">
                         <div class="product-in-cart col-8">
-                            <div class="product row container">
-                                <img src="img/product-thumbnail.jpg" alt="product" class="col-3">
-                                <div class="product-info container col-9">
-                                    <div class="d-flex justify-content-between">
-                                        <h4>Vintage Typewriter</h4>
-                                        <h5>$49.50</h5>
+                            <c:set var="cart" value="${sessionScope.CART}"/>
+                            <c:set var="products" value="${cart.items}"/>
+                            <c:set var="sum" value="${0}"/>
+                            <c:if test="${not empty products}">
+                                <c:forEach var="product" items="${products}">
+                                    <div class="product row container">
+                                        <img src="img/${product.value.thumbnail}" alt="product" class="col-3">
+                                        <div class="product-info container col-9">
+                                            <div class="d-flex justify-content-between">
+                                                <h4>${product.value.title}</h4>
+                                                <h5>
+                                                    <c:choose>
+                                                        <c:when test="${product.value.salePrice != 0}">
+                                                            $${product.value.salePrice * product.value.quantity}
+                                                            <c:set var="sum" value="${sum + product.value.salePrice * product.value.quantity}"/>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            $${product.value.listPrice * product.value.quantity}
+                                                            <c:set var="sum" value="${sum + product.value.listPrice * product.value.quantity}"/>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </h5>
+                                            </div>
+                                            <span>Quantity: ${product.value.quantity}</span>
+                                        </div>
                                     </div>
-                                    <span>Quantity: 1</span>
-                                </div>
-                            </div>
-                            <div class="product row container">
-                                <img src="img/product-thumbnail.jpg" alt="product" class="col-3">
-                                <div class="product-info container col-9">
-                                    <div class="d-flex justify-content-between">
-                                        <h4>Plastic Plugs</h4>
-                                        <h5>$24.96</h5>
-                                    </div>
-                                    <span>Quantity: 2</span>
-                                </div>
-                            </div>
+                                </c:forEach>
+                            </c:if>
+                            
                             <br>
                             <!--Contact form-->
                             <div class="contact-form container col-12">
@@ -87,27 +90,26 @@
                                 <form action="" method="POST" id="contact-info">
                                     <div class="row frm-ctrl">
                                         <label for="txtReceiverName" class="col-3">Full Name:</label>
-                                        <input type="text" name="txtReceiverName" value="">
+                                        <input type="text" name="txtReceiverName" value="" required>
                                     </div>
                                     <div class="row frm-ctrl">
                                         <label for="txtReceiverGender" class="col-3">Gender:</label>
-                                        <select name="txtReceiverGender">
-                                            <option disabled selected>Gender</option>
-                                            <option value="0">Male</option>
+                                        <select name="txtReceiverGender" required>
+                                            <option value="0" selected>Male</option>
                                             <option value="1">Female</option>
                                         </select>
                                     </div>
                                     <div class="row frm-ctrl">
                                         <label for="txtReceiverEmail" class="col-3">Email:</label>
-                                        <input type="text" name="txtReceiverEmail" value="">
+                                        <input type="text" name="txtReceiverEmail" required value="">
                                     </div>
                                     <div class="row frm-ctrl">
                                         <label for="txtReceiverMobile" class="col-3">Mobile:</label>
-                                        <input type="text" name="txtReceiverMobile" value="">
+                                        <input type="text" name="txtReceiverMobile" value="" required>
                                     </div>
                                     <div class="row frm-ctrl">
                                         <label for="txtReceiverAddress" class="col-3">Address:</label>
-                                        <textarea name="txtReceiverAddress" cols="33" rows="4"></textarea>
+                                        <textarea name="txtReceiverAddress" cols="33" rows="4" required></textarea>
                                     </div>
                                     <div class="row frm-ctrl">
                                         <label for="txtNote" class="col-3">Note:</label>
@@ -122,12 +124,12 @@
                             <h3 class="mb-auto">SUMMARY</h3>
                             <div class="d-flex justify-content-between">
                                 <span>Total:</span>
-                                <span>$81.91</span>
+                                <span>$${sum}</span>
                             </div>
                             <br>
                             <div class="d-flex justify-content-between">
-                                <button class="btn-change">CHANGE</button>
-                                <button class="btn-submit" name="btAction" form="contact-info">SUBMIT</button>
+                                <button class="btn-change" onclick="location.href='viewCart'">CHANGE</button>
+                                <button class="btn-submit" name="btAction" form="contact-info" onclick="location.href='checkout'">SUBMIT</button>
                             </div>
                         </div>
                     </div>

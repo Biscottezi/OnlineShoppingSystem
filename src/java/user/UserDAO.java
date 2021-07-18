@@ -437,19 +437,20 @@ public class UserDAO implements Serializable {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
+        int UserID=0;
         try{
             con = DBHelper.makeConnection();
             if(con != null){
                 String sql = "SELECT UserID "
                         + "FROM [User] "
-                        + "WHERE Email = ?";
+                        + "WHERE Email LIKE ?";
                 
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
-                
-                int UserID = rs.getInt("UserID");
-                
+                if (rs.next()){
+                UserID = rs.getInt("UserID");
+                }
                 return UserID;
                 
             }
@@ -464,7 +465,7 @@ public class UserDAO implements Serializable {
                 con.close();
             }
         }
-        return  0;
+        return  UserID;
     }
     
     public boolean resetNewPassword(int userID, String password)

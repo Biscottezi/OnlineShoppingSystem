@@ -6,7 +6,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,19 +62,30 @@ public class viewHomePageServlet extends HttpServlet {
             }
             
             SliderDAO sliderDao = new SliderDAO();
-            SliderDTO slider = sliderDao.getSlider();
-            if(slider != null){
-                request.setAttribute("SLIDER", slider);
+            sliderDao.getSlider();
+            List<SliderDTO> sliderList = sliderDao.getSliderList();
+            if(sliderList != null){
+                request.setAttribute("SLIDER", sliderList);
                 SliderContentDAO sliderContentDao = new SliderContentDAO();
-                sliderContentDao.getProductID(slider.getId());
-                List<Integer> productIDList = sliderContentDao.getProductIDList();
-                if(productIDList != null){
+                if(sliderList.get(0).getStatus() == 0){
+                    sliderContentDao.getProductID(sliderList.get(0).getId());
+                    List<Integer> productIDList = sliderContentDao.getProductIDList();
                     List<ProductDTO> sliderProducts = new ArrayList<>();
                     for(int i = 0; i < productIDList.size(); i++){
                         productDao.searchProductByID(productIDList.get(i));
                         sliderProducts.add(productDao.getProduct());
                     }
-                    request.setAttribute("SLIDER_PRODUCTS", sliderProducts);
+                    request.setAttribute("SLIDER_1_CONTENT", sliderProducts);
+                }
+                if(sliderList.get(1).getStatus() == 0){
+                    sliderContentDao.getProductID(sliderList.get(1).getId());
+                    List<Integer> productIDList = sliderContentDao.getProductIDList();
+                    List<ProductDTO> sliderProducts = new ArrayList<>();
+                    for(int i = 0; i < productIDList.size(); i++){
+                        productDao.searchProductByID(productIDList.get(i));
+                        sliderProducts.add(productDao.getProduct());
+                    }
+                    request.setAttribute("SLIDER_2_CONTENT", sliderProducts);
                 }
             }
         

@@ -63,14 +63,14 @@
                                         <form action="removeFromCart" method="POST">
                                             <div class="d-flex justify-content-between">
                                                 <h4>${product.value.title}</h4>
-                                                <h5>Unit Price: 
+                                                <h5> 
                                                     <c:choose>
                                                         <c:when test="${product.value.salePrice != 0}">
-                                                            ${product.value.salePrice}
+                                                            $${product.value.salePrice * product.value.quantity}
                                                             <c:set var="sum" value="${sum + product.value.salePrice * product.value.quantity}"/>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            ${product.value.listPrice}
+                                                            $${product.value.listPrice * product.value.quantity}
                                                             <c:set var="sum" value="${sum + product.value.listPrice * product.value.quantity}"/>
                                                         </c:otherwise>
                                                     </c:choose>
@@ -99,7 +99,7 @@
                             <br>
                             <div class="d-flex justify-content-between">
                                 <button class="btn-buy-more" onclick="location.href='viewAllProduct'">BUY MORE</button>
-                                <button class="btn-checkout" name="btAction">CHECKOUT</button>
+                                <button class="btn-checkout" name="btAction" onclick="location.href='cartContact'">CHECKOUT</button>
                             </div>
                         </div>
                     </div>
