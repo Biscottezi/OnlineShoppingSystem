@@ -47,7 +47,7 @@ public class CheckOutAfterUpdateServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String custId = request.getParameter("custId");
+        String OrderID = request.getParameter("OrderID");
         String Receivername = request.getParameter("txtReceiverName");
         String Receivergender = request.getParameter("txtReceiverGender");
         String email = request.getParameter("txtReceiverEmail");
@@ -65,18 +65,16 @@ public class CheckOutAfterUpdateServlet extends HttpServlet {
                 if (cart != null) {
                     Map<Integer,ProductDTO> items = cart.getItems();
                     if (items != null) {
-                        //3.Create order
-                        UserDAO dao= new UserDAO();
-                        int saleID = dao.getSaleMemberActive();
+                        //3.Create order                                            
                          OrderDAO orderDAO = new OrderDAO();
-                        int newOrderID = orderDAO.CreateOrder(Integer.parseInt(custId), Receivername, Integer.parseInt(Receivergender), address, email, phone, note, saleID);
+                        orderDAO.updateOrder( Integer.parseInt(OrderID),Receivername, Integer.parseInt(Receivergender), address, email, phone);
                         //4.Get each item and add to order
                         OrderDetailDAO detailDAO = new OrderDetailDAO();
                         ProductDTO dto =new ProductDTO();
                         
                         for (int ID : items.keySet()) {
                             int quantity = dto.getQuantity();
-                            detailDAO.CreateOrderDetail(newOrderID, ID, quantity);
+                            detailDAO.CreateOrderDetail(Integer.parseInt(OrderID), ID, quantity);
                         }//end for items.keySet
                     }//end if items is not null  
                     session.removeAttribute("CART");
