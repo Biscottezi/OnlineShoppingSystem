@@ -152,7 +152,7 @@ public class OrderDAO implements Serializable{
 
             if (rs.next()) {
                 newlyAddedOrderID = rs.getInt(1);
-                System.out.println("We have just added " + newlyAddedOrderID + " to database");
+                //System.out.println("We have just added " + newlyAddedOrderID + " to database");
             }
         } finally {
             if (rs != null) {
@@ -398,7 +398,7 @@ public class OrderDAO implements Serializable{
                     String ReceiverPhone = rs.getString("ReceiverPhone");
                     String Note = rs.getString("Note");
                     int SaleMemberID= rs.getInt("SaleMemberID");
-                    OrderDTO dto = new OrderDTO();
+                    OrderDTO dto = new OrderDTO(OrderID, Status, OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID);
                     if(this.orderList == null){
                         this.orderList = new ArrayList<>();
                     }
@@ -617,6 +617,48 @@ public class OrderDAO implements Serializable{
         }
         return beforeRevenueList;
     }
+
+    public boolean updateOrder(int OrderID, String ReceiverName,int ReceiverGender, String ReceiverAddress, String ReceiverEmail, String ReceiverPhone)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                //B2. create SQL string 
+
+                String sql = "UPDATE tblOrder "
+                        + "SET OrderedDate =GETDATE(), ReceiverName = ? , ReceiverGender= ?, ReceiverAddress= ?, ReceiverEmail= ?, ReceiverPhone= ? "
+                        + "WHERE OrderID = ?";
+
+                stm = con.prepareStatement(sql);                               
+                stm.setString(1, ReceiverName);
+                stm.setInt(2, ReceiverGender);
+                stm.setString(3, ReceiverAddress);
+                stm.setString(4, ReceiverEmail);
+                stm.setString(5, ReceiverPhone);
+                stm.setInt(6, OrderID);
+                
+                int rowAffect = stm.executeUpdate();
+                if(rowAffect == 1){
+                    return true;
+                }
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
     
     public List<CustomizedOrderDTO> getOrderListByCustomer(int customerId) throws SQLException, NamingException{
         List<CustomizedOrderDTO> orders = null;
@@ -717,6 +759,7 @@ public class OrderDAO implements Serializable{
             }
         }
         return order;
+
     }
 }
 
