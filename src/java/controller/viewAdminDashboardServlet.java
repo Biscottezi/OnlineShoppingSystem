@@ -75,7 +75,7 @@ public class viewAdminDashboardServlet extends HttpServlet {
             if(ratedStarList.size()>0){
                 float avgRatedStar = 0;
                 for(int i = 0; i < ratedStarList.size(); i++){
-                    avgRatedStar += ratedStarList.get(i).getAvergaeStar();
+                    avgRatedStar += ratedStarList.get(i).getAverageStar();
                 }
                 averageRatedStar ratedStar = new averageRatedStar(avgRatedStar, 0);
                 ratedStarList.add(ratedStar);

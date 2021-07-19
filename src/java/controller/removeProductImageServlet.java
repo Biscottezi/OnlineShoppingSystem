@@ -6,24 +6,25 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import user.UserDAO;
-import utils.sendMail;
+import productAttachedImage.ProductAttachedImageDAO;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "requestResetLinkServlet", urlPatterns = {"/requestResetLinkServlet"})
-public class requestResetLinkServlet extends HttpServlet {
-    private final String ERROR_PAGE = "error";
-    private final String HOME_PAGE = "homepage";
+@WebServlet(name = "removeProductImageServlet", urlPatterns = {"/removeProductImageServlet"})
+public class removeProductImageServlet extends HttpServlet {
+    private final String ERROR_PAGE = "Error.html";
+    private final String PRODUCT_MARKETING_PAGE = "MarketingProductList.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,21 +37,25 @@ public class requestResetLinkServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String email = request.getParameter("txtEmail");
         String url = ERROR_PAGE;
+        String productID = request.getParameter("");
+        String imageID = request.getParameter("");
         
-        try {
-            UserDAO dao = new UserDAO();
-            int UserID = dao.getUserID(email);
-            sendMail.mailResetLink(email, UserID);
+        try{
+            ProductAttachedImageDAO dao = new ProductAttachedImageDAO();
+            boolean result = dao.removeProductImage(Integer.parseInt(productID), Integer.parseInt(imageID));
+            if(result){
+                url = "viewProductDetailsMarketingServlet?productID=" + productID;
+            }
             
-            url = HOME_PAGE;
         }catch(SQLException ex){
-            log("requestResetLinkServlet _ SQL:" + ex.getMessage());
+            log("removeProductImageServlet _ SQL:" + ex.getMessage());
         }catch(NamingException ex){
-            log("requestResetLinkServlet _ Naming:" + ex.getMessage());
+            log("removeProductImageServlet _ Naming:" + ex.getMessage());
         }finally{
-            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+            
         }
     }
 
