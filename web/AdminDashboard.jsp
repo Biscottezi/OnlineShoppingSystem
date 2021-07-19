@@ -30,6 +30,7 @@
         <script src="js/upload.js"></script>
         <script src="js/statuschange.js"></script>
         <script src="js/datepicker.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <style>
             .status{
                 width:100px;
@@ -146,7 +147,7 @@
               </ul>
             </div>
 
-            <div class="wrapper col" style="background-color: #F7F8FC; padding: 30px 33px 30px 45px;" id="maincontent">
+            <div class="wrapper col-10" style="background-color: #F7F8FC; padding: 30px 33px 30px 45px;" id="maincontent">
                 <!-- main title -->
                 <div class="maintitle row" style="margin-bottom: 30px;">
                     <div class="col-2" id="title"><span>Overview</span></div>
@@ -255,6 +256,7 @@
                     <div class="graph-desc">
                         From 18 May 2021 to 25 May 2021
                     </div>
+                    <div id="curve_chart"></div>
                 </div>
                 
             </div>
@@ -294,8 +296,34 @@
                 "endDate": "07/02/2021"
             }, function(start, end, label) {
               console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-            },);           
+            },);
+            
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Date', 'Orders'],
+                    ['12 July',  35],
+                    ['13 July',  13],
+                    ['14 July',  34],
+                    ['15 July',  52],
+                    ['16 July',  28],
+                    ['17 July',  24],
+                    ['18 July',  56]
+                ]);
+                var options = {
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                width: 1450,
+                height: 500,
+                chartArea:{
+                    left:24,top:8,width:'95%',height:'80%'
+                }
+                };
+                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+                chart.draw(data, options);
+            }
         </script>
-        
     </body>
 </html>

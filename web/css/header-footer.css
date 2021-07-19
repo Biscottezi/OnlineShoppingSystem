@@ -1,5 +1,8 @@
 .wrapper {
     border: 1px #E3E3E3 solid;
+    border-left: none;
+    border-right: none;
+    border-top: none;
 }
 
 .searchbar {
