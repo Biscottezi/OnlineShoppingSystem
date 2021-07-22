@@ -841,7 +841,45 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
-
+            }
+        }
+        return totalList;
+    }
+    public List<totalInOrderTable> getSaleGraphTotal(String startdate, String enddate, int saleId) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<totalInOrderTable> totalList = new ArrayList<>();
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT COUNT(OrderID) AS TOTALORDER, convert(varchar(6), OrderedDate, 106) as OrderDate "
+                        + "FROM [Order] "
+                        + "WHERE OrderedDate >= ? AND OrderedDate <= ? AND SaleMemberID =?"
+                        + "GROUP BY convert(varchar(6), OrderedDate, 106) ";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, startdate);
+                stm.setString(2, enddate);
+                stm.setInt(3, saleId);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int TotalOrder = rs.getInt("TotalOrder");
+                    String date = rs.getString("OrderDate");
+                    
+                    totalInOrderTable total = new totalInOrderTable(TotalOrder, date);
+                    totalList.add(total);
+                }
+                return totalList;
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
             }
         }
         return totalList;
