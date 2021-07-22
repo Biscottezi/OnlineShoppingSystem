@@ -30,6 +30,7 @@
         <script src="js/upload.js"></script>
         <script src="js/statuschange.js"></script>
         <script src="js/datepicker.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <style>
             .status{
                 width:100px;
@@ -102,12 +103,23 @@
     </head>
     <body style="width: 100%; height:100%; margin: 0; padding: 0; background-color: #F7F8FC">
         <c:set var="user" value="${sessionScope.USER}"/>
+        <c:set var="subOrders" value="${sessionScope.SUBMITTED_ORDERS}"/>
+        <c:set var="conOrders" value="${sessionScope.CONFIRMED_ORDERS}"/>
+        <c:set var="shipOrders" value="${sessionScope.SHIPPED_ORDERS}"/>
+        <c:set var="potCustomers" value="${sessionScope.POTENTIAL_CUSTOMERS}"/>
+        <c:set var="Customers" value="${sessionScope.CUSTOMERS}"/>
+        <c:set var="ratedStars" value="${sessionScope.RATED_STAR_LIST}"/>
+        <c:set var="revenue" value="${sessionScope.REVENUE}"/>
+        <c:set var="graph" value="${sessionScope.GRAPH}"/>
+        <c:set var="start" value="${sessionScope.DATESTART}"/>
+        <c:set var="end" value="${sessionScope.DATEEND}"/>
+        <c:set var="status" value="${sessionScope.STATUS}"/>
         <div class="wrapper row" style="margin:0;padding:0; max-width: 100%;">
             <div class="wrapper col-2" style="background-color: #363740; min-height:937px; padding-right: 0;">
               <ul class="nav flex-column col">
                   
                   <!-- header -->
-                  <li class="nav-item" id="header">
+                  <li class="nav-item" id="header" onclick="location.href='AdminDashboard'">
                     <div class="navbar-brand" href="#">
                         <div class="container">
                             <div class="row justify-content-md-center">
@@ -119,7 +131,7 @@
                   </li>
                   
                   <!-- item 1 -->
-                  <li class="nav-item naviitem row" id="active">
+                  <li class="nav-item naviitem row" id="active" onclick="location.href='AdminDashboard'">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
@@ -131,7 +143,7 @@
                   </li>
                   
                   <!-- item 2 -->
-                  <li class="nav-item naviitem row">
+                  <li class="nav-item naviitem row" onclick="location.href='viewUserList'">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
@@ -146,7 +158,7 @@
               </ul>
             </div>
 
-            <div class="wrapper col" style="background-color: #F7F8FC; padding: 30px 33px 30px 45px;" id="maincontent">
+            <div class="wrapper col-10" style="background-color: #F7F8FC; padding: 30px 33px 30px 45px;" id="maincontent">
                 <!-- main title -->
                 <div class="maintitle row" style="margin-bottom: 30px;">
                     <div class="col-2" id="title"><span>Overview</span></div>
@@ -164,47 +176,95 @@
                 <div class="picker row">
                     <div class="col-3 sale-member picker-title"><span id="session-role">Orders</span><br>
                         <div class="select-wrapper">
-                            <select class="d-flex align-items-center admin-filter">
-                                <option value="" selected>Select status</option>
-                                <option>Submitted</option>
-                                <option>Confirmed</option>
-                                <option>Shipped</option>
+                            <select class="d-flex align-items-center admin-filter" id="slOrder">
+                                <option value="" disabled selected hidden>Select status</option>
+                                <option value="${subOrders}">Submitted</option>
+                                <option value="${conOrders}">Confirmed</option>
+                                <option value="${shipOrders}">Shipped</option>
                             </select>
                         </div><br>
                         <div class="admin-stats d-flex align-items-center justify-content-center">
                             <div class="details-header">New orders<br>
-                                <span class="details">60</span>
+                                <span class="details" id="orderscount">
+                                    0
+                                </span>
                             </div>
                         </div>
                     </div>
                     <div class="col-3 sale-member picker-title"><span id="session-role">Revenues</span><br>
                         <div class="select-wrapper">
-                            <select class="d-flex align-items-center admin-filter">
+                            <select class="d-flex align-items-center admin-filter" id="slRevenues">
                                 <option value="" selected>Select Category</option>
-                                <option>Phone</option>
-                                <option>Laptop</option>
-                                <option>Tablet</option>
-                                <option>Smartwatch</option>
-                                <option>Earphone</option>
+                                <option
+                                    <c:forEach var="rev" items="${revenue}">
+                                        <c:choose>
+                                            <c:when test="${rev.categoryID==1}">
+                                            value="${rev.revenue}"
+                                            </c:when>
+                                            <c:otherwise>
+                                            value="0"
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>>Phone</option>
+                                <option <c:forEach var="rev" items="${revenue}">
+                                        <c:choose>
+                                            <c:when test="${rev.categoryID==2}">
+                                            value="${rev.revenue}"
+                                            </c:when>
+                                            <c:otherwise>
+                                            value="0"
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>>Laptop</option>
+                                <option <c:forEach var="rev" items="${revenue}">
+                                        <c:choose>
+                                            <c:when test="${rev.categoryID==3}">
+                                            value="${rev.revenue}"
+                                            </c:when>
+                                            <c:otherwise>
+                                            value="0"
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>>Tablet</option>
+                                <option <c:forEach var="rev" items="${revenue}">
+                                        <c:choose>
+                                            <c:when test="${rev.categoryID==4}">
+                                            value="${rev.revenue}"
+                                            </c:when>
+                                            <c:otherwise>
+                                            value="0"
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>>Smartwatch</option>
+                                <option <c:forEach var="rev" items="${revenue}">
+                                        <c:choose>
+                                            <c:when test="${rev.categoryID==5}">
+                                            value="${rev.revenue}"
+                                            </c:when>
+                                            <c:otherwise>
+                                            value="0"
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>>Earphone</option>
                             </select>
                         </div><br>
                         <div class="admin-stats d-flex align-items-center justify-content-center">
                             <div class="details-header">USD<br>
-                                <span class="details">$10M</span>
+                                <span class="details" id="revenuescount">$0</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-3 sale-member picker-title"><span id="session-role">Customers</span><br>
                         <div class="select-wrapper">
-                            <select class="d-flex align-items-center admin-filter">
-                                <option value="" selected>Select type</option>
-                                <option>Potential</option>
-                                <option>Customers</option>
+                            <select class="d-flex align-items-center admin-filter" id="slCustomers">
+                                <option value="" selected disabled hidden>Select type</option>
+                                <option value="${potCustomers}">Potential</option>
+                                <option value="${Customers}">Customers</option>
                             </select>
                         </div><br>
                         <div class="admin-stats d-flex align-items-center justify-content-center">
                             <div class="details-header">Customers<br>
-                                <span class="details">43</span>
+                                <span class="details" id="customerscount">0</span>
                             </div>
                         </div>
                     </div>
@@ -233,16 +293,19 @@
                             <span class="input-group-text" id="basic-addon1" style="background-color:white; border: 1px #e3e3e3 solid; border-right-style: none;">
                                 <i class="far fa-calendar-alt" style="font-size:22px;"></i>
                             </span>
-                            <input type="text" name="daterange" id="datepicker" class="datepicker" style="height: 38px; width: 310px;"/>
+                            <input type="text" value="abad" name="daterange" id="datepicker" class="datepicker" style="height: 38px; width: 310px;" form="changeGraph"/>
                         </div>
                     </div>
                     <div class="col-3 sale-member picker-title">
                         <div class="select-wrapper">
-                            <select class="d-flex align-items-center admin-filter">
-                                <option value="" selected>Total</option>
-                                <option>Shipped</option>
+                            <select class="d-flex align-items-center admin-filter" form="changeGraph" name="graphstatus">
+                                <option value="" ${status == '2' ? '' : 'selected'}>Total</option>
+                                <option value="2" ${status == '2' ? 'selected' : ''}>Shipped</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="col-3 sale-member picker-title">
+                        <input type="submit" value="View" name="btAction" form="changeGraph"/>
                     </div>
                 </div>
                 
@@ -250,11 +313,12 @@
                 <div class="graphwrapper">
                     <!-- graph header -->
                     <div class="graph-header row">
-                        <div class="col-12 d-flex justify-content-start align-items-center graphtitle">Total order trends</div>
+                        <div class="col-12 d-flex justify-content-start align-items-center graphtitle" id="graph-title">Total order trends</div>
                     </div>
-                    <div class="graph-desc">
-                        From 18 May 2021 to 25 May 2021
+                    <div class="graph-desc" id="graph-description">
+                        From ${start} to ${end}
                     </div>
+                    <div id="curve_chart"></div>
                 </div>
                 
             </div>
@@ -287,15 +351,76 @@
                 <div class="col-9 d-flex align-items-center description menu-itemtitle">Sign Out</div>
             </div>
         </div>
+        <form id="changeGraph" action="changeAdminGraph" method="POST"></form>
+                        
         <script>
             $('#datepicker').daterangepicker({
                 "showDropdowns": true,
-                "startDate": "06/26/2021",
-                "endDate": "07/02/2021"
+                "startDate":  moment().subtract('days', 7),
+                "endDate": moment(),
+                locale:{
+                    format: 'YYYY/MM/DD'
+                }
             }, function(start, end, label) {
               console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-            },);           
+            },);
+            
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Date', 'Orders'],
+                    <c:if test="${empty graph}">
+                        ['', 0]
+                    </c:if>
+                    <c:if test="${not empty graph}">
+                        <c:forEach var="order" items="${graph}">
+                            ['${order.date}',  ${order.total}],
+                        </c:forEach>
+                    </c:if>
+                ]);
+                var options = {
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                width: 1450,
+                height: 500,
+                chartArea:{
+                    left:35,top:8,width:'95%',height:'80%'
+                }
+                };
+                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+                chart.draw(data, options);
+            }
         </script>
-        
+        <script>
+        $(document).ready(function() {
+            $('#slOrder').change(function(event) {
+                $("#orderscount").text($(this).val());
+            });
+        });
+        $(document).ready(function() {
+            $('#slRevenues').change(function(event) {
+                $("#revenuescount").text('$'+$(this).val());
+            });
+        });
+        $(document).ready(function() {
+            $('#slCustomers').change(function(event) {
+                $("#customerscount").text($(this).val());
+            });
+        });
+        <c:if test="${not empty start || not empty end && status>=2}" >
+            $(document).ready(function() {
+                $('#graph-description').html('From ${start} to ${end}');
+                $('#graph-title').html('Shipped order trends');
+            });
+        </c:if>
+        <c:if test="${status < 2}" >
+            $(document).ready(function() {
+                $('#graph-description').html('From ${start} to ${end}');
+                $('#graph-title').html('Total order trends');
+            });
+        </c:if>
+        </script>
     </body>
 </html>
