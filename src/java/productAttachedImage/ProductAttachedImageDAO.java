@@ -34,7 +34,7 @@ public class ProductAttachedImageDAO implements Serializable{
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "SELECT Name "
+                String sql = "SELECT ImageID, Name "
                         + "FROM ProductAttachedImage "
                         + "WHERE ProductID = ? ";
 
