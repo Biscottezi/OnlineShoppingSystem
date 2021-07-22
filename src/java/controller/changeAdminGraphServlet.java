@@ -8,8 +8,17 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,19 +26,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import orderDetail.OrderDetailDAO;
-import orderDetail.OrderItemObj;
-import product.ProductDAO;
-import productCategory.ProductCategoryDAO;
-import productCategory.ProductCategoryDTO;
+import javax.servlet.http.HttpSession;
+import javax.swing.JOptionPane;
+import order.OrderDAO;
+import order.totalInOrderTable;
+import org.eclipse.jdt.core.compiler.InvalidInputException;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "ViewSaleOrderDetailServlet", urlPatterns = {"/ViewSaleOrderDetailServlet"})
-public class ViewSaleOrderDetailServlet extends HttpServlet {
+@WebServlet(name = "changeAdminGraphServlet", urlPatterns = {"/changeAdminGraphServlet"})
+public class changeAdminGraphServlet extends HttpServlet {
 
+    private final String ADMIN_PAGE = "AdminDashboard";
+    private final String ERROR_PAGE = "viewAdminDashboardServlet";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,34 +50,39 @@ public class ViewSaleOrderDetailServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-     private final String DETAIL_LIST_PAGE = "SaleOrderDetails.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String selectedOrderID = request.getParameter("selectedOrderID");
-        String url = DETAIL_LIST_PAGE;
+        
+        HttpSession session = request.getSession(false);
+        String url = ERROR_PAGE;
+        int status=0;
+        String daterange = request.getParameter("daterange");
+        if (!request.getParameter("graphstatus").isEmpty()) {
+        status = Integer.parseInt(request.getParameter("graphstatus"));
+        }
+        String[] date = daterange.split(" - ");
+        String start = date[0];
+        String end = date[1];
         try {
-            OrderDetailDAO dao = new OrderDetailDAO();
-            ArrayList<OrderItemObj> detailList = dao.GetOrderDetailByOrderID(Integer.parseInt(selectedOrderID));
-
-            ProductDAO productDAO = new ProductDAO();
-
-            productDAO.getAllProduct();
-            ProductCategoryDAO cate = new ProductCategoryDAO();
-            List<ProductCategoryDTO> categoryList = cate.getCategoryList();
-
-            request.setAttribute("detailList", detailList);
-            request.setAttribute("categoryList", categoryList);
-
-        } catch (SQLException ex) {
-            log("ViewSaleOrderDetailServlet _ SQLException: " + ex.getMessage());
-        } catch (ClassNotFoundException ex) {
-            log("ViewSaleOrderDetailServlet _ ClassNotFoundException: " + ex.getMessage());
-        } catch (NamingException ex) {
-            log("ViewSaleOrderDetailServlet _ NamingException: " + ex.getMessage());
-        } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            OrderDAO orderdao = new OrderDAO();
+            List<totalInOrderTable> graph;
+            if (status>0) graph = orderdao.getAdminGraphShipped(start, end, status);
+            else graph = orderdao.getAdminGraphTotal(start, end);
+            session.setAttribute("GRAPH", graph);
+            session.setAttribute("DATESTART", start);
+            session.setAttribute("DATEEND", end);
+            session.setAttribute("STATUS", status);
+            url=ADMIN_PAGE;
+        }
+        catch(SQLException ex){
+            log("changeAdminGraphServlet _ SQL:" + ex.getMessage());
+        }
+        catch(NamingException ex){
+            log("changeAdminGraphServlet _ Naming:" + ex.getMessage());
+        }
+        finally{
+            response.sendRedirect(url);
         }
     }
 

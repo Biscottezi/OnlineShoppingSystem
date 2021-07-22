@@ -30,7 +30,7 @@ public class loginServlet extends HttpServlet {
     private final String MARKETING_DASHBOARD = "MarketingDashboard.jsp";
     private final String SALE_MANAGER_DASHBOARD = "SaleManagerDashboard.jsp";
     private final String SALE_MEMBER_DASHBOARD = "SaleMemberDashboard.jsp";
-    private final String ADMIN_DASHBOARD = "AdminDashboard.jsp";
+    private final String ADMIN_DASHBOARD = "viewAdminDashboardServlet";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

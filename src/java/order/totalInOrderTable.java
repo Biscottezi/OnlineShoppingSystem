@@ -14,31 +14,43 @@ import java.sql.Date;
  */
 public class totalInOrderTable implements Serializable{
     private int total;
-    private Date date;
+    private String date;
 
     public totalInOrderTable() {
     }
 
-    public totalInOrderTable(int total, Date date) {
+    public totalInOrderTable(int total, String date) {
         this.total = total;
         this.date = date;
     }
 
+    /**
+     * @return the total
+     */
     public int getTotal() {
         return total;
     }
 
+    /**
+     * @param total the total to set
+     */
     public void setTotal(int total) {
         this.total = total;
     }
 
-    public Date getDate() {
+    /**
+     * @return the date
+     */
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    /**
+     * @param date the date to set
+     */
+    public void setDate(String date) {
         this.date = date;
     }
-    
+
     
 }
