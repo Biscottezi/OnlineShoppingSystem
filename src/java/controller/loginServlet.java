@@ -52,27 +52,32 @@ public class loginServlet extends HttpServlet {
                 boolean result = dao.checkLogin(email, password);
                 
                 if(result){
-                    HttpSession session = request.getSession(true);
                     UserDTO user = dao.getUser();
-                    session.setAttribute("USER", user);
-                    
-                    int role = user.getRole();
-                    switch (role){
-                        case 0:
-                            url = MARKETING_DASHBOARD;
-                            break;
-                        case 1:
-                            url = SALE_MEMBER_DASHBOARD;
-                            break;
-                        case 2:
-                            url = SALE_MANAGER_DASHBOARD;
-                            break;
-                        case 3:
-                            url = ADMIN_DASHBOARD;
-                            break;
-                        case 4:
-                            url = HOME_PAGE;
-                            break;
+                    if(user.getStatus() == 0){
+                        request.setAttribute("LOGIN_ERROR", "This account is disable");
+                    }else{
+                        HttpSession session = request.getSession(true);
+
+                        session.setAttribute("USER", user);
+
+                        int role = user.getRole();
+                        switch (role){
+                            case 0:
+                                url = MARKETING_DASHBOARD;
+                                break;
+                            case 1:
+                                url = SALE_MEMBER_DASHBOARD;
+                                break;
+                            case 2:
+                                url = SALE_MANAGER_DASHBOARD;
+                                break;
+                            case 3:
+                                url = ADMIN_DASHBOARD;
+                                break;
+                            case 4:
+                                url = HOME_PAGE;
+                                break;
+                        }
                     }
                 }
             
