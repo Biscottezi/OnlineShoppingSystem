@@ -24,6 +24,11 @@ public class ProductAttachedImageDTO implements Serializable{
         this.name = name;
         this.productId = productId;
     }
+    
+    public ProductAttachedImageDTO(int imageId, String name) {
+        this.imageId = imageId;
+        this.name = name;
+    }
 
     public int getImageId() {
         return imageId;

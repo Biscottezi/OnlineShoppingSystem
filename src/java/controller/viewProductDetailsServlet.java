@@ -62,7 +62,7 @@ public class viewProductDetailsServlet extends HttpServlet {
             
             ProductAttachedImageDAO imageDao = new ProductAttachedImageDAO();
             imageDao.getProductImages(Integer.parseInt(productID));
-            List<String> imageDto = imageDao.getProductImageList();
+            List<ProductAttachedImageDTO> imageDto = imageDao.getProductImageList();
             if(imageDto != null){
                 request.setAttribute("PRODUCT_IMAGES", imageDto);
             }

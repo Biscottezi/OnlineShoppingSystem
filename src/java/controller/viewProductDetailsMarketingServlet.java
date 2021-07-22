@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import product.ProductDAO;
 import product.ProductDTO;
 import productAttachedImage.ProductAttachedImageDAO;
+import productAttachedImage.ProductAttachedImageDTO;
 
 /**
  *
@@ -52,7 +53,7 @@ public class viewProductDetailsMarketingServlet extends HttpServlet {
             
             ProductAttachedImageDAO imageDao = new ProductAttachedImageDAO();
             imageDao.getProductImages(Integer.parseInt(id));
-            List<String> imageDto = imageDao.getProductImageList();
+            List<ProductAttachedImageDTO> imageDto = imageDao.getProductImageList();
             if(imageDto != null){
                 request.setAttribute("PRODUCT_IMAGES", imageDto);
             }
