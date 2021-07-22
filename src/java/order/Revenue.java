@@ -14,41 +14,60 @@ import java.sql.Date;
  */
 public class Revenue implements Serializable{
     private float revenue;
-    private Date date;
+    private String date;
     private int categoryID;
 
     public Revenue() {
     }
 
-    public Revenue(float revenue, Date date, int categoryID) {
+    public Revenue(float revenue, String date, int categoryID) {
         this.revenue = revenue;
         this.date = date;
         this.categoryID = categoryID;
     }
 
+    /**
+     * @return the revenue
+     */
     public float getRevenue() {
         return revenue;
     }
 
+    /**
+     * @param revenue the revenue to set
+     */
     public void setRevenue(float revenue) {
         this.revenue = revenue;
     }
 
-    public Date getDate() {
+    /**
+     * @return the date
+     */
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    /**
+     * @param date the date to set
+     */
+    public void setDate(String date) {
         this.date = date;
     }
 
+    /**
+     * @return the categoryID
+     */
     public int getCategoryID() {
         return categoryID;
     }
 
+    /**
+     * @param categoryID the categoryID to set
+     */
     public void setCategoryID(int categoryID) {
         this.categoryID = categoryID;
     }
+
     
     
 }

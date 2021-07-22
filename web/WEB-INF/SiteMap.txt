@@ -57,3 +57,5 @@ custOrderDetail = ViewOrderDetailServlet
 viewUserList = viewUserListPageServlet
 viewUserDetails = viewUserDetailsPageServlet
 viewAdminDashboard = viewAdminDashboardServlet
+changeAdminGraph = changeAdminGraphServlet
+AdminDashboard = AdminDashboard.jsp

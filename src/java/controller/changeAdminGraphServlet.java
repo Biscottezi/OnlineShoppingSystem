@@ -8,6 +8,17 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,21 +27,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import user.UserDAO;
-import user.UserDTO;
+import javax.swing.JOptionPane;
+import order.OrderDAO;
+import order.totalInOrderTable;
+import org.eclipse.jdt.core.compiler.InvalidInputException;
 
 /**
  *
- * @author ASUS
+ * @author Admin
  */
-@WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
-public class loginServlet extends HttpServlet {
-    private final String INVALID_PAGE = "Error.html";
-    private final String HOME_PAGE = "viewHomePageServlet";
-    private final String MARKETING_DASHBOARD = "MarketingDashboard.jsp";
-    private final String SALE_MANAGER_DASHBOARD = "SaleManagerDashboard.jsp";
-    private final String SALE_MEMBER_DASHBOARD = "SaleMemberDashboard.jsp";
-    private final String ADMIN_DASHBOARD = "viewAdminDashboardServlet";
+@WebServlet(name = "changeAdminGraphServlet", urlPatterns = {"/changeAdminGraphServlet"})
+public class changeAdminGraphServlet extends HttpServlet {
+
+    private final String ADMIN_PAGE = "AdminDashboard";
+    private final String ERROR_PAGE = "viewAdminDashboardServlet";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,52 +53,36 @@ public class loginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = INVALID_PAGE;
         
-        try{
-                String email = request.getParameter("txtEmail");
-                String password = request.getParameter("txtPassword");
-                UserDAO dao = new UserDAO();
-                boolean result = dao.checkLogin(email, password);
-                
-                if(result){
-                    UserDTO user = dao.getUser();
-                    if(user.getStatus() == 0){
-                        request.setAttribute("LOGIN_ERROR", "This account is disable");
-                    }else{
-                        HttpSession session = request.getSession(true);
-
-                        session.setAttribute("USER", user);
-
-                        int role = user.getRole();
-                        switch (role){
-                            case 0:
-                                url = MARKETING_DASHBOARD;
-                                break;
-                            case 1:
-                                url = SALE_MEMBER_DASHBOARD;
-                                break;
-                            case 2:
-                                url = SALE_MANAGER_DASHBOARD;
-                                break;
-                            case 3:
-                                url = ADMIN_DASHBOARD;
-                                break;
-                            case 4:
-                                url = HOME_PAGE;
-                                break;
-                        }
-                    }
-                }
-            
-        }catch(SQLException ex){
-            log("LoginServlet _ SQL:" + ex.getMessage());
-        }catch(NamingException ex){
-            log("LoginServlet _ Naming:" + ex.getMessage());
-        }finally{
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
-//                response.sendRedirect(url);
+        HttpSession session = request.getSession(false);
+        String url = ERROR_PAGE;
+        int status=0;
+        String daterange = request.getParameter("daterange");
+        if (!request.getParameter("graphstatus").isEmpty()) {
+        status = Integer.parseInt(request.getParameter("graphstatus"));
+        }
+        String[] date = daterange.split(" - ");
+        String start = date[0];
+        String end = date[1];
+        try {
+            OrderDAO orderdao = new OrderDAO();
+            List<totalInOrderTable> graph;
+            if (status>0) graph = orderdao.getAdminGraphShipped(start, end, status);
+            else graph = orderdao.getAdminGraphTotal(start, end);
+            session.setAttribute("GRAPH", graph);
+            session.setAttribute("DATESTART", start);
+            session.setAttribute("DATEEND", end);
+            session.setAttribute("STATUS", status);
+            url=ADMIN_PAGE;
+        }
+        catch(SQLException ex){
+            log("changeAdminGraphServlet _ SQL:" + ex.getMessage());
+        }
+        catch(NamingException ex){
+            log("changeAdminGraphServlet _ Naming:" + ex.getMessage());
+        }
+        finally{
+            response.sendRedirect(url);
         }
     }
 
