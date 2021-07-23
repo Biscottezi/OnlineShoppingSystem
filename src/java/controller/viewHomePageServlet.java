@@ -67,7 +67,7 @@ public class viewHomePageServlet extends HttpServlet {
             if(sliderList != null){
                 request.setAttribute("SLIDER", sliderList);
                 SliderContentDAO sliderContentDao = new SliderContentDAO();
-                if(sliderList.get(0).getStatus() == 0){
+                if(sliderList.get(0).getStatus() == 1){
                     sliderContentDao.getProductID(sliderList.get(0).getId());
                     List<Integer> productIDList = sliderContentDao.getProductIDList();
                     List<ProductDTO> sliderProducts = new ArrayList<>();
@@ -77,7 +77,7 @@ public class viewHomePageServlet extends HttpServlet {
                     }
                     request.setAttribute("SLIDER_1_CONTENT", sliderProducts);
                 }
-                if(sliderList.get(1).getStatus() == 0){
+                if(sliderList.get(1).getStatus() == 1){
                     sliderContentDao.getProductID(sliderList.get(1).getId());
                     List<Integer> productIDList = sliderContentDao.getProductIDList();
                     List<ProductDTO> sliderProducts = new ArrayList<>();

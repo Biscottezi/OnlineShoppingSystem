@@ -50,8 +50,9 @@
             </div>
 
             <!--On sale product slider-->
-            <c:set var="onsaleProducts" value="${requestScope.SLIDER_PRODUCTS}"/>
-            <div class="container slider-wrapper">
+            <c:if test="${not empty requestScope.SLIDER_1_CONTENT}">
+            <c:set var="onsaleProducts" value="${requestScope.SLIDER_1_CONTENT}"/>
+            <div class="container slider-wrapper" style="min-height: 820px">
                 <div class="col-12">
                     <div class="row">
                         <h2 class="slider-title">On sale right now!</h2>
@@ -125,6 +126,86 @@
                     </div>
                 </div>
             </div>
+            </c:if>
+            
+            <!--slider 2-->
+            <c:if test="${not empty requestScope.SLIDER_2_CONTENT}">
+            <c:set var="sliderProducts" value="${requestScope.SLIDER_2_CONTENT}"/>
+            <div class="container slider-wrapper" style="min-height: 820px">
+                <div class="col-12">
+                    <div class="row">
+                        <h2 class="slider-title">On sale right now!</h2>
+                    </div>
+                    <div id="sale-slider" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="container">
+                                    <div class="row">
+                                        <c:forEach var="product" items="${sliderProducts}" begin="0" end="3">
+                                            <div class="col-3" onclick="location.href='viewProductDetails?productID=${product.id}';">
+                                                <div class="card" style="min-height: 600px; margin: auto;">
+                                                    <img src="img/${product.thumbnail}" alt="product-thumbnail" class="card-img-top">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">${product.title}</h5>
+                                                        <c:choose>
+                                                            <c:when test="${product.salePrice != 0}">
+                                                                <h5 class="card-title" style="text-decoration: line-through">$${product.listPrice}</h5>
+                                                                <h3 class="card-title">$${product.salePrice}</h3>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <h3 class="card-title">$${product.listPrice}</h3>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                        <p class="card-text">${product.briefInfo}</p>
+                                                        <p class="card-text">Star: ${product.ratedStar}/5</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="container">
+                                    <div class="row">
+                                        <c:forEach var="product" items="${sliderProducts}" begin="4" end="7">
+                                            <div class="col-3" onclick="location.href='viewProductDetails?productID=${product.id}';">
+                                                <div class="card" style="min-height: 600px; margin: auto;">
+                                                    <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">${product.title}</h5>
+                                                        <c:choose>
+                                                            <c:when test="${product.salePrice != 0}">
+                                                                <h5 class="card-title" style="text-decoration: line-through">$${product.listPrice}</h5>
+                                                                <h3 class="card-title">$${product.salePrice}</h3>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <h3 class="card-title">$${product.listPrice}</h3>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                        <p class="card-text">${product.briefInfo}</p>
+                                                        <p class="card-text">Star: ${product.ratedStar}/5</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a class="carousel-control-prev" href="#sale-slider" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#sale-slider" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            </c:if>
 
             <!--Featured products-->
             <div class="container featured-wrapper">
