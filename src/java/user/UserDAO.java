@@ -364,9 +364,9 @@ public class UserDAO implements Serializable {
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "SELECT UserID "
+                String sql = "SELECT TOP 1 UserID "
                         + "FROM [User] "
-                        + "Where Role = 1 AND Status = 1 AND rownum = 1";
+                        + "Where Role = 1 AND Status = 1 ";
                 stm = con.prepareStatement(sql);
                 
                 rs = stm.executeQuery();
