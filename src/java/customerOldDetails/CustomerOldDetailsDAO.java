@@ -70,4 +70,40 @@ public class CustomerOldDetailsDAO implements Serializable{
             }
         }
     }
+    
+    public boolean AddCustomerOldDetails(String name, int gender, String address, String phone, int customerID) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "INSERT INTO CustomerOldDetails "
+                        + "(Name, Gender, Address, Phone, DateCreated, CustomerID) "
+                        + "VALUES(?, ?, ?, ?, GETDATE(), ?) ";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, name);
+                stm.setInt(2, gender);
+                stm.setString(3, address);
+                stm.setString(4, phone);
+                stm.setInt(5, customerID);
+                
+                int rowAffected = stm.executeUpdate();
+                if(rowAffected == 1){
+                    return true;
+                }
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return false;
+    }
 }

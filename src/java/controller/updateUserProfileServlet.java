@@ -5,6 +5,7 @@
  */
 package controller;
 
+import customerOldDetails.CustomerOldDetailsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -44,8 +45,10 @@ public class updateUserProfileServlet extends HttpServlet {
         String url = ERROR_PAGE;
         
         try {
-            UserDAO dao = new UserDAO();
-            boolean result = dao.updateUserProfile(Integer.parseInt(userID), name, Integer.parseInt(gender), phone, address);
+            UserDAO userDao = new UserDAO();
+            boolean result = userDao.updateUserProfile(Integer.parseInt(userID), name, Integer.parseInt(gender), phone, address);
+            CustomerOldDetailsDAO oldDao = new CustomerOldDetailsDAO();
+            oldDao.AddCustomerOldDetails(name, Integer.parseInt(gender), address, phone, Integer.parseInt(userID));
             if(result){
                 url = HOME_PAGE;
             }

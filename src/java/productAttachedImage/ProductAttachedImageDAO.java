@@ -73,7 +73,7 @@ public class ProductAttachedImageDAO implements Serializable{
             con = DBHelper.makeConnection();
             if (con != null) {
                 String sql = "INSERT INTO ProductAttachedImage "
-                        + "(Name, ProductID)"
+                        + "(Name, ProductID) "
                         + "VALUES (?, ?) ";
 
                 stm = con.prepareStatement(sql);
