@@ -41,10 +41,10 @@
                         <br>
                         <h4>Categories</h4>
                         <c:set var="productCategoryList" value="${requestScope.PRODUCT_CATEGORY}"/>
-                        <c:forEach var="category" items="${productCategoryList}">
-                            <div class="category">
-                                <a href="">${category.name}</a>
-                            </div>
+                        <c:forEach var="productCategory" items="${productCategoryList}">
+                        <div class="category">
+                            <a href="viewProdByCate?categoryID=${productCategory.id}">${productCategory.name}</a>
+                        </div>
                         </c:forEach>
                     </div>
                 </div>

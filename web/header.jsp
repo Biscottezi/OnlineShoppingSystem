@@ -24,7 +24,6 @@
         
         <style>
             #user-profile{
-                display: block;
                 margin-left: 3%;
             }
             .decor-div{
