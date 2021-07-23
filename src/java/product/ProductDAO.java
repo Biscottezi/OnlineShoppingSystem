@@ -472,7 +472,7 @@ public class ProductDAO implements Serializable{
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "SELECT Select AVG(RatedStar) as AvgRatedStar, ProductCategoryID "
+                String sql = "SELECT AVG(RatedStar) as AvgRatedStar, ProductCategoryID "
                         + "from Product "
                         + "Group by ProductCategoryID ";
                 stm = con.prepareCall(sql);

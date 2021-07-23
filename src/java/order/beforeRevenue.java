@@ -15,50 +15,75 @@ import java.sql.Date;
 public class beforeRevenue implements Serializable{
     private float salePrice;
     private float listPrice;
-    private Date date;
+    private String date;
     private int categoryID;
 
     public beforeRevenue() {
     }
 
-    public beforeRevenue(float salePrice, float listPrice, Date date, int categoryID) {
+    public beforeRevenue(float salePrice, float listPrice, String date, int categoryID) {
         this.salePrice = salePrice;
         this.listPrice = listPrice;
         this.date = date;
         this.categoryID = categoryID;
     }
 
+    /**
+     * @return the salePrice
+     */
     public float getSalePrice() {
         return salePrice;
     }
 
+    /**
+     * @param salePrice the salePrice to set
+     */
     public void setSalePrice(float salePrice) {
         this.salePrice = salePrice;
     }
 
+    /**
+     * @return the listPrice
+     */
     public float getListPrice() {
         return listPrice;
     }
 
+    /**
+     * @param listPrice the listPrice to set
+     */
     public void setListPrice(float listPrice) {
         this.listPrice = listPrice;
     }
 
-    public Date getDate() {
+    /**
+     * @return the date
+     */
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    /**
+     * @param date the date to set
+     */
+    public void setDate(String date) {
         this.date = date;
     }
 
+    /**
+     * @return the categoryID
+     */
     public int getCategoryID() {
         return categoryID;
     }
 
+    /**
+     * @param categoryID the categoryID to set
+     */
     public void setCategoryID(int categoryID) {
         this.categoryID = categoryID;
     }
+
     
     
 }

@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -14,22 +15,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import user.UserDAO;
-import user.UserDTO;
+import productAttachedImage.ProductAttachedImageDAO;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
-public class loginServlet extends HttpServlet {
-    private final String INVALID_PAGE = "Error.html";
-    private final String HOME_PAGE = "viewHomePageServlet";
-    private final String MARKETING_DASHBOARD = "MarketingDashboard.jsp";
-    private final String SALE_MANAGER_DASHBOARD = "SaleManagerDashboard.jsp";
-    private final String SALE_MEMBER_DASHBOARD = "SaleMemberDashboard.jsp";
-    private final String ADMIN_DASHBOARD = "viewAdminDashboardServlet";
+@WebServlet(name = "removeProductImageServlet", urlPatterns = {"/removeProductImageServlet"})
+public class removeProductImageServlet extends HttpServlet {
+    private final String ERROR_PAGE = "Error.html";
+    private final String PRODUCT_MARKETING_PAGE = "MarketingProductList.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,52 +37,25 @@ public class loginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = INVALID_PAGE;
+        String url = ERROR_PAGE;
+        String productID = request.getParameter("");
+        String imageID = request.getParameter("");
         
         try{
-                String email = request.getParameter("txtEmail");
-                String password = request.getParameter("txtPassword");
-                UserDAO dao = new UserDAO();
-                boolean result = dao.checkLogin(email, password);
-                
-                if(result){
-                    UserDTO user = dao.getUser();
-                    if(user.getStatus() == 0){
-                        request.setAttribute("LOGIN_ERROR", "This account is disable");
-                    }else{
-                        HttpSession session = request.getSession(true);
-
-                        session.setAttribute("USER", user);
-
-                        int role = user.getRole();
-                        switch (role){
-                            case 0:
-                                url = MARKETING_DASHBOARD;
-                                break;
-                            case 1:
-                                url = SALE_MEMBER_DASHBOARD;
-                                break;
-                            case 2:
-                                url = SALE_MANAGER_DASHBOARD;
-                                break;
-                            case 3:
-                                url = ADMIN_DASHBOARD;
-                                break;
-                            case 4:
-                                url = HOME_PAGE;
-                                break;
-                        }
-                    }
-                }
+            ProductAttachedImageDAO dao = new ProductAttachedImageDAO();
+            boolean result = dao.removeProductImage(Integer.parseInt(productID), Integer.parseInt(imageID));
+            if(result){
+                url = "viewProductDetailsMarketingServlet?productID=" + productID;
+            }
             
         }catch(SQLException ex){
-            log("LoginServlet _ SQL:" + ex.getMessage());
+            log("removeProductImageServlet _ SQL:" + ex.getMessage());
         }catch(NamingException ex){
-            log("LoginServlet _ Naming:" + ex.getMessage());
+            log("removeProductImageServlet _ Naming:" + ex.getMessage());
         }finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
-//                response.sendRedirect(url);
+            
         }
     }
 

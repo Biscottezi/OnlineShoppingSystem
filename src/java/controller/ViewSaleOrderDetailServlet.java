@@ -59,11 +59,11 @@ public class ViewSaleOrderDetailServlet extends HttpServlet {
             request.setAttribute("categoryList", categoryList);
 
         } catch (SQLException ex) {
-            log("ViewOlderOrderDetailServlet SQLException: " + ex.getMessage());
+            log("ViewSaleOrderDetailServlet _ SQLException: " + ex.getMessage());
         } catch (ClassNotFoundException ex) {
-            log("ViewOlderOrderDetailServlet ClassNotFoundException: " + ex.getMessage());
+            log("ViewSaleOrderDetailServlet _ ClassNotFoundException: " + ex.getMessage());
         } catch (NamingException ex) {
-            log("ViewOlderOrderDetailServlet NamingException: " + ex.getMessage());
+            log("ViewSaleOrderDetailServlet _ NamingException: " + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

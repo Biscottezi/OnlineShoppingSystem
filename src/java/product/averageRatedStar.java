@@ -12,23 +12,23 @@ import java.io.Serializable;
  * @author ASUS
  */
 public class averageRatedStar implements Serializable{
-    private float avergaeStar;
+    private float averageStar;
     private int categoryID;
 
     public averageRatedStar() {
     }
 
-    public averageRatedStar(float avergaeStar, int categoryID) {
-        this.avergaeStar = avergaeStar;
+    public averageRatedStar(float averageStar, int categoryID) {
+        this.averageStar = averageStar;
         this.categoryID = categoryID;
     }
 
-    public float getAvergaeStar() {
-        return avergaeStar;
+    public float getAverageStar() {
+        return averageStar;
     }
 
-    public void setAvergaeStar(float avergaeStar) {
-        this.avergaeStar = avergaeStar;
+    public void setAverageStar(float averageStar) {
+        this.averageStar = averageStar;
     }
 
     public int getCategoryID() {
@@ -37,7 +37,5 @@ public class averageRatedStar implements Serializable{
 
     public void setCategoryID(int categoryID) {
         this.categoryID = categoryID;
-    }
-    
-    
+    } 
 }

@@ -14,6 +14,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
@@ -464,11 +465,12 @@ public class OrderDAO implements Serializable{
         }
     }
     
-    public List<totalInOrderTable> getTotalOrderByStatus(int status) throws SQLException, NamingException{
+    public int getTotalOrderByStatus(int status) throws SQLException, NamingException{
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         List<totalInOrderTable> totalList = new ArrayList<>();
+        int total=0;
         try{
             con = DBHelper.makeConnection();
             if(con != null){
@@ -480,14 +482,10 @@ public class OrderDAO implements Serializable{
                 stm.setInt(1, status);
                 rs = stm.executeQuery();
                 
-                if(rs.next()){
-                    int TotalOrder = rs.getInt("TotalOrder");
-                    Date date = rs.getDate("OrderDate");
-                    
-                    totalInOrderTable total = new totalInOrderTable(TotalOrder, date);
-                    totalList.add(total);
+                while(rs.next()){
+                    total += rs.getInt("TotalOrder");
                 }
-                return totalList;
+                return total;
             }
         }finally{
             if(rs != null){
@@ -500,32 +498,32 @@ public class OrderDAO implements Serializable{
 
             }
         }
-        return totalList;
+        return total;
     }
     
-    public List<totalInOrderTable> getTotalPotentialCustomerByDate() throws SQLException, NamingException{
+    public int getTotalPotentialCustomerByDate() throws SQLException, NamingException{
         Connection con = null;
         CallableStatement stm = null;
         ResultSet rs = null;
-        List<totalInOrderTable> totalList = new ArrayList<>();
+        int totalPotCus=0;
+        String now = java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        String monthago = java.time.LocalDate.now().minusMonths(1).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         try{
             con = DBHelper.makeConnection();
             if(con != null){
                 String sql = "SELECT COUNT(ReceiverName) AS TotalCustomer, convert(varchar, OrderedDate, 101) as OrderDate "
                         + "FROM [Order] "
-                        + "WHERE CustomerID is null "
+                        + "WHERE CustomerID is null AND OrderedDate >= ? AND OrderedDate <= ? "
                         + "GROUP BY convert(varchar, OrderedDate, 101) ";
                 stm = con.prepareCall(sql);
+                stm.setString(1, monthago);
+                stm.setString(2, now);
                 rs = stm.executeQuery();
                 
-                if(rs.next()){
-                    int TotalOrder = rs.getInt("TotalCustomer");
-                    Date date = rs.getDate("OrderDate");
-                    
-                    totalInOrderTable total = new totalInOrderTable(TotalOrder, date);
-                    totalList.add(total);
+                while(rs.next()){
+                    totalPotCus += rs.getInt("TotalCustomer");
                 }
-                return totalList;
+                return totalPotCus;
             }
         }finally{
             if(rs != null){
@@ -538,32 +536,32 @@ public class OrderDAO implements Serializable{
 
             }
         }
-        return totalList;
+        return totalPotCus;
     }
     
-    public List<totalInOrderTable> getTotalCustomerByDate() throws SQLException, NamingException{
+    public int getTotalCustomerByDate() throws SQLException, NamingException{
         Connection con = null;
         CallableStatement stm = null;
         ResultSet rs = null;
-        List<totalInOrderTable> totalList = new ArrayList<>();
+        int totalCus=0;
+        String now = java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        String monthago = java.time.LocalDate.now().minusMonths(1).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         try{
             con = DBHelper.makeConnection();
-            if(con != null){
+            while(con != null){
                 String sql = "SELECT COUNT(ReceiverName) AS TotalCustomer, convert(varchar, OrderedDate, 101) as OrderDate "
                         + "FROM [Order] "
-                        + "WHERE CustomerID is not null "
+                        + "WHERE CustomerID is not null AND OrderedDate >= ? AND OrderedDate <= ? "
                         + "GROUP BY convert(varchar, OrderedDate, 101) ";
                 stm = con.prepareCall(sql);
+                stm.setString(1, monthago);
+                stm.setString(2, now);
                 rs = stm.executeQuery();
                 
-                if(rs.next()){
-                    int TotalOrder = rs.getInt("TotalCustomer");
-                    Date date = rs.getDate("OrderDate");
-                    
-                    totalInOrderTable total = new totalInOrderTable(TotalOrder, date);
-                    totalList.add(total);
+                while(rs.next()){
+                    totalCus += rs.getInt("TotalCustomer");
                 }
-                return totalList;
+                return totalCus;
             }
         }finally{
             if(rs != null){
@@ -576,7 +574,7 @@ public class OrderDAO implements Serializable{
 
             }
         }
-        return totalList;
+        return totalCus;
     }
     
     public List<beforeRevenue> getBeforeRevenue() throws SQLException, NamingException{
@@ -584,19 +582,25 @@ public class OrderDAO implements Serializable{
         CallableStatement stm = null;
         ResultSet rs = null;
         List<beforeRevenue> beforeRevenueList = new ArrayList<>();
+        String now = java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        String monthago = java.time.LocalDate.now().minusMonths(1).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         try{
             con = DBHelper.makeConnection();
             if(con != null){
                 String sql = "SELECT sum(od.Quantity*p.SalePrice) AS SalePrice, sum(od.Quantity*p.ListPrice) AS ListPrice, convert(varchar, OrderedDate, 101) AS OrderDate, p.ProductCategoryID "
                         + "FROM ([Order] o JOIN OrderDetail od ON o.OrderID = od.OrderID) JOIN Product p ON od.ProductID = p.ProductID "
+                        + "WHERE OrderedDate >= ? AND OrderedDate <= ? "
                         + "GROUP BY convert(varchar, OrderedDate, 101), p.ProductCategoryID ";
                 stm = con.prepareCall(sql);
+                stm.setString(1, monthago);
+                stm.setString(2, now);
+                
                 rs = stm.executeQuery();
                 
-                if(rs.next()){
+                while(rs.next()){
                     float salePrice = rs.getFloat("SalePrice");
                     float listPrice = rs.getFloat("ListPrice");
-                    Date date = rs.getDate("OrderDate");
+                    String date = rs.getString("OrderDate");
                     int categoryID = rs.getInt("ProductCategoryID");
                     
                     beforeRevenue beforeRevenue = new beforeRevenue(salePrice, listPrice, date, categoryID);
@@ -760,6 +764,125 @@ public class OrderDAO implements Serializable{
         }
         return order;
 
+    }
+    
+    public List<totalInOrderTable> getAdminGraphShipped(String startdate, String enddate, int status) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<totalInOrderTable> totalList = new ArrayList<>();
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT COUNT(OrderID) AS TOTALORDER, convert(varchar(6), OrderedDate, 106) as OrderDate "
+                        + "FROM [Order] "
+                        + "WHERE Status = ? AND OrderedDate >= ? AND OrderedDate <= ? "
+                        + "GROUP BY convert(varchar(6), OrderedDate, 106) ";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, status);
+                stm.setString(2, startdate);
+                stm.setString(3, enddate);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int TotalOrder = rs.getInt("TotalOrder");
+                    String date = rs.getString("OrderDate");
+                    
+                    totalInOrderTable total = new totalInOrderTable(TotalOrder, date);
+                    totalList.add(total);
+                }
+                return totalList;
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+
+            }
+        }
+        return totalList;
+    }
+    
+    public List<totalInOrderTable> getAdminGraphTotal(String startdate, String enddate) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<totalInOrderTable> totalList = new ArrayList<>();
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT COUNT(OrderID) AS TOTALORDER, convert(varchar(6), OrderedDate, 106) as OrderDate "
+                        + "FROM [Order] "
+                        + "WHERE OrderedDate >= ? AND OrderedDate <= ? "
+                        + "GROUP BY convert(varchar(6), OrderedDate, 106) ";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, startdate);
+                stm.setString(2, enddate);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int TotalOrder = rs.getInt("TotalOrder");
+                    String date = rs.getString("OrderDate");
+                    
+                    totalInOrderTable total = new totalInOrderTable(TotalOrder, date);
+                    totalList.add(total);
+                }
+                return totalList;
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+            }
+        }
+        return totalList;
+    }
+    public List<totalInOrderTable> getSaleGraphTotal(String startdate, String enddate, int saleId) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<totalInOrderTable> totalList = new ArrayList<>();
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT COUNT(OrderID) AS TOTALORDER, convert(varchar(6), OrderedDate, 106) as OrderDate "
+                        + "FROM [Order] "
+                        + "WHERE OrderedDate >= ? AND OrderedDate <= ? AND SaleMemberID =?"
+                        + "GROUP BY convert(varchar(6), OrderedDate, 106) ";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, startdate);
+                stm.setString(2, enddate);
+                stm.setInt(3, saleId);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int TotalOrder = rs.getInt("TotalOrder");
+                    String date = rs.getString("OrderDate");
+                    
+                    totalInOrderTable total = new totalInOrderTable(TotalOrder, date);
+                    totalList.add(total);
+                }
+                return totalList;
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+            }
+        }
+        return totalList;
     }
 }
 

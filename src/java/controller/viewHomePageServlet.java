@@ -62,7 +62,7 @@ public class viewHomePageServlet extends HttpServlet {
             }
             
             SliderDAO sliderDao = new SliderDAO();
-            sliderDao.getSlider();
+            sliderDao.getAllSlider();
             List<SliderDTO> sliderList = sliderDao.getSliderList();
             if(sliderList != null){
                 request.setAttribute("SLIDER", sliderList);

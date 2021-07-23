@@ -8,6 +8,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
@@ -17,6 +18,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.swing.JOptionPane;
 import order.OrderDAO;
 import order.Revenue;
 import order.beforeRevenue;
@@ -45,47 +48,50 @@ public class viewAdminDashboardServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR_PAGE;
-        
+        String now = java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        String weekago = java.time.LocalDate.now().minusDays(7).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        HttpSession session = request.getSession(false);
         try {
             OrderDAO orderDao = new OrderDAO();
-            List<totalInOrderTable> submittedOrders = orderDao.getTotalOrderByStatus(1);
-            if(submittedOrders.size() > 0){
-                request.setAttribute("SUBMITTED_ORDERS", submittedOrders);
-            }
-            List<totalInOrderTable> confirmedOrders = orderDao.getTotalOrderByStatus(1);
-            if(submittedOrders.size()>0){
-                request.setAttribute("CONFIRMED_ORDERS", confirmedOrders);
-            }
-            List<totalInOrderTable> shippedOrders = orderDao.getTotalOrderByStatus(1);
-            if(submittedOrders.size()>0){
-                request.setAttribute("SHIPPED_ORDERS", shippedOrders);
-            }
+            int submittedOrders = orderDao.getTotalOrderByStatus(0);
             
-            List<totalInOrderTable> potentialCustomers = orderDao.getTotalPotentialCustomerByDate();
-            if(submittedOrders.size()>0){
-                request.setAttribute("POTENTIAL_CUSTOMERS", potentialCustomers);
+            session.setAttribute("SUBMITTED_ORDERS", submittedOrders);
+            
+            int confirmedOrders = orderDao.getTotalOrderByStatus(1);
+            session.setAttribute("CONFIRMED_ORDERS", confirmedOrders);
+            
+            int shippedOrders = orderDao.getTotalOrderByStatus(2);
+            session.setAttribute("SHIPPED_ORDERS", shippedOrders);
+            
+            int potentialCustomers = orderDao.getTotalPotentialCustomerByDate();
+            session.setAttribute("POTENTIAL_CUSTOMERS", potentialCustomers);
+            
+            int customers = orderDao.getTotalCustomerByDate();
+            session.setAttribute("CUSTOMERS", customers);
+            
+            List<totalInOrderTable> graph = orderDao.getAdminGraphTotal(weekago, now);
+            if(graph.size()>0){
+                session.setAttribute("GRAPH", customers);
             }
-            List<totalInOrderTable> customers = orderDao.getTotalCustomerByDate();
-            if(submittedOrders.size()>0){
-                request.setAttribute("CUSTOMERS", customers);
-            }
+            session.setAttribute("DATESTART", weekago);
+            session.setAttribute("DATEEND", now);
             
             ProductDAO productDao = new ProductDAO();
             List<averageRatedStar>ratedStarList = productDao.getAverageRatedStar();
             if(ratedStarList.size()>0){
                 float avgRatedStar = 0;
                 for(int i = 0; i < ratedStarList.size(); i++){
-                    avgRatedStar += ratedStarList.get(i).getAvergaeStar();
+                    avgRatedStar += ratedStarList.get(i).getAverageStar();
                 }
                 averageRatedStar ratedStar = new averageRatedStar(avgRatedStar, 0);
                 ratedStarList.add(ratedStar);
-                request.setAttribute("RATED_STAR_LIST", ratedStarList);
+                session.setAttribute("RATED_STAR_LIST", ratedStarList);
             }
             
             List<beforeRevenue> beforeRevenueList = orderDao.getBeforeRevenue();
             if(beforeRevenueList.size()>0){
                 List<Revenue> revenueList = new ArrayList<>();
-                for(int i=0; i < revenueList.size(); i++){
+                for(int i=0; i < beforeRevenueList.size(); i++){
                     if(beforeRevenueList.get(i).getSalePrice() == 0){
                         Revenue revenue = new Revenue(beforeRevenueList.get(i).getListPrice(), beforeRevenueList.get(i).getDate(), beforeRevenueList.get(i).getCategoryID());
                         revenueList.add(revenue);
@@ -94,7 +100,7 @@ public class viewAdminDashboardServlet extends HttpServlet {
                         revenueList.add(revenue);
                     }
                 }
-                request.setAttribute("REVENUE", revenueList);
+                session.setAttribute("REVENUE", revenueList);
             }
             
             url = ADMIN_DASHBOARD;

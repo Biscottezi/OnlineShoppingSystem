@@ -50,7 +50,6 @@ public class updateProductServlet extends HttpServlet {
         String chkFeatured = request.getParameter("chkFeatured");
         String chkStatus = request.getParameter("chkStatus");
         String url = ERROR_PAGE;
-        String[] removedImage = request.getParameterValues("removedImage");
         int status = 0;
         int featured = 0;
         
@@ -65,9 +64,6 @@ public class updateProductServlet extends HttpServlet {
             ProductDAO productDao = new ProductDAO();
             boolean productResult = productDao.updateProduct(Integer.parseInt(productID), title, Integer.parseInt(categoryID), thumbnail, briefInfo, description, 
                     Integer.parseInt(quantity), Float.parseFloat(listPrice), Float.parseFloat(salePrice), featured, status);
-            for(int i = 0; i <= removedImage.length; i++){
-                imageDao.removeProductImage(Integer.parseInt(productID), Integer.parseInt(removedImage[i]));
-            }
             
             if(productResult){
                 url = PRODUCT_MARKETING_PAGE;
