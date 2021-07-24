@@ -21,6 +21,56 @@
         <link rel="stylesheet" href="css/pop-up.css">
         <script src="js/homepage.js"></script>
         <script src="js/managerpopup.js"></script>
+        
+        <style>
+            #user-profile{
+                margin-left: 3%;
+            }
+            .decor-div{
+                background: linear-gradient(180deg, rgba(0, 133, 255, 0.58) 0%, rgba(0, 83, 158, 0.80738) 78.79%, #002A4B 141.2%);
+                border-radius: 0 0 50px 50px;
+                height: 120px;
+            }
+            #user-ava{
+                width: 130px;
+                height: 130px;
+                border: 2px solid white;
+                border-radius: 50%;
+                position: absolute;
+                left: 44%;
+                top: 50px;
+            }
+            #ava-label{
+                width: 2em;
+                position: absolute;
+                left: 54%;
+                top: 9em;
+            }
+            .user-ava-btn{
+                position: absolute;
+                right: 13%;
+            }
+            .info-label{
+                font-size: 20px;
+                margin-top: 3px;
+                font-weight: 500;
+            }
+            .profile-div{
+                margin-top: 6em;
+            }
+        </style>
+        
+        <script>
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#user-ava').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        </script>
     </head>
     <body class="container">
         <!--Header-->
@@ -67,7 +117,7 @@
                 <!--Customer dropdown menu-->
                 <div class="droplist container float-right popupwrapper" id="usermenu">
                     <div class="col">
-                        <div class="row droplist-btn">
+                        <div class="row droplist-btn" onclick="openProfile()">
                             <img src="img/${user.avatar}" alt="" class="droplist-avatar">
                             <div class="d-flex flex-column justify-content-center droplist-btn-txt">
                                 <h6>${user.name}</h6>
@@ -109,32 +159,78 @@
                 </div>
         
                 <!--Change password-->
-                <div id="change-pwd" class="container pop-up form-col">
+                <c:set var="error" value="${requestScope.CHANGE_PASS_ERR}"/>
+                <div id="change-pwd" class="container pop-up form-col" <c:if test="${not empty error}">style="display: block"</c:if> >
                     <div class="close-btn" onclick="closePopUp('change-pwd')">
                         <i class="far fa-times-circle"></i>
                     </div>
                     <div class="container">
                         <div class="col-12">
                             <h1>Change Password</h1>
-                            <form action="" method="POST" class="form">
+                            <form action="changePass" method="POST" class="form">
                                 <div class="form-group">
-                                    <input class="form-control" type="password" placeholder="Current Password">
+                                    <input class="form-control" type="password" placeholder="Current Password" name="txtOldPassword">
+                                    <p style="color: red">${error.oldPassErr}</p>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" type="password" placeholder="New Password">
+                                    <input class="form-control" type="password" placeholder="New Password" name="txtNewPassword">
+                                    <p style="color: red">${error.newPassErr}</p>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" type="password" placeholder="Confirm New Password">
+                                    <input class="form-control" type="password" placeholder="Confirm New Password" name="txtConfirmPassword">
+                                    <p style="color: red">${error.confirmPassErr}</p>
                                 </div>
                                 <button type="submit" class="form-col-btn forgot-btn">Change Password</button>
+                                <input type="hidden" name="userID" value="${user.id}"/>
+                                <input type="hidden" name="password" value="${user.password}"/>
                             </form>
                         </div>
                     </div>
                 </div>
+                
+                <!--User profile-->
+                <div id="user-profile" class="pop-up">
+                    <div class="close-btn" onclick="closePopUp('user-profile')">
+                        <i class="far fa-times-circle" style="color: white"></i>
+                    </div>
+                    <div class="decor-div"></div>
+                    <img src="img/${user.avatar}" alt="user avatar" id="user-ava">
+                    <label for="ava-user">
+                        <img src="img/add-ava.png" id="ava-label">
+                    </label>
+                    <input type="file" id="ava-user" hidden name="avatar" form="user-avatar" onchange="readURL(this)">
+                    <button type="submit" class="form-col-btn user-ava-btn" form="user-avatar" style="width: 170px;">Update avatar</button>
+                    <div class="profile-div col">
+                        <div class="d-flex justify-content-center" style="margin-bottom: 1em">
+                            <span class="col-2 info-label">Full Name:</span>
+                            <input type="text" name="txtName" class="col-6 form-control" value="${user.name}" style="margin-top: 0" form="user-info">
+                        </div>
+                        <div class="d-flex justify-content-center" style="margin-bottom: 1em">
+                            <span class="col-2 info-label">Gender:</span>
+                            <select class="form-control col-6" name="txtGender" style="margin-top: 0" form="user-info">
+                                <option value="0" <c:if test="${user.gender == 0}">selected</c:if> >Male</option>
+                                <option value="1" <c:if test="${user.gender == 1}">selected</c:if> >Female</option>
+                            </select>
+                        </div>
+                        <div class="d-flex justify-content-center" style="margin-bottom: 1em">
+                            <span class="col-2 info-label">Mobile:</span>
+                            <input type="text" name="txtPhone" class="col-6 form-control" value="${user.phone}" style="margin-top: 0" form="user-info">
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <span class="col-2 info-label">Address:</span>
+                            <textarea class="form-control col-6" name="txtAddress" style="margin-top: 0" form="user-info">${user.address}</textarea>
+                        </div>
+                        <button type="submit" form="user-info" class="form-col-btn" style="width: 120px; margin-left: 44%; margin-bottom: 1em">Save</button>
+                        <input type="hidden" name="userID" value="${user.id}" form="user-info">
+                    </div>
+                    <form id="user-avatar" action=""></form>
+                    <form id="user-info" method="GET" action="updateProfile"></form>
+                </div>
+                
             </c:when>
             <c:otherwise>
         <!--Login form-->
-        <div id="login" class="container pop-up">
+        <div id="login" class="container pop-up" <c:if test="${not empty requestScope.LOGIN_ERROR}">style="display: block"</c:if> > 
             <div class="row">
                 <div class="col-4 welcome">
                     <div class="container">
@@ -150,6 +246,8 @@
                     <div class="container">
                         <div class="col-12">
                             <h1>Sign in</h1>
+                            <c:set var="error" value="${requestScope.LOGIN_ERROR}"/>
+                            <p style="color: red">${error}</p>
                             <form action="login" method="POST" class="form">
                                 <div class="form-group">
                                     <input class="form-control" type="text" placeholder="Email" name="txtEmail">
@@ -203,7 +301,6 @@
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" name="txtGender">
-                                        <option disabled selected>Gender</option>
                                         <option value="0">Male</option>
                                         <option value="1">Female</option>
                                     </select>

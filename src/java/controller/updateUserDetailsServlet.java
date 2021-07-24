@@ -24,7 +24,6 @@ import user.UserDAO;
 @WebServlet(name = "updateUserDetailsServlet", urlPatterns = {"/updateUserDetailsServlet"})
 public class updateUserDetailsServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
-    private final String USER_DETAILS_PAGE = "userlistedit.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,16 +36,19 @@ public class updateUserDetailsServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR_PAGE;
-        String userID = request.getParameter("");
-        String role = request.getParameter("");
-        String status = request.getParameter("");
-        
+        String urlRewriting = ERROR_PAGE;
+        String userID = request.getParameter("txtUserID");
+        String role = request.getParameter("slRole");
+        String status = request.getParameter("chkStatus");
+        int userStatus=0;
+        if (status!=null){
+            userStatus=1;
+        }
         try {
             UserDAO dao = new UserDAO();
-            boolean result = dao.updateUser(Integer.parseInt(userID), Integer.parseInt(role), Integer.parseInt(status));
+            boolean result = dao.updateUser(Integer.parseInt(userID), Integer.parseInt(role), userStatus);
             if(result){
-                url = USER_DETAILS_PAGE;
+                urlRewriting = "viewUserDetails?userID="+userID;
             }
             
         }catch(SQLException ex){
@@ -54,8 +56,7 @@ public class updateUserDetailsServlet extends HttpServlet {
         }catch(NamingException ex){
             log("updateUserDetailsServlet _ Naming:" + ex.getMessage());
         }finally{
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            response.sendRedirect(urlRewriting);
             
         }
     }

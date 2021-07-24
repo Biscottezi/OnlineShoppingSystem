@@ -40,18 +40,12 @@
                         </form>
                         <br>
                         <h4>Categories</h4>
+                        <c:set var="productCategoryList" value="${requestScope.PRODUCT_CATEGORY}"/>
+                        <c:forEach var="productCategory" items="${productCategoryList}">
                         <div class="category">
-                            <a href="">Smartphone</a>
+                            <a href="viewProdByCate?categoryID=${productCategory.id}">${productCategory.name}</a>
                         </div>
-                        <div class="category">
-                            <a href="">Laptop</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Smartwatch</a>
-                        </div>
-                        <div class="category">
-                            <a href="">Earphone</a>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
 

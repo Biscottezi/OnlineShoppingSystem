@@ -5,26 +5,34 @@
  */
 package controller;
 
-import error.changePasswordError;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import order.OrderDAO;
+import order.beforeRevenue;
+import order.totalInOrderTable;
+import user.SaleMember;
 import user.UserDAO;
 
 /**
  *
- * @author ASUS
+ * @author Admin
  */
-@WebServlet(name = "changePasswordServlet", urlPatterns = {"/changePasswordServlet"})
-public class changePasswordServlet extends HttpServlet {
+@WebServlet(name = "viewSManagerDashboardServlet", urlPatterns = {"/viewSManagerDashboardServlet"})
+public class viewSManagerDashboardServlet extends HttpServlet {
+    
+    private final String SMANAGER_DASHBOARD = "SaleManagerDashboard.jsp";
     private final String ERROR_PAGE = "Error.html";
-    private final String HOME_PAGE = "viewHomePageServlet";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,45 +45,38 @@ public class changePasswordServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String userID = request.getParameter("userID");
-        String password = request.getParameter("password");
-        String oldPassword = request.getParameter("txtOldPassword");
-        String newPassword = request.getParameter("txtNewPassword");
-        String confirmPassword = request.getParameter("txtConfirmPassword");
         String url = ERROR_PAGE;
-        changePasswordError error = new changePasswordError();
-        boolean founderror = false;
+        String now = java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        String weekago = java.time.LocalDate.now().minusDays(7).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        HttpSession session = request.getSession(false);
         
-        try{
-            UserDAO dao = new UserDAO();
-            
-            if(!oldPassword.trim().equals(password.trim())){
-                founderror = true;
-                error.setOldPassErr("Old Password is incorrect");
-            }
-            if (newPassword.trim().length() < 5 || newPassword.trim().length() > 20) {
-                founderror = true;
-                error.setNewPassErr("Password is required input from 5 to 20 chars");
-
-            } else if (!newPassword.trim().equals(confirmPassword.trim())) {
-                founderror = true;
-                error.setConfirmPassErr("Confirm password must match with password!");
+        try {
+            OrderDAO orderDao = new OrderDAO();
+            List<totalInOrderTable> graph = orderDao.getAdminGraphTotal(weekago, now);
+            if(graph.size()>0){
+                session.setAttribute("ORDERGRAPH", graph);
             }
             
-            if(founderror){
-                request.setAttribute("CHANGE_PASS_ERR", error);
-            }else{
-                dao.resetNewPassword(Integer.parseInt(userID), newPassword);
-                request.getSession(false).invalidate();
+            List<beforeRevenue> beforeRevenueList = orderDao.getBeforeRevenue();
+            
+            List<totalInOrderTable> revgraph = orderDao.getAdminGraphTotal(weekago, now);
+            if(graph.size()>0){
+                session.setAttribute("REVGRAPH", revgraph);
             }
             
-            url = HOME_PAGE;
-        }catch (SQLException ex) {
-            log("changePasswordServlet_SQLException: " + ex.getMessage());
-        } catch (NamingException ex) {
-            log("changePasswordServlet_NamingException: " + ex.getMessage());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            
+            UserDAO userDao= new UserDAO();
+            userDao.getSaleMembers();
+            List<SaleMember> listsale = userDao.getSaleMemberList();
+            session.setAttribute("SALELIST", listsale);
+            
+        } catch(SQLException ex){
+            log("viewAdminDashboardServlet _ SQL:" + ex.getMessage());
+        } catch(NamingException ex){
+            log("viewAdminDashboardServlet _ Naming:" + ex.getMessage());
+        } finally{
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

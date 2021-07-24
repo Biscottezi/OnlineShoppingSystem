@@ -24,10 +24,10 @@ import user.UserDTO;
  */
 @WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
 public class loginServlet extends HttpServlet {
-    private final String INVALID_PAGE = "Error.html";
+    //private final String INVALID_PAGE = "Error.html";
     private final String HOME_PAGE = "viewHomePageServlet";
     private final String MARKETING_DASHBOARD = "MarketingDashboard.jsp";
-    private final String SALE_MANAGER_DASHBOARD = "SaleManagerDashboard.jsp";
+    private final String SALE_MANAGER_DASHBOARD = "viewSManagerDashboard";
     private final String SALE_MEMBER_DASHBOARD = "SaleMemberDashboard.jsp";
     private final String ADMIN_DASHBOARD = "viewAdminDashboardServlet";
     /**
@@ -42,7 +42,7 @@ public class loginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = INVALID_PAGE;
+        String url = HOME_PAGE;
         
         try{
                 String email = request.getParameter("txtEmail");
@@ -79,6 +79,9 @@ public class loginServlet extends HttpServlet {
                                 break;
                         }
                     }
+                }
+                else{
+                    request.setAttribute("LOGIN_ERROR", "Wrong email or password");
                 }
             
         }catch(SQLException ex){

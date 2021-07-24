@@ -37,7 +37,7 @@ public class ViewSaleDashBoard extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewSaleDashBroad</title>");            
+            out.println("<title>Servlet ViewSaleDashBoard</title>");            
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ViewSaleDashBroad at " + request.getContextPath() + "</h1>");

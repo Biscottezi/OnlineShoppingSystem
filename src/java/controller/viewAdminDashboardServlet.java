@@ -71,7 +71,7 @@ public class viewAdminDashboardServlet extends HttpServlet {
             
             List<totalInOrderTable> graph = orderDao.getAdminGraphTotal(weekago, now);
             if(graph.size()>0){
-                session.setAttribute("GRAPH", customers);
+                session.setAttribute("GRAPH", graph);
             }
             session.setAttribute("DATESTART", weekago);
             session.setAttribute("DATEEND", now);

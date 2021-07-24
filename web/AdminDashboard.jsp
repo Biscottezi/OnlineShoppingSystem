@@ -4,6 +4,7 @@
     Author     : Admin
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -114,6 +115,15 @@
         <c:set var="start" value="${sessionScope.DATESTART}"/>
         <c:set var="end" value="${sessionScope.DATEEND}"/>
         <c:set var="status" value="${sessionScope.STATUS}"/>
+        <c:set var="totalOrder" value="${subOrders+conOrders+shipOrders}"/>
+        <c:set var="totalCustomer" value="${potCustomers+Customers}"/>
+        <c:set var="totalRevenue" value="${0}"/>
+        <c:forEach var="rev" items="${revenue}">
+            <c:if test="${not empty rev.revenue}">
+                <c:set var="totalRevenue" value="${totalRevenue+rev.revenue}"/>
+            </c:if>
+        </c:forEach>
+        <c:set var="fmTotalRevenue"><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${totalRevenue}"/></c:set>
         <div class="wrapper row" style="margin:0;padding:0; max-width: 100%;">
             <div class="wrapper col-2" style="background-color: #363740; min-height:937px; padding-right: 0;">
               <ul class="nav flex-column col">
@@ -177,7 +187,7 @@
                     <div class="col-3 sale-member picker-title"><span id="session-role">Orders</span><br>
                         <div class="select-wrapper">
                             <select class="d-flex align-items-center admin-filter" id="slOrder">
-                                <option value="" disabled selected hidden>Select status</option>
+                                <option value="${totalOrder}" selected>Select status</option>
                                 <option value="${subOrders}">Submitted</option>
                                 <option value="${conOrders}">Confirmed</option>
                                 <option value="${shipOrders}">Shipped</option>
@@ -186,7 +196,7 @@
                         <div class="admin-stats d-flex align-items-center justify-content-center">
                             <div class="details-header">New orders<br>
                                 <span class="details" id="orderscount">
-                                    0
+                                    ${totalOrder}
                                 </span>
                             </div>
                         </div>
@@ -194,94 +204,137 @@
                     <div class="col-3 sale-member picker-title"><span id="session-role">Revenues</span><br>
                         <div class="select-wrapper">
                             <select class="d-flex align-items-center admin-filter" id="slRevenues">
-                                <option value="" selected>Select Category</option>
+                                <option value="${fmTotalRevenue}" selected>Select Category</option>
                                 <option
+                                    <c:set var="phoneRev" value="${0}"/>
                                     <c:forEach var="rev" items="${revenue}">
-                                        <c:choose>
-                                            <c:when test="${rev.categoryID==1}">
-                                            value="${rev.revenue}"
-                                            </c:when>
-                                            <c:otherwise>
-                                            value="0"
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:forEach>>Phone</option>
-                                <option <c:forEach var="rev" items="${revenue}">
-                                        <c:choose>
-                                            <c:when test="${rev.categoryID==2}">
-                                            value="${rev.revenue}"
-                                            </c:when>
-                                            <c:otherwise>
-                                            value="0"
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:forEach>>Laptop</option>
-                                <option <c:forEach var="rev" items="${revenue}">
-                                        <c:choose>
-                                            <c:when test="${rev.categoryID==3}">
-                                            value="${rev.revenue}"
-                                            </c:when>
-                                            <c:otherwise>
-                                            value="0"
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:forEach>>Tablet</option>
-                                <option <c:forEach var="rev" items="${revenue}">
-                                        <c:choose>
-                                            <c:when test="${rev.categoryID==4}">
-                                            value="${rev.revenue}"
-                                            </c:when>
-                                            <c:otherwise>
-                                            value="0"
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:forEach>>Smartwatch</option>
-                                <option <c:forEach var="rev" items="${revenue}">
-                                        <c:choose>
-                                            <c:when test="${rev.categoryID==5}">
-                                            value="${rev.revenue}"
-                                            </c:when>
-                                            <c:otherwise>
-                                            value="0"
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:forEach>>Earphone</option>
+                                        <c:if test="${rev.categoryID==1}">
+                                            <c:set var="phoneRev" value="${phoneRev+rev.revenue}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    <c:set var="phoneRev">
+                                        <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${phoneRev}"/>
+                                    </c:set>
+                                    value="${phoneRev}">Phone</option>
+                                
+                                <option 
+                                    <c:set var="laptopRev" value="${0}"/>
+                                    <c:forEach var="rev" items="${revenue}">
+                                        <c:if test="${rev.categoryID==2}">
+                                            <c:set var="laptopRev" value="${laptopRev+rev.revenue}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    <c:set var="laptopRev">
+                                        <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${laptopRev}"/>
+                                    </c:set>
+                                    value="${laptopRev}">Laptop</option>
+                                
+                                <option 
+                                    <c:set var="tabletRev" value="${0}"/>
+                                    <c:forEach var="rev" items="${revenue}">
+                                        <c:if test="${rev.categoryID==3}">
+                                            <c:set var="tabletRev" value="${tabletRev+rev.revenue}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    <c:set var="tabletRev">
+                                        <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${tabletRev}"/>
+                                    </c:set>
+                                    value="${tabletRev}">Tablet</option>
+                                
+                                <option 
+                                    <c:set var="smWatchRev" value="${0}"/>
+                                    <c:forEach var="rev" items="${revenue}">
+                                        <c:if test="${rev.categoryID==4}">
+                                            <c:set var="smWatchRev" value="${smWatchRev+rev.revenue}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    <c:set var="smWatchRev">
+                                        <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${smWatchRev}"/>
+                                    </c:set>
+                                    value="${smWatchRev}">Smartwatch</option>
+                                
+                                <option 
+                                    <c:set var="earphoneRev" value="${0}"/>
+                                    <c:forEach var="rev" items="${revenue}">
+                                        <c:if test="${rev.categoryID==5}">
+                                            <c:set var="earphoneRev" value="${earphoneRev+rev.revenue}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    <c:set var="earphoneRev">
+                                        <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${earphoneRev}"/>
+                                    </c:set>
+                                    value="${earphoneRev}">Earphone</option>
                             </select>
                         </div><br>
                         <div class="admin-stats d-flex align-items-center justify-content-center">
                             <div class="details-header">USD<br>
-                                <span class="details" id="revenuescount">$0</span>
+                                <span class="details" id="revenuescount">$${fmTotalRevenue}</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-3 sale-member picker-title"><span id="session-role">Customers</span><br>
                         <div class="select-wrapper">
                             <select class="d-flex align-items-center admin-filter" id="slCustomers">
-                                <option value="" selected disabled hidden>Select type</option>
+                                <option value="${totalCustomer}" selected>Select type</option>
                                 <option value="${potCustomers}">Potential</option>
                                 <option value="${Customers}">Customers</option>
                             </select>
                         </div><br>
                         <div class="admin-stats d-flex align-items-center justify-content-center">
                             <div class="details-header">Customers<br>
-                                <span class="details" id="customerscount">0</span>
+                                <span class="details" id="customerscount">${totalCustomer}</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-3 sale-member picker-title"><span id="session-role">Feedbacks</span><br>
                         <div class="select-wrapper">
-                            <select class="d-flex align-items-center admin-filter">
+                            <select class="d-flex align-items-center admin-filter" id="slFeedbacks">
                                 <option value="" selected>Select category</option>
-                                <option>Phone</option>
-                                <option>Laptop</option>
-                                <option>Tablet</option>
-                                <option>Smartwatch</option>
-                                <option>Earphone</option>
+                                <option
+                                    <c:set var="fbPhone" value="${0}"/>
+                                    <c:forEach var="fb" items="${ratedStars}">
+                                        <c:if test="${fb.categoryID==1}">
+                                            <c:set var="fbPhone" value="${fb.averageStar}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    value="${fbPhone}">Phone</option>
+                                <option
+                                    <c:set var="fbLaptop" value="${0}"/>
+                                    <c:forEach var="fb" items="${ratedStars}">
+                                        <c:if test="${fb.categoryID==2}">
+                                            <c:set var="fbLaptop" value="${fb.averageStar}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    value="${fbLaptop}">Laptop</option>
+                                <option
+                                    <c:set var="fbTablet" value="${0}"/>
+                                    <c:forEach var="fb" items="${ratedStars}">
+                                        <c:if test="${fb.categoryID==3}">
+                                            <c:set var="fbTablet" value="${fb.averageStar}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    value="${fbTablet}">Tablet</option>
+                                <option
+                                    <c:set var="fbSmWatch" value="${0}"/>
+                                    <c:forEach var="fb" items="${ratedStars}">
+                                        <c:if test="${fb.categoryID==4}">
+                                            <c:set var="fbSmWatch" value="${fb.averageStar}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    value="${fbSmWatch}">Smartwatch</option>
+                                <option
+                                    <c:set var="fbEarphone" value="${0}"/>
+                                    <c:forEach var="fb" items="${ratedStars}">
+                                        <c:if test="${fb.categoryID==5}">
+                                            <c:set var="fbEarphone" value="${fb.averageStar}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    value="${fbEarphone}">Earphone</option>
                             </select>
                         </div><br>
                         <div class="admin-stats d-flex align-items-center justify-content-center">
                             <div class="details-header">Average stars<br>
-                                <span class="details">4.5</span>
+                                <span class="details" id="feedbackscount">4.5</span>
                             </div>
                         </div>
                     </div>
@@ -371,6 +424,8 @@
             function drawChart() {
                 var data = google.visualization.arrayToDataTable([
                     ['Date', 'Orders'],
+                    ['20 Jul', 5],
+                    ['20 Jul', 10],
                     <c:if test="${empty graph}">
                         ['', 0]
                     </c:if>
@@ -407,6 +462,11 @@
         $(document).ready(function() {
             $('#slCustomers').change(function(event) {
                 $("#customerscount").text($(this).val());
+            });
+        });
+        $(document).ready(function() {
+            $('#slFeedbacks').change(function(event) {
+                $("#feedbackscount").text($(this).val());
             });
         });
         <c:if test="${not empty start || not empty end && status>=2}" >

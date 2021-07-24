@@ -41,7 +41,7 @@
                         <c:set var="productCategoryList" value="${requestScope.PRODUCT_CATEGORY}"/>
                         <c:forEach var="productCategory" items="${productCategoryList}">
                         <div class="category">
-                            <a href="">${productCategory.name}</a>
+                            <a href="viewProdByCate?categoryID=${productCategory.id}">${productCategory.name}</a>
                         </div>
                         </c:forEach>
                     </div>
@@ -56,7 +56,7 @@
                             <h2>${product.title}</h2>
                             <span>Star: 4/5</span>
                             <c:choose>
-                                <c:when test="${not empty product.listPrice}">
+                                <c:when test="${product.salePrice != 0}">
                                     <h4 style="text-decoration: line-through">$${product.listPrice}</h4>
                                     <h1>$${product.salePrice}</h1>
                                 </c:when>

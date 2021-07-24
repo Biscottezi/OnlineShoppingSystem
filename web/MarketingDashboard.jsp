@@ -113,7 +113,7 @@
                         <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col"><img src="img/logo.png" alt=""/></div>
-                                <div class="col">Admin <br> Dashboard</div>
+                                <div class="col">Marketing <br> Dashboard</div>
                             </div>
                         </div>
                     </div>
