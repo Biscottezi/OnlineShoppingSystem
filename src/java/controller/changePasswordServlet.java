@@ -24,7 +24,7 @@ import user.UserDAO;
 @WebServlet(name = "changePasswordServlet", urlPatterns = {"/changePasswordServlet"})
 public class changePasswordServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
-    private final String HOME_PAGE = "homepage.jsp";
+    private final String HOME_PAGE = "viewHomePageServlet";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -66,6 +66,7 @@ public class changePasswordServlet extends HttpServlet {
                 request.setAttribute("CHANGE_PASS_ERR", error);
             }else{
                 dao.resetNewPassword(Integer.parseInt(userID), newPassword);
+                request.getSession(false).invalidate();
             }
             
             url = HOME_PAGE;
@@ -74,7 +75,7 @@ public class changePasswordServlet extends HttpServlet {
         } catch (NamingException ex) {
             log("changePasswordServlet_NamingException: " + ex.getMessage());
         } finally {
-            response.sendRedirect(url);
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

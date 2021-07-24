@@ -159,24 +159,30 @@
                 </div>
         
                 <!--Change password-->
-                <div id="change-pwd" class="container pop-up form-col">
+                <c:set var="error" value="${requestScope.CHANGE_PASS_ERR}"/>
+                <div id="change-pwd" class="container pop-up form-col" <c:if test="${not empty error}">style="display: block"</c:if> >
                     <div class="close-btn" onclick="closePopUp('change-pwd')">
                         <i class="far fa-times-circle"></i>
                     </div>
                     <div class="container">
                         <div class="col-12">
                             <h1>Change Password</h1>
-                            <form action="" method="POST" class="form">
+                            <form action="changePass" method="POST" class="form">
                                 <div class="form-group">
-                                    <input class="form-control" type="password" placeholder="Current Password">
+                                    <input class="form-control" type="password" placeholder="Current Password" name="txtOldPassword">
+                                    <p style="color: red">${error.oldPassErr}</p>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" type="password" placeholder="New Password">
+                                    <input class="form-control" type="password" placeholder="New Password" name="txtNewPassword">
+                                    <p style="color: red">${error.newPassErr}</p>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" type="password" placeholder="Confirm New Password">
+                                    <input class="form-control" type="password" placeholder="Confirm New Password" name="txtConfirmPassword">
+                                    <p style="color: red">${error.confirmPassErr}</p>
                                 </div>
                                 <button type="submit" class="form-col-btn forgot-btn">Change Password</button>
+                                <input type="hidden" name="userID" value="${user.id}"/>
+                                <input type="hidden" name="password" value="${user.password}"/>
                             </form>
                         </div>
                     </div>
@@ -224,7 +230,7 @@
             </c:when>
             <c:otherwise>
         <!--Login form-->
-        <div id="login" class="container pop-up">
+        <div id="login" class="container pop-up" <c:if test="${not empty requestScope.LOGIN_ERROR}">style="display: block"</c:if> > 
             <div class="row">
                 <div class="col-4 welcome">
                     <div class="container">
@@ -240,6 +246,8 @@
                     <div class="container">
                         <div class="col-12">
                             <h1>Sign in</h1>
+                            <c:set var="error" value="${requestScope.LOGIN_ERROR}"/>
+                            <p style="color: red">${error}</p>
                             <form action="login" method="POST" class="form">
                                 <div class="form-group">
                                     <input class="form-control" type="text" placeholder="Email" name="txtEmail">
