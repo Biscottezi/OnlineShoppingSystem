@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import order.OrderDAO;
+import order.beforeRevenue;
 import order.totalInOrderTable;
 import user.SaleMember;
 import user.UserDAO;
@@ -56,13 +57,16 @@ public class viewSManagerDashboardServlet extends HttpServlet {
                 session.setAttribute("ORDERGRAPH", graph);
             }
             
+            List<beforeRevenue> beforeRevenueList = orderDao.getBeforeRevenue();
+            
             List<totalInOrderTable> revgraph = orderDao.getAdminGraphTotal(weekago, now);
             if(graph.size()>0){
                 session.setAttribute("REVGRAPH", revgraph);
             }
             
+            
             UserDAO userDao= new UserDAO();
-            userDao.getSaleMemberActive();
+            userDao.getSaleMembers();
             List<SaleMember> listsale = userDao.getSaleMemberList();
             session.setAttribute("SALELIST", listsale);
             

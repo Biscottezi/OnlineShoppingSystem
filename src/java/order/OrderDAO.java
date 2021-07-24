@@ -885,7 +885,7 @@ public class OrderDAO implements Serializable{
         return totalList;
     }
     
-    public List<beforeRevenue> getBeforeRevenuebyDate(String startdate, String enddate, int saleId) throws SQLException, NamingException{
+    public List<beforeRevenue> getTotalBeforeRevenuebyDate(String startdate, String enddate) throws SQLException, NamingException{
         Connection con = null;
         CallableStatement stm = null;
         ResultSet rs = null;
@@ -893,14 +893,14 @@ public class OrderDAO implements Serializable{
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "SELECT sum(od.Quantity*p.SalePrice) AS SalePrice, sum(od.Quantity*p.ListPrice) AS ListPrice, convert(varchar, OrderedDate, 101) AS OrderDate, p.ProductCategoryID "
-                        + "FROM ([Order] o JOIN OrderDetail od ON o.OrderID = od.OrderID) JOIN Product p ON od.ProductID = p.ProductID "
-                        + "WHERE OrderedDate >= ? AND OrderedDate <= ? AND SaleMemberID=?"
-                        + "GROUP BY convert(varchar, OrderedDate, 101), p.ProductCategoryID ";
+                String sql = "SELECT sum(od.Quantity*p.SalePrice) AS SalePrice, sum(od.Quantity*p.ListPrice) AS ListPrice, convert(varchar(6), OrderedDate, 106) AS OrderDate, p.ProductCategoryID " 
+                           + "FROM ([Order] o JOIN OrderDetail od ON o.OrderID = od.OrderID) JOIN Product p ON od.ProductID = p.ProductID "
+                           + "WHERE OrderedDate >= ?  AND OrderedDate <= ? "
+                           + "GROUP BY convert(varchar(6), OrderedDate, 106), p.ProductCategoryID "
+                           + "ORDER BY OrderDate ASC";
                 stm = con.prepareCall(sql);
                 stm.setString(1, startdate);
                 stm.setString(2, enddate);
-                stm.setInt(3, saleId);
                 
                 rs = stm.executeQuery();
                 
