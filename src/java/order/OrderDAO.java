@@ -157,10 +157,10 @@ public class OrderDAO implements Serializable{
             }
         } finally {
             if (rs != null) {
-                con.close();
+                rs.close();
             }
             if (stm != null) {
-                con.close();
+                stm.close();
             }
             if (con != null) {
                 con.close();
@@ -281,9 +281,7 @@ public class OrderDAO implements Serializable{
                 
                 if (rs.next()) {
                      status = rs.getInt("Status");
-                    
                 }
-                
             }
         } finally {
             if (rs != null) {
@@ -414,6 +412,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if (con != null) {
+                con.close();
             }
         }
     }
@@ -460,7 +459,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
-
+                con.close();
             }
         }
     }
@@ -495,7 +494,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
-
+                con.close();
             }
         }
         return total;
@@ -533,7 +532,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
-
+                con.close();
             }
         }
         return totalPotCus;
@@ -571,7 +570,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
-
+                con.close();
             }
         }
         return totalCus;
@@ -616,7 +615,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
-
+                con.close();
             }
         }
         return beforeRevenueList;
@@ -801,7 +800,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
-
+                con.close();
             }
         }
         return totalList;
@@ -841,6 +840,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
+                con.close();
             }
         }
         return totalList;
@@ -880,6 +880,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
+                con.close();
             }
         }
         return totalList;
@@ -919,6 +920,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
+                con.close();
             }
         }
         return totalList;
@@ -958,6 +960,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
+                con.close();
             }
         }
         return totalList;
@@ -998,6 +1001,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
+                con.close();
             }
         }
         return totalList;
@@ -1032,10 +1036,10 @@ public class OrderDAO implements Serializable{
             }
         } finally {
             if (rs != null) {
-                con.close();
+                rs.close();
             }
             if (stm != null) {
-                con.close();
+                stm.close();
             }
             if (con != null) {
                 con.close();
@@ -1080,7 +1084,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
-
+                con.close();
             }
         }
         return revenueList;
@@ -1123,7 +1127,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
-
+                con.close();
             }
         }
         return revenueList;

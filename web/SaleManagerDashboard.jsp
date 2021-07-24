@@ -88,9 +88,13 @@
             #saleselect{
                  width: 400px;
             }
+            .viewbtn{
+                height: 38px;
+            }
         </style>
     </head>
     <body style="width: 100%; height:100%; margin: 0; padding: 0; background-color: #F7F8FC">
+        <c:set var="user" value="${sessionScope.USER}"/>
         <c:set var="SaleList" value="${sessionScope.SALELIST}"/>
         <c:set var="graphOrder" value="${sessionScope.ORDERGRAPH}"/>
         <c:set var="graphRev" value="${sessionScope.REVGRAPH}"/>
@@ -145,10 +149,10 @@
                     <div class="col-7"></div>
                     <div class="col row">
                         <div class="d-flex justify-content-end col-10 align-items-center" id="user">
-                            Trần Tân Long <!-- input jstl session user here! -->
+                            ${user.name} <!-- input jstl session user here! -->
                         </div>
                         <div class="profile col-2">
-                            <div id="avatar" class="ava" style="background-image: url(img/tanlong.png);" onclick="showPopup()"></div> <!-- get session's avatar -->
+                            <div id="avatar" class="ava" style="background-image: url(img/${user.avatar});" onclick="showPopup()"></div> <!-- get session's avatar -->
                         </div>
                     </div>
                 </div>
@@ -189,7 +193,7 @@
                         </div>
                     </div>
                     <div class="col-3 sale-member picker-title">
-                        <input type="submit" value="View" name="btAction" form="changeGraph"/>
+                        <input type="submit" value="View" name="btAction" form="changeGraph" class="viewbtn"/>
                     </div>
                 </div>
                 
@@ -222,11 +226,11 @@
         <div class="popupwrapper" id="usermenu" style="padding:0;margin:0;">
             <div class="pro5 row popupitem">
                 <div class="col-3 d-flex align-items-center justify-content-center" style="padding:0;">
-                    <div id="menuavatar" style="background-image: url(img/tanlong.png);"></div>
+                    <div id="menuavatar" style="background-image: url(img/${user.avatar});"></div>
                 </div>
                 <div class="col-9 d-flex align-items-center description">
                     <div class="descwrapper">
-                        <p class="menu-itemtitle">Trần Tân Long</p>
+                        <p class="menu-itemtitle">${user.name}</p>
                         <p>See your profile</p>
                     </div>
                 </div>
@@ -246,7 +250,7 @@
                 <div class="col-9 d-flex align-items-center description menu-itemtitle">Sign Out</div>
             </div>
         </div>
-        <form id="changeGraph" action="changeAdminGraph" method="POST"></form>
+        <form id="changeGraph" action="changeSaleGraph" method="POST"></form>
         <script>
             $('#datepicker').daterangepicker({
                 "showDropdowns": true,

@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,12 +46,12 @@ public class changeSaleGraphServlet extends HttpServlet {
         String url = ERROR_PAGE;
         String daterange = request.getParameter("daterange");
         int saleid=0;
-        if (!request.getParameter("slSaleName").isEmpty()) {
+        if (request.getParameter("slSaleName")!=null && !request.getParameter("slSaleName").isEmpty()) {
             saleid = Integer.parseInt(request.getParameter("slSaleName"));
         }
         HttpSession session = request.getSession(false);
         int status=0;
-        if (!request.getParameter("graphstatus").isEmpty()) {
+        if (request.getParameter("graphstatus")!=null && !request.getParameter("graphstatus").isEmpty()) {
             status = Integer.parseInt(request.getParameter("graphstatus"));
         }
         String[] date = daterange.split(" - ");
@@ -100,15 +101,20 @@ public class changeSaleGraphServlet extends HttpServlet {
                 }
             }
             //end revenuegraph
+            request.setAttribute("DATESTART", start);
+            request.setAttribute("DATEEND", end);
+            request.setAttribute("DATEEND", end);
+            url=SALE_PAGE;
         } 
         catch(SQLException ex){
-            log("changeAdminGraphServlet _ SQL:" + ex.getMessage());
+            log("changeAdminGraphServlet_SQL:" + ex.getMessage());
         }
         catch(NamingException ex){
-            log("changeAdminGraphServlet _ Naming:" + ex.getMessage());
+            log("changeAdminGraphServlet_Naming:" + ex.getMessage());
         }
         finally{
-            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

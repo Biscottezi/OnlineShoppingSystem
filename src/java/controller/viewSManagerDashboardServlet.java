@@ -32,7 +32,7 @@ import user.UserDAO;
 @WebServlet(name = "viewSManagerDashboardServlet", urlPatterns = {"/viewSManagerDashboardServlet"})
 public class viewSManagerDashboardServlet extends HttpServlet {
     
-    private final String SMANAGER_DASHBOARD = "SaleManagerDashboard.jsp";
+    private final String SMANAGER_DASHBOARD = "SaleManagerDashboard";
     private final String ERROR_PAGE = "Error.html";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -70,10 +70,9 @@ public class viewSManagerDashboardServlet extends HttpServlet {
         } catch(SQLException ex){
             log("viewSManagerDashboardServlet_SQL:" + ex.getMessage());
         } catch(NamingException ex){
-            log("viewSManagerDashboardServlet:" + ex.getMessage());
+            log("viewSManagerDashboardServlet_Naming:" + ex.getMessage());
         } finally{
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            response.sendRedirect(url);
         }
     }
 
