@@ -33,3 +33,7 @@ function resetNoti(){
 function openChangePwd(){
     document.getElementById("change-pwd").style.display = "block";
 }
+
+function openProfile(){
+    document.getElementById("user-profile").style.display = "block";
+}

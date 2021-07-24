@@ -59,3 +59,6 @@ viewUserDetails = viewUserDetailsPageServlet
 viewAdminDashboard = viewAdminDashboardServlet
 changeAdminGraph = changeAdminGraphServlet
 AdminDashboard = AdminDashboard.jsp
+updateProfile = updateUserProfileServlet
+viewProdByCate = viewProductByCategoryServlet
+updateUserDetails = updateUserDetailsServlet

@@ -24,8 +24,8 @@ import user.UserDTO;
  */
 @WebServlet(name = "updateUserProfileServlet", urlPatterns = {"/updateUserProfileServlet"})
 public class updateUserProfileServlet extends HttpServlet {
-    private final String ERROR_PAGE = "Error.html";
-    private final String HOME_PAGE = "homepage.jsp";
+    private final String ERROR_PAGE = "error";
+    private final String HOME_PAGE = "viewHomePage";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

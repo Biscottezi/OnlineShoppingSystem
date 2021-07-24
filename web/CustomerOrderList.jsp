@@ -74,7 +74,7 @@
                                         <td>${order.orderedDate}</td>
                                         <td>
                                             <c:set var="details" value="${order.details}"/>
-                                            <c:forEach var="detail" items="${details}" begin="0" end="0">${detail.productName}</c:forEach>and ${order.noOfProd} more product(s)
+                                            <c:forEach var="detail" items="${details}" begin="0" end="0">${detail.productName}</c:forEach> and ${order.noOfProd} more product(s)
                                         </td>
                                         <td>${order.total}</td>
                                         <td>
