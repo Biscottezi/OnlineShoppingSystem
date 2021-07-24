@@ -110,7 +110,7 @@
                     <div class="col-7"></div>
                     <div class="col row">
                         <div class="d-flex justify-content-end col-10 align-items-center" id="user">
-                            ${session.name} <!-- input jstl session user here! -->
+                            ${user.name} <!-- input jstl session user here! -->
                         </div>
                         <div class="profile col-2">
                             <div id="avatar" class="ava" style="background-image: url(img/${user.avatar});" onclick="showPopup()"></div> <!-- get session's avatar -->
@@ -122,7 +122,9 @@
                 <div class="listwrapper">
                     <!-- list header -->
                     <div class="listheader row">
-                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">User ID: ${userdet.id}</div>
+                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">User ID: ${userdet.id}
+                            <input type="hidden" value="${userdet.id}" name="txtUserID" form="updateform"/>
+                        </div>
                         <div class="col-6 row"></div>
                         <div class="extended col-4 row d-flex"></div>
                     </div>
@@ -172,18 +174,20 @@
                         <div class="col-6">
                             Status<br>
                             <div class="statuswrapper row d-flex align-items-end" style="margin:0;">
-                                <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">
-                                    <c:if test="${user.status==1}">
+                                <div class="status col-3 d-flex align-items-center justify-content-center newstatus
+                                    <c:if test="${userdet.status==1}">enable</c:if>
+                                    <c:if test="${userdet.status==0}">disable</c:if>" id="createstatus">
+                                    <c:if test="${userdet.status==1}">
                                     ENABLED
                                     </c:if>
-                                    <c:if test="${user.status==0}">
+                                    <c:if test="${userdet.status==0}">
                                     DISABLED
                                     </c:if>
                                 </div>
                                 <input type="checkbox" name="chkStatus" value="ON" 
-                                    <c:if test="${user.status==1}">
+                                    <c:if test="${userdet.status==1}">
                                     checked="checked"
-                                    </c:if> id="statuschkbox" class="col-1"  form="updateform"/>
+                                    </c:if> id="statuschkbox" class="col-1" form="updateform"/>
                             </div>
                         </div>
                         <div class="col-2"></div>
@@ -230,6 +234,6 @@
             </div>
         </div>
         
-        <form action="updateUser" id="updateform"></form>
+        <form action="updateUserDetails" id="updateform" method="POST"></form>
     </body>
 </html>
