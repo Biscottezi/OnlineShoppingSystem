@@ -6,7 +6,10 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,21 +18,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import order.OrderDAO;
+import order.totalInOrderTable;
+import user.SaleMember;
 import user.UserDAO;
-import user.UserDTO;
 
 /**
  *
- * @author ASUS
+ * @author Admin
  */
-@WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
-public class loginServlet extends HttpServlet {
-    //private final String INVALID_PAGE = "Error.html";
-    private final String HOME_PAGE = "viewHomePageServlet";
-    private final String MARKETING_DASHBOARD = "MarketingDashboard.jsp";
-    private final String SALE_MANAGER_DASHBOARD = "viewSManagerDashboard";
-    private final String SALE_MEMBER_DASHBOARD = "SaleMemberDashboard.jsp";
-    private final String ADMIN_DASHBOARD = "viewAdminDashboardServlet";
+@WebServlet(name = "viewSManagerDashboardServlet", urlPatterns = {"/viewSManagerDashboardServlet"})
+public class viewSManagerDashboardServlet extends HttpServlet {
+    
+    private final String SMANAGER_DASHBOARD = "SaleManagerDashboard.jsp";
+    private final String ERROR_PAGE = "Error.html";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,55 +44,35 @@ public class loginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = HOME_PAGE;
+        String url = ERROR_PAGE;
+        String now = java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        String weekago = java.time.LocalDate.now().minusDays(7).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        HttpSession session = request.getSession(false);
         
-        try{
-                String email = request.getParameter("txtEmail");
-                String password = request.getParameter("txtPassword");
-                UserDAO dao = new UserDAO();
-                boolean result = dao.checkLogin(email, password);
-                
-                if(result){
-                    UserDTO user = dao.getUser();
-                    if(user.getStatus() == 0){
-                        request.setAttribute("LOGIN_ERROR", "This account is disable");
-                    }else{
-                        HttpSession session = request.getSession(true);
-
-                        session.setAttribute("USER", user);
-
-                        int role = user.getRole();
-                        switch (role){
-                            case 0:
-                                url = MARKETING_DASHBOARD;
-                                break;
-                            case 1:
-                                url = SALE_MEMBER_DASHBOARD;
-                                break;
-                            case 2:
-                                url = SALE_MANAGER_DASHBOARD;
-                                break;
-                            case 3:
-                                url = ADMIN_DASHBOARD;
-                                break;
-                            case 4:
-                                url = HOME_PAGE;
-                                break;
-                        }
-                    }
-                }
-                else{
-                    request.setAttribute("LOGIN_ERROR", "Wrong email or password");
-                }
+        try {
+            OrderDAO orderDao = new OrderDAO();
+            List<totalInOrderTable> graph = orderDao.getAdminGraphTotal(weekago, now);
+            if(graph.size()>0){
+                session.setAttribute("ORDERGRAPH", graph);
+            }
             
-        }catch(SQLException ex){
-            log("LoginServlet _ SQL:" + ex.getMessage());
-        }catch(NamingException ex){
-            log("LoginServlet _ Naming:" + ex.getMessage());
-        }finally{
+            List<totalInOrderTable> revgraph = orderDao.getAdminGraphTotal(weekago, now);
+            if(graph.size()>0){
+                session.setAttribute("REVGRAPH", revgraph);
+            }
+            
+            UserDAO userDao= new UserDAO();
+            userDao.getSaleMemberActive();
+            List<SaleMember> listsale = userDao.getSaleMemberList();
+            session.setAttribute("SALELIST", listsale);
+            
+        } catch(SQLException ex){
+            log("viewAdminDashboardServlet _ SQL:" + ex.getMessage());
+        } catch(NamingException ex){
+            log("viewAdminDashboardServlet _ Naming:" + ex.getMessage());
+        } finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
-//                response.sendRedirect(url);
         }
     }
 

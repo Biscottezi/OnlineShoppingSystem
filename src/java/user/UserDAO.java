@@ -30,9 +30,14 @@ public class UserDAO implements Serializable {
     }
     
     private List<UserDTO> userList;
+    private List<SaleMember> saleList;
 
     public List<UserDTO> getUserList() {
         return userList;
+    }
+    
+    public List<SaleMember> getSaleMemberList() {
+        return saleList;
     }
 
     public boolean checkLogin(String email, String password)
@@ -357,26 +362,29 @@ public class UserDAO implements Serializable {
         return false;
     }
 
-    public int getSaleMemberActive() throws SQLException, NamingException{
+    public void getSaleMemberActive() throws SQLException, NamingException{
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "SELECT TOP 1 UserID "
-                        + "FROM [User] "
-                        + "Where Role = 1 AND Status = 1 ";
-                stm = con.prepareStatement(sql);
-                
+                String sql = "Select UserID, Name "
+                           + "From [User] " 
+                           + "WHERE [Role] = 1 AND Status = 1";
+                stm = con.prepareCall(sql);
                 rs = stm.executeQuery();
                 
                 while(rs.next()){
                     int UserID = rs.getInt("UserID");
-                    return UserID;
+                    String Name = rs.getString("Name");
+
+                    SaleMember smember = new SaleMember(UserID, Name);
+                    if(this.saleList == null){
+                        this.saleList = new ArrayList<>();
+                    }
+                    this.saleList.add(smember);
                 }
-                //return UserID;
-                
             }
         }finally{
             if(rs != null){
@@ -389,7 +397,6 @@ public class UserDAO implements Serializable {
                 con.close();
             }
         }
-        return  0;
     }
     
     public boolean updateCustomer(int cusID, String name, int gender, String address, String phone)

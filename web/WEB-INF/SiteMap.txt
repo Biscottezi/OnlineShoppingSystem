@@ -63,3 +63,4 @@ updateProfile = updateUserProfileServlet
 viewProdByCate = viewProductByCategoryServlet
 changePass = changePasswordServlet
 updateUserDetails = updateUserDetailsServlet
+viewSManagerDashboard = viewSManagerDashboardServlet
