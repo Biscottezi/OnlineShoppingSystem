@@ -479,8 +479,8 @@ public class UserDAO implements Serializable {
                 //B2. create SQL string 
 
                 String sql = "UPDATE [User] "
-                        + "SET Password = ?"
-                        + "WHERE UserID = ?";
+                        + "SET Password = ? "
+                        + "WHERE UserID = ? ";
 
                 stm = con.prepareStatement(sql);
                 stm.setString(1, password);
