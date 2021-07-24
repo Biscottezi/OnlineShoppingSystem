@@ -68,6 +68,19 @@
             .show {
                 display:block;
             }
+            #createpopup{
+                overflow: auto;
+                padding-bottom: 35px;
+            }
+            .inputbox:focus{
+                border: 2px solid black;
+            }
+            #prod-dscrpt{
+                width: 1080px;
+                height: 170px;
+                color: black;
+                font-size: 22px;
+            }
         </style>
     </head>
     <body style="width: 100%; height:100%; margin: 0; padding: 0; background-color: #F7F8FC">
@@ -283,6 +296,76 @@
             </div>
         </div>
         
-        
+        <div class="popupwrapperadd" id="createpopup">
+            <div class="title row">Create Post</div>
+            <div class="info row">
+                <div class="col">
+                    Title<br>
+                    <input class="inputbox" type="text" name="txtTitle" value="" form="createform" required/>
+                </div>
+                <div class="col">
+                    Category<br>
+                    <select id="gender" class="inputbox" form="createform" name="categoryID" required>
+                        <option value="" selected disabled hidden>Select category</option>
+                        <option value="1">Đánh giá</option>
+                        <option value="2">Mẹo hay</option>
+                        <option value="3">Tư vấn</option>
+                    </select>
+                </div>
+            </div>
+            <div class="info row">
+                <div class="col">
+                    Thumbnail<br>
+                    <div class="avawrapper row">
+                        <img id="avapreview" class="col-3" src="http://placehold.it/180" onchange="showPreview();">
+                        <input type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="createform" name="productThumbnail"/>
+                        <div class="col-4 d-flex align-items-end" style="padding-top: 117px;">
+                            <label for="upload" class="d-flex align-items-center justify-content-center uplbtn">
+                                <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    Brief Info<br>
+                    <textarea class="inputbox" id="address" type="text" name="txtBriefInfo" value="" form="createform" required></textarea>
+                </div>
+            </div>
+            <div class="info row">
+                <div class="col">
+                    Author<br>
+                    <input class="inputbox" type="text" name="txtAuthor" value="" form="createform" required/>
+                </div>
+                <div class="col">
+                    <div style="margin-top:12px;">Featured</div>
+                    <input type="checkbox" name="chkFeatured" value="ON" checked="checked" id="" class="col-1"  form="createform" style="zoom: 2; margin-top: 1em"/>
+                </div>
+            </div>
+            <div class="info">
+                <p class="input-title">Description</p>
+                <textarea class="inputbox" id="prod-dscrpt" form="createform" name="txtDescription" required></textarea>
+            </div>
+            <div class="info row">
+                <div class="col-6">
+                    Status<br>
+                    <div class="statuswrapper row d-flex align-items-end">
+                        <div class="status enable col-3 d-flex align-items-center justify-content-center newstatus" id="createstatus">ENABLED</div>
+                        <input type="checkbox" name="chkStatus" value="1" checked="checked" id="statuschkbox" class="col-1"  form="createform"/>
+                    </div>
+                </div>
+                <div class="col-2"></div>
+                <div class="col-4">
+                    <div class="savewrapper row d-flex align-items-end">
+                        <div class="col" id="cancelbtn" onclick="closeCreatePopup();">Cancel</div>
+                        <div class="col" style="padding-right: 56px;">
+                            <input type="submit" value="Create" name="btAction" id="createbtn" form="createform"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                        
+        <form action="" id="createform" method="POST" enctype="multipart/form-data"></form>
+                        
     </body>
 </html>
