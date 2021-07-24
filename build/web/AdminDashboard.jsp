@@ -424,6 +424,8 @@
             function drawChart() {
                 var data = google.visualization.arrayToDataTable([
                     ['Date', 'Orders'],
+                    ['20 Jul', 5],
+                    ['20 Jul', 10],
                     <c:if test="${empty graph}">
                         ['', 0]
                     </c:if>
