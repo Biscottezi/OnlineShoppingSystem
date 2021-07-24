@@ -431,7 +431,7 @@ public class OrderDAO implements Serializable{
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "SELECT DISTINCT OrderedDate, ReceiverName, ReceiverAddress, ReceiverEmail, ReceiverGender, ReceiverPhone, "
+                String sql = "SELECT DISTINCT OrderedDate, ReceiverName, ReceiverAddress, ReceiverEmail, ReceiverGender, ReceiverPhone "
                         + "FROM [Order] "
                         + "WHERE CustomerID is null";
                 stm = con.prepareCall(sql);

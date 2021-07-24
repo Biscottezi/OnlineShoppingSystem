@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import user.UserDAO;
+import user.UserDTO;
 
 /**
  *
@@ -49,6 +50,9 @@ public class updateUserProfileServlet extends HttpServlet {
             boolean result = userDao.updateUserProfile(Integer.parseInt(userID), name, Integer.parseInt(gender), phone, address);
             CustomerOldDetailsDAO oldDao = new CustomerOldDetailsDAO();
             oldDao.AddCustomerOldDetails(name, Integer.parseInt(gender), address, phone, Integer.parseInt(userID));
+            userDao.getUserByID(Integer.parseInt(userID));
+            UserDTO userDto = userDao.getUser();
+            request.setAttribute("USER", userDto);
             if(result){
                 url = HOME_PAGE;
             }
