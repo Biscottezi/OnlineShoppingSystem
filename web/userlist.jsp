@@ -123,7 +123,7 @@
                     <div class="col-7"></div>
                     <div class="col row">
                         <div class="d-flex justify-content-end col-10 align-items-center" id="user">
-                            ${user.name} <!-- input jstl session user here! -->
+                            ${user.name} <!-- input jstl session user hereeeeeeeeee! -->
                         </div>
                         <div class="profile col-2">
                             <div id="avatar" class="ava" style="background-image: url(img/${user.avatar});" onclick="showPopup()"></div> <!-- get session's avatar -->
@@ -166,33 +166,33 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <c:set var="users" value="${requestScope.USER_LIST}"/>
-                        <c:forEach var="user" items="${users}">
-                        <tr style="height: 92px;" onclick="location.href='viewUserDetails?userID=${user.id}'">
-                          <td class="align-middle" style="text-align: center">${user.id}</td>
-                          <td class="align-middle">${user.name}</td>
+                        <c:set var="userlist" value="${requestScope.USER_LIST}"/>
+                        <c:forEach var="useritem" items="${userlist}">
+                        <tr style="height: 92px;" onclick="location.href='viewUserDetails?userID=${useritem.id}'">
+                          <td class="align-middle" style="text-align: center">${useritem.id}</td>
+                          <td class="align-middle">${useritem.name}</td>
                           <td class="align-middle">
-                              <c:if test="${user.gender==1}">
+                              <c:if test="${useritem.gender==1}">
                                   Male
                               </c:if>
-                              <c:if test="${user.gender==0}">
+                              <c:if test="${useritem.gender==0}">
                                   Female
                               </c:if>
                           </td>
-                          <td class="align-middle">${user.email}</td>
-                          <td class="align-middle">${user.phone}</td>
+                          <td class="align-middle">${useritem.email}</td>
+                          <td class="align-middle">${useritem.phone}</td>
                           <td class="align-middle">
                               <c:choose>
-                                  <c:when test="${user.role==0}">
+                                  <c:when test="${useritem.role==0}">
                                       Marketing
                                   </c:when>
-                                  <c:when test="${user.role==1}">
+                                  <c:when test="${useritem.role==1}">
                                       Sale
                                   </c:when>
-                                  <c:when test="${user.role==2}">
+                                  <c:when test="${useritem.role==2}">
                                       Sale Manager
                                   </c:when>
-                                  <c:when test="${user.role==3}">
+                                  <c:when test="${useritem.role==3}">
                                       Admin
                                   </c:when>
                                   <c:otherwise>
@@ -202,12 +202,12 @@
                           </td>
                           <td class="align-middle" style="width:150px;">
                               <div class="d-flex align-items-center justify-content-center status 
-                                  <c:if test="${user.status==1}">enable</c:if>
-                                  <c:if test="${user.status==0}">disable</c:if>">
-                                  <c:if test="${user.status==1}">
+                                  <c:if test="${useritem.status==1}">enable</c:if>
+                                  <c:if test="${useritem.status==0}">disable</c:if>">
+                                  <c:if test="${useritem.status==1}">
                                   ENABLED
                                   </c:if>
-                                  <c:if test="${user.status==0}">
+                                  <c:if test="${useritem.status==0}">
                                   DISABLED
                                   </c:if>
                               </div>

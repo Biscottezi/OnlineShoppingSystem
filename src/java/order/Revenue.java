@@ -26,6 +26,11 @@ public class Revenue implements Serializable{
         this.categoryID = categoryID;
     }
 
+    public Revenue(float revenue, String date) {
+        this.revenue = revenue;
+        this.date = date;
+    }
+
     /**
      * @return the revenue
      */

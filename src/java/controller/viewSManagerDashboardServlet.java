@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import order.OrderDAO;
+import order.Revenue;
 import order.beforeRevenue;
 import order.totalInOrderTable;
 import user.SaleMember;
@@ -48,32 +50,28 @@ public class viewSManagerDashboardServlet extends HttpServlet {
         String url = ERROR_PAGE;
         String now = java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         String weekago = java.time.LocalDate.now().minusDays(7).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        String monthago = java.time.LocalDate.now().minusMonths(1).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         HttpSession session = request.getSession(false);
         
         try {
             OrderDAO orderDao = new OrderDAO();
-            List<totalInOrderTable> graph = orderDao.getAdminGraphTotal(weekago, now);
+            List<totalInOrderTable> graph = orderDao.getAdminGraphTotal(monthago, now);
             if(graph.size()>0){
                 session.setAttribute("ORDERGRAPH", graph);
             }
             
-            List<beforeRevenue> beforeRevenueList = orderDao.getBeforeRevenue();
-            
-            List<totalInOrderTable> revgraph = orderDao.getAdminGraphTotal(weekago, now);
-            if(graph.size()>0){
-                session.setAttribute("REVGRAPH", revgraph);
-            }
-            
+            List<Revenue> revenueList = orderDao.getTotalBeforeRevenuebyDate(monthago,now);
+            session.setAttribute("REVGRAPH", revenueList);
             
             UserDAO userDao= new UserDAO();
             userDao.getSaleMembers();
             List<SaleMember> listsale = userDao.getSaleMemberList();
             session.setAttribute("SALELIST", listsale);
-            
+            url= SMANAGER_DASHBOARD;
         } catch(SQLException ex){
-            log("viewAdminDashboardServlet _ SQL:" + ex.getMessage());
+            log("viewAdminDashboardServlet_SQL:" + ex.getMessage());
         } catch(NamingException ex){
-            log("viewAdminDashboardServlet _ Naming:" + ex.getMessage());
+            log("viewAdminDashboardServlet_Naming:" + ex.getMessage());
         } finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
