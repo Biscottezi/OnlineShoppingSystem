@@ -87,7 +87,7 @@
                             <!--Contact form-->
                             <div class="contact-form container col-12">
                                 <h6>Contact Info</h6>
-                                <form action="" method="POST" id="contact-info">
+                                <form action="checkout" method="POST" id="contact-info">
                                     <div class="row frm-ctrl">
                                         <label for="txtReceiverName" class="col-3">Full Name:</label>
                                         <input type="text" name="txtReceiverName" value="" required>
@@ -129,7 +129,7 @@
                             <br>
                             <div class="d-flex justify-content-between">
                                 <button class="btn-change" onclick="location.href='viewCart'">CHANGE</button>
-                                <button class="btn-submit" name="btAction" form="contact-info" onclick="location.href='checkout'">SUBMIT</button>
+                                <button class="btn-submit" name="btAction" form="contact-info" type="submit">SUBMIT</button>
                             </div>
                         </div>
                     </div>

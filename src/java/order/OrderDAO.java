@@ -42,7 +42,7 @@ public class OrderDAO implements Serializable{
             connection = DBHelper.makeConnection();
             if (connection != null) {
                 String orderSQLString = "SELECT OrderID, Status, OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID "
-                        + "FROM Order "
+                        + "FROM [Order] "
                         + "WHERE CustomerID = ?";
 
                 prestm = connection.prepareStatement(orderSQLString);
@@ -89,7 +89,7 @@ public class OrderDAO implements Serializable{
             connection = DBHelper.makeConnection();
             if (connection != null) {
                 String orderSQLString = "SELECT OrderID, Status, OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID "
-                        + "FROM Order "
+                        + "FROM [Order] "
                         + "WHERE CustomerID = ?";
 
                 prestm = connection.prepareStatement(orderSQLString);
@@ -131,7 +131,7 @@ public class OrderDAO implements Serializable{
     public int CreateOrder(int custId, String ReceiverName,int ReceiverGender, String ReceiverAddress, String ReceiverEmail, String ReceiverPhone, String Note, int SaleID) throws SQLException, ClassNotFoundException, NamingException {
         Connection con = DBHelper.makeConnection();
 
-        String sql = "INSERT INTO tblOrder(OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID,Status)"
+        String sql = "INSERT INTO [Order] (OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID,Status)"
                 + " VALUES (GETDATE() , ?, ?, ?, ?, ?, ?, ?, ?, 0)";
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -176,7 +176,7 @@ public class OrderDAO implements Serializable{
             connection = DBHelper.makeConnection();
             if (connection != null) {
                 String orderSQLString = "SELECT OrderID, Status, OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID "
-                        + "FROM Order "
+                        + "FROM [Order] "
                         + "ORDER by DateCreated desc";
 
                 prestm = connection.prepareStatement(orderSQLString);
@@ -223,7 +223,7 @@ public class OrderDAO implements Serializable{
             connection = DBHelper.makeConnection();
             if (connection != null) {
                 String orderSQLString = "SELECT OrderID, Status, OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID "
-                        + "FROM Order "
+                        + "FROM [Order] "
                         + "WHERE SaleMemberID = ?";
 
                 prestm = connection.prepareStatement(orderSQLString);
@@ -272,7 +272,7 @@ public class OrderDAO implements Serializable{
             connection = DBHelper.makeConnection();
             if (connection != null) {
                 String orderSQLString = "SELECT OrderID, Status "
-                        + "FROM tblOrder "
+                        + "FROM [Order] "
                         + "WHERE OrderID = ?";
 
                 prestm = connection.prepareStatement(orderSQLString);
@@ -308,7 +308,7 @@ public class OrderDAO implements Serializable{
             if (con != null) {
                 //B2. create SQL string 
 
-                String sql = "UPDATE tblOrder "
+                String sql = "UPDATE [Order] "
                         + "SET Status = 3 "
                         + "WHERE OrderID = ?";
 
@@ -344,7 +344,7 @@ public class OrderDAO implements Serializable{
             if (con != null) {
                 //B2. create SQL string 
 
-                String sql = "UPDATE tblOrder "
+                String sql = "UPDATE [Order] "
                         + "SET Status = ? "
                         + "WHERE OrderID = ?";
 
@@ -380,7 +380,7 @@ public class OrderDAO implements Serializable{
             con = DBHelper.makeConnection();
             if (con != null) {
                 String sql = "SELECT  OrderID, Status, OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID "
-                        + "From tblOrder "
+                        + "From [Order] "
                         + "Where ReceiverName LIKE ?";
 
                 stm = con.prepareStatement(sql);
@@ -632,7 +632,7 @@ public class OrderDAO implements Serializable{
             if (con != null) {
                 //B2. create SQL string 
 
-                String sql = "UPDATE tblOrder "
+                String sql = "UPDATE [Order] "
                         + "SET OrderedDate =GETDATE(), ReceiverName = ? , ReceiverGender= ?, ReceiverAddress= ?, ReceiverEmail= ?, ReceiverPhone= ? "
                         + "WHERE OrderID = ?";
 
@@ -888,7 +888,7 @@ public class OrderDAO implements Serializable{
     public int CreateOrderGuest( String ReceiverName,int ReceiverGender, String ReceiverAddress, String ReceiverEmail, String ReceiverPhone, String Note, int SaleID) throws SQLException, ClassNotFoundException, NamingException {
         Connection con = DBHelper.makeConnection();
 
-        String sql = "INSERT INTO tblOrder(OrderedDate, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID,Status)"
+        String sql = "INSERT INTO [Order] (OrderedDate, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID,Status)"
                 + " VALUES (GETDATE() , ?, ?, ?, ?, ?, ?, ?, 0)";
         PreparedStatement stm = null;
         ResultSet rs = null;
