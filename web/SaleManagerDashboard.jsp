@@ -29,6 +29,7 @@
         <script src="js/upload.js"></script>
         <script src="js/statuschange.js"></script>
         <script src="js/datepicker.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <style>
             .status{
                 width:100px;
@@ -89,10 +90,13 @@
         </style>
     </head>
     <body style="width: 100%; height:100%; margin: 0; padding: 0; background-color: #F7F8FC">
+        <c:set var="SaleList" value="${sessionScope.SALELIST}"/>
+        <c:set var="graphOrder" value="${sessionScope.ORDERGRAPH}"/>
+        <c:set var="graphRev" value="${sessionScope.REVGRAPH}"/>
+        
         <div class="wrapper row" style="margin:0;padding:0; max-width: 100%;">
             <div class="wrapper col-2" style="background-color: #363740; min-height:937px; padding-right: 0;">
               <ul class="nav flex-column col">
-                  
                   <!-- header -->
                   <li class="nav-item" id="header">
                     <div class="navbar-brand" href="#">
@@ -153,8 +157,9 @@
                         <div class="select-wrapper" id="saleselect">
                             <select id="table-filter" class="d-flex align-items-center">
                                 <option value="" selected>Select sale</option>
-                                <option>00001 - Trần Tân Long</option>
-                                <option>00002 - Vũ Quang Minh</option>
+                                <c:forEach var="sale" items="${SaleList}">
+                                    <option value="${sale.id}">${sale.id} - ${sale.name}</option>
+                                </c:forEach>
                             </select>
                         </div>
                     </div>
@@ -196,7 +201,7 @@
                     <div class="graph-desc">
                         From 18 May 2021 to 25 May 2021 - Sale: Trần Tân Long
                     </div>
-                    
+                    <div id="order_chart"></div>
                 </div>
                 
                 <div class="graphwrapper">
@@ -207,7 +212,7 @@
                     <div class="graph-desc">
                         From 18 May 2021 to 25 May 2021 - Sale: Trần Tân Long
                     </div>
-                    
+                    <div id="rev_chart"></div>
                 </div>
             </div>
         </div>
@@ -242,11 +247,68 @@
         <script>
             $('#datepicker').daterangepicker({
                 "showDropdowns": true,
-                "startDate": "06/26/2021",
-                "endDate": "07/02/2021"
+                "startDate":  moment().subtract('days', 7),
+                "endDate": moment(),
+                locale:{
+                    format: 'YYYY/MM/DD'
+                }
             }, function(start, end, label) {
               console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-            },);           
+            },);
+            
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawOrderChart);
+            google.charts.setOnLoadCallback(drawRevenueChart);
+
+            function drawOrderChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Date', 'Orders'],
+                    <c:if test="${empty graphOrder}">
+                        ['', 0]
+                    </c:if>
+                    <c:if test="${not empty graphOrder}">
+                        <c:forEach var="order" items="${graphOrder}">
+                            ['${order.date}',  ${order.total}],
+                        </c:forEach>
+                    </c:if>
+                ]);
+                var options = {
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                width: 1450,
+                height: 500,
+                chartArea:{
+                    left:35,top:8,width:'95%',height:'80%'
+                }
+                };
+                var chart = new google.visualization.LineChart(document.getElementById('order_chart'));
+                chart.draw(data, options);
+            }
+            
+            function drawRevenueChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Date', 'Revenues'],
+                    <c:if test="${empty graphRev}">
+                        ['', 0]
+                    </c:if>
+                    <c:if test="${not empty graphRev}">
+                        <c:forEach var="rev" items="${graphRev}">
+                            ['${rev.date}',  ${rev.revenue}],
+                        </c:forEach>
+                    </c:if>
+                ]);
+                var options = {
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                width: 1450,
+                height: 500,
+                chartArea:{
+                    left:35,top:8,width:'95%',height:'80%'
+                }
+                };
+                var chart = new google.visualization.LineChart(document.getElementById('rev_chart'));
+                chart.draw(data, options);
+            }
         </script>
         
     </body>
