@@ -62,3 +62,4 @@ AdminDashboard = AdminDashboard.jsp
 updateProfile = updateUserProfileServlet
 viewProdByCate = viewProductByCategoryServlet
 changePass = changePasswordServlet
+updateUserDetails = updateUserDetailsServlet
