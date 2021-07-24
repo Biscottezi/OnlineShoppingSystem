@@ -28,6 +28,12 @@ public class beforeRevenue implements Serializable{
         this.categoryID = categoryID;
     }
 
+    public beforeRevenue(float salePrice, float listPrice, String date) {
+        this.salePrice = salePrice;
+        this.listPrice = listPrice;
+        this.date = date;
+    }
+
     /**
      * @return the salePrice
      */

@@ -926,19 +926,19 @@ public class OrderDAO implements Serializable{
         return newlyAddedOrderID;
     }
     
-    public List<beforeRevenue> getTotalBeforeRevenuebyDate(String startdate, String enddate) throws SQLException, NamingException{
+    public List<Revenue> getTotalBeforeRevenuebyDate(String startdate, String enddate) throws SQLException, NamingException{
         Connection con = null;
         CallableStatement stm = null;
         ResultSet rs = null;
-        List<beforeRevenue> beforeRevenueList = new ArrayList<>();
+        List<Revenue> revenueList = new ArrayList<>();
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "SELECT sum(od.Quantity*p.SalePrice) AS SalePrice, sum(od.Quantity*p.ListPrice) AS ListPrice, convert(varchar(6), OrderedDate, 106) AS OrderDate, p.ProductCategoryID " 
+                String sql = "SELECT sum(CASE WHEN p.SalePrice is not null THEN od.Quantity*p.SalePrice ELSE od.Quantity*p.ListPrice END) AS Revenues, convert(varchar(6), OrderedDate, 106) AS OrderDate " 
                            + "FROM ([Order] o JOIN OrderDetail od ON o.OrderID = od.OrderID) JOIN Product p ON od.ProductID = p.ProductID "
                            + "WHERE OrderedDate >= ?  AND OrderedDate <= ? "
-                           + "GROUP BY convert(varchar(6), OrderedDate, 106), p.ProductCategoryID "
-                           + "ORDER BY OrderDate ASC";
+                           + "GROUP BY convert(varchar(6), OrderedDate, 106) "
+                           + "ORDER BY OrderDate ASC ";
                 stm = con.prepareCall(sql);
                 stm.setString(1, startdate);
                 stm.setString(2, enddate);
@@ -946,15 +946,13 @@ public class OrderDAO implements Serializable{
                 rs = stm.executeQuery();
                 
                 while(rs.next()){
-                    float salePrice = rs.getFloat("SalePrice");
-                    float listPrice = rs.getFloat("ListPrice");
+                    float revenues = rs.getFloat("Revenues");
                     String date = rs.getString("OrderDate");
-                    int categoryID = rs.getInt("ProductCategoryID");
                     
-                    beforeRevenue beforeRevenue = new beforeRevenue(salePrice, listPrice, date, categoryID);
-                    beforeRevenueList.add(beforeRevenue);
+                    Revenue revenue = new Revenue(revenues, date);
+                    revenueList.add(revenue);
                 }
-                return beforeRevenueList;
+                return revenueList;
             }
         }finally{
             if(rs != null){
@@ -967,8 +965,7 @@ public class OrderDAO implements Serializable{
 
             }
         }
-        return beforeRevenueList;
-
+        return revenueList;
     }
 }
 

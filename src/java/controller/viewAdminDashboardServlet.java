@@ -33,7 +33,7 @@ import product.averageRatedStar;
  */
 @WebServlet(name = "viewAdminDashboardServlet", urlPatterns = {"/viewAdminDashboardServlet"})
 public class viewAdminDashboardServlet extends HttpServlet {
-    private final String ADMIN_DASHBOARD = "AdminDashboard.jsp";
+    private final String ADMIN_DASHBOARD = "AdminDashboard";
     private final String ERROR_PAGE = "Error.html";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -109,8 +109,7 @@ public class viewAdminDashboardServlet extends HttpServlet {
         }catch(NamingException ex){
             log("viewAdminDashboardServlet _ Naming:" + ex.getMessage());
         }finally{
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            response.sendRedirect(url);
         }
     }
 
