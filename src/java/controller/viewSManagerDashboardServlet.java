@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import order.OrderDAO;
 import order.Revenue;
-import order.beforeRevenue;
 import order.totalInOrderTable;
 import user.SaleMember;
 import user.UserDAO;
@@ -55,12 +54,12 @@ public class viewSManagerDashboardServlet extends HttpServlet {
         
         try {
             OrderDAO orderDao = new OrderDAO();
-            List<totalInOrderTable> graph = orderDao.getAdminGraphTotal(monthago, now);
+            List<totalInOrderTable> graph = orderDao.getSaleGraphTotal(weekago, now);
             if(graph.size()>0){
                 session.setAttribute("ORDERGRAPH", graph);
             }
             
-            List<Revenue> revenueList = orderDao.getTotalBeforeRevenuebyDate(monthago,now);
+            List<Revenue> revenueList = orderDao.getTotalRevenuebyDate(weekago,now);
             session.setAttribute("REVGRAPH", revenueList);
             
             UserDAO userDao= new UserDAO();
@@ -69,9 +68,9 @@ public class viewSManagerDashboardServlet extends HttpServlet {
             session.setAttribute("SALELIST", listsale);
             url= SMANAGER_DASHBOARD;
         } catch(SQLException ex){
-            log("viewAdminDashboardServlet_SQL:" + ex.getMessage());
+            log("viewSManagerDashboardServlet_SQL:" + ex.getMessage());
         } catch(NamingException ex){
-            log("viewAdminDashboardServlet_Naming:" + ex.getMessage());
+            log("viewSManagerDashboardServlet:" + ex.getMessage());
         } finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

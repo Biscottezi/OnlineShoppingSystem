@@ -64,3 +64,4 @@ viewProdByCate = viewProductByCategoryServlet
 changePass = changePasswordServlet
 updateUserDetails = updateUserDetailsServlet
 viewSManagerDashboard = viewSManagerDashboardServlet
+changeSaleGraph = changeSaleGraphServlet

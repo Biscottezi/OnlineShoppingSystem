@@ -25,6 +25,7 @@
         <link rel="stylesheet" href="css/managerprofile.css"/>
         <link rel="stylesheet" href="css/salelist.css"/>
         <link rel="stylesheet" href="css/dashboard.css"/>
+        <link rel="stylesheet" href="css/admindashboard.css"/>
         <script src="js/managerpopup.js"></script>
         <script src="js/upload.js"></script>
         <script src="js/statuschange.js"></script>
@@ -155,7 +156,7 @@
                 <div class="session-user row">
                     <div class="col-3 sale-member" id="title"><span id="session-role">Sale member</span><br>
                         <div class="select-wrapper" id="saleselect">
-                            <select id="table-filter" class="d-flex align-items-center">
+                            <select id="table-filter" class="d-flex align-items-center" name="slSaleName">
                                 <option value="" selected>Select sale</option>
                                 <c:forEach var="sale" items="${SaleList}">
                                     <option value="${sale.id}">${sale.id} - ${sale.name}</option>
@@ -167,27 +168,28 @@
                     <div class="col row"></div>
                 </div>
                 <div class="picker-title row">
-                    <div class="col-4" style="padding:0; margin-left: 15px;">Date</div>
-                    <div class="col-4" style="padding:0;">Order Status</div>
+                    <div class="col-md-auto" style="padding:0; margin-left: 15px; width: 400px;">Date</div>
+                    <div class="col-md-auto" style="padding:0; margin-left: 50px; width: 400px;">Order Status</div>
                 </div>
-                <div class="picker-wrapper row" style="margin:0; margin-bottom: 50px;">
-                    <div class="input-group col-4 row" style="margin-right: 10px;">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1" style="background-color:white; border: 1px #e3e3e3 solid">
+                <div class="graph-filter row" style="padding:0; margin: 10px 0 0 0;">
+                    <div class="input-group col-3 row" style="margin-right: 10px;">
+                        <div class="input-group-prepend" style="height: 38px;">
+                            <span class="input-group-text" id="basic-addon1" style="background-color:white; border: 1px #e3e3e3 solid; border-right-style: none;">
                                 <i class="far fa-calendar-alt" style="font-size:22px;"></i>
                             </span>
+                            <input type="text" value="" name="daterange" id="datepicker" class="datepicker" style="height: 38px; width: 355.75px;" form="changeGraph"/>
                         </div>
-                        <input type="text" name="daterange" id="datepicker" class="col-10 datepicker"/>
                     </div>
-                    <div class="status-select col-5">
+                    <div class="col-3 sale-member picker-title" style="margin-left:64px;">
                         <div class="select-wrapper">
-                            <select id="statussl" class="d-flex align-items-center">
-                                <option value="" selected>Select status</option>
-                                <option>Submitted</option>
-                                <option>Confirmed</option>
-                                <option>Shipped</option>
+                            <select class="d-flex align-items-center admin-filter" form="changeGraph" name="graphstatus">
+                                <option value="" ${status == '2' ? '' : 'selected'}>Total</option>
+                                <option value="2" ${status == '2' ? 'selected' : ''}>Shipped</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="col-3 sale-member picker-title">
+                        <input type="submit" value="View" name="btAction" form="changeGraph"/>
                     </div>
                 </div>
                 
@@ -237,13 +239,14 @@
                 <div class="col-9 d-flex align-items-center description menu-itemtitle">Change Your Password</div>
             </div>
             <div class="menu-divider"></div>
-            <div class="signout row popupitem" onclick="location.href='homepage.jsp';">
+            <div class="signout row popupitem" onclick="location.href='logout';">
                 <div class="col-3 d-flex align-items-center justify-content-center" id="signout">
                     <div class="menuitemicon" style="background-image: url(img/signout.png);"></div>
                 </div>
                 <div class="col-9 d-flex align-items-center description menu-itemtitle">Sign Out</div>
             </div>
         </div>
+        <form id="changeGraph" action="changeAdminGraph" method="POST"></form>
         <script>
             $('#datepicker').daterangepicker({
                 "showDropdowns": true,
