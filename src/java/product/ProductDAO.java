@@ -500,4 +500,40 @@ public class ProductDAO implements Serializable{
         }
         return ratedStarList;
     }
+    
+    public int getNoOfProductByMonth(String now, String monthago) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int totalProd = 0;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT COUNT(ProductID) as NumOfProd "
+                        + "FROM Product "
+                        + "WHERE DateCreated >= ? AND DateCreated <= ? ";
+                
+                stm = con.prepareStatement(sql);
+                stm.setString(1, monthago);
+                stm.setString(2, now);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    totalProd += rs.getInt("NumOfProd");
+                }
+            }
+        }
+        finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return totalProd;
+    }
 }

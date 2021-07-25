@@ -4,4 +4,7 @@
                 driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
                 url="jdbc:sqlserver://localhost:1433;databaseName=OnlineShoppingSystem"
                 username="quannpm" password="admin"/>
+    <Valve 
+        className="org.apache.catalina.valves.StuckThreadDetectionValve"
+        threshold="20" />
 </Context>

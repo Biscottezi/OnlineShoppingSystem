@@ -5,6 +5,7 @@
  */
 package controller;
 
+import feedBack.FeedBackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -17,6 +18,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import post.PostDAO;
+import product.ProductDAO;
+import user.UserDAO;
 
 /**
  *
@@ -43,13 +47,31 @@ public class viewMarketingDashboardServlet extends HttpServlet {
         String monthago = java.time.LocalDate.now().minusMonths(1).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         HttpSession session = request.getSession(false);
         try{
+            UserDAO userDAO = new UserDAO();
+            int numOfCust = userDAO.getNoOfCustomerByMonth(now, monthago);
+            session.setAttribute("CUSTOMERS", numOfCust);
+            
+            ProductDAO prodDAO = new ProductDAO();
+            int numOfProd = prodDAO.getNoOfProductByMonth(now, monthago);
+            session.setAttribute("PRODUCTS", numOfProd);
+            
+            PostDAO postDAO = new PostDAO();
+            int numOfPost = postDAO.getNoOfPostByMonth(now, monthago);
+            session.setAttribute("POSTS", numOfPost);
+            
+            FeedBackDAO feedDAO = new FeedBackDAO();
+            int numOfFeed = feedDAO.getNoOfFeedbackByMonth(now, monthago);
+            session.setAttribute("FEEDBACKS", numOfFeed);
             
             url = MARKETING_DASHBOARD;
-//        }catch(SQLException ex){
-//            log("viewMarketingDashboardServlet _ SQL:" + ex.getMessage());
-//        }catch(NamingException ex){
-//            log("viewMarketingDashboardServlet _ Naming:" + ex.getMessage());
-        }finally{
+        }
+        catch(SQLException ex){
+            log("viewMarketingDashboardServlet _ SQL:" + ex.getMessage());
+        }
+        catch(NamingException ex){
+            log("viewMarketingDashboardServlet _ Naming:" + ex.getMessage());
+        }
+        finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
             
