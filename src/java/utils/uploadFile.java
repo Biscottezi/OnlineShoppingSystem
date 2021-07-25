@@ -35,7 +35,8 @@ public class uploadFile implements Serializable{
                 String fileName = "";
                 try {
                     Part filePart = request.getPart(paramName);
-                    fileName = (String)getFileName(filePart);
+//                    fileName = (String)getFileName(filePart);
+                    fileName =  filePart.getSubmittedFileName();
 
                     String applicationPath = request.getServletContext().getRealPath("");
                     String basePath = applicationPath + File.separator + UPLOAD_DIR + File.separator;
@@ -78,7 +79,8 @@ public class uploadFile implements Serializable{
                     
                     ArrayList<Part> filePart = (ArrayList<Part>)request.getParts();
                     for(int i = index; i<filePart.size(); i++){
-                        fileName = (String) getFileName(filePart.get(i));
+//                        fileName = (String) getFileName(filePart.get(i));
+                        fileName = filePart.get(i).getSubmittedFileName();
                         fileNameList.add(fileName);
                         try {
                             File outputFilePath = new File(basePath + fileName);
@@ -109,13 +111,13 @@ public class uploadFile implements Serializable{
     
     
 
-    public static String getFileName(Part part) {       
-        for (String content : part.getHeader("content-disposition").split(";")) {
-            if (content.trim().startsWith("filename")) {
-                return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
-            }
-        }
-
-        return null;
-    }
+//    public static String getFileName(Part part) {       
+//        for (String content : part.getHeader("content-disposition").split(";")) {
+//            if (content.trim().startsWith("filename")) {
+//                return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
+//            }
+//        }
+//
+//        return null;
+//    }
 }

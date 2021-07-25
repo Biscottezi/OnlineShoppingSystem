@@ -346,7 +346,7 @@
                             <span class="input-group-text" id="basic-addon1" style="background-color:white; border: 1px #e3e3e3 solid; border-right-style: none;">
                                 <i class="far fa-calendar-alt" style="font-size:22px;"></i>
                             </span>
-                            <input type="text" value="abad" name="daterange" id="datepicker" class="datepicker" style="height: 38px; width: 310px;" form="changeGraph"/>
+                            <input type="text" value="" name="daterange" id="datepicker" class="datepicker" style="height: 38px; width: 310px;" form="changeGraph"/>
                         </div>
                     </div>
                     <div class="col-3 sale-member picker-title">
