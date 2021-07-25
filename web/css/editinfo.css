@@ -37,6 +37,7 @@ and open the template in the editor.
     width: 1440px;
 }
 
+
 #userid {
     font-size: 19px;
     font-weight: 500;
@@ -77,4 +78,15 @@ select:focus{
 
 .back {
     cursor: pointer;
+}
+
+.lastrow{
+    margin-bottom: 55px;
+    width: 1440px;
+}
+
+.orderdet-header{
+    font-size: 19px;
+    font-weight: 500;
+    padding:0;
 }

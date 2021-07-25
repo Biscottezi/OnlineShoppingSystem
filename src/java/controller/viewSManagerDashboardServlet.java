@@ -49,15 +49,13 @@ public class viewSManagerDashboardServlet extends HttpServlet {
         String url = ERROR_PAGE;
         String now = java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         String weekago = java.time.LocalDate.now().minusDays(7).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-        String monthago = java.time.LocalDate.now().minusMonths(1).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         HttpSession session = request.getSession(false);
         
         try {
             OrderDAO orderDao = new OrderDAO();
             List<totalInOrderTable> graph = orderDao.getSaleGraphTotal(weekago, now);
-            if(graph.size()>0){
-                session.setAttribute("ORDERGRAPH", graph);
-            }
+            session.setAttribute("ORDERGRAPH", graph);
+            
             
             List<Revenue> revenueList = orderDao.getTotalRevenuebyDate(weekago,now);
             session.setAttribute("REVGRAPH", revenueList);
@@ -66,6 +64,8 @@ public class viewSManagerDashboardServlet extends HttpServlet {
             userDao.getSaleMembers();
             List<SaleMember> listsale = userDao.getSaleMemberList();
             session.setAttribute("SALELIST", listsale);
+            session.setAttribute("DATESTART", weekago);
+            session.setAttribute("DATEEND", now);
             url= SMANAGER_DASHBOARD;
         } catch(SQLException ex){
             log("viewSManagerDashboardServlet_SQL:" + ex.getMessage());
