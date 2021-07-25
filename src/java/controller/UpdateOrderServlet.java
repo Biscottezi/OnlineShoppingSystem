@@ -5,6 +5,7 @@
  */
 package controller;
 
+import cart.Cart;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -17,11 +18,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import order.OrderDAO;
 import order.OrderDTO;
 import orderDetail.OrderDetailDAO;
 import orderDetail.OrderItemObj;
 import product.ProductDAO;
+import product.ProductDTO;
 import productCategory.ProductCategoryDAO;
 import productCategory.ProductCategoryDTO;
 
@@ -49,18 +52,25 @@ public class UpdateOrderServlet extends HttpServlet {
         String selectedOrderID = request.getParameter("selectedOrderID");
         String url = ORDER_LIST_PAGE;
         try {
-            OrderDAO dao = new OrderDAO();
-            ArrayList<OrderDTO> orderList = dao.GetOrderListByCustID(custId);
-            request.setAttribute("orderList", orderList);
+            
             OrderDetailDAO detaildao = new OrderDetailDAO();
             ArrayList<OrderItemObj> detailList = detaildao.GetOrderDetailByOrderID(Integer.parseInt(selectedOrderID));
-
             ProductDAO productDAO = new ProductDAO();
-
             productDAO.getAllProduct();
             ProductCategoryDAO cate = new ProductCategoryDAO();
             List<ProductCategoryDTO> categoryList = cate.getCategoryList();
-
+            HttpSession session = request.getSession(true);
+            
+            Cart cart = (Cart) session.getAttribute("CART");
+           
+            for (int i =0; i< detailList.size(); ++i){
+             ProductDTO ID = productDAO.getProduct();
+            int quantity = detailList.get(i).getQuantity();          
+            cart.addToCart(ID, quantity);
+            
+            }
+            detaildao.deleteOrderDetail(Integer.parseInt(selectedOrderID));
+            session.setAttribute("CART", cart);
             request.setAttribute("detailList", detailList);
             request.setAttribute("categoryList", categoryList);
         } catch (SQLException ex) {

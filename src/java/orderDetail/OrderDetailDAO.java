@@ -174,4 +174,31 @@ public class OrderDetailDAO implements Serializable{
         }
         return details;
     }
+    public boolean deleteOrderDetail(int OrderID) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "DELETE FROM OrderDetail"
+                        + " WHERE OrderID = ? ";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, OrderID);
+                int rowAffect = stm.executeUpdate();
+                if (rowAffect > 0) {
+                    return true;
+                }
+            }
+
+        } finally {
+
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
 }
