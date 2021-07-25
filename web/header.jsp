@@ -223,7 +223,7 @@
                         <button type="submit" form="user-info" class="form-col-btn" style="width: 120px; margin-left: 44%; margin-bottom: 1em">Save</button>
                         <input type="hidden" name="userID" value="${user.id}" form="user-info">
                     </div>
-                    <form id="user-avatar" action=""></form>
+                    <form id="user-avatar" action="updateAvatar" method="POST" enctype="multipart/form-data"></form>
                     <form id="user-info" method="GET" action="updateProfile"></form>
                 </div>
                 

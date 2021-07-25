@@ -11,7 +11,7 @@
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>User List</title>
+        <title>Admin Dashboard</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -346,7 +346,7 @@
                             <span class="input-group-text" id="basic-addon1" style="background-color:white; border: 1px #e3e3e3 solid; border-right-style: none;">
                                 <i class="far fa-calendar-alt" style="font-size:22px;"></i>
                             </span>
-                            <input type="text" value="abad" name="daterange" id="datepicker" class="datepicker" style="height: 38px; width: 310px;" form="changeGraph"/>
+                            <input type="text" value="" name="daterange" id="datepicker" class="datepicker" style="height: 38px; width: 310px;" form="changeGraph"/>
                         </div>
                     </div>
                     <div class="col-3 sale-member picker-title">

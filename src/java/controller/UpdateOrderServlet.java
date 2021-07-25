@@ -48,7 +48,7 @@ public class UpdateOrderServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String custId = request.getParameter("CusttomerID");
+        String custId = request.getParameter("CustomerID");
         String selectedOrderID = request.getParameter("selectedOrderID");
         String url = ORDER_LIST_PAGE;
         try {
@@ -74,11 +74,11 @@ public class UpdateOrderServlet extends HttpServlet {
             request.setAttribute("detailList", detailList);
             request.setAttribute("categoryList", categoryList);
         } catch (SQLException ex) {
-          log("DisplayShoppingPageServlet SQLException: " + ex.getMessage());
+          log("UpdateOrderServlet SQLException: " + ex.getMessage());
         } catch (ClassNotFoundException ex) {
-          log("DisplayShoppingPageServlet ClassNotFoundException: " + ex.getMessage());
+          log("UpdateOrderServlet ClassNotFoundException: " + ex.getMessage());
         } catch (NamingException ex) { 
-             log("DisplayShoppingPageServlet NamingException: " + ex.getMessage());
+             log("UpdateOrderServlet NamingException: " + ex.getMessage());
          } 
         finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

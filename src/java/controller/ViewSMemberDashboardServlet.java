@@ -6,7 +6,9 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -16,17 +18,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import order.OrderDAO;
+import order.Revenue;
 import order.totalInOrderTable;
+import user.SaleMember;
+import user.UserDAO;
+import user.UserDTO;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "changeAdminGraphServlet", urlPatterns = {"/changeAdminGraphServlet"})
-public class changeAdminGraphServlet extends HttpServlet {
+@WebServlet(name = "ViewSMemberDashboardServlet", urlPatterns = {"/ViewSMemberDashboardServlet"})
+public class ViewSMemberDashboardServlet extends HttpServlet {
 
-    private final String ADMIN_PAGE = "AdminDashboard";
-    private final String ERROR_PAGE = "viewAdminDashboardServlet";
+    private final String SMEMBER_DASHBOARD = "SaleMemberDashboard";
+    private final String ERROR_PAGE = "Error.html";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,35 +45,41 @@ public class changeAdminGraphServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        HttpSession session = request.getSession(false);
         String url = ERROR_PAGE;
-        int status=0;
-        String daterange = request.getParameter("daterange");
-        if (!request.getParameter("graphstatus").isEmpty()) {
-        status = Integer.parseInt(request.getParameter("graphstatus"));
-        }
-        String[] date = daterange.split(" - ");
-        String start = date[0];
-        String end = date[1];
+        String now = java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        String weekago = java.time.LocalDate.now().minusDays(7).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        HttpSession session = request.getSession(false);
+        UserDTO user = (UserDTO)session.getAttribute("USER");
+        SaleMember loggedin = null;
         try {
-            OrderDAO orderdao = new OrderDAO();
-            List<totalInOrderTable> graph;
-            if (status>0) graph = orderdao.getAdminGraphShipped(start, end, status);
-            else graph = orderdao.getAdminGraphTotal(start, end);
-            session.setAttribute("GRAPH", graph);
-            session.setAttribute("DATESTART", start);
-            session.setAttribute("DATEEND", end);
-            session.setAttribute("STATUS", status);
-            url=ADMIN_PAGE;
-        }
-        catch(SQLException ex){
-            log("changeAdminGraphServlet _ SQL:" + ex.getMessage());
-        }
-        catch(NamingException ex){
-            log("changeAdminGraphServlet _ Naming:" + ex.getMessage());
-        }
-        finally{
+            
+            UserDAO userDao= new UserDAO();
+            userDao.getSaleMembers();
+            List<SaleMember> listsale = userDao.getSaleMemberList();
+            for (int i=0;i<listsale.size();i++){
+                if(listsale.get(i).getId()==user.getId()){
+                    loggedin=listsale.get(i);
+                    session.setAttribute("SALELOGIN", loggedin);
+                }
+            }
+            
+            
+            OrderDAO orderDao = new OrderDAO();
+            List<totalInOrderTable> graph = orderDao.getSaleGraphTotalbySaleMember(weekago, now, loggedin.getId());
+            session.setAttribute("ORDERGRAPH", graph);
+            
+            
+            List<Revenue> revenueList = orderDao.getTotalRevenuebyDateSaleID(weekago,now, loggedin.getId());
+            session.setAttribute("REVGRAPH", revenueList);
+            
+            session.setAttribute("DATESTART", weekago);
+            session.setAttribute("DATEEND", now);
+            url= SMEMBER_DASHBOARD;
+        } catch(SQLException ex){
+            log("viewSManagerDashboardServlet_SQL:" + ex.getMessage());
+        } catch(NamingException ex){
+            log("viewSManagerDashboardServlet_Naming:" + ex.getMessage());
+        } finally{
             response.sendRedirect(url);
         }
     }

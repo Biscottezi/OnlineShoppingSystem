@@ -42,7 +42,7 @@ public class OrderDAO implements Serializable{
             connection = DBHelper.makeConnection();
             if (connection != null) {
                 String orderSQLString = "SELECT OrderID, Status, OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID "
-                        + "FROM Order "
+                        + "FROM [Order] "
                         + "WHERE CustomerID = ?";
 
                 prestm = connection.prepareStatement(orderSQLString);
@@ -89,7 +89,7 @@ public class OrderDAO implements Serializable{
             connection = DBHelper.makeConnection();
             if (connection != null) {
                 String orderSQLString = "SELECT OrderID, Status, OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID "
-                        + "FROM Order "
+                        + "FROM [Order] "
                         + "WHERE CustomerID = ?";
 
                 prestm = connection.prepareStatement(orderSQLString);
@@ -131,7 +131,7 @@ public class OrderDAO implements Serializable{
     public int CreateOrder(int custId, String ReceiverName,int ReceiverGender, String ReceiverAddress, String ReceiverEmail, String ReceiverPhone, String Note, int SaleID) throws SQLException, ClassNotFoundException, NamingException {
         Connection con = DBHelper.makeConnection();
 
-        String sql = "INSERT INTO tblOrder(OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID,Status)"
+        String sql = "INSERT INTO [Order] (OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID,Status)"
                 + " VALUES (GETDATE() , ?, ?, ?, ?, ?, ?, ?, ?, 0)";
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -157,10 +157,10 @@ public class OrderDAO implements Serializable{
             }
         } finally {
             if (rs != null) {
-                con.close();
+                rs.close();
             }
             if (stm != null) {
-                con.close();
+                stm.close();
             }
             if (con != null) {
                 con.close();
@@ -176,7 +176,7 @@ public class OrderDAO implements Serializable{
             connection = DBHelper.makeConnection();
             if (connection != null) {
                 String orderSQLString = "SELECT OrderID, Status, OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID "
-                        + "FROM Order "
+                        + "FROM [Order] "
                         + "ORDER by DateCreated desc";
 
                 prestm = connection.prepareStatement(orderSQLString);
@@ -223,7 +223,7 @@ public class OrderDAO implements Serializable{
             connection = DBHelper.makeConnection();
             if (connection != null) {
                 String orderSQLString = "SELECT OrderID, Status, OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID "
-                        + "FROM Order "
+                        + "FROM [Order] "
                         + "WHERE SaleMemberID = ?";
 
                 prestm = connection.prepareStatement(orderSQLString);
@@ -272,7 +272,7 @@ public class OrderDAO implements Serializable{
             connection = DBHelper.makeConnection();
             if (connection != null) {
                 String orderSQLString = "SELECT OrderID, Status "
-                        + "FROM tblOrder "
+                        + "FROM [Order] "
                         + "WHERE OrderID = ?";
 
                 prestm = connection.prepareStatement(orderSQLString);
@@ -281,9 +281,7 @@ public class OrderDAO implements Serializable{
                 
                 if (rs.next()) {
                      status = rs.getInt("Status");
-                    
                 }
-                
             }
         } finally {
             if (rs != null) {
@@ -308,7 +306,7 @@ public class OrderDAO implements Serializable{
             if (con != null) {
                 //B2. create SQL string 
 
-                String sql = "UPDATE tblOrder "
+                String sql = "UPDATE [Order] "
                         + "SET Status = 3 "
                         + "WHERE OrderID = ?";
 
@@ -344,7 +342,7 @@ public class OrderDAO implements Serializable{
             if (con != null) {
                 //B2. create SQL string 
 
-                String sql = "UPDATE tblOrder "
+                String sql = "UPDATE [Order] "
                         + "SET Status = ? "
                         + "WHERE OrderID = ?";
 
@@ -380,7 +378,7 @@ public class OrderDAO implements Serializable{
             con = DBHelper.makeConnection();
             if (con != null) {
                 String sql = "SELECT  OrderID, Status, OrderedDate, CustomerID, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID "
-                        + "From tblOrder "
+                        + "From [Order] "
                         + "Where ReceiverName LIKE ?";
 
                 stm = con.prepareStatement(sql);
@@ -414,6 +412,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if (con != null) {
+                con.close();
             }
         }
     }
@@ -460,7 +459,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
-
+                con.close();
             }
         }
     }
@@ -495,7 +494,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
-
+                con.close();
             }
         }
         return total;
@@ -533,7 +532,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
-
+                con.close();
             }
         }
         return totalPotCus;
@@ -571,7 +570,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
-
+                con.close();
             }
         }
         return totalCus;
@@ -616,7 +615,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
-
+                con.close();
             }
         }
         return beforeRevenueList;
@@ -632,7 +631,7 @@ public class OrderDAO implements Serializable{
             if (con != null) {
                 //B2. create SQL string 
 
-                String sql = "UPDATE tblOrder "
+                String sql = "UPDATE [Order] "
                         + "SET OrderedDate =GETDATE(), ReceiverName = ? , ReceiverGender= ?, ReceiverAddress= ?, ReceiverEmail= ?, ReceiverPhone= ? "
                         + "WHERE OrderID = ?";
 
@@ -763,7 +762,6 @@ public class OrderDAO implements Serializable{
             }
         }
         return order;
-
     }
     
     public List<totalInOrderTable> getAdminGraphShipped(String startdate, String enddate, int status) throws SQLException, NamingException{
@@ -801,7 +799,7 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
-
+                con.close();
             }
         }
         return totalList;
@@ -841,11 +839,12 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
+                con.close();
             }
         }
         return totalList;
     }
-    public List<totalInOrderTable> getSaleGraphTotal(String startdate, String enddate, int saleId) throws SQLException, NamingException{
+    public List<totalInOrderTable> getSaleGraphTotalbySaleMember(String startdate, String enddate, int saleId) throws SQLException, NamingException{
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -855,7 +854,7 @@ public class OrderDAO implements Serializable{
             if(con != null){
                 String sql = "SELECT COUNT(OrderID) AS TOTALORDER, convert(varchar(6), OrderedDate, 106) as OrderDate "
                         + "FROM [Order] "
-                        + "WHERE OrderedDate >= ? AND OrderedDate <= ? AND SaleMemberID =?"
+                        + "WHERE OrderedDate >= ? AND OrderedDate <= ? AND SaleMemberID =? "
                         + "GROUP BY convert(varchar(6), OrderedDate, 106) ";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, startdate);
@@ -880,6 +879,128 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
+                con.close();
+            }
+        }
+        return totalList;
+    }
+    
+    public List<totalInOrderTable> getSaleGraphTotal(String startdate, String enddate) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<totalInOrderTable> totalList = new ArrayList<>();
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT COUNT(OrderID) AS TOTALORDER, convert(varchar(6), OrderedDate, 106) as OrderDate "
+                        + "FROM [Order] "
+                        + "WHERE OrderedDate >= ? AND OrderedDate <= ? "
+                        + "GROUP BY convert(varchar(6), OrderedDate, 106) ";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, startdate);
+                stm.setString(2, enddate);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int TotalOrder = rs.getInt("TotalOrder");
+                    String date = rs.getString("OrderDate");
+                    
+                    totalInOrderTable total = new totalInOrderTable(TotalOrder, date);
+                    totalList.add(total);
+                }
+                return totalList;
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return totalList;
+    }
+    
+    public List<totalInOrderTable> getSaleGraphShipped(String startdate, String enddate) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<totalInOrderTable> totalList = new ArrayList<>();
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT COUNT(OrderID) AS TOTALORDER, convert(varchar(6), OrderedDate, 106) as OrderDate "
+                        + "FROM [Order] "
+                        + "WHERE OrderedDate >= ? AND OrderedDate <= ? AND Status = 2 "
+                        + "GROUP BY convert(varchar(6), OrderedDate, 106) ";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, startdate);
+                stm.setString(2, enddate);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int TotalOrder = rs.getInt("TotalOrder");
+                    String date = rs.getString("OrderDate");
+                    
+                    totalInOrderTable total = new totalInOrderTable(TotalOrder, date);
+                    totalList.add(total);
+                }
+                return totalList;
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return totalList;
+    }
+    
+    public List<totalInOrderTable> getSaleGraphShippedbySaleMember(String startdate, String enddate, int SaleId) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<totalInOrderTable> totalList = new ArrayList<>();
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT COUNT(OrderID) AS TOTALORDER, convert(varchar(6), OrderedDate, 106) as OrderDate "
+                        + "FROM [Order] "
+                        + "WHERE OrderedDate >= ? AND OrderedDate <= ? AND Status = 2 AND SaleMemberID = ? "
+                        + "GROUP BY convert(varchar(6), OrderedDate, 106) ";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, startdate);
+                stm.setString(2, enddate);
+                stm.setInt(3, SaleId);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int TotalOrder = rs.getInt("TotalOrder");
+                    String date = rs.getString("OrderDate");
+                    
+                    totalInOrderTable total = new totalInOrderTable(TotalOrder, date);
+                    totalList.add(total);
+                }
+                return totalList;
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
             }
         }
         return totalList;
@@ -888,7 +1009,7 @@ public class OrderDAO implements Serializable{
     public int CreateOrderGuest( String ReceiverName,int ReceiverGender, String ReceiverAddress, String ReceiverEmail, String ReceiverPhone, String Note, int SaleID) throws SQLException, ClassNotFoundException, NamingException {
         Connection con = DBHelper.makeConnection();
 
-        String sql = "INSERT INTO tblOrder(OrderedDate, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID,Status)"
+        String sql = "INSERT INTO [Order] (OrderedDate, ReceiverName, ReceiverGender, ReceiverAddress, ReceiverEmail, ReceiverPhone, Note, SaleMemberID,Status)"
                 + " VALUES (GETDATE() , ?, ?, ?, ?, ?, ?, ?, 0)";
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -914,10 +1035,10 @@ public class OrderDAO implements Serializable{
             }
         } finally {
             if (rs != null) {
-                con.close();
+                rs.close();
             }
             if (stm != null) {
-                con.close();
+                stm.close();
             }
             if (con != null) {
                 con.close();
@@ -926,7 +1047,7 @@ public class OrderDAO implements Serializable{
         return newlyAddedOrderID;
     }
     
-    public List<Revenue> getTotalBeforeRevenuebyDate(String startdate, String enddate) throws SQLException, NamingException{
+    public List<Revenue> getTotalRevenuebyDate(String startdate, String enddate) throws SQLException, NamingException{
         Connection con = null;
         CallableStatement stm = null;
         ResultSet rs = null;
@@ -962,10 +1083,256 @@ public class OrderDAO implements Serializable{
                 stm.close();
             }
             if(con != null){
-
+                con.close();
             }
         }
         return revenueList;
+    }
+    
+    public List<Revenue> getTotalRevenuebyDateSaleID(String startdate, String enddate, int SaleId) throws SQLException, NamingException{
+        Connection con = null;
+        CallableStatement stm = null;
+        ResultSet rs = null;
+        List<Revenue> revenueList = new ArrayList<>();
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT sum(CASE WHEN p.SalePrice is not null THEN od.Quantity*p.SalePrice ELSE od.Quantity*p.ListPrice END) AS Revenues, convert(varchar(6), OrderedDate, 106) AS OrderDate " 
+                           + "FROM ([Order] o JOIN OrderDetail od ON o.OrderID = od.OrderID) JOIN Product p ON od.ProductID = p.ProductID "
+                           + "WHERE OrderedDate >= ?  AND OrderedDate <= ? And SaleMemberID = ? "
+                           + "GROUP BY convert(varchar(6), OrderedDate, 106) "
+                           + "ORDER BY OrderDate ASC ";
+                stm = con.prepareCall(sql);
+                stm.setString(1, startdate);
+                stm.setString(2, enddate);
+                stm.setInt(3, SaleId);
+                
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    float revenues = rs.getFloat("Revenues");
+                    String date = rs.getString("OrderDate");
+                    
+                    Revenue revenue = new Revenue(revenues, date);
+                    revenueList.add(revenue);
+                }
+                return revenueList;
+            }
+        }finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return revenueList;
+    }
+    
+    public List<CustomizedOrderDTO> getAllOrderList() throws SQLException, NamingException{
+        List<CustomizedOrderDTO> orders = null;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "Select OrderID, o.[Status], SaleMemberID, CustomerID, "
+                        + "u.Name, OrderedDate, ReceiverName, ReceiverAddress, ReceiverGender, "
+                        + "ReceiverEmail, ReceiverPhone, Note "
+                        + "From [Order] o, [User] u "
+                        + "Where u.UserID=o.CustomerID "
+                        + "ORDER BY OrderedDate DESC";
+                
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int orderId = rs.getInt("OrderID");
+                    int status = rs.getInt("Status");
+                    int saleId = rs.getInt("SaleMemberID");
+                    int custId = rs.getInt("CustomerID");
+                    Date orderedDate = rs.getDate("OrderedDate");
+                    String name = rs.getString("ReceiverName");
+                    String address = rs.getString("ReceiverAddress");
+                    String email = rs.getString("ReceiverEmail");
+                    String phone = rs.getString("ReceiverPhone");
+                    int gender = rs.getInt("ReceiverGender");
+                    String note = rs.getString("Note");
+                    String customerName = rs.getString("Name");
+                    
+                    CustomizedOrderDTO dto = new CustomizedOrderDTO(orderId, status, custId, saleId, orderedDate, name, address, email, phone, note, gender, customerName);
+                    if(orders == null){
+                        orders = new ArrayList<>();
+                    }
+                    orders.add(dto);
+                }
+            }
+        }
+        finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return orders;
+    }
+    
+    public List<CustomizedOrderDTO> getAllOrderListbySaleID(int saleMemId) throws SQLException, NamingException{
+        List<CustomizedOrderDTO> orders = null;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "Select OrderID, o.[Status], SaleMemberID, CustomerID, "
+                        + "u.Name, OrderedDate, ReceiverName, ReceiverAddress, ReceiverGender, "
+                        + "ReceiverEmail, ReceiverPhone, Note "
+                        + "From [Order] o, [User] u "
+                        + "Where u.UserID=o.CustomerID AND SaleMemberID=? "
+                        + "ORDER BY OrderedDate DESC";
+                
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, saleMemId);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int orderId = rs.getInt("OrderID");
+                    int status = rs.getInt("Status");
+                    int saleId = rs.getInt("SaleMemberID");
+                    int custId = rs.getInt("CustomerID");
+                    Date orderedDate = rs.getDate("OrderedDate");
+                    String name = rs.getString("ReceiverName");
+                    String address = rs.getString("ReceiverAddress");
+                    String email = rs.getString("ReceiverEmail");
+                    String phone = rs.getString("ReceiverPhone");
+                    int gender = rs.getInt("ReceiverGender");
+                    String note = rs.getString("Note");
+                    String customerName = rs.getString("Name");
+                    
+                    CustomizedOrderDTO dto = new CustomizedOrderDTO(orderId, status, custId, saleId, orderedDate, name, address, email, phone, note, gender, customerName);
+                    if(orders == null){
+                        orders = new ArrayList<>();
+                    }
+                    orders.add(dto);
+                }
+            }
+        }
+        finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return orders;
+    }
+    
+    public CustomizedOrderDTO getSaleOrderByOrderId(int id) throws SQLException, NamingException{
+        CustomizedOrderDTO order = null;
+        
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "Select OrderID, o.[Status], SaleMemberID, CustomerID, "
+                        + "u.Name, OrderedDate, ReceiverName, ReceiverAddress, ReceiverGender, "
+                        + "ReceiverEmail, ReceiverPhone, Note "
+                        + "From [Order] o, [User] u "
+                        + "Where u.UserID=o.CustomerID AND OrderID = ?  "
+                        + "ORDER BY OrderedDate DESC";
+                
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, id);
+                rs = stm.executeQuery();
+                
+                if(rs.next()){
+                    int orderId = rs.getInt("OrderID");
+                    int status = rs.getInt("Status");
+                    int saleId = rs.getInt("SaleMemberID");
+                    int custId = rs.getInt("CustomerID");
+                    Date orderedDate = rs.getDate("OrderedDate");
+                    String name = rs.getString("ReceiverName");
+                    String address = rs.getString("ReceiverAddress");
+                    String email = rs.getString("ReceiverEmail");
+                    String phone = rs.getString("ReceiverPhone");
+                    int gender = rs.getInt("ReceiverGender");
+                    String note = rs.getString("Note");
+                    String customerName = rs.getString("Name");
+                    
+                    order = new CustomizedOrderDTO(orderId, status, custId, saleId, orderedDate, name, address, email, phone, note, gender, customerName);
+                }
+            }
+        }
+        finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return order;
+    }
+    
+    public boolean updateOrderSale(int OrderID, int status, int salememberid)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                //B2. create SQL string 
+
+                String sql = "UPDATE [Order] "
+                        + "SET Status = ?, SaleMemberID = ? "
+                        + "WHERE OrderID = ?";
+
+                stm = con.prepareStatement(sql);                               
+                stm.setInt(1, status);
+                stm.setInt(2, salememberid);
+                stm.setInt(3, OrderID);
+                
+                int rowAffect = stm.executeUpdate();
+                if(rowAffect == 1){
+                    return true;
+                }
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
     }
 }
 

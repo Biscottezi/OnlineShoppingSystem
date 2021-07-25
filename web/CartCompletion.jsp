@@ -55,18 +55,19 @@
                         <div class="d-flex justify-content-center p-2">
                             <img src="img/cartCompletion.png" alt="cartCompletionImg">
                         </div>
-                        <h2 class="d-flex justify-content-center pt-2">Thank you [customer name]</h2>
+                        <h2 class="d-flex justify-content-center pt-2">Thank you</h2>
                         <h3 class="d-flex justify-content-center p-2">Sit back and relax, your order is on its way!</h3>
                         <div class="d-flex flex-row justify-content-around p-2">
                             <button class="main-ctn-btn">HOME PAGE</button>
                             <c:if test="${not empty sessionScope.USER}">
-                                <button class="main-ctn-btn">VIEW ORDERS</button>
+                                <c:set var="user" value="${sessionScope.USER}"/>
+                                <button class="main-ctn-btn" onclick="location.href='custOrderList?customerID=${user.id}'">VIEW ORDERS</button>
                             </c:if>
                             <button class="main-ctn-btn">BUY MORE</button>
                         </div>
-                        <div class="d-flex justify-content-center p-2">
+                        <!--<div class="d-flex justify-content-center p-2">
                             <h4>Order confirmation was sent to receiver@gmail.com</h4>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>

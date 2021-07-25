@@ -6,27 +6,33 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import order.CustomizedOrderDTO;
 import order.OrderDAO;
-import order.totalInOrderTable;
+import orderDetail.OrderDetailDAO;
+import productCategory.ProductCategoryDAO;
+import productCategory.ProductCategoryDTO;
+import user.UserDAO;
+import user.UserDTO;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "changeAdminGraphServlet", urlPatterns = {"/changeAdminGraphServlet"})
-public class changeAdminGraphServlet extends HttpServlet {
+@WebServlet(name = "SaleOrderDetailsServlet", urlPatterns = {"/SaleOrderDetailsServlet"})
+public class SaleOrderDetailsServlet extends HttpServlet {
 
-    private final String ADMIN_PAGE = "AdminDashboard";
-    private final String ERROR_PAGE = "viewAdminDashboardServlet";
+    private final String ORDER_DETAILS_PAGE = "SaleOrderDetails.jsp";
+    private final String ERROR_PAGE = "Error.html";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,36 +45,45 @@ public class changeAdminGraphServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        HttpSession session = request.getSession(false);
         String url = ERROR_PAGE;
-        int status=0;
-        String daterange = request.getParameter("daterange");
-        if (!request.getParameter("graphstatus").isEmpty()) {
-        status = Integer.parseInt(request.getParameter("graphstatus"));
+        String id = request.getParameter("orderId");
+        int orderID=0;
+        if (id!=null && !id.isEmpty()){
+            orderID=Integer.parseInt(id);
         }
-        String[] date = daterange.split(" - ");
-        String start = date[0];
-        String end = date[1];
         try {
-            OrderDAO orderdao = new OrderDAO();
-            List<totalInOrderTable> graph;
-            if (status>0) graph = orderdao.getAdminGraphShipped(start, end, status);
-            else graph = orderdao.getAdminGraphTotal(start, end);
-            session.setAttribute("GRAPH", graph);
-            session.setAttribute("DATESTART", start);
-            session.setAttribute("DATEEND", end);
-            session.setAttribute("STATUS", status);
-            url=ADMIN_PAGE;
+            OrderDAO orderDAO = new OrderDAO();
+            
+            //get order
+            CustomizedOrderDTO order = orderDAO.getSaleOrderByOrderId(orderID);
+            
+            //get order details
+            OrderDetailDAO orderDetDAO = new OrderDetailDAO();
+            int orderId = order.getOrderId();
+            order.setDetails(orderDetDAO.getOrderDetailsByOrderID(orderId));
+            //get customer details
+            UserDAO userDAO = new UserDAO();
+            userDAO.getUserByID(order.getCustomerId());
+            UserDTO customer = userDAO.getUser();
+            order.setCustomer(customer);
+            request.setAttribute("ORDER", order);
+            
+            ProductCategoryDAO productCategoryDao = new ProductCategoryDAO();
+            productCategoryDao.getAllCategory();
+            List<ProductCategoryDTO> productCategoryDto = productCategoryDao.getCategoryList();
+            if(productCategoryDto != null){
+                request.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
+            }
+            
+            url = ORDER_DETAILS_PAGE;
+        } catch (SQLException ex) {
+          log("ViewSaleOrderListServlet_SQLException: " + ex.getMessage());
+        } catch (NamingException ex) {
+          log("ViewSaleOrderListServlet_NamingException: " + ex.getMessage());
         }
-        catch(SQLException ex){
-            log("changeAdminGraphServlet _ SQL:" + ex.getMessage());
-        }
-        catch(NamingException ex){
-            log("changeAdminGraphServlet _ Naming:" + ex.getMessage());
-        }
-        finally{
-            response.sendRedirect(url);
+        finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

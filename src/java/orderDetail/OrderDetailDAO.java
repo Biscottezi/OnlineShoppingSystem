@@ -136,7 +136,7 @@ public class OrderDetailDAO implements Serializable{
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "Select OrderID, od.ProductID, od.Quantity, p.Title, p.Thumbnail, p.ListPrice, p.SalePrice "
+                String sql = "Select OrderID, od.ProductID, od.Quantity, p.Title, p.Thumbnail, p.ListPrice, p.SalePrice, p.ProductCategoryID "
                         + "From OrderDetail od join Product p on od.ProductID = p.ProductID "
                         + "Where od.OrderID = ? ";
                 
@@ -152,8 +152,9 @@ public class OrderDetailDAO implements Serializable{
                     String thumb = rs.getString("Thumbnail");
                     float listPrice = rs.getFloat("ListPrice");
                     float salePrice = rs.getFloat("SalePrice");
+                    int proCategoryID = rs.getInt("ProductCategoryID");
                     
-                    CustomizedOrderDetailDTO dto = new CustomizedOrderDetailDTO(orderID, prodID, quantity, title, thumb, listPrice, salePrice);
+                    CustomizedOrderDetailDTO dto = new CustomizedOrderDetailDTO(orderID, prodID, quantity, title, thumb, listPrice, salePrice, proCategoryID);
                     if(details == null){
                         details = new ArrayList<>();
                     }

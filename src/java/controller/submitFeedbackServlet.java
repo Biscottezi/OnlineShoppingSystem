@@ -12,15 +12,23 @@ import java.sql.SQLException;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utils.uploadFile;
 
 /**
  *
  * @author nguye
  */
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 10,
+        maxFileSize = 1024 * 1024 * 50,
+        maxRequestSize = 1024 * 1024 * 100
+)
+
 @WebServlet(name = "submitFeedbackServlet", urlPatterns = {"/submitFeedbackServlet"})
 public class submitFeedbackServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
@@ -75,6 +83,7 @@ public class submitFeedbackServlet extends HttpServlet {
             String rating = request.getParameter("txtRating");
             int ratedStar = Integer.parseInt(rating);
             String content = request.getParameter("txtFeedbackContent");
+            String avatar = uploadFile.uploadFile(request, "txtFeedbackImages");
             if(productID != null){
                 int prodID = Integer.parseInt(productID);
                 FeedBackDAO dao = new FeedBackDAO();

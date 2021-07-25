@@ -41,10 +41,10 @@
                         <img class="d-block w-100" src="img/banner1.jpg" alt="First slide">
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="img/banner2.jpg" alt="Second slide">
+                        <img class="d-block w-100" src="img/banner2.png" alt="Second slide">
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="img/banner3.jpg" alt="Third slide">
+                        <img class="d-block w-100" src="img/banner3.png" alt="Third slide">
                     </div>
                 </div>
             </div>
