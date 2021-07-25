@@ -55,12 +55,12 @@ public class ViewOrderListServlet extends HttpServlet {
         try{
             OrderDAO dao1 = new OrderDAO();
             List<CustomizedOrderDTO> orders = dao1.getOrderListByCustomer(Integer.parseInt(custId));
-            for(int i = 0; i < orders.size(); ++i){
-                OrderDetailDAO dao2 = new OrderDetailDAO();
-                int orderId = orders.get(i).getOrderId();
-                orders.get(i).setDetails(dao2.getOrderDetailsByOrderID(orderId));
-            }
             if(orders != null){
+                for(int i = 0; i < orders.size(); ++i){
+                    OrderDetailDAO dao2 = new OrderDetailDAO();
+                    int orderId = orders.get(i).getOrderId();
+                    orders.get(i).setDetails(dao2.getOrderDetailsByOrderID(orderId));
+                }
                 request.setAttribute("ORDER_LIST", orders);
             }
             
@@ -70,7 +70,6 @@ public class ViewOrderListServlet extends HttpServlet {
             if(productCategoryDto != null){
                 request.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
             }
-            
             url = ORDER_LIST_PAGE;
         }
         catch(SQLException ex){
