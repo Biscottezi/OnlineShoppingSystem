@@ -27,6 +27,7 @@ import product.ProductDTO;
 public class removeFromCartServlet extends HttpServlet {
     private final String ERROR = "error";
     private final String CART_DETAILS = "viewCart";
+    private final String CART_DETAILS_UPDATE = "viewCartUpdate";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -63,7 +64,13 @@ public class removeFromCartServlet extends HttpServlet {
                 }//end if cart existed
             }//session is existed
             
-            url = CART_DETAILS;
+            if(session.getAttribute("ORDER") != null){
+                url = CART_DETAILS_UPDATE;
+            }
+            else{
+                url = CART_DETAILS;
+            }
+            
         }catch (SQLException ex) {
             log("removeFromCartServlet_SQLException: " + ex.getMessage());
         } catch (NamingException ex) {

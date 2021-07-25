@@ -74,9 +74,13 @@
                                         <td>${order.orderedDate}</td>
                                         <td>
                                             <c:set var="details" value="${order.details}"/>
-                                            <c:forEach var="detail" items="${details}" begin="0" end="0">${detail.productName}</c:forEach> and ${order.noOfProd - 1} more product(s)
+                                            <c:forEach var="detail" items="${details}" begin="0" end="0">${detail.productName}</c:forEach>
+                                            <c:choose>
+                                                <c:when test="${order.noOfProd == 2}"> and ${order.noOfProd - 1} more product</c:when>
+                                                <c:when test="${order.noOfProd > 2}"> and ${order.noOfProd - 1} more products</c:when>
+                                            </c:choose>
                                         </td>
-                                        <td>${order.total}</td>
+                                        <td>$${order.total}</td>
                                         <td>
                                             <c:choose>
                                                 <c:when test="${order.status == 0}">Submitted</c:when>

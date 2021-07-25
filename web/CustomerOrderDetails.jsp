@@ -93,7 +93,7 @@
                             <c:if test="${order.status == 0}">
                                 <div class="btn-cancel-update">
                                     <button id="btn-cancel">CANCEL</button>
-                                    <button id="btn-update">UPDATE</button>
+                                    <button id="btn-update" onclick="location.href='updateOrder?orderID=${order.orderId}'">UPDATE</button>
                                 </div>
                             </c:if>
                             <h3 id="order-total-price">Total: $${order.total}</h3>

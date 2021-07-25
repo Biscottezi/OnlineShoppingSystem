@@ -46,7 +46,7 @@ public class updateAvatarServlet extends HttpServlet {
             boolean result = dao.updateUserAvatar(Integer.parseInt(userID), avatar);
             if(result){
                 url = HOME_PAGE;
-            }
+    }
         } catch (SQLException ex) {
             log("updateUserProfileServlet_SQLException: " + ex.getMessage());
         } catch (NamingException ex) {
@@ -84,7 +84,7 @@ public class updateAvatarServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
+           
     /**
      * Returns a short description of the servlet.
      *

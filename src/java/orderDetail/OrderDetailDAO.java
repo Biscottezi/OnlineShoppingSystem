@@ -33,7 +33,7 @@ public class OrderDetailDAO implements Serializable{
             connection = DBHelper.makeConnection();
             if (connection != null) {
                 String orderSQLString = "SELECT OrderID, ProductID, Quantity "
-                        + "FROM tblOrderDetail "
+                        + "FROM OrderDetail "
                         + "WHERE OrderID = ?";
 
                 prestm = connection.prepareStatement(orderSQLString);
@@ -99,7 +99,7 @@ public class OrderDetailDAO implements Serializable{
             connection = DBHelper.makeConnection();
             if (connection != null) {
                 String orderSQLString = "SELECT OrderID, ProductID, Quantity "
-                        + "FROM tblOrderDetail "
+                        + "FROM OrderDetail "
                         + "WHERE OrderID = ?";
 
                 prestm = connection.prepareStatement(orderSQLString);
@@ -181,7 +181,7 @@ public class OrderDetailDAO implements Serializable{
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "DELETE FROM OrderDetail"
+                String sql = "DELETE FROM OrderDetail "
                         + " WHERE OrderID = ? ";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, OrderID);
@@ -201,5 +201,48 @@ public class OrderDetailDAO implements Serializable{
             }
         }
         return false;
+    }
+    
+    public List<OrderDetailDTO> getDetailsByOrderID(int orderID) throws SQLException, NamingException{
+        List<OrderDetailDTO> details = null;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT OrderID, ProductID, Quantity "
+                        + "FROM OrderDetail "
+                        + "WHERE OrderID = ? ";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, orderID);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int ordID = rs.getInt("OrderID");
+                    int prodID = rs.getInt("ProductID");
+                    int quantity = rs.getInt("Quantity");
+                    
+                    OrderDetailDTO dto = new OrderDetailDTO(ordID, prodID, quantity);
+                    
+                    if(details == null){
+                        details = new ArrayList<>();
+                    }
+                    details.add(dto);
+                }
+            }
+        }
+        finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return details;
     }
 }

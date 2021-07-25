@@ -93,7 +93,12 @@
                         <a href="viewBlogList">Blogs</a>
                     </li>
                 </ul>
-                <i class="fas fa-shopping-cart col-1" onclick="location.href='viewCart'"></i>
+                    <i class="fas fa-shopping-cart col-1" 
+                       <c:choose>
+                           <c:when test="${not empty sessionScope.ORDER}">onclick="location.href='viewCartUpdate'"</c:when>
+                           <c:otherwise>onclick="location.href='viewCart'"</c:otherwise>
+                       </c:choose>
+                    ></i>
                 <c:choose>
                     <c:when test="${not empty sessionScope.USER}">
                         <c:set var="user" value="${sessionScope.USER}"/>

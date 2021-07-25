@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import order.OrderDAO;
 import order.OrderDTO;
 import orderDetail.OrderDetailDAO;
+import orderDetail.OrderDetailDTO;
 import orderDetail.OrderItemObj;
 import product.ProductDAO;
 import product.ProductDTO;
@@ -44,47 +45,49 @@ public class UpdateOrderServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private final String ORDER_LIST_PAGE = "CustomerOrderList.jsp";
+    private final String CART_DETAILS_UPDATE = "CartDetailsUpdate.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String custId = request.getParameter("CustomerID");
-        String selectedOrderID = request.getParameter("selectedOrderID");
-        String url = ORDER_LIST_PAGE;
+        String selectedOrderID = request.getParameter("orderID");
+        String url = CART_DETAILS_UPDATE;
         try {
-            
-            OrderDetailDAO detaildao = new OrderDetailDAO();
-            ArrayList<OrderItemObj> detailList = detaildao.GetOrderDetailByOrderID(Integer.parseInt(selectedOrderID));
-            ProductDAO productDAO = new ProductDAO();
-            productDAO.getAllProduct();
-            ProductCategoryDAO cate = new ProductCategoryDAO();
-            List<ProductCategoryDTO> categoryList = cate.getCategoryList();
             HttpSession session = request.getSession(true);
             
-            Cart cart = (Cart) session.getAttribute("CART");
-           
-            for (int i =0; i< detailList.size(); ++i){
-             ProductDTO product = productDAO.getProduct();
-             int ID = product.getId();
-            int quantity = detailList.get(i).getQuantity();          
-            cart.addToCart(ID, quantity);
+            Cart cart = new Cart();
             
+            ProductCategoryDAO productCategoryDao = new ProductCategoryDAO();
+            productCategoryDao.getAllCategory();
+            List<ProductCategoryDTO> productCategoryDto = productCategoryDao.getCategoryList();
+            if(productCategoryDto != null){
+                session.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
             }
-            detaildao.deleteOrderDetail(Integer.parseInt(selectedOrderID));
+            
+            OrderDAO orderdao = new OrderDAO();
+            OrderDTO orderdto = orderdao.getOrderDTOByOrderID(Integer.parseInt(selectedOrderID));
+            session.setAttribute("ORDER", orderdto);
+            
+            OrderDetailDAO detaildao = new OrderDetailDAO();
+            List<OrderDetailDTO> detailList = detaildao.getDetailsByOrderID(Integer.parseInt(selectedOrderID));
+            for(int i = 0; i < detailList.size(); ++i){
+                int prodID = detailList.get(i).getProductId();
+                int quantity = detailList.get(i).getQuantity();
+                cart.addToCart(prodID, quantity);
+            }
+            
             session.setAttribute("CART", cart);
-            request.setAttribute("detailList", detailList);
-            request.setAttribute("categoryList", categoryList);
-        } catch (SQLException ex) {
-          log("UpdateOrderServlet SQLException: " + ex.getMessage());
-        } catch (ClassNotFoundException ex) {
-          log("UpdateOrderServlet ClassNotFoundException: " + ex.getMessage());
-        } catch (NamingException ex) { 
-             log("UpdateOrderServlet NamingException: " + ex.getMessage());
-         } 
+            
+        }
+        catch (SQLException ex) {
+            log("UpdateOrderServlet SQLException: " + ex.getMessage());
+        }
+        catch (NamingException ex) { 
+            log("UpdateOrderServlet NamingException: " + ex.getMessage());
+        } 
         finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
-         
         }
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -1334,5 +1334,95 @@ public class OrderDAO implements Serializable{
         }
         return false;
     }
+    
+    public OrderDTO getOrderDTOByOrderID(int orderID) throws SQLException, NamingException{
+        OrderDTO dto = null;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT OrderID, [Status], OrderedDate, CustomerID, ReceiverName, ReceiverAddress, ReceiverEmail, ReceiverGender, ReceiverPhone, Note, SaleMemberID "
+                        + "FROM [Order] "
+                        + "WHERE OrderID = ? ";
+                
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, orderID);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int ordID = rs.getInt("OrderID");
+                    int status = rs.getInt("Status");
+                    Date ordDate = rs.getDate("OrderedDate");
+                    int custID = rs.getInt("CustomerID");
+                    String name = rs.getString("ReceiverName");
+                    String addr = rs.getString("ReceiverAddress");
+                    String email = rs.getString("ReceiverEmail");
+                    int gender = rs.getInt("ReceiverGender");
+                    String phone = rs.getString("ReceiverPhone");
+                    String note = rs.getString("Note");
+                    int saleID = rs.getInt("SaleMemberID");
+                    
+                    dto = new OrderDTO(ordID, status, ordDate, custID, name, gender, addr, email, phone, note, saleID);
+                }
+            }
+        }
+        finally{
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return dto;
+    }
+    
+    public boolean updateOrderCheckout(int OrderID, String ReceiverName,int ReceiverGender, String ReceiverAddress, String ReceiverEmail, String ReceiverPhone, String note)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                //B2. create SQL string 
+
+                String sql = "UPDATE [Order] "
+                        + "SET OrderedDate = GETDATE(), ReceiverName = ? , ReceiverGender= ?, ReceiverAddress= ?, ReceiverEmail= ?, ReceiverPhone= ?, Note = ? "
+                        + "WHERE OrderID = ?";
+
+                stm = con.prepareStatement(sql);                               
+                stm.setString(1, ReceiverName);
+                stm.setInt(2, ReceiverGender);
+                stm.setString(3, ReceiverAddress);
+                stm.setString(4, ReceiverEmail);
+                stm.setString(5, ReceiverPhone);
+                stm.setString(6, note);
+                stm.setInt(7, OrderID);
+                
+                int rowAffect = stm.executeUpdate();
+                if(rowAffect > 0){
+                    return true;
+                }
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
 }
 
