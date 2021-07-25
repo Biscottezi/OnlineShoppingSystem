@@ -64,7 +64,8 @@ public class UpdateOrderServlet extends HttpServlet {
             Cart cart = (Cart) session.getAttribute("CART");
            
             for (int i =0; i< detailList.size(); ++i){
-             ProductDTO ID = productDAO.getProduct();
+             ProductDTO product = productDAO.getProduct();
+             int ID = product.getId();
             int quantity = detailList.get(i).getQuantity();          
             cart.addToCart(ID, quantity);
             
