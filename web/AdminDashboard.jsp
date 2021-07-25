@@ -21,16 +21,19 @@
         <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+        <link rel="stylesheet" href="css/pop-up.css">
         <link rel="stylesheet" href="css/managersider.css">
         <link rel="stylesheet" href="css/userlist.css">
         <link rel="stylesheet" href="css/managerprofile.css"/>
         <link rel="stylesheet" href="css/salelist.css"/>
         <link rel="stylesheet" href="css/dashboard.css"/>
         <link rel="stylesheet" href="css/admindashboard.css"/>
+        <link rel="stylesheet" href="css/staffpop-up.css"/>
         <script src="js/managerpopup.js"></script>
         <script src="js/upload.js"></script>
         <script src="js/statuschange.js"></script>
         <script src="js/datepicker.js"></script>
+        <script src="js/homepage.js"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <style>
             .status{
@@ -378,7 +381,7 @@
         </div>
         
         <div class="popupwrapper" id="usermenu" style="padding:0;margin:0;">
-            <div class="pro5 row popupitem">
+            <div class="pro5 row popupitem" onclick="openProfile()">
                 <div class="col-3 d-flex align-items-center justify-content-center" style="padding:0;">
                     <div id="menuavatar" style="background-image: url(img/${user.avatar});"></div>
                 </div>
@@ -390,7 +393,7 @@
                 </div>
             </div>
             <div class="menu-divider"></div>
-            <div class="chgpsw row popupitem">
+            <div class="chgpsw row popupitem" onclick="openChangePwd()">
                 <div class="col-3 d-flex align-items-center justify-content-center" id="chgpsw">
                     <div class="menuitemicon" style="background-image: url(img/chgpsw.png);"></div>
                 </div>
@@ -405,7 +408,37 @@
             </div>
         </div>
         <form id="changeGraph" action="changeAdminGraph" method="POST"></form>
-                        
+                      
+        <c:set var="error" value="${requestScope.CHANGE_PASS_ERR}"/>
+        <div id="change-pwd" class="container pop-up form-col" <c:if test="${not empty error}">style="display: block"</c:if> >
+            <div class="close-btn" onclick="closePopUp('change-pwd')">
+                <i class="far fa-times-circle"></i>
+            </div>
+            <div class="container">
+                <div class="col-12">
+                    <h1>Change Password</h1>
+                    <form action="changePass" method="POST" class="form">
+                        <div class="form-group">
+                            <input class="form-control" type="password" placeholder="Current Password" name="txtOldPassword">
+                            <p style="color: red">${error.oldPassErr}</p>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="password" placeholder="New Password" name="txtNewPassword">
+                            <p style="color: red">${error.newPassErr}</p>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="password" placeholder="Confirm New Password" name="txtConfirmPassword">
+                            <p style="color: red">${error.confirmPassErr}</p>
+                        </div>
+                        <button type="submit" class="form-col-btn forgot-btn">Change Password</button>
+                        <input type="hidden" name="userID" value="${user.id}"/>
+                        <input type="hidden" name="password" value="${user.password}"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+                    
+       
         <script>
             $('#datepicker').daterangepicker({
                 "showDropdowns": true,
