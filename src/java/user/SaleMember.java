@@ -5,11 +5,13 @@
  */
 package user;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Admin
  */
-public class SaleMember {
+public class SaleMember implements Serializable {
     private int id;
     private String name;
 

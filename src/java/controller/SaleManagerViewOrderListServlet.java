@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,8 +17,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import order.CustomizedOrderDTO;
 import order.OrderDAO;
 import order.OrderDTO;
+import orderDetail.OrderDetailDAO;
 
 /**
  *
@@ -26,6 +29,9 @@ import order.OrderDTO;
 @WebServlet(name = "SaleManagerViewOrderListServlet", urlPatterns = {"/SaleManagerViewOrderListServlet"})
 public class SaleManagerViewOrderListServlet extends HttpServlet {
 
+    private final String SALE_ORDER_LIST_PAGE = "SaleManagerOrders.jsp";
+    private final String ERROR_PAGE = "error.html";
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,27 +41,29 @@ public class SaleManagerViewOrderListServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private final String SALE_ORDER_LIST_PAGE = "SaleManagerViewOrderList.jsp";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         String url = SALE_ORDER_LIST_PAGE;
+         String url = ERROR_PAGE;
         try {
-            OrderDAO dao = new OrderDAO();
-            ArrayList<OrderDTO> orderList = dao.GetAllOrder();
-            request.setAttribute("orderList", orderList);
-           
+            OrderDAO orderDAO = new OrderDAO();
+            List<CustomizedOrderDTO> orderList = orderDAO.getAllOrderList();
+            for(int i = 0; i < orderList.size(); ++i){
+                OrderDetailDAO orderDetDAO = new OrderDetailDAO();
+                int orderId = orderList.get(i).getOrderId();
+                orderList.get(i).setDetails(orderDetDAO.getOrderDetailsByOrderID(orderId));
+            }
+            request.setAttribute("ORDERLIST", orderList);
+            url = SALE_ORDER_LIST_PAGE;
         } catch (SQLException ex) {
           log("ViewSaleOrderListServlet SQLException: " + ex.getMessage());
         } catch (NamingException ex) {
           log("ViewSaleOrderListServlet NamingException: " + ex.getMessage());
-        } catch (ClassNotFoundException ex) { 
-            log("ViewSaleOrderListServlet ClassNotFoundException: " + ex.getMessage());
-         } 
+        }
         finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
-         
         }
     }
 

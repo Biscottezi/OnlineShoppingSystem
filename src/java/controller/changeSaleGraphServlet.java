@@ -20,6 +20,9 @@ import javax.servlet.http.HttpSession;
 import order.OrderDAO;
 import order.Revenue;
 import order.totalInOrderTable;
+import user.SaleMember;
+import user.UserDAO;
+import user.UserDTO;
 
 /**
  *
@@ -28,8 +31,9 @@ import order.totalInOrderTable;
 @WebServlet(name = "changeSaleGraphServlet", urlPatterns = {"/changeSaleGraphServlet"})
 public class changeSaleGraphServlet extends HttpServlet {
 
-    private final String SALE_PAGE = "SaleManagerDashboard";
-    private final String ERROR_PAGE = "viewSManagerDashboard";
+    private final String SALE_PAGE = "SaleManagerDashboard.jsp";
+    private final String SALEMEMBER_PAGE = "SaleMemberDashboard.jsp";
+    private final String ERROR_PAGE = "viewSManagerDashboardServlet";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,11 +49,20 @@ public class changeSaleGraphServlet extends HttpServlet {
         
         String url = ERROR_PAGE;
         String daterange = request.getParameter("daterange");
+        HttpSession session = request.getSession(false);
         int saleid=0;
+        List<SaleMember> listsale = (List<SaleMember>)session.getAttribute("SALELIST");
+        SaleMember chosen = new SaleMember();
         if (request.getParameter("slSaleName")!=null && !request.getParameter("slSaleName").isEmpty()) {
             saleid = Integer.parseInt(request.getParameter("slSaleName"));
+            for (int i = 0; i<listsale.size();i++){
+                if (listsale.get(i).getId()==saleid){
+                    chosen.setId(listsale.get(i).getId());
+                    chosen.setName(listsale.get(i).getName());
+                    break;
+                }
+            }
         }
-        HttpSession session = request.getSession(false);
         int status=0;
         if (request.getParameter("graphstatus")!=null && !request.getParameter("graphstatus").isEmpty()) {
             status = Integer.parseInt(request.getParameter("graphstatus"));
@@ -62,49 +75,42 @@ public class changeSaleGraphServlet extends HttpServlet {
             if (status>0){
                 if (saleid<=0){
                     List<totalInOrderTable> graph = orderdao.getSaleGraphShipped(start, end);
-                    if(graph.size()>0){
-                        session.setAttribute("ORDERGRAPH", graph);
-                    }
+                    session.setAttribute("ORDERGRAPH", graph);
                 } 
                 else {
-                    List<totalInOrderTable> graph = orderdao.getSaleGraphShippedbySaleMember(start, end, saleid);
-                    if(graph.size()>0){
-                        session.setAttribute("ORDERGRAPH", graph);
-                    }
+                    List<totalInOrderTable> graph = orderdao.getSaleGraphShippedbySaleMember(start, end, chosen.getId());
+                    session.setAttribute("ORDERGRAPH", graph);
                 }
             }
             else {
                 if (saleid<=0){
                     List<totalInOrderTable> graph = orderdao.getSaleGraphTotal(start, end);
-                    if(graph.size()>0){
-                        session.setAttribute("ORDERGRAPH", graph);
-                    }
+                    session.setAttribute("ORDERGRAPH", graph);
                 } 
                 else {
-                    List<totalInOrderTable> graph = orderdao.getSaleGraphTotalbySaleMember(start, end, saleid);
-                    if(graph.size()>0){
-                        session.setAttribute("ORDERGRAPH", graph);
-                    }
+                    List<totalInOrderTable> graph = orderdao.getSaleGraphTotalbySaleMember(start, end, chosen.getId());
+                    session.setAttribute("ORDERGRAPH", graph);
                 }
             }
             //end ordergraph
             if (saleid<=0){
                 List<Revenue> revenueList = orderdao.getTotalRevenuebyDate(start,end);
-                if(revenueList.size()>0){
-                    session.setAttribute("REVGRAPH", revenueList);
-                }
+                session.setAttribute("REVGRAPH", revenueList);
             } 
             else {
                 List<Revenue> revenueList = orderdao.getTotalRevenuebyDate(start,end);
-                if(revenueList.size()>0){
-                    session.setAttribute("REVGRAPH", revenueList);
-                }
+                session.setAttribute("REVGRAPH", revenueList);
             }
             //end revenuegraph
-            request.setAttribute("DATESTART", start);
-            request.setAttribute("DATEEND", end);
-            request.setAttribute("DATEEND", end);
-            url=SALE_PAGE;
+            session.setAttribute("DATESTART", start);
+            session.setAttribute("DATEEND", end);
+            request.setAttribute("SaleMember", chosen);
+            request.setAttribute("graphstatus", status);
+            UserDTO user = (UserDTO)session.getAttribute("USER");
+            if (user.getRole()==2) 
+                url=SALE_PAGE;
+            else 
+                url = SALEMEMBER_PAGE;
         } 
         catch(SQLException ex){
             log("changeAdminGraphServlet_SQL:" + ex.getMessage());

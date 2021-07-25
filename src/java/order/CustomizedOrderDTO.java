@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 import orderDetail.CustomizedOrderDetailDTO;
+import user.UserDTO;
 
 /**
  *
@@ -29,7 +30,9 @@ public class CustomizedOrderDTO implements Serializable{
     private float total = 0;
     private List<CustomizedOrderDetailDTO> details;
     private int noOfProd;
-
+    private String customerName;
+    private UserDTO customer;
+    
     public CustomizedOrderDTO(int orderId, int status, int customerId, int saleMemberId, Date orderedDate, String receiverName, String receiverAddress, String receiverEmail, String receiverPhone, String note, int receiverGender) {
         this.orderId = orderId;
         this.status = status;
@@ -44,7 +47,36 @@ public class CustomizedOrderDTO implements Serializable{
         this.receiverGender = receiverGender;
     }
 
-    
+    public CustomizedOrderDTO(int orderId, int status, int customerId, int saleMemberId, Date orderedDate, String receiverName, String receiverAddress, String receiverEmail, String receiverPhone, String note, int receiverGender, String customerName) {
+        this.orderId = orderId;
+        this.status = status;
+        this.customerId = customerId;
+        this.saleMemberId = saleMemberId;
+        this.orderedDate = orderedDate;
+        this.receiverName = receiverName;
+        this.receiverAddress = receiverAddress;
+        this.receiverEmail = receiverEmail;
+        this.receiverPhone = receiverPhone;
+        this.note = note;
+        this.receiverGender = receiverGender;
+        this.customerName = customerName;
+    }
+
+    public CustomizedOrderDTO(int orderId, int status, int customerId, int saleMemberId, Date orderedDate, String receiverName, String receiverAddress, String receiverEmail, String receiverPhone, String note, int receiverGender, UserDTO customer) {
+        this.orderId = orderId;
+        this.status = status;
+        this.customerId = customerId;
+        this.saleMemberId = saleMemberId;
+        this.orderedDate = orderedDate;
+        this.receiverName = receiverName;
+        this.receiverAddress = receiverAddress;
+        this.receiverEmail = receiverEmail;
+        this.receiverPhone = receiverPhone;
+        this.note = note;
+        this.receiverGender = receiverGender;
+        this.customer = customer;
+    }
+
     
     public int getOrderId() {
         return orderId;
@@ -153,4 +185,22 @@ public class CustomizedOrderDTO implements Serializable{
     public int getNoOfProd() {
         return noOfProd;
     }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public UserDTO getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(UserDTO customer) {
+        this.customer = customer;
+    }
+    
+    
 }

@@ -53,10 +53,10 @@ public class PostCategoryDAO implements Serializable{
                 }
             }
         }finally{
-            if(con != null){
+            if(rs != null){
                     rs.close();
                 }
-                if(con != null){
+                if(stm != null){
                     stm.close();
                 }
                 if(con != null){

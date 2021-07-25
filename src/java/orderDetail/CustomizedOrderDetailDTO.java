@@ -15,13 +15,14 @@ public class CustomizedOrderDetailDTO implements Serializable{
     private int orderId;
     private int productId;
     private int quantity;
+    private int proCategoryId;
     private String productName;
     private float listPrice;
     private float salePrice;
     private float detailTotal;
     private String thumbnail;
 
-    public CustomizedOrderDetailDTO(int orderId, int productId, int quantity, String productName, String thumbnail, float listPrice, float salePrice) {
+    public CustomizedOrderDetailDTO(int orderId, int productId, int quantity, String productName, String thumbnail, float listPrice, float salePrice, int proCategoryId) {
         this.orderId = orderId;
         this.productId = productId;
         this.quantity = quantity;
@@ -35,6 +36,7 @@ public class CustomizedOrderDetailDTO implements Serializable{
         else{
             this.detailTotal = listPrice * quantity;
         }
+        this.proCategoryId = proCategoryId;
     }
 
     public int getOrderId() {
@@ -95,6 +97,14 @@ public class CustomizedOrderDetailDTO implements Serializable{
 
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public int getProCategoryId() {
+        return proCategoryId;
+    }
+
+    public void setProCategoryId(int proCategoryId) {
+        this.proCategoryId = proCategoryId;
     }
     
 }
