@@ -32,7 +32,7 @@ import user.UserDAO;
 @WebServlet(name = "viewMarketingDashboardServlet", urlPatterns = {"/viewMarketingDashboardServlet"})
 public class viewMarketingDashboardServlet extends HttpServlet {
     private final String ERROR_PAGE="Error.html";
-    private final String MARKETING_DASHBOARD="";
+    private final String MARKETING_DASHBOARD="MarketingDashboard.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -66,7 +66,7 @@ public class viewMarketingDashboardServlet extends HttpServlet {
             session.setAttribute("POSTS", numOfPost);
             
             FeedBackDAO feedDAO = new FeedBackDAO();
-            int numOfFeed = feedDAO.getNoOfFeedbackByMonth(now, monthago);
+            int numOfFeed = feedDAO.getNoOfFeedbackByMonth();
             session.setAttribute("FEEDBACKS", numOfFeed);
             
             OrderDAO orderDAO = new OrderDAO();

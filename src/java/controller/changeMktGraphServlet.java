@@ -26,8 +26,8 @@ import order.totalInOrderTable;
 @WebServlet(name = "changeMktGraphServlet", urlPatterns = {"/changeMktGraphServlet"})
 public class changeMktGraphServlet extends HttpServlet {
 
-    private final String MKT_PAGE = "";
-    private final String ERROR_PAGE = "";
+    private final String MKT_PAGE = "MarketingDashboard.jsp";
+    private final String ERROR_PAGE = "viewMarketingDashboardServlet";
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -64,7 +64,7 @@ public class changeMktGraphServlet extends HttpServlet {
             log("changeMktGraphServlet _ Naming:" + ex.getMessage());
         }
         finally{
-            response.sendRedirect(url);
+            request.getRequestDispatcher(url).forward(request, response);
         }
         
     }

@@ -220,7 +220,7 @@ public class FeedBackDAO implements Serializable{
         return false;
     }
     
-    public int getNoOfFeedbackByMonth(String now, String monthago) throws SQLException, NamingException{
+    public int getNoOfFeedbackByMonth() throws SQLException, NamingException{
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -232,8 +232,6 @@ public class FeedBackDAO implements Serializable{
                         + "FROM Feedback ";
                 
                 stm = con.prepareStatement(sql);
-                stm.setString(1, monthago);
-                stm.setString(2, now);
                 rs = stm.executeQuery();
                 
                 while(rs.next()){

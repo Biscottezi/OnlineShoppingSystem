@@ -103,6 +103,14 @@
     </head>
     <body style="width: 100%; height:100%; margin: 0; padding: 0; background-color: #F7F8FC">
         <c:set var="user" value="${sessionScope.USER}"/>
+        <c:set var="posts" value="${sessionScope.POSTS}"/>
+        <c:set var="products" value="${sessionScope.PRODUCTS}"/>
+        <c:set var="feedbacks" value="${sessionScope.FEEDBACKS}"/>
+        <c:set var="customers" value="${sessionScope.CUSTOMERS}"/>
+        <c:set var="start" value="${sessionScope.DATESTART}"/>
+        <c:set var="end" value="${sessionScope.DATEEND}"/>
+        <c:set var="graph" value="${sessionScope.GRAPH}"/>
+        
         <div class="wrapper row" style="margin:0;padding:0; max-width: 100%;">
             <div class="wrapper col-2" style="background-color: #363740; min-height:937px; padding-right: 0;">
               <ul class="nav flex-column col">
@@ -215,7 +223,8 @@
                         <span class="input-group-text" id="basic-addon1" style="background-color:white; border: 1px #e3e3e3 solid; border-right-style: none;">
                             <i class="far fa-calendar-alt" style="font-size:22px;"></i>
                         </span>
-                        <input type="text" name="daterange" id="datepicker" class="datepicker" style="height: 38px; width: 310px;"/>
+                        <input type="text" name="daterange" id="datepicker" class="datepicker" style="height: 38px; width: 310px;" form="changeGraph"/>
+                        <input type="submit" value="View" name="btAction" form="changeGraph"/>
                     </div>
                 </div>
                 
@@ -223,28 +232,28 @@
                     <div class="col-3 sale-member picker-title">
                         <div class="admin-stats d-flex align-items-center justify-content-center">
                             <div class="details-header">Posts<br>
-                                <span class="details">60</span>
+                                <span class="details">${posts}</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-3 sale-member picker-title">
                         <div class="admin-stats d-flex align-items-center justify-content-center">
                             <div class="details-header">Products<br>
-                                <span class="details">16</span>
+                                <span class="details">${products}</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-3 sale-member picker-title">
                         <div class="admin-stats d-flex align-items-center justify-content-center">
                             <div class="details-header">Customers<br>
-                                <span class="details">43</span>
+                                <span class="details">${customers}</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-3 sale-member picker-title">
                         <div class="admin-stats d-flex align-items-center justify-content-center">
                             <div class="details-header">Feedbacks<br>
-                                <span class="details">64</span>
+                                <span class="details">${feedbacks}</span>
                             </div>
                         </div>
                     </div>
@@ -257,7 +266,7 @@
                         <div class="col-12 d-flex justify-content-start align-items-center graphtitle">New customers trends</div>
                     </div>
                     <div class="graph-desc">
-                        From 18 May 2021 to 25 May 2021
+                        From ${start} to ${end}
                     </div>
                     <div id="curve_chart"></div>
                 </div>
@@ -292,11 +301,17 @@
                 <div class="col-9 d-flex align-items-center description menu-itemtitle">Sign Out</div>
             </div>
         </div>
+                        
+        <form action="changeMktGraph" id="changeGraph" method="POST"></form>
+                        
         <script>
             $('#datepicker').daterangepicker({
                 "showDropdowns": true,
-                "startDate": "06/26/2021",
-                "endDate": "07/02/2021"
+                "startDate": moment().subtract('days', 7),
+                "endDate": moment(),
+                locale:{
+                    format: 'YYYY/MM/DD'
+                }
             }, function(start, end, label) {
               console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
             },);
@@ -307,13 +322,14 @@
             function drawChart() {
                 var data = google.visualization.arrayToDataTable([
                     ['Date', 'Orders'],
-                    ['12 July',  35],
-                    ['13 July',  13],
-                    ['14 July',  34],
-                    ['15 July',  52],
-                    ['16 July',  28],
-                    ['17 July',  24],
-                    ['18 July',  56]
+                    <c:if test="${empty graph}">
+                        ['', 0]
+                    </c:if>
+                    <c:if test="${not empty graph}">
+                        <c:forEach var="order" items="${graph}">
+                            ['${order.date}',  ${order.total}],
+                        </c:forEach>
+                    </c:if>
                 ]);
                 var options = {
                 curveType: 'function',
