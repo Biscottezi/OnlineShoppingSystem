@@ -74,3 +74,4 @@ SaleMemberDashboard = SaleMemberDashboard.jsp
 ViewSMemberDashboard = ViewSMemberDashboardServlet
 ViewSaleOrderList = ViewSaleOrderListServlet
 SaleUpdateOrder = SaleUpdateOrderServlet
+updateAvatar = updateAvatarServlet

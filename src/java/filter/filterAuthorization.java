@@ -135,8 +135,10 @@ public class filterAuthorization implements Filter {
         switch (role){
             case 0:
                 for(int i = 0; i < marketingPages.size(); i++){
-                    if(resource.equals(marketingPages.get(i)))
+                    if(resource.equals(marketingPages.get(i))){
                         result = true;
+                    }
+                        
                 }
                 if(result == true){
                     chain.doFilter(request, response);
@@ -147,8 +149,10 @@ public class filterAuthorization implements Filter {
                 break;
             case 1:
                 for(int i = 0; i < saleMemberPages.size(); i++){
-                    if(resource.equals(saleMemberPages.get(i)))
+                    if(resource.equals(saleMemberPages.get(i))){
                         result = true;
+                    }
+                        
                 }
                 if(result == true){
                     chain.doFilter(request, response);
@@ -159,8 +163,10 @@ public class filterAuthorization implements Filter {
                 break;
             case 2:
                 for(int i = 0; i < saleManagerPages.size(); i++){
-                    if(resource.equals(saleManagerPages.get(i)))
+                    if(resource.equals(saleManagerPages.get(i))){
                         result = true;
+                    }
+                        
                 }
                 if(result == true){
                     chain.doFilter(request, response);
@@ -171,8 +177,10 @@ public class filterAuthorization implements Filter {
                 break;
             case 3:
                 for(int i = 0; i < adminPages.size(); i++){
-                    if(resource.equals(adminPages.get(i)))
+                    if(resource.equals(adminPages.get(i))){
                         result = true;
+                    }
+                        
                 }
                 if(result == true){
                     chain.doFilter(request, response);
@@ -183,8 +191,10 @@ public class filterAuthorization implements Filter {
                 break;
             case 4:
                 for(int i = 0; i < customerPages.size(); i++){
-                    if(resource.equals(customerPages.get(i)))
+                    if(resource.equals(customerPages.get(i))){
                         result = true;
+                    }
+                        
                 }
                 if(result == true){
                     chain.doFilter(request, response);
