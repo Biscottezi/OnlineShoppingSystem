@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,8 @@ import javax.servlet.http.HttpSession;
 import order.OrderDAO;
 import orderDetail.OrderDetailDAO;
 import product.ProductDTO;
+import productCategory.ProductCategoryDAO;
+import productCategory.ProductCategoryDTO;
 import user.UserDAO;
 
 /**
@@ -57,24 +60,33 @@ public class CheckOutAfterUpdateServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String url = SUCCESS_PAGE;
         try {         
-
-            
+            ProductCategoryDAO productCategoryDao = new ProductCategoryDAO();
+            productCategoryDao.getAllCategory();
+            List<ProductCategoryDTO> productCategoryDto = productCategoryDao.getCategoryList();
+            if(productCategoryDto != null){
+                request.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
+            }
             if (session != null) {
                 //2.Take customer's cart
                 Cart cart = (Cart) session.getAttribute("CART");
                 if (cart != null) {
                     Map<Integer,ProductDTO> items = cart.getItems();
                     if (items != null) {
-                        //3.Create order                                            
-                         OrderDAO orderDAO = new OrderDAO();
-                        orderDAO.updateOrder( Integer.parseInt(OrderID),Receivername, Integer.parseInt(Receivergender), address, email, phone);
+                        //3.Create order
+                        UserDAO dao= new UserDAO();
+                        int saleID = dao.getSaleMemberActive();
+                        OrderDAO orderDAO = new OrderDAO();
+                        int newOrderID= 0;
+                        if(session.getAttribute("custId") != null){
+                            int custId = (int) session.getAttribute("custId");
+                            newOrderID = orderDAO.CreateOrder(custId, Receivername, Integer.parseInt(Receivergender), address, email, phone, note, saleID);
+                        }
+                        
                         //4.Get each item and add to order
                         OrderDetailDAO detailDAO = new OrderDetailDAO();
-                        ProductDTO dto =new ProductDTO();
-                        
                         for (int ID : items.keySet()) {
-                            int quantity = dto.getQuantity();
-                            detailDAO.CreateOrderDetail(Integer.parseInt(OrderID), ID, quantity);
+                            int quantity = items.get(ID).getQuantity();
+                            detailDAO.CreateOrderDetail(newOrderID, ID, quantity);
                         }//end for items.keySet
                     }//end if items is not null  
                     session.removeAttribute("CART");
