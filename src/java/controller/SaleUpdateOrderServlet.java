@@ -8,9 +8,9 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,22 +18,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import order.OrderDAO;
-import order.Revenue;
-import order.totalInOrderTable;
-import user.SaleMember;
-import user.UserDAO;
+import order.OrderDTO;
+import orderDetail.OrderDetailDAO;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "viewSManagerDashboardServlet", urlPatterns = {"/viewSManagerDashboardServlet"})
-public class viewSManagerDashboardServlet extends HttpServlet {
-    
-    private final String SMANAGER_DASHBOARD = "SaleManagerDashboard";
-    private final String ERROR_PAGE = "Error.html";
+@WebServlet(name = "NewServlet", urlPatterns = {"/NewServlet"})
+public class SaleUpdateOrderServlet extends HttpServlet {
+
+    private final String ERROR_PAGE = "error.html";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,33 +42,25 @@ public class viewSManagerDashboardServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR_PAGE;
-        String now = java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-        String weekago = java.time.LocalDate.now().minusDays(7).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-        HttpSession session = request.getSession(false);
         
+        String urlRewriting=ERROR_PAGE;
+        String id="1";
         try {
-            OrderDAO orderDao = new OrderDAO();
-            List<totalInOrderTable> graph = orderDao.getSaleGraphTotal(weekago, now);
-            session.setAttribute("ORDERGRAPH", graph);
-            
-            
-            List<Revenue> revenueList = orderDao.getTotalRevenuebyDate(weekago,now);
-            session.setAttribute("REVGRAPH", revenueList);
-            
-            UserDAO userDao= new UserDAO();
-            userDao.getSaleMembers();
-            List<SaleMember> listsale = userDao.getSaleMemberList();
-            session.setAttribute("SALELIST", listsale);
-            session.setAttribute("DATESTART", weekago);
-            session.setAttribute("DATEEND", now);
-            url= SMANAGER_DASHBOARD;
-        } catch(SQLException ex){
-            log("viewSManagerDashboardServlet_SQL:" + ex.getMessage());
-        } catch(NamingException ex){
-            log("viewSManagerDashboardServlet_Naming:" + ex.getMessage());
-        } finally{
-            response.sendRedirect(url);
+            OrderDAO dao = new OrderDAO();
+            ArrayList<OrderDTO> orderList = dao.GetOrderListByCustID(id);
+            request.setAttribute("orderList", orderList);
+            OrderDetailDAO detaildao = new OrderDetailDAO();
+        } catch (SQLException ex) {
+            log("DisplayShoppingPageServlet SQLException: " + ex.getMessage());
+        } catch (NamingException ex) { 
+            log("DisplayShoppingPageServlet NamingException: " + ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SaleUpdateOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        finally {
+            RequestDispatcher rd = request.getRequestDispatcher(urlRewriting);
+            rd.forward(request, response);
+         
         }
     }
 

@@ -35,11 +35,14 @@
                 color: white;
                 font-weight: 400;
             }
-            .enable{
+            .shipped{
                 background: #29cc97;
             }
-            .disable{
-                background: #CC2929;
+            .confirmed{
+                background: #53D6FF;
+            }
+            .submitted{
+                background: #FFCB15;
             }
             #tbllist_info {
                 padding: 8px;
@@ -78,12 +81,15 @@
         </style>
     </head>
     <body style="width: 100%; height:100%; margin: 0; padding: 0; background-color: #F7F8FC">
+        <c:set var="user" value="${sessionScope.USER}"/>
+        <c:set var="SaleList" value="${sessionScope.SALELIST}"/>
+        <c:set var="orderList" value="${requestScope.ORDERLIST}"/>
         <div class="wrapper row" style="margin:0;padding:0; max-width: 100%;">
             <div class="wrapper col-2" style="background-color: #363740; min-height:937px; padding-right: 0;">
               <ul class="nav flex-column col">
                   
                   <!-- header -->
-                  <li class="nav-item" id="header">
+                  <li class="nav-item" id="header" onclick="location.href='SaleManagerDashboard';">
                     <div class="navbar-brand" href="#">
                         <div class="container">
                             <div class="row justify-content-md-center">
@@ -95,7 +101,7 @@
                   </li>
                   
                   <!-- item 1 -->
-                  <li class="nav-item naviitem row">
+                  <li class="nav-item naviitem row" onclick="location.href='SaleManagerDashboard';">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
@@ -107,7 +113,7 @@
                   </li>
                   
                   <!-- item 2 -->
-                  <li class="nav-item naviitem row" id="active">
+                  <li class="nav-item naviitem row" id="active" onclick="location.href='SaleManagerViewOrderList';">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
@@ -129,10 +135,10 @@
                     <div class="col-7"></div>
                     <div class="col row">
                         <div class="d-flex justify-content-end col-10 align-items-center" id="user">
-                            Trần Tân Long <!-- input jstl session user here! -->
+                            ${user.name}
                         </div>
                         <div class="profile col-2">
-                            <div id="avatar" class="ava" style="background-image: url(img/tanlong.png);" onclick="showPopup()"></div> <!-- get session's avatar -->
+                            <div id="avatar" class="ava" style="background-image: url(img/${user.avatar});" onclick="showPopup()"></div>
                         </div>
                     </div>
                 </div>
@@ -142,8 +148,9 @@
                         <div class="select-wrapper">
                             <select id="table-filter" class="d-flex align-items-center">
                                 <option value="" selected>Select sale</option>
-                                <option>00001 - Trần Tân Long</option>
-                                <option>00002 - Vũ Quang Minh</option>
+                                <c:forEach var="sale" items="${SaleList}">
+                                    <option value="${sale.name}">${sale.id} - ${sale.name}</option>
+                                </c:forEach>
                             </select>
                         </div>
                     </div>
@@ -185,124 +192,38 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00001</td>
-                          <td class="align-middle">Vintage Typewriter and 1 other product</td>
-                          <td class="align-middle">Nguyễn Phạm Minh Quân</td>
-                          <td class="align-middle">$15.15</td>
-                          <td class="align-middle">25/06/2021</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                          <td class="align-middle">00001 - Trần Tân Long</td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00002</td>
-                          <td class="align-middle">Vintage Typewriter and 1 other product</td>
-                          <td class="align-middle">Đỗ Hoàng Lâm</td>
-                          <td class="align-middle">$120.45</td>
-                          <td class="align-middle">14/06/2021</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                          <td class="align-middle">00001 - Trần Tân Long</td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00003</td>
-                          <td class="align-middle">Vintage Typewriter and 1 other product</td>
-                          <td class="align-middle">Nguyễn Phạm Minh Quân</td>
-                          <td class="align-middle">$75.45</td>
-                          <td class="align-middle">12/06/2021</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                          <td class="align-middle">00001 - Trần Tân Long</td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00004</td>
-                          <td class="align-middle">Vintage Typewriter and 1 other product</td>
-                          <td class="align-middle">Nguyễn Phạm Minh Quân</td>
-                          <td class="align-middle">$11.86</td>
-                          <td class="align-middle">25/06/2021</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status disable">
-                                  DISABLED
-                              </div>
-                          </td>
-                          <td class="align-middle">Vũ Quang Minh</td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00005</td>
-                          <td class="align-middle">Vintage Typewriter and 1 other product</td>
-                          <td class="align-middle">Nguyễn Phạm Minh Quân</td>
-                          <td class="align-middle">$22.78</td>
-                          <td class="align-middle">24/06/2021</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                          <td class="align-middle">00002 - Vũ Quang Minh</td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00006</td>
-                          <td class="align-middle">Vintage Typewriter and 1 other product</td>
-                          <td class="align-middle">Nguyễn Phạm Minh Quân</td>
-                          <td class="align-middle">$91.15</td>
-                          <td class="align-middle">19/06/2021</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                          <td class="align-middle">00002 - Vũ Quang Minh</td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00007</td>
-                          <td class="align-middle">Vintage Typewriter and 1 other product</td>
-                          <td class="align-middle">Nguyễn Phạm Minh Quân</td>
-                          <td class="align-middle">$58.46</td>
-                          <td class="align-middle">23/06/2021</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                          <td class="align-middle">00002 - Vũ Quang Minh</td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00008</td>
-                          <td class="align-middle">Vintage Typewriter and 1 other product</td>
-                          <td class="align-middle">Nguyễn Phạm Minh Quân</td>
-                          <td class="align-middle">$45.59</td>
-                          <td class="align-middle">20/06/2021</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                          <td class="align-middle">00002 - Vũ Quang Minh</td>
-                        </tr>
-                        <tr style="height: 92px;">
-                          <td class="align-middle" style="text-align: center">00009</td>
-                          <td class="align-middle">Vintage Typewriter and 1 other product</td>
-                          <td class="align-middle">Nguyễn Phạm Minh Quân</td>
-                          <td class="align-middle">$80.12</td>
-                          <td class="align-middle">24/06/2021</td>
-                          <td class="align-middle" style="width:150px;">
-                              <div class="d-flex align-items-center justify-content-center status enable">
-                                  ENABLED
-                              </div>
-                          </td>
-                          <td class="align-middle">00002 - Vũ Quang Minh</td>
-                        </tr>
-                        
+                          <c:forEach var="order" items="${orderList}">
+                            <tr style="height: 92px;" onclick="location.href='saleOrderDet?orderId=${order.orderId}';">
+                              <td class="align-middle" style="text-align: center">${order.orderId}</td>
+                              <td class="align-middle">${order.details[0].productName} <c:if test="${(order.noOfProd - 1)>0}">and ${order.noOfProd - 1} other product${(order.noOfProd-1)>0?'s':''}</c:if></td>
+                              <td class="align-middle">${order.customerName}</td>
+                              <td class="align-middle">$${order.total}</td>
+                              <td class="align-middle">${order.orderedDate}</td>
+                              <td class="align-middle" style="width:150px;">
+                                  <div class="d-flex align-items-center justify-content-center status 
+                                        <c:if test="${order.status==2}">shipped</c:if>
+                                        <c:if test="${order.status==1}">confirmed</c:if>
+                                        <c:if test="${order.status==0}">submitted</c:if>">
+                                      <c:choose>
+                                          <c:when test="${order.status == 2}">
+                                              SHIPPED
+                                          </c:when>
+                                          <c:when test="${order.status == 1}">
+                                              CONFIRMED
+                                          </c:when>
+                                          <c:otherwise>
+                                              SUBMIITED
+                                          </c:otherwise>
+                                      </c:choose>
+                                  </div>
+                              </td>
+                              <td class="align-middle">
+                                <c:forEach var="sale" items="${SaleList}">
+                                    <c:if test="${sale.id == order.saleMemberId}">${sale.name}</c:if>
+                                </c:forEach>
+                              </td>
+                            </tr>
+                            </c:forEach>
                       </tbody>
                     </table> 
                 </div>
@@ -313,11 +234,11 @@
         <div class="popupwrapper" id="usermenu" style="padding:0;margin:0;">
             <div class="pro5 row popupitem">
                 <div class="col-3 d-flex align-items-center justify-content-center" style="padding:0;">
-                    <div id="menuavatar" style="background-image: url(img/tanlong.png);"></div>
+                    <div id="menuavatar" style="background-image: url(img/${user.avatar});"></div>
                 </div>
                 <div class="col-9 d-flex align-items-center description">
                     <div class="descwrapper">
-                        <p class="menu-itemtitle">Trần Tân Long</p>
+                        <p class="menu-itemtitle">${user.name}</p>
                         <p>See your profile</p>
                     </div>
                 </div>

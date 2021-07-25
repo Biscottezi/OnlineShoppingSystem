@@ -66,3 +66,6 @@ updateUserDetails = updateUserDetailsServlet
 viewSManagerDashboard = viewSManagerDashboardServlet
 changeSaleGraph = changeSaleGraphServlet
 SaleManagerDashboard = SaleManagerDashboard.jsp
+SaleManagerViewOrderList = SaleManagerViewOrderListServlet
+SaleOrderDetails = SaleOrderDetails.jsp
+saleOrderDet = SaleOrderDetailsServlet

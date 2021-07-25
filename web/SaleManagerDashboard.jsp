@@ -98,12 +98,16 @@
         <c:set var="SaleList" value="${sessionScope.SALELIST}"/>
         <c:set var="graphOrder" value="${sessionScope.ORDERGRAPH}"/>
         <c:set var="graphRev" value="${sessionScope.REVGRAPH}"/>
+        <c:set var="chosensale" value="${requestScope.SaleMember}"/>
+        <c:set var="start" value="${sessionScope.DATESTART}"/>
+        <c:set var="end" value="${sessionScope.DATEEND}"/>
+        <c:set var="status" value="${requestScope.graphstatus}"/>
         
         <div class="wrapper row" style="margin:0;padding:0; max-width: 100%;">
             <div class="wrapper col-2" style="background-color: #363740; min-height:937px; padding-right: 0;">
               <ul class="nav flex-column col">
                   <!-- header -->
-                  <li class="nav-item" id="header">
+                  <li class="nav-item" id="header" onclick="location.href='SaleManagerDashboard';">
                     <div class="navbar-brand" href="#">
                         <div class="container">
                             <div class="row justify-content-md-center">
@@ -115,7 +119,7 @@
                   </li>
                   
                   <!-- item 1 -->
-                  <li class="nav-item naviitem row" id="active">
+                  <li class="nav-item naviitem row" id="active" onclick="location.href='SaleManagerDashboard';">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
@@ -127,7 +131,7 @@
                   </li>
                   
                   <!-- item 2 -->
-                  <li class="nav-item naviitem row">
+                  <li class="nav-item naviitem row" onclick="location.href='SaleManagerViewOrderList';">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
@@ -160,7 +164,7 @@
                 <div class="session-user row">
                     <div class="col-3 sale-member" id="title"><span id="session-role">Sale member</span><br>
                         <div class="select-wrapper" id="saleselect">
-                            <select id="table-filter" class="d-flex align-items-center" name="slSaleName">
+                            <select id="table-filter" class="d-flex align-items-center" name="slSaleName" form="changeGraph">
                                 <option value="" selected>Select sale</option>
                                 <c:forEach var="sale" items="${SaleList}">
                                     <option value="${sale.id}">${sale.id} - ${sale.name}</option>
@@ -202,10 +206,13 @@
                 <div class="graphwrapper">
                     <!-- graph header -->
                     <div class="graph-header row">
-                        <div class="col-12 d-flex justify-content-start align-items-center graphtitle">Shipped/total order trends</div>
+                        <div class="col-12 d-flex justify-content-start align-items-center graphtitle">
+                            <c:if test="${status>0}">Shipped</c:if><c:if test="${status<=0 || empty status}">Total</c:if> order trends
+                        </div>
                     </div>
                     <div class="graph-desc">
-                        From 18 May 2021 to 25 May 2021 - Sale: Trần Tân Long
+                        From ${start} to ${end}
+                        <c:if test="${not empty chosensale && chosensale.id>0}"> - Sale: ${chosensale.name}</c:if>
                     </div>
                     <div id="order_chart"></div>
                 </div>
@@ -216,7 +223,8 @@
                         <div class="col-12 d-flex justify-content-start align-items-center graphtitle">Revenues trends - in tens ($)</div>
                     </div>
                     <div class="graph-desc">
-                        From 18 May 2021 to 25 May 2021 - Sale: Trần Tân Long
+                        From ${start} to ${end}
+                        <c:if test="${not empty chosensale && chosensale.id>0}"> - Sale: ${chosensale.name}</c:if>
                     </div>
                     <div id="rev_chart"></div>
                 </div>
@@ -254,8 +262,8 @@
         <script>
             $('#datepicker').daterangepicker({
                 "showDropdowns": true,
-                "startDate":  moment().subtract('days', 7),
-                "endDate": moment(),
+                "startDate":  '${start}',
+                "endDate": '${end}',
                 locale:{
                     format: 'YYYY/MM/DD'
                 }
@@ -316,6 +324,16 @@
                 var chart = new google.visualization.LineChart(document.getElementById('rev_chart'));
                 chart.draw(data, options);
             }
+            <c:if test="${not empty chosensale}">
+            $(document).ready(function() {
+                <c:if test="${chosensale.id > 0}">
+                $('#table-filter').val("${chosensale.id}").change();
+                </c:if>
+                <c:if test="${chosensale.id <= 0}">
+                $('#table-filter').val("").change();
+                </c:if>
+            });
+            </c:if>
         </script>
         
     </body>

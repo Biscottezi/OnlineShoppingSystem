@@ -45,7 +45,7 @@ public class UpdateOrderServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String custId = request.getParameter("CusttomerID");
+        String custId = request.getParameter("CustomerID");
         String selectedOrderID = request.getParameter("selectedOrderID");
         String url = ORDER_LIST_PAGE;
         try {

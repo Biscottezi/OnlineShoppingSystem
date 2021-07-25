@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="css/managerprofile.css"/>
         <link rel="stylesheet" href="css/userlist.css"/>
         <link rel="stylesheet" href="css/editinfo.css"/>
+        <link rel="stylesheet" href="css/saleorderdetails.css"/>
         <script src="js/managerpopup.js"></script>
         <script src="js/upload.js"></script>
         <script src="js/statuschange.js"></script>
@@ -57,24 +58,27 @@
     </head>
     <body style="width: 100%; height:100%; margin: 0; padding: 0; background-color: #F7F8FC">
         <c:set var="user" value="${sessionScope.USER}"/>
+        <c:set var="SaleList" value="${sessionScope.SALELIST}"/>
+        <c:set var="order" value="${requestScope.ORDER}"/>
+        <c:set var="proCategory" value="${requestScope.PRODUCT_CATEGORY}"/>
         <div class="wrapper row" style="margin:0;padding:0; max-width: 100%;">
             <div class="wrapper col-2" style="background-color: #363740; min-height:937px; padding-right: 0;">
               <ul class="nav flex-column col">
                   
                   <!-- header -->
-                  <li class="nav-item" id="header" onclick="location.href='AdminDashboard'">
+                  <li class="nav-item" id="header" onclick="location.href='SaleManagerDashboard';">
                     <div class="navbar-brand" href="#">
                         <div class="container">
                             <div class="row justify-content-md-center">
                                 <div class="col"><img src="img/logo.png" alt=""/></div>
-                                <div class="col">Admin <br> Dashboard</div>
+                                <div class="col">Sale <br> Dashboard</div>
                             </div>
                         </div>
                     </div>
                   </li>
                   
                   <!-- item 1 -->
-                  <li class="nav-item naviitem row" onclick="location.href='AdminDashboard'">
+                  <li class="nav-item naviitem row" onclick="location.href='SaleManagerDashboard';">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
@@ -86,12 +90,12 @@
                   </li>
                   
                   <!-- item 2 -->
-                  <li class="nav-item naviitem row" id="active" onclick="location.href='viewUserList'">
+                  <li class="nav-item naviitem row" id="active" onclick="location.href='SaleManagerViewOrderList';">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
-                                <div class="col align-self-baseline"><img src="img/users-chosen.png" alt=""/></div>
-                                <div class="col align-self-baseline" style="font-size: 19px;">Users</div>
+                                <div class="col align-self-baseline"><img src="img/order-chosen.png" alt=""/></div>
+                                <div class="col align-self-baseline" style="font-size: 19px;">Orders</div>
                             </div>
                           </div>
                       </a>
@@ -101,19 +105,19 @@
               </ul>
             </div>
             <c:set var="userdet" value="${requestScope.USER_DETAILS}"/>
-            <div class="wrapper col" style="background-color: #F7F8FC; padding: 30px 33px 30px 45px;" id="maincontent">
+            <div class="wrapper col-10" style="background-color: #F7F8FC; padding: 30px 33px 30px 45px;" id="maincontent">
                 <!-- main title -->
                 <div class="maintitle row">
-                    <div class="col-2" id="title" onclick="location.href='viewUserList';">
-                        <span class="back"><i class="fas fa-angle-left"></i>&nbsp; Back to users</span>
+                    <div class="col-2" id="title" onclick="location.href='<c:if test="${user.role==2}">SaleManagerViewOrderList</c:if>';">
+                        <span class="back"><i class="fas fa-angle-left"></i>&nbsp; Back to orders</span>
                     </div>
                     <div class="col-7"></div>
                     <div class="col row">
                         <div class="d-flex justify-content-end col-10 align-items-center" id="user">
-                            ${user.name} <!-- input jstl session user here! -->
+                            ${user.name} 
                         </div>
                         <div class="profile col-2">
-                            <div id="avatar" class="ava" style="background-image: url(img/${user.avatar});" onclick="showPopup()"></div> <!-- get session's avatar -->
+                            <div id="avatar" class="ava" style="background-image: url(img/${user.avatar});" onclick="showPopup()"></div>
                         </div>
                     </div>
                 </div>
@@ -122,84 +126,161 @@
                 <div class="listwrapper">
                     <!-- list header -->
                     <div class="listheader row">
-                        <div class="col-2 d-flex justify-content-start align-items-center" id="userid">User ID: ${userdet.id}
-                            <input type="hidden" value="${userdet.id}" name="txtUserID" form="updateform"/>
+                        <div class="col-2 d-flex justify-content-start align-items-center orderdet-header">Order ID: ${order.orderId}
+                            <input type="hidden" value="${order.orderId}" name="selectedOrderID" form="updateform"/>
                         </div>
                         <div class="col-6 row"></div>
                         <div class="extended col-4 row d-flex"></div>
                     </div>
                     <div class="infor row">
                         <div class="col">
-                            Fullname<br>
-                            <div class="userinfo">${userdet.name}</div>
-                        </div>
-                        <div class="col">
-                            Gender<br>
-                            <div class="userinfo">Male</div>
-                        </div>
-                    </div>
-                    <div class="infor row">
-                        <div class="col">
-                            Avatar<br>
-                            <div class="avawrapper">
-                                <div id="avainfo" style="background-image: url(img/${userdet.avatar});"></div>
-                            </div>
+                            Customer's fullname<br>
+                            <div class="userinfo">${order.customer.name}</div>
                         </div>
                         <div class="col">
                             Email<br>
-                            <div class="userinfo">${userdet.email}</div>
-                            <div style="margin-top:18px;">Mobile</div>
-                            <div class="userinfo">${userdet.phone}</div>
+                            <div class="userinfo">${order.customer.email}</div>
                         </div>
                     </div>
                     <div class="infor row">
                         <div class="col">
-                            Address<br>
-                            <div class="userinfo" id="addressinfo">${userdet.address}</div>
+                            Ordered date<br>
+                            <div class="userinfo">${order.orderedDate}</div>
                         </div>
                         <div class="col">
-                            Role<br>
-                            <div class="select-wrapper">
-                                <select id="role" class="editbox" form="updateform" name="slRole">
-                                    <option value="0" <c:if test="${userdet.role==0}">selected</c:if>>Marketing</option>
-                                    <option value="1" <c:if test="${userdet.role==1}">selected</c:if>>Sale</option>
-                                    <option value="2" <c:if test="${userdet.role==2}">selected</c:if>>Sale Manager</option>
-                                    <option value="3" <c:if test="${userdet.role==3}">selected</c:if>>Admin</option>
-                                    <option value="4" <c:if test="${userdet.role==4}">selected</c:if>>Customer</option>
-                                </select>
-                            </div>
+                            Mobile<br>
+                            <div class="userinfo">${order.customer.phone}</div>
                         </div>
                     </div>
-                    <div class="infor row" id="lastrow">
+                    <div class="infor row">
+                        <div class="col">
+                            Total cost<br>
+                            <div class="userinfo">$${order.total}</div>
+                        </div>
+                        <div class="col">
+                            Sale name<br>
+                            <c:choose>
+                                <c:when test="${user.role==2}">
+                                    <div class="select-wrapper">
+                                        <select id="salemem" class="editbox" form="updateform" name="slSaleMem">
+                                            <c:forEach var="sale" items="${SaleList}">
+                                                <option value="${sale.id}">${sale.id} - ${sale.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="userinfo">
+                                        <c:forEach var="sale" items="${SaleList}">
+                                            <c:if test="${sale.id == order.saleMemberId}">
+                                                ${sale.id} - ${sale.name}
+                                                <input type="hidden" name="txtSaleMemberID" value="${sale.id}" form="updateform"/>
+                                            </c:if>
+                                        </c:forEach>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
+                    <div class="infor row lastrow">
                         <div class="col-6">
                             Status<br>
-                            <div class="statuswrapper row d-flex align-items-end" style="margin:0;">
-                                <div class="status col-3 d-flex align-items-center justify-content-center newstatus
-                                    <c:if test="${userdet.status==1}">enable</c:if>
-                                    <c:if test="${userdet.status==0}">disable</c:if>" id="createstatus">
-                                    <c:if test="${userdet.status==1}">
-                                    ENABLED
-                                    </c:if>
-                                    <c:if test="${userdet.status==0}">
-                                    DISABLED
-                                    </c:if>
-                                </div>
-                                <input type="checkbox" name="chkStatus" value="ON" 
-                                    <c:if test="${userdet.status==1}">
-                                    checked="checked"
-                                    </c:if> id="statuschkbox" class="col-1" form="updateform"/>
+                            <div class="select-wrapper">
+                                <select id="salemem" class="editbox" form="updateform" name="slStatus"  form="updateform">
+                                        <option value="0">Submitted</option>
+                                        <option value="1">Confirmed</option>
+                                        <option value="2">Shipped</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-2"></div>
                         <div class="col-4">
                             <div class="savewrapper row d-flex align-items-end justify-content-end">
-                                <div class="col d-flex justify-content-end" id="cancelbtn" onclick="location.href='viewUserList';">Discard change</div>
+                                <div class="col d-flex justify-content-end" id="cancelbtn" onclick="location.href='<c:if test="${user.role==2}">SaleManagerViewOrderList</c:if>';">Discard change</div>
                                 <div class="col d-flex justify-content-end" style="padding:0;">
-                                    <input type="submit" value="Save" name="btAction" id="createbtn" form="updateform"/>
+                                    <button type="submit" style="margin-right:5px;" value="SMUpdate" name="btAction" id="createbtn" form="updateform">Save</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                                
+                    <div class="separator col-12"></div>
+                                
+                    <div class="listheader row">
+                        <div class="col-2 d-flex justify-content-start align-items-center orderdet-header">Receiver</div>
+                        <div class="col-6 row"></div>
+                        <div class="extended col-4 row d-flex"></div>
+                    </div>
+                    <div class="infor row">
+                        <div class="col">
+                            Fullname<br>
+                            <div class="userinfo">${order.receiverName}</div>
+                        </div>
+                        <div class="col">
+                            Gender<br>
+                            <div class="userinfo">
+                                <c:if test="${order.receiverGender==1}">Female</c:if>
+                                <c:if test="${order.receiverGender==0}">Male</c:if>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="infor row" style="margin-bottom:40px;">
+                        <div class="col">
+                            Address<br>
+                            <div class="userinfo" id="addressinfo">${order.receiverAddress}</div>
+                        </div>
+                        <div class="col">
+                            Email<br>
+                            <div class="userinfo">${order.receiverEmail}</div>
+                            <div style="margin-top:18px;">Mobile</div>
+                            <div class="userinfo">${order.receiverPhone}</div>
+                        </div>
+                    </div>
+                                
+                    <div class="separator col-12"></div>
+                    
+                    <div class="listheader row">
+                        <div class="col-2 d-flex justify-content-start align-items-center orderdet-header">Ordered Products</div>
+                        <div class="col-6 row"></div>
+                        <div class="extended col-4 row d-flex"></div>
+                    </div>
+                    <table class="table table-hover" id="tbllist">
+                      <thead>
+                        <tr>
+                          <th scope="col" style="text-align: center">Thumbnail</th>
+                          <th scope="col">Title</th>
+                          <th scope="col">Category</th>
+                          <th scope="col">Unit Price</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Total cost</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <c:forEach var="detail" items="${order.details}">
+                        <tr style="height: 92px;">
+                          <td class="align-middle d-flex align-items-center justify-content-center" style="text-align: center">
+                              <div class="productthumb" style="background-image: url(img/${detail.thumbnail});"></div>
+                          </td>
+                          <td class="align-middle">${detail.productName}</td>
+                          <td class="align-middle">
+                              <c:forEach var="cate" items="${proCategory}">
+                                  <c:if test="${cate.id == detail.proCategoryId}">
+                                      ${cate.name}
+                                  </c:if>
+                              </c:forEach>
+                          </td>
+                          <td class="align-middle">
+                              <c:choose>
+                                            <c:when test="${detail.salePrice != 0}">$${detail.salePrice}</c:when>
+                                            <c:otherwise>$${detail.listPrice}</c:otherwise>
+                              </c:choose>
+                          </td>
+                          <td class="align-middle">${detail.quantity}</td>
+                          <td class="align-middle">$${detail.detailTotal}</td>
+                        </tr>
+                        </c:forEach>
+                      </tbody>
+                    </table> 
                     
                 </div>
                 

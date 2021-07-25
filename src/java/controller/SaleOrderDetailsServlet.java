@@ -8,8 +8,6 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -18,21 +16,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import order.CustomizedOrderDTO;
 import order.OrderDAO;
-import order.Revenue;
-import order.totalInOrderTable;
-import user.SaleMember;
+import orderDetail.OrderDetailDAO;
+import productCategory.ProductCategoryDAO;
+import productCategory.ProductCategoryDTO;
 import user.UserDAO;
+import user.UserDTO;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "viewSManagerDashboardServlet", urlPatterns = {"/viewSManagerDashboardServlet"})
-public class viewSManagerDashboardServlet extends HttpServlet {
-    
-    private final String SMANAGER_DASHBOARD = "SaleManagerDashboard";
+@WebServlet(name = "SaleOrderDetailsServlet", urlPatterns = {"/SaleOrderDetailsServlet"})
+public class SaleOrderDetailsServlet extends HttpServlet {
+
+    private final String ORDER_DETAILS_PAGE = "SaleOrderDetails.jsp";
     private final String ERROR_PAGE = "Error.html";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,32 +46,44 @@ public class viewSManagerDashboardServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR_PAGE;
-        String now = java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-        String weekago = java.time.LocalDate.now().minusDays(7).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-        HttpSession session = request.getSession(false);
-        
+        String id = request.getParameter("orderId");
+        int orderID=0;
+        if (id!=null && !id.isEmpty()){
+            orderID=Integer.parseInt(id);
+        }
         try {
-            OrderDAO orderDao = new OrderDAO();
-            List<totalInOrderTable> graph = orderDao.getSaleGraphTotal(weekago, now);
-            session.setAttribute("ORDERGRAPH", graph);
+            OrderDAO orderDAO = new OrderDAO();
             
+            //get order
+            CustomizedOrderDTO order = orderDAO.getSaleOrderByOrderId(orderID);
             
-            List<Revenue> revenueList = orderDao.getTotalRevenuebyDate(weekago,now);
-            session.setAttribute("REVGRAPH", revenueList);
+            //get order details
+            OrderDetailDAO orderDetDAO = new OrderDetailDAO();
+            int orderId = order.getOrderId();
+            order.setDetails(orderDetDAO.getOrderDetailsByOrderID(orderId));
+            //get customer details
+            UserDAO userDAO = new UserDAO();
+            userDAO.getUserByID(order.getCustomerId());
+            UserDTO customer = userDAO.getUser();
+            order.setCustomer(customer);
+            request.setAttribute("ORDER", order);
             
-            UserDAO userDao= new UserDAO();
-            userDao.getSaleMembers();
-            List<SaleMember> listsale = userDao.getSaleMemberList();
-            session.setAttribute("SALELIST", listsale);
-            session.setAttribute("DATESTART", weekago);
-            session.setAttribute("DATEEND", now);
-            url= SMANAGER_DASHBOARD;
-        } catch(SQLException ex){
-            log("viewSManagerDashboardServlet_SQL:" + ex.getMessage());
-        } catch(NamingException ex){
-            log("viewSManagerDashboardServlet_Naming:" + ex.getMessage());
-        } finally{
-            response.sendRedirect(url);
+            ProductCategoryDAO productCategoryDao = new ProductCategoryDAO();
+            productCategoryDao.getAllCategory();
+            List<ProductCategoryDTO> productCategoryDto = productCategoryDao.getCategoryList();
+            if(productCategoryDto != null){
+                request.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
+            }
+            
+            url = ORDER_DETAILS_PAGE;
+        } catch (SQLException ex) {
+          log("ViewSaleOrderListServlet_SQLException: " + ex.getMessage());
+        } catch (NamingException ex) {
+          log("ViewSaleOrderListServlet_NamingException: " + ex.getMessage());
+        }
+        finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 
