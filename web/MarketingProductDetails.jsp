@@ -268,8 +268,8 @@
                             <div class="row">
                                 <c:forEach var="image" items="${images}">
                                     <div class="col-3" style="text-align: center;">
-                                        <img src="img/${image}" alt="product attached image" class="prod-a-img"/><br>
-                                        <a href="" class="remove-img-link">Remove Image</a>
+                                        <img src="img/${image.name}" alt="product attached image" class="prod-a-img"/><br>
+                                        <a href="removeProdImg?prodID=${product.id}&imgID=${image.imageId}" class="remove-img-link">Remove Image</a>
                                     </div>
                                 </c:forEach>
                             </div>

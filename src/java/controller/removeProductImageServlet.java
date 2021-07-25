@@ -38,8 +38,8 @@ public class removeProductImageServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR_PAGE;
-        String productID = request.getParameter("");
-        String imageID = request.getParameter("");
+        String productID = request.getParameter("prodID");
+        String imageID = request.getParameter("imgID");
         
         try{
             ProductAttachedImageDAO dao = new ProductAttachedImageDAO();

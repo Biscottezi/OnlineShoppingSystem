@@ -79,3 +79,4 @@ checkoutUpdate = CheckOutAfterUpdateServlet
 viewCartUpdate = CartDetailsUpdate.jsp
 cartContactUpdate = CartContactUpdate.jsp
 updateOrder = UpdateOrderServlet
+removeProdImg = removeProductImageServlet
