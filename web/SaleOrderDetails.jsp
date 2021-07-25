@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Edit User</title>
+        <title>Order Details</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -59,6 +59,7 @@
     <body style="width: 100%; height:100%; margin: 0; padding: 0; background-color: #F7F8FC">
         <c:set var="user" value="${sessionScope.USER}"/>
         <c:set var="SaleList" value="${sessionScope.SALELIST}"/>
+        <c:set var="loginSale" value="${sessionScope.SALELOGIN}"/>
         <c:set var="order" value="${requestScope.ORDER}"/>
         <c:set var="proCategory" value="${requestScope.PRODUCT_CATEGORY}"/>
         <div class="wrapper row" style="margin:0;padding:0; max-width: 100%;">
@@ -108,7 +109,7 @@
             <div class="wrapper col-10" style="background-color: #F7F8FC; padding: 30px 33px 30px 45px;" id="maincontent">
                 <!-- main title -->
                 <div class="maintitle row">
-                    <div class="col-2" id="title" onclick="location.href='<c:if test="${user.role==2}">SaleManagerViewOrderList</c:if>';">
+                    <div class="col-2" id="title" onclick="location.href='<c:if test="${user.role==2}">SaleManagerViewOrderList</c:if><c:if test="${user.role==1}">ViewSaleOrderList</c:if>';">
                         <span class="back"><i class="fas fa-angle-left"></i>&nbsp; Back to orders</span>
                     </div>
                     <div class="col-7"></div>
@@ -164,19 +165,15 @@
                                     <div class="select-wrapper">
                                         <select id="salemem" class="editbox" form="updateform" name="slSaleMem">
                                             <c:forEach var="sale" items="${SaleList}">
-                                                <option value="${sale.id}">${sale.id} - ${sale.name}</option>
+                                                <option value="${sale.id}" ${sale.id eq order.saleMemberId? 'selected':''}>${sale.id} - ${sale.name}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
                                 </c:when>
                                 <c:otherwise>
                                     <div class="userinfo">
-                                        <c:forEach var="sale" items="${SaleList}">
-                                            <c:if test="${sale.id == order.saleMemberId}">
-                                                ${sale.id} - ${sale.name}
-                                                <input type="hidden" name="txtSaleMemberID" value="${sale.id}" form="updateform"/>
-                                            </c:if>
-                                        </c:forEach>
+                                        ${loginSale.id} - ${loginSale.name}
+                                        <input type="hidden" name="txtSaleMemberID" value="${loginSale.id}" form="updateform"/>
                                     </div>
                                 </c:otherwise>
                             </c:choose>
@@ -186,10 +183,10 @@
                         <div class="col-6">
                             Status<br>
                             <div class="select-wrapper">
-                                <select id="salemem" class="editbox" form="updateform" name="slStatus"  form="updateform">
-                                        <option value="0">Submitted</option>
-                                        <option value="1">Confirmed</option>
-                                        <option value="2">Shipped</option>
+                                <select id="statussl" class="editbox" form="updateform" name="slStatus" form="updateform">
+                                        <option value="0" ${order.status eq 0 ? 'selected':''}>Submitted</option>
+                                        <option value="1" ${order.status eq 1 ? 'selected':''}>Confirmed</option>
+                                        <option value="2" ${order.status eq 2 ? 'selected':''}>Shipped</option>
                                 </select>
                             </div>
                         </div>
@@ -314,7 +311,16 @@
                 <div class="col-9 d-flex align-items-center description menu-itemtitle">Sign Out</div>
             </div>
         </div>
-        
-        <form action="updateUserDetails" id="updateform" method="POST"></form>
+        <c:set var="announce" value="${requestScope.Announce}"/>
+        <c:set var="chosensale" value="${requestScope.chosensale}"/>
+        <c:set var="status" value="${requestScope.status}"/>
+        <form action="SaleUpdateOrder" id="updateform" method="POST"></form>
+        <c:if test="${not empty announce}">
+        <script type="text/javascript">
+            $(document).ready(function() {
+                alert('${announce}');
+            });
+        </script>
+        </c:if>
     </body>
 </html>

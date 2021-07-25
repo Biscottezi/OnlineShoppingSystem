@@ -64,11 +64,11 @@ public class UpdateOrderServlet extends HttpServlet {
             request.setAttribute("detailList", detailList);
             request.setAttribute("categoryList", categoryList);
         } catch (SQLException ex) {
-          log("DisplayShoppingPageServlet SQLException: " + ex.getMessage());
+          log("UpdateOrderServlet SQLException: " + ex.getMessage());
         } catch (ClassNotFoundException ex) {
-          log("DisplayShoppingPageServlet ClassNotFoundException: " + ex.getMessage());
+          log("UpdateOrderServlet ClassNotFoundException: " + ex.getMessage());
         } catch (NamingException ex) { 
-             log("DisplayShoppingPageServlet NamingException: " + ex.getMessage());
+             log("UpdateOrderServlet NamingException: " + ex.getMessage());
          } 
         finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

@@ -21,6 +21,8 @@ import order.OrderDAO;
 import order.Revenue;
 import order.totalInOrderTable;
 import user.SaleMember;
+import user.UserDAO;
+import user.UserDTO;
 
 /**
  *
@@ -30,6 +32,7 @@ import user.SaleMember;
 public class changeSaleGraphServlet extends HttpServlet {
 
     private final String SALE_PAGE = "SaleManagerDashboard.jsp";
+    private final String SALEMEMBER_PAGE = "SaleMemberDashboard.jsp";
     private final String ERROR_PAGE = "viewSManagerDashboardServlet";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -103,7 +106,11 @@ public class changeSaleGraphServlet extends HttpServlet {
             session.setAttribute("DATEEND", end);
             request.setAttribute("SaleMember", chosen);
             request.setAttribute("graphstatus", status);
-            url=SALE_PAGE;
+            UserDTO user = (UserDTO)session.getAttribute("USER");
+            if (user.getRole()==2) 
+                url=SALE_PAGE;
+            else 
+                url = SALEMEMBER_PAGE;
         } 
         catch(SQLException ex){
             log("changeAdminGraphServlet_SQL:" + ex.getMessage());

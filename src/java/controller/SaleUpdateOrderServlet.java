@@ -18,15 +18,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import order.CustomizedOrderDTO;
 import order.OrderDAO;
 import order.OrderDTO;
 import orderDetail.OrderDetailDAO;
+import user.SaleMember;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "NewServlet", urlPatterns = {"/NewServlet"})
+@WebServlet(name = "SaleUpdateOrderServlet", urlPatterns = {"/SaleUpdateOrderServlet"})
 public class SaleUpdateOrderServlet extends HttpServlet {
 
     private final String ERROR_PAGE = "error.html";
@@ -43,21 +46,44 @@ public class SaleUpdateOrderServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        HttpSession session = request.getSession(false);
+        SaleMember loggedin = (SaleMember)session.getAttribute("SALELOGIN");
+        int loggedSaleID=0;
+        if (loggedin!=null){
+            loggedSaleID=loggedin.getId();
+        }
         String urlRewriting=ERROR_PAGE;
-        String id="1";
+        String id = request.getParameter("selectedOrderID");
+        int orderID=0;
+        if (id!=null && !id.isEmpty()){
+            orderID=Integer.parseInt(id);
+        }
+        String salememID= request.getParameter("slSaleMem");
+        int saleID;
+        if (salememID!=null && !salememID.isEmpty()){
+            saleID=Integer.parseInt(salememID);
+        } else { 
+            saleID=loggedSaleID;
+        }
+        String orderStatus= request.getParameter("slStatus");
+        int status=0;
+        if (orderStatus!=null && !orderStatus.isEmpty()){
+            status=Integer.parseInt(orderStatus);
+        }
         try {
-            OrderDAO dao = new OrderDAO();
-            ArrayList<OrderDTO> orderList = dao.GetOrderListByCustID(id);
-            request.setAttribute("orderList", orderList);
-            OrderDetailDAO detaildao = new OrderDetailDAO();
+            OrderDAO orderDAO = new OrderDAO();
+            boolean result = orderDAO.updateOrderSale(orderID, status, saleID);
+            if (result==true){
+                urlRewriting = "SaleOrderDetailsServlet?orderId="+orderID;
+                request.setAttribute("Announce","Order has been updated!");
+                request.setAttribute("status",status);
+                request.setAttribute("chosensale",saleID);
+            }
         } catch (SQLException ex) {
-            log("DisplayShoppingPageServlet SQLException: " + ex.getMessage());
+            log("SaleUpdateOrderServlet_SQLException: " + ex.getMessage());
         } catch (NamingException ex) { 
-            log("DisplayShoppingPageServlet NamingException: " + ex.getMessage());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SaleUpdateOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        finally {
+            log("SaleUpdateOrderServlet_NamingException: " + ex.getMessage());
+        } finally {
             RequestDispatcher rd = request.getRequestDispatcher(urlRewriting);
             rd.forward(request, response);
          

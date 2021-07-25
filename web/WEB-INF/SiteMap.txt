@@ -69,3 +69,7 @@ SaleManagerDashboard = SaleManagerDashboard.jsp
 SaleManagerViewOrderList = SaleManagerViewOrderListServlet
 SaleOrderDetails = SaleOrderDetails.jsp
 saleOrderDet = SaleOrderDetailsServlet
+SaleMemberDashboard = SaleMemberDashboard.jsp
+ViewSMemberDashboard = ViewSMemberDashboardServlet
+ViewSaleOrderList = ViewSaleOrderListServlet
+SaleUpdateOrder = SaleUpdateOrderServlet

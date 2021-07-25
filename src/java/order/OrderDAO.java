@@ -1187,6 +1187,62 @@ public class OrderDAO implements Serializable{
         return orders;
     }
     
+    public List<CustomizedOrderDTO> getAllOrderListbySaleID(int saleMemId) throws SQLException, NamingException{
+        List<CustomizedOrderDTO> orders = null;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "Select OrderID, o.[Status], SaleMemberID, CustomerID, "
+                        + "u.Name, OrderedDate, ReceiverName, ReceiverAddress, ReceiverGender, "
+                        + "ReceiverEmail, ReceiverPhone, Note "
+                        + "From [Order] o, [User] u "
+                        + "Where u.UserID=o.CustomerID AND SaleMemberID=? "
+                        + "ORDER BY OrderedDate DESC";
+                
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, saleMemId);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    int orderId = rs.getInt("OrderID");
+                    int status = rs.getInt("Status");
+                    int saleId = rs.getInt("SaleMemberID");
+                    int custId = rs.getInt("CustomerID");
+                    Date orderedDate = rs.getDate("OrderedDate");
+                    String name = rs.getString("ReceiverName");
+                    String address = rs.getString("ReceiverAddress");
+                    String email = rs.getString("ReceiverEmail");
+                    String phone = rs.getString("ReceiverPhone");
+                    int gender = rs.getInt("ReceiverGender");
+                    String note = rs.getString("Note");
+                    String customerName = rs.getString("Name");
+                    
+                    CustomizedOrderDTO dto = new CustomizedOrderDTO(orderId, status, custId, saleId, orderedDate, name, address, email, phone, note, gender, customerName);
+                    if(orders == null){
+                        orders = new ArrayList<>();
+                    }
+                    orders.add(dto);
+                }
+            }
+        }
+        finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return orders;
+    }
+    
     public CustomizedOrderDTO getSaleOrderByOrderId(int id) throws SQLException, NamingException{
         CustomizedOrderDTO order = null;
         
@@ -1240,5 +1296,43 @@ public class OrderDAO implements Serializable{
         return order;
     }
     
+    public boolean updateOrderSale(int OrderID, int status, int salememberid)
+            throws SQLException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                //B2. create SQL string 
+
+                String sql = "UPDATE [Order] "
+                        + "SET Status = ?, SaleMemberID = ? "
+                        + "WHERE OrderID = ?";
+
+                stm = con.prepareStatement(sql);                               
+                stm.setInt(1, status);
+                stm.setInt(2, salememberid);
+                stm.setInt(3, OrderID);
+                
+                int rowAffect = stm.executeUpdate();
+                if(rowAffect == 1){
+                    return true;
+                }
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
 }
 
