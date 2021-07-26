@@ -241,9 +241,9 @@
                                     <td class="align-middle">${post.title}</td>
                                     <td class="align-middle">
                                         <c:choose>
-                                            <c:when test="${post.postCategoryId == 1}">Đánh giá</c:when>
-                                            <c:when test="${post.postCategoryId == 2}">Mẹo hay</c:when>
-                                            <c:otherwise>Tư vấn</c:otherwise>
+                                            <c:when test="${post.postCategoryId == 1}">Rating</c:when>
+                                            <c:when test="${post.postCategoryId == 2}">Tips</c:when>
+                                            <c:otherwise>Advice</c:otherwise>
                                         </c:choose>
                                     </td>
                                     <td class="align-middle">${post.author}</td>
