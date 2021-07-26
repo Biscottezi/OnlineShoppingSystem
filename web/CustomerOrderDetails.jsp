@@ -26,6 +26,9 @@
             #sider-search{
                 padding-left: 0px;
             }
+            .btn-buy-again, .btn-feedback, #btn-cancel, #btn-update{
+                cursor: pointer;
+            }
         </style>
     </head>
     <body>

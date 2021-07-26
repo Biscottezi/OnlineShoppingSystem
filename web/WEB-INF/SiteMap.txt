@@ -82,3 +82,4 @@ updateOrder = UpdateOrderServlet
 removeProdImg = removeProductImageServlet
 changeMktGraph = changeMktGraphServlet
 cancelOrder = CustomerCancelOrderServlet
+searchPost = SearchBlogServlet

@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import post.PostDAO;
 import post.PostDTO;
+import postCategory.PostCategoryDAO;
+import postCategory.PostCategoryDTO;
 
 /**
  *
@@ -46,9 +48,14 @@ public class SearchBlogServlet extends HttpServlet {
             dao.searchPostName(searchedPost);
             List<PostDTO> postList = dao.getPostList();
             if(postList != null){
-                request.setAttribute("POST_LIST", postList);
+                request.setAttribute("ALL_POST_LIST", postList);
             }
-            
+            PostCategoryDAO postCategoryDao = new PostCategoryDAO();
+            postCategoryDao.getAllCategory();
+            List<PostCategoryDTO> postCategoryDto = postCategoryDao.getPostCateList();
+            if(postCategoryDto != null){
+                request.setAttribute("POST_CATEGORY", postCategoryDto);
+            }
             url = BLOG_PAGE;
         }catch (SQLException ex) {
             log("searchProductServlet_SQLException: " + ex.getMessage());

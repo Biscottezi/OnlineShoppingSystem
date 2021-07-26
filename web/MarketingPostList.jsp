@@ -318,7 +318,7 @@
                     Thumbnail<br>
                     <div class="avawrapper row">
                         <img id="avapreview" class="col-3" src="http://placehold.it/180" onchange="showPreview();">
-                        <input type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="createform" name="productThumbnail"/>
+                        <input type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="createform" name="postThumbnail"/>
                         <div class="col-4 d-flex align-items-end" style="padding-top: 117px;">
                             <label for="upload" class="d-flex align-items-center justify-content-center uplbtn">
                                 <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file

@@ -38,8 +38,8 @@
                             <input type="password" name="txtPassword" value="" class="input-form" form="reset-form"><br>
                             <label for="txtConfirm" class="label-form">Confirm new password:</label><br>
                             <input type="password" name="txtConfirm" value="" class="input-form" form="reset-form"/><br>
-                            <input type="submit" name="btAction" value="RESET PASSWORD" class="reset-btn"/>
-                            <input type="hidden" name="userID" value="${param.userID}"/>
+                            <input type="submit" name="btAction" value="RESET PASSWORD" class="reset-btn" form="reset-form"/>
+                            <input type="hidden" name="userID" value="${param.userID}" form="reset-form"/>
                             <form id="reset-form" action="resetPwd" method="POST"></form>
                         </div>
                     </div>
