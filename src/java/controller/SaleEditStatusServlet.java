@@ -19,10 +19,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import order.OrderDAO;
 import orderDetail.OrderDetailDAO;
+import orderDetail.OrderDetailDTO;
 import orderDetail.OrderItemObj;
 import product.ProductDAO;
 import productCategory.ProductCategoryDAO;
 import productCategory.ProductCategoryDTO;
+import utils.sendMail;
 
 /**
  *
@@ -40,7 +42,7 @@ public class SaleEditStatusServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private final String DETAIL_LIST_PAGE = "SaleMemberOrders.jsp";
+    private final String DETAIL_LIST_PAGE = "SaleOrderDetails.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -49,26 +51,36 @@ public class SaleEditStatusServlet extends HttpServlet {
         String changedStatus = request.getParameter("status");
         String url = DETAIL_LIST_PAGE;
         try {
-            OrderDetailDAO dao = new OrderDetailDAO();
-            ArrayList<OrderItemObj> detailList = dao.GetOrderDetailByOrderID(Integer.parseInt(selectedOrderID));
-            OrderDAO oDAO= new OrderDAO();
-            
+            OrderDetailDAO detaildao = new OrderDetailDAO();
+            List<OrderDetailDTO> detailList = detaildao.getDetailsByOrderID(Integer.parseInt(selectedOrderID));
+            OrderDAO oDAO = new OrderDAO();
             ProductDAO productDAO = new ProductDAO();
+            String email = oDAO.GetEmailByOrderID(Integer.parseInt(selectedOrderID));
+            for (int i = 0; i < detailList.size(); ++i) {
+                int prodID = detailList.get(i).getProductId();
+                int quantity = detailList.get(i).getQuantity();
+                String productName = productDAO.getProductNameByProductID(prodID);
+                if (oDAO.updateStatus(Integer.parseInt(selectedOrderID), 4) == true) {
+                    sendMail.mailShippedOrder(email, prodID, productName);
+                }
+            }
+
             
             productDAO.getAllProduct();
+            
             oDAO.updateStatus(Integer.parseInt(selectedOrderID), Integer.parseInt(changedStatus));
             ProductCategoryDAO cate = new ProductCategoryDAO();
             List<ProductCategoryDTO> categoryList = cate.getCategoryList();
-            
+
             request.setAttribute("detailList", detailList);
             request.setAttribute("categoryList", categoryList);
 
         } catch (SQLException ex) {
-            log("ViewOlderOrderDetailServlet SQLException: " + ex.getMessage());
+            log("SaleEditStatusServlet SQLException: " + ex.getMessage());
         } catch (ClassNotFoundException ex) {
-            log("ViewOlderOrderDetailServlet ClassNotFoundException: " + ex.getMessage());
+            log("SaleEditStatusServlet ClassNotFoundException: " + ex.getMessage());
         } catch (NamingException ex) {
-            log("ViewOlderOrderDetailServlet NamingException: " + ex.getMessage());
+            log("SaleEditStatusServlet NamingException: " + ex.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
