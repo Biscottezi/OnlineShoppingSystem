@@ -398,5 +398,21 @@
         </div>
         
         <form action="" id="createform" method="POST" enctype="multipart/form-data"></form>
+        <script>
+                $('#createform').submit(function() {
+                    var form = document.getElementById('createform');
+                    var fi = document.getElementById('upload-attached');
+                    for (var i = 0; i <= fi.files.length -1; i++){
+                        var fname = fi.files.item(i).name;
+                        var input = document.createElement('input');
+                        input.setAttribute('name', 'fileNameList');
+                        input.setAttribute('value', fname);
+                        input.setAttribute('type', 'hidden');
+                        form.appendChild(input);
+                    }
+
+                    return true; // return false to cancel form action
+                });
+        </script>
     </body>
 </html>

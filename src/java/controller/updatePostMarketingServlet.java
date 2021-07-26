@@ -5,6 +5,8 @@
  */
 package controller;
 
+import com.oreilly.servlet.MultipartRequest;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import post.PostDAO;
+import post.PostDTO;
 
 /**
  *
@@ -24,7 +27,8 @@ import post.PostDAO;
 @WebServlet(name = "updatePostMarketingServlet", urlPatterns = {"/updatePostMarketingServlet"})
 public class updatePostMarketingServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
-    private final String POST_MARKETING_PAGE = "MarketingPostList.jsp";
+    private final String POST_MARKETING_PAGE = "viewPostListMarketingServlet";
+    private static final String UPLOAD_DIR = "img";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,16 +41,18 @@ public class updatePostMarketingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String postID = request.getParameter("postID");
-        String title = request.getParameter("txtTitle");
-//        String thumbnail = uploadFile.uploadFile(request, "thumnail");
-        String thumbnail ="";
-        String briefInfo = request.getParameter("txtBriefInfo");
-        String author = request.getParameter("txtAuthor");
-        String description = request.getParameter("txtDescription");
-        String chkFeatured = request.getParameter("chkFeatured");
-        String chkStatus = request.getParameter("chkStatus");
-        String categoryID = request.getParameter("categoryID");
+        String applicationPath = request.getServletContext().getRealPath("");
+        String basePath = applicationPath + File.separator + UPLOAD_DIR + File.separator;
+        MultipartRequest mreq = new MultipartRequest(request, basePath, 500000 * 1024);
+        String postID = mreq.getParameter("postID");
+        String title = mreq.getParameter("postTitle");
+        String thumbnail = mreq.getFilesystemName("postThumbnail");
+        String briefInfo = mreq.getParameter("postBriefInfo");
+        String author = mreq.getParameter("postAuthor");
+        String description = mreq.getParameter("postDescription");
+        String chkFeatured = mreq.getParameter("postFeatured");
+        String chkStatus = mreq.getParameter("postStatus");
+        String categoryID = mreq.getParameter("postCategory");
         int featured = 0;
         int status = 0;
         String url = ERROR_PAGE;
@@ -60,6 +66,11 @@ public class updatePostMarketingServlet extends HttpServlet {
                 featured = 1;
             }
             PostDAO dao = new PostDAO();
+            if(thumbnail == null){
+                dao.getPostbyID(Integer.parseInt(postID));
+                PostDTO post = dao.getPost();
+                thumbnail = post.getThumbnail();
+            }
             boolean result = dao.updatePost(Integer.parseInt(postID), title, thumbnail, briefInfo, author, description, featured, status, Integer.parseInt(categoryID));
             if(result){
                 url = POST_MARKETING_PAGE;
