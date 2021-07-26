@@ -98,7 +98,10 @@
                                 </div>
                             </c:forEach>
                         </c:if>
-                           
+                        <c:if test="${empty products}">
+                            <img src="img/emptycart.png" alt="empty cart" style="width:110%; height: 100%;"/>
+                        </c:if>
+                            
                         </div>
 
                         <div class="summary col-4 d-flex flex-column">
@@ -110,7 +113,7 @@
                             <br>
                             <div class="d-flex justify-content-between">
                                 <button class="btn-buy-more" onclick="location.href='viewAllProduct'">BUY MORE</button>
-                                <button class="btn-checkout" name="btAction" onclick="location.href='cartContact'">CHECKOUT</button>
+                                <button class="btn-checkout" name="btAction" onclick="location.href='cartContact'" id="chkoutbtn">CHECKOUT</button>
                             </div>
                         </div>
                     </div>
@@ -120,5 +123,13 @@
 
         <!--Footer-->
         <%@include file="footer.html" %>
+        <style>
+            <c:if test="${empty cart}">
+                #chkoutbtn {
+                    pointer-events: none;
+                    background-color: #999999;
+                }
+            </c:if>
+        </style>
     </body>
 </html>
