@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -76,7 +77,9 @@ public class CheckOutServlet extends HttpServlet {
                     if (items != null) {
                         //3.Create order
                         UserDAO dao= new UserDAO();
-                        int saleID = dao.getSaleMemberActive();
+                        List<Integer> saleActive = dao.getSaleMemberActive();
+                        Random rand = new Random();
+                        int saleID = saleActive.get(rand.nextInt(saleActive.size()));
                         OrderDAO orderDAO = new OrderDAO();
                         int newOrderID;
                         if(session.getAttribute("custId") != null){

@@ -458,7 +458,7 @@ public class UserDAO implements Serializable {
                 if (rs.next()){
                 UserID = rs.getInt("UserID");
                 }
-                return UserID;
+               
                 
             }
         }finally{
@@ -594,10 +594,12 @@ public class UserDAO implements Serializable {
         return false;
     }
     
-    public int getSaleMemberActive() throws SQLException, NamingException{
+    public List<Integer> getSaleMemberActive() throws SQLException, NamingException{
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
+        
+        List<Integer> saleActive =new ArrayList<>();
         try{
             con = DBHelper.makeConnection();
             if(con != null){
@@ -607,11 +609,11 @@ public class UserDAO implements Serializable {
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 
-                while(rs.next()){
+               while(rs.next()){
                     int UserID = rs.getInt("UserID");
-                    return UserID;
+                    saleActive.add(UserID);
                 }
-                //return userID;
+                return saleActive;
             }
         }finally{
             if(rs != null){
@@ -624,7 +626,7 @@ public class UserDAO implements Serializable {
                 con.close();
             }
         }
-        return 0;
+        return saleActive;
     }
     
     public int getNoOfCustomerByMonth(String now, String monthago) throws SQLException, NamingException{
