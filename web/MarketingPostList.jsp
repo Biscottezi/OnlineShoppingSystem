@@ -365,7 +365,7 @@
             </div>
         </div>
                         
-        <form action="" id="createform" method="POST" enctype="multipart/form-data"></form>
+        <form action="addPost" id="createform" method="POST" enctype="multipart/form-data"></form>
                         
     </body>
 </html>

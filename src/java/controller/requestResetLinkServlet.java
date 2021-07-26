@@ -23,7 +23,7 @@ import utils.sendMail;
 @WebServlet(name = "requestResetLinkServlet", urlPatterns = {"/requestResetLinkServlet"})
 public class requestResetLinkServlet extends HttpServlet {
     private final String ERROR_PAGE = "error";
-    private final String HOME_PAGE = "homepage";
+    private final String HOME_PAGE = "";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
