@@ -4,6 +4,7 @@
     Author     : nguye
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,18 +71,18 @@
                             <c:forEach var="product" items="${products}">
                                 <div class="product row container">
                                     <img src="img/${product.value.thumbnail}" alt="product" class="col-3">
-                                    <div class="product-info container col-9">
+                                    <div class="product-info container col-9" style="padding-right:0;">
                                         <form action="removeFromCart" method="POST">
                                             <div class="d-flex justify-content-between">
-                                                <h4>${product.value.title}</h4>
-                                                <h5> 
+                                                <h4 class="col-8" style="padding:0;">${product.value.title}</h4>
+                                                <h5 class="col-4" style="padding:0; text-align: right;"> 
                                                     <c:choose>
                                                         <c:when test="${product.value.salePrice != 0}">
-                                                            $${product.value.salePrice * product.value.quantity}
+                                                            $<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${product.value.salePrice * product.value.quantity}"/>
                                                             <c:set var="sum" value="${sum + product.value.salePrice * product.value.quantity}"/>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            $${product.value.listPrice * product.value.quantity}
+                                                            $<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${product.value.listPrice * product.value.quantity}"/>
                                                             <c:set var="sum" value="${sum + product.value.listPrice * product.value.quantity}"/>
                                                         </c:otherwise>
                                                     </c:choose>
@@ -108,7 +109,7 @@
                             <h3 class="mb-auto">SUMMARY</h3>
                             <div class="d-flex justify-content-between">
                                 <span>Total:</span>
-                                <span>$${sum}</span>
+                                <span>$<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${sum}"/></span>
                             </div>
                             <br>
                             <div class="d-flex justify-content-between">

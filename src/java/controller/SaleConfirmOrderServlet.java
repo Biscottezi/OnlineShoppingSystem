@@ -19,10 +19,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import order.OrderDAO;
 import orderDetail.OrderDetailDAO;
+import orderDetail.OrderDetailDTO;
 import orderDetail.OrderItemObj;
 import product.ProductDAO;
 import productCategory.ProductCategoryDAO;
 import productCategory.ProductCategoryDTO;
+import user.UserDAO;
 import utils.sendMail;
 
 /**
@@ -49,17 +51,30 @@ public class SaleConfirmOrderServlet extends HttpServlet {
          String SaleID = request.getParameter("SaleID");
         String url = DETAIL_LIST_PAGE;
         try {
-            OrderDetailDAO dao = new OrderDetailDAO();
-            ArrayList<OrderItemObj> detailList = dao.GetOrderDetailByOrderID(Integer.parseInt(selectedOrderID));
-            int quantity = dao.GetQuantityByOrderID(Integer.parseInt(selectedOrderID));
-            
-            ProductDAO productDAO = new ProductDAO();
-            
-            productDAO.getAllProduct();
-            OrderDAO oDAO = new OrderDAO();
+            OrderDetailDAO detaildao = new OrderDetailDAO();
+            List<OrderDetailDTO> detailList = detaildao.getDetailsByOrderID(Integer.parseInt(selectedOrderID));
+            ProductDAO pDao = new ProductDAO();
+             OrderDAO oDAO = new OrderDAO();
+             int saleID = oDAO.GetSaleByOrderID(Integer.parseInt(selectedOrderID));
+             UserDAO uDAO = new UserDAO();
+            for(int i = 0; i < detailList.size(); ++i){
+                int prodID = detailList.get(i).getProductId();
+                int quantity = detailList.get(i).getQuantity();
+                int stock = pDao.getQuantityByProductID(prodID);
+                if (quantity >= stock){
+                    request.setAttribute("QUANTITY_ERROR", "Product is not enough!");
+                    oDAO.updateStatus(Integer.parseInt(selectedOrderID), 2);
+                    uDAO.updateSaleStatus(saleID);
+                    return;
+                }
+            }
+              
+            pDao.getAllProduct();
             String email= oDAO.GetEmailByOrderID(Integer.parseInt(selectedOrderID));
             oDAO.updateStatus(Integer.parseInt(selectedOrderID), 2);
+            uDAO.updateSaleStatus(saleID);
             sendMail.mailConfirmOrder(email, Integer.parseInt(selectedOrderID));
+            
             ProductCategoryDAO cate = new ProductCategoryDAO();
             List<ProductCategoryDTO> categoryList = cate.getCategoryList();
 
