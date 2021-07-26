@@ -212,9 +212,9 @@
                             <input name="postFeatured" type="checkbox" form="updateform" <c:if test="${post.featured == 1}">checked="checked"</c:if> value="ON" style="margin-top: 10px; zoom: 2"/>
                             <div style="margin-top:18px;">Category</div>
                             <select name="postCategory" form="updateform" class="editbox">
-                                <option value="1" <c:if test="${post.featured == 1}">selected</c:if> >Đánh giá</option>
-                                <option value="2" <c:if test="${post.featured == 2}">selected</c:if> >Mẹo hay</option>
-                                <option value="3" <c:if test="${post.featured == 3}">selected</c:if> >Tư vấn</option>
+                                <option value="1" <c:if test="${post.featured == 1}">selected</c:if> >Rating</option>
+                                <option value="2" <c:if test="${post.featured == 2}">selected</c:if> >Tips</option>
+                                <option value="3" <c:if test="${post.featured == 3}">selected</c:if> >Advice</option>
                             </select>
                         </div>
                     </div>

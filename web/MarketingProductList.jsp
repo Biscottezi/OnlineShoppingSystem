@@ -401,7 +401,7 @@
             </div>
         </div>
         
-        <form action="" id="createform" method="POST" enctype="multipart/form-data"></form>
+
         
         <!--Change password-->
                 <c:set var="error" value="${requestScope.CHANGE_PASS_ERR}"/>
@@ -472,6 +472,7 @@
                     <form id="user-info" method="GET" action="updateProfile"></form>
                 </div>
         
+        <form action="addProduct" id="createform" method="POST" enctype="multipart/form-data"></form>
         <script>
                 $('#createform').submit(function() {
                     var form = document.getElementById('createform');

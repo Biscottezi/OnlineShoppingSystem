@@ -311,9 +311,9 @@
                     Category<br>
                     <select id="gender" class="inputbox" form="createform" name="categoryID" required>
                         <option value="" selected disabled hidden>Select category</option>
-                        <option value="1">Đánh giá</option>
-                        <option value="2">Mẹo hay</option>
-                        <option value="3">Tư vấn</option>
+                        <option value="1">Rating</option>
+                        <option value="2">Tips</option>
+                        <option value="3">Advice</option>
                     </select>
                 </div>
             </div>
@@ -369,7 +369,6 @@
             </div>
         </div>
                         
-        <form action="" id="createform" method="POST" enctype="multipart/form-data"></form>
                 
         <!--Change password-->
                 <c:set var="error" value="${requestScope.CHANGE_PASS_ERR}"/>
@@ -439,5 +438,8 @@
                     <form id="user-avatar" action="updateAvatar" method="POST" enctype="multipart/form-data"></form>
                     <form id="user-info" method="GET" action="updateProfile"></form>
                 </div>
+
+        <form action="addPost" id="createform" method="POST" enctype="multipart/form-data"></form>
+                        
     </body>
 </html>
