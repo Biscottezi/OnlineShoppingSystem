@@ -3,5 +3,5 @@
     <Resource name="logname" auth="Container" type="javax.sql.DataSource"
                 driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
                 url="jdbc:sqlserver://localhost:1433;databaseName=OnlineShoppingSystem"
-                username="quannpm" password="admin"/>
+                username="lamdh" password="123"/>
 </Context>

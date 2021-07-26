@@ -92,7 +92,7 @@ public class submitFeedbackServlet extends HttpServlet {
             String rating = mreq.getParameter("txtRating");
             int ratedStar = Integer.parseInt(rating);
             String content = mreq.getParameter("txtFeedbackContent");
-            String[] fileNameList = mreq.getParameterValues("txtFeedbackImages");
+            String[] fileNamelist = mreq.getParameterValues("fileNameList");
             
             
             
@@ -102,9 +102,8 @@ public class submitFeedbackServlet extends HttpServlet {
                 FeedBackAttachedImageDAO imgDao = new FeedBackAttachedImageDAO();
                 
                 int generatedID = dao.addNewProductFeedback(name, content, email, phone, ratedStar, prodID);
-                for(int i = 0; i < fileNameList.length; i++){
-                    String fileSystemName= mreq.getFilesystemName(fileNameList[i]);
-                    imgDao.addNewImage(fileSystemName, generatedID);
+                for(int i = 0; i < fileNamelist.length; i++){
+                    imgDao.addNewImage(fileNamelist[i], generatedID);
                 }
                 if(generatedID > 0){
                     url = HOMEPAGE;
@@ -114,9 +113,8 @@ public class submitFeedbackServlet extends HttpServlet {
                 FeedBackDAO dao = new FeedBackDAO();
                 FeedBackAttachedImageDAO imgDao = new FeedBackAttachedImageDAO();
                 int generatedID = dao.addNewGeneralFeedback(name, content, email, phone, ratedStar);
-                for(int i = 0; i < fileNameList.length; i++){
-                    String fileSystemName= mreq.getFilesystemName(fileNameList[i]);
-                    imgDao.addNewImage(fileSystemName, generatedID);
+                for(int i = 0; i < fileNamelist.length; i++){
+                    imgDao.addNewImage(fileNamelist[i], generatedID);
                 }
                 if(generatedID > 0){
                     url = HOMEPAGE;
