@@ -6,7 +6,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -17,15 +16,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import product.ProductDAO;
 import productAttachedImage.ProductAttachedImageDAO;
+import com.oreilly.servlet.MultipartRequest;
+import java.io.File;
+import javax.servlet.annotation.MultipartConfig;
+import product.ProductDTO;
 
 /**
  *
  * @author ASUS
  */
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 10,
+        maxFileSize = 1024 * 1024 * 50,
+        maxRequestSize = 1024 * 1024 * 100
+)
 @WebServlet(name = "updateProductServlet", urlPatterns = {"/updateProductServlet"})
 public class updateProductServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
-    private final String PRODUCT_MARKETING_PAGE = "MarketingProductList.jsp";
+    private final String PRODUCT_MARKETING_PAGE = "viewProductMarketingServlet";
+    private static final String UPLOAD_DIR = "img";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,17 +47,22 @@ public class updateProductServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String productID = request.getParameter("txtProductID");
-        String title = request.getParameter("txtTitle");
-        String categoryID = request.getParameter("txtCategoryID");
-        String thumbnail = "";
-        String briefInfo = request.getParameter("txtBriefInfo");
-        String description = request.getParameter("txtDescription");
-        String quantity = request.getParameter("txtQuantity");
-        String listPrice = request.getParameter("txtListPrice");
-        String salePrice = request.getParameter("txtSalePrice");
-        String chkFeatured = request.getParameter("chkFeatured");
-        String chkStatus = request.getParameter("chkStatus");
+        String applicationPath = request.getServletContext().getRealPath("");
+        String basePath = applicationPath + File.separator + UPLOAD_DIR + File.separator;
+        MultipartRequest mreq = new MultipartRequest(request, basePath, 500000 * 1024);
+        String productID = mreq.getParameter("productID");
+        String title = mreq.getParameter("productTitle");
+        String categoryID = mreq.getParameter("productCategory");
+        String thumbnail = mreq.getFilesystemName("productThumbnail");
+        String briefInfo = mreq.getParameter("productBriefInfo");
+        String description = mreq.getParameter("productDescription");
+        String quantity = mreq.getParameter("productQuantity");
+        String listPrice = mreq.getParameter("productBasePrice");
+        String salePrice = mreq.getParameter("productSalePrice");
+        String chkFeatured = mreq.getParameter("productFeatured");
+        String chkStatus = mreq.getParameter("productStatus");
+        String[] fileNamelist = mreq.getParameterValues("fileNameList");
+        
         String url = ERROR_PAGE;
         int status = 0;
         int featured = 0;
@@ -60,10 +74,20 @@ public class updateProductServlet extends HttpServlet {
             if(chkFeatured != null){
                 featured = 1;
             }
+            
             ProductAttachedImageDAO imageDao = new ProductAttachedImageDAO();
             ProductDAO productDao = new ProductDAO();
+            if(thumbnail == null){
+                ProductDTO product = productDao.GetProductbyID(Integer.parseInt(productID));
+                thumbnail = product.getThumbnail();
+            }
             boolean productResult = productDao.updateProduct(Integer.parseInt(productID), title, Integer.parseInt(categoryID), thumbnail, briefInfo, description, 
                     Integer.parseInt(quantity), Float.parseFloat(listPrice), Float.parseFloat(salePrice), featured, status);
+            if(fileNamelist != null){
+                for(int i = 0; i < fileNamelist.length; i++){
+                    imageDao.addProductImage(fileNamelist[i], Integer.parseInt(productID));
+                }
+            }
             
             if(productResult){
                 url = PRODUCT_MARKETING_PAGE;
