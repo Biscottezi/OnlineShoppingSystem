@@ -267,5 +267,13 @@
                 </div>
             </div>
         </div>
+        <c:set var="announce" value="${requestScope.Announce}"/>
+        <c:if test="${not empty announce}">
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    alert('${announce}');
+                });
+            </script>
+        </c:if>
     </body>
 </html>
