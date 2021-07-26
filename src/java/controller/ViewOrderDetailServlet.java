@@ -62,9 +62,7 @@ public class ViewOrderDetailServlet extends HttpServlet {
             CustomizedOrderDTO order = dao1.getOrderByOrderId(Integer.parseInt(orderID));
             OrderDetailDAO dao2 = new OrderDetailDAO();
             order.setDetails(dao2.getOrderDetailsByOrderID(order.getOrderId()));
-            if(order != null){
-                request.setAttribute("ORDER_DETAIL", order);
-            }
+            request.setAttribute("ORDER_DETAIL", order);
             
             url = DETAIL_LIST_PAGE;
         } catch (SQLException ex) {

@@ -26,6 +26,9 @@
             #sider-search{
                 padding-left: 0px;
             }
+            .btn-remove, .btn-buy-more, .btn-checkout{
+                cursor: pointer;
+            }
         </style>
     </head>
 

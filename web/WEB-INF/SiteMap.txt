@@ -75,7 +75,6 @@ ViewSMemberDashboard = ViewSMemberDashboardServlet
 ViewSaleOrderList = ViewSaleOrderListServlet
 SaleUpdateOrder = SaleUpdateOrderServlet
 updateAvatar = updateAvatarServlet
-custOrderDetail=CustomerOrderDetails.jsp
 checkoutUpdate = CheckOutAfterUpdateServlet
 viewCartUpdate = CartDetailsUpdate.jsp
 cartContactUpdate = CartContactUpdate.jsp

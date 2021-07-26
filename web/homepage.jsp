@@ -21,6 +21,11 @@
         <link rel="stylesheet" href="css/homepage.css">
         <link rel="stylesheet" href="css/pop-up.css">
         <script src="js/homepage.js"></script>
+        <style>
+            .prod-wrapper, .post-wrapper{
+                cursor: pointer;
+            }
+        </style>
     </head>
 
     <body>
@@ -63,7 +68,7 @@
                                 <div class="container">
                                     <div class="row">
                                         <c:forEach var="product" items="${onsaleProducts}" begin="0" end="3">
-                                            <div class="col-3" onclick="location.href='viewProductDetails?productID=${product.id}';">
+                                            <div class="col-3 prod-wrapper" onclick="location.href='viewProductDetails?productID=${product.id}';">
                                                 <div class="card" style="min-height: 600px; margin: auto;">
                                                     <img src="img/${product.thumbnail}" alt="product-thumbnail" class="card-img-top">
                                                     <div class="card-body">
@@ -90,7 +95,7 @@
                                 <div class="container">
                                     <div class="row">
                                         <c:forEach var="product" items="${onsaleProducts}" begin="4" end="7">
-                                            <div class="col-3" onclick="location.href='viewProductDetails?productID=${product.id}';">
+                                            <div class="col-3 prod-wrapper" onclick="location.href='viewProductDetails?productID=${product.id}';">
                                                 <div class="card" style="min-height: 600px; margin: auto;">
                                                     <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
                                                     <div class="card-body">
@@ -142,7 +147,7 @@
                                 <div class="container">
                                     <div class="row">
                                         <c:forEach var="product" items="${sliderProducts}" begin="0" end="3">
-                                            <div class="col-3" onclick="location.href='viewProductDetails?productID=${product.id}';">
+                                            <div class="col-3 prod-wrapper" onclick="location.href='viewProductDetails?productID=${product.id}';">
                                                 <div class="card" style="min-height: 600px; margin: auto;">
                                                     <img src="img/${product.thumbnail}" alt="product-thumbnail" class="card-img-top">
                                                     <div class="card-body">
@@ -169,7 +174,7 @@
                                 <div class="container">
                                     <div class="row">
                                         <c:forEach var="product" items="${sliderProducts}" begin="4" end="7">
-                                            <div class="col-3" onclick="location.href='viewProductDetails?productID=${product.id}';">
+                                            <div class="col-3 prod-wrapper" onclick="location.href='viewProductDetails?productID=${product.id}';">
                                                 <div class="card" style="min-height: 600px; margin: auto;">
                                                     <img src="img/product-thumbnail.jpg" alt="product-thumbnail" class="card-img-top">
                                                     <div class="card-body">
@@ -220,7 +225,7 @@
                         <div class="row">
                             <c:set var="featuredProducts" value="${requestScope.FEATURED_PRODUCT}"/>
                             <c:forEach var="product" items="${featuredProducts}">
-                                <div class="col-3" style="margin-top: 1em" onclick="location.href='viewProductDetails?productID=${product.id}';">
+                                <div class="col-3 prod-wrapper" style="margin-top: 1em" onclick="location.href='viewProductDetails?productID=${product.id}';">
                                     <div class="card" style="min-height: 600px; margin: auto;">
                                         <img src="img/${product.thumbnail}" alt="product-thumbnail" class="card-img-top">
                                         <div class="card-body">
@@ -258,7 +263,7 @@
                     <div class="row">
                         <div class="col-5">
                             <c:forEach var="post" items="${postList}" begin="0" end="0">
-                                <div class="card" style="height: 500px; overflow: hidden;" onclick="location.href='viewBlogDetails?selectedPostID=${post.id}';">
+                                <div class="card post-wrapper" style="height: 500px; overflow: hidden;" onclick="location.href='viewBlogDetails?selectedPostID=${post.id}';">
                                     <img src="img/${post.thumbnail}" alt="post-thumbnail" class="card-img-top">
                                     <div class="card-body">
                                         <h3 class="card-title">${post.title}</h3>
@@ -269,7 +274,7 @@
                         </div>
                         <div class="col-7 container">
                             <c:forEach var="post" items="${postList}" begin="1" end="4">
-                                <div class="row" style="height: 120px; margin-bottom: 5px;" onclick="location.href='viewBlogDetails?selectedPostID=${post.id}';">
+                                <div class="row post-wrapper" style="height: 120px; margin-bottom: 5px;" onclick="location.href='viewBlogDetails?selectedPostID=${post.id}';">
                                     <img src="img/${post.thumbnail}" alt="post-thumbnail" class="col-3">
                                     <h5 class="col-9" style="overflow: hidden;">${post.title}</h5>
                                 </div>

@@ -28,6 +28,9 @@
             #sider-search{
                 padding-left: 0px;
             }
+            .main-ctn-btn{
+                cursor: pointer;
+            }
         </style>
     </head>
 
