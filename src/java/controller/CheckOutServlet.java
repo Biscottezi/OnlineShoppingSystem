@@ -29,6 +29,7 @@ import productCategory.ProductCategoryDAO;
 import productCategory.ProductCategoryDTO;
 import user.UserDAO;
 import user.UserDTO;
+import utils.sendMail;
 
 /**
  *
@@ -91,6 +92,7 @@ public class CheckOutServlet extends HttpServlet {
                             int quantity = items.get(ID).getQuantity();
                             detailDAO.CreateOrderDetail(newOrderID, ID, quantity);
                         }//end for items.keySet
+                        sendMail.mailCheckout(email, newOrderID);
                     }//end if items is not null  
                     session.removeAttribute("CART");
                 }//end if cart is not null

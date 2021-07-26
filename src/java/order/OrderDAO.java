@@ -1334,5 +1334,40 @@ public class OrderDAO implements Serializable{
         }
         return false;
     }
+    public String GetEmailByOrderID(int OrderID) throws SQLException, ClassNotFoundException, NamingException {
+        Connection connection = null;
+        PreparedStatement prestm = null;
+        ResultSet rs = null;
+        String email ="";
+        try {
+            connection = DBHelper.makeConnection();
+            if (connection != null) {
+                String orderSQLString = "SELECT ReceiverEmail "
+                        + "FROM [Order] "
+                        + "WHERE OrderID = ?";
+
+                prestm = connection.prepareStatement(orderSQLString);
+                prestm.setInt(1, OrderID);
+                rs = prestm.executeQuery();
+                
+                if (rs.next()) {
+                      email = rs.getString("ReceiverEmail");
+                    
+                }
+                
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (prestm != null) {
+                prestm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return email;
+    }   
 }
 
