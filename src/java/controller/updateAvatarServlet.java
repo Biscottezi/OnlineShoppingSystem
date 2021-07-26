@@ -33,7 +33,11 @@ import user.UserDTO;
 @WebServlet(name = "updateAvatarServlet", urlPatterns = {"/updateAvatarServlet"})
 public class updateAvatarServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
-    private final String HOME_PAGE = "homepage.jsp";
+    private final String HOME_PAGE = "viewHomePageServlet";
+    private final String MARKETING_DASHBOARD = "viewMarketingDashboardServlet";
+    private final String SALE_MANAGER_DASHBOARD = "viewSManagerDashboardServlet";
+    private final String SALE_MEMBER_DASHBOARD = "ViewSMemberDashboardServlet";
+    private final String ADMIN_DASHBOARD = "viewAdminDashboardServlet";
     private static final String UPLOAD_DIR = "img";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -64,7 +68,23 @@ public class updateAvatarServlet extends HttpServlet {
             UserDTO newUser = dao.getUser();
             session.setAttribute("USER", newUser);
             if(result){
-                url = HOME_PAGE;
+                switch(newUser.getRole()){
+                    case 0:
+                        url = MARKETING_DASHBOARD;
+                        break;
+                    case 1:
+                        url = SALE_MEMBER_DASHBOARD;
+                        break;
+                    case 2:
+                        url = SALE_MANAGER_DASHBOARD;
+                        break;
+                    case 3:
+                        url = ADMIN_DASHBOARD;
+                        break;
+                    case 4:
+                        url = HOME_PAGE;
+                        break;
+                }
             }       
         } catch (SQLException ex) {
             log("updateUserProfileServlet_SQLException: " + ex.getMessage());
