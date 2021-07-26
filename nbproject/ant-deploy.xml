@@ -55,7 +55,7 @@ Contributor(s):
                     <isset property="tomcat.password"/>
                 </not>
             </condition>
-        </fail>
+        </fail>    
     </target>
     <target name="-deploy-ant" if="deploy.ant.enabled" depends="-init,-check-credentials">
         <echo message="Deploying ${deploy.ant.archive} to ${Context(path)}"/>
