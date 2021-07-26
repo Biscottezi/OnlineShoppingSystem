@@ -118,7 +118,7 @@ public class sendMail implements Serializable{
                 message.setFrom(new InternetAddress(myAcc));
                 message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
                 message.setSubject("Order placed from OnlineShoppingSystem");
-                String htmlCode = "<h2>Your Order "+ OrderID +"is submitted .Please wait for confirming by our shop! </h2></br>";
+                String htmlCode = "<h2>Your Order "+ OrderID +" is submitted .Please wait for confirming by our shop! </h2></br>";
                         
                 message.setContent(htmlCode, "text/html");
             }catch(MessagingException ex){
@@ -154,7 +154,7 @@ public class sendMail implements Serializable{
                 message.setFrom(new InternetAddress(myAcc));
                 message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
                 message.setSubject("Order confirmation from OnlineShoppingSystem");
-                String htmlCode = "<h2>Your Order "+ OrderID +"is confirmed . Thank you for your Purchase !</h2></br>"
+                String htmlCode = "<h2>Your Order "+ OrderID +" is confirmed . Thank you for your Purchase!</h2></br>"
                         +"<a href=" + confirmLink + ">Click here to view your order!</a>";
                         
                 message.setContent(htmlCode, "text/html");
