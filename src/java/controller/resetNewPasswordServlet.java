@@ -36,7 +36,7 @@ public class resetNewPasswordServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String userID = request.getParameter("txtUserID");
+        String userID = request.getParameter("userID");
         String password = request.getParameter("txtPassword");
         String url =ERROR_PAGE;
         
