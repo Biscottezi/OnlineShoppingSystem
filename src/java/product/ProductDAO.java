@@ -536,4 +536,74 @@ public class ProductDAO implements Serializable{
         }
         return totalProd;
     }
+    public int getQuantityByProductID(int porductID) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int stock = 0;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT Quantity "
+                        + "FROM Product "
+                        + "WHERE ProductID = ? ";
+                
+                stm = con.prepareStatement(sql);
+               
+                stm.setInt(1, porductID);
+                rs = stm.executeQuery();
+                
+                if (rs.next()) {
+                    stock = rs.getInt(1);
+                }
+            }
+        }
+        finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return stock;
+    }
+    public String getProductNameByProductID(int porductID) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String name ="";
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT Title "
+                        + "FROM Product "
+                        + "WHERE ProductID = ? ";
+                
+                stm = con.prepareStatement(sql);
+               
+                stm.setInt(1, porductID);
+                rs = stm.executeQuery();
+                
+                if (rs.next()) {
+                    name = rs.getString(1);
+                }
+            }
+        }
+        finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return name;
+    }
 }
