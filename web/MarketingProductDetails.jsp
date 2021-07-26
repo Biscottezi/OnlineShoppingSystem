@@ -341,5 +341,28 @@
         </div>
         
         <form action="updateProd" id="updateform" method="POST" enctype="multipart/form-data"></form>
+        
+        <script>
+            var input= document.getElementById("upload-attached");
+            
+            input.onchange = function () {
+                var files = $("#upload-attached")[0].files;
+                $('#updateform').append('<input type="hidden" class="input-files" name="fileNamelist" value="'+files+'" />');
+//                for (var i = 0; i < files.length; i++)
+//                {
+//                $('#form').append('<input type="text" value="'+yourValue+'" />');
+//                }
+            };
+            
+            $("#updateform").submit(function(){
+                var num =$(".input-files").length;
+                var files = $(".input-files");
+                for (var i=0; i<num-1;i++){
+                    files[i].remove();
+                }
+                return true;
+            });
+        </script>
+        
     </body>
 </html>

@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import product.ProductDAO;
 import productAttachedImage.ProductAttachedImageDAO;
-import utils.uploadFile;
 
 /**
  *
@@ -48,7 +47,8 @@ public class addProductMarketingServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String title = request.getParameter("txtTitle");
         String categoryID = request.getParameter("txtCategoryID");
-        String thumbnail = uploadFile.uploadFile(request, "thumbnail");
+//        String thumbnail = uploadFile.uploadFile(request, "thumbnail");
+        String thumbnail ="";
         String briefInfo = request.getParameter("txtBriefInfo");
         String description = request.getParameter("txtDescription");
         String quantity = request.getParameter("txtQuantity");
@@ -56,7 +56,8 @@ public class addProductMarketingServlet extends HttpServlet {
         String salePrice = request.getParameter("txtSalePrice");
         String chkFeatured = request.getParameter("chkFeatured");
         String chkStatus = request.getParameter("chkStatus");
-        ArrayList<String> attachedImages = uploadFile.uploadFiles(request, 1);
+//        ArrayList<String> attachedImages = uploadFile.uploadFiles(request, 1);
+        ArrayList<String> attachedImages = null;
         String url = ERROR_PAGE;
         int status = 0;
         int featured = 0;

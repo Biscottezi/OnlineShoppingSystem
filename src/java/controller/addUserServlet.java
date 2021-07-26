@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import user.UserDAO;
 import utils.sendMail;
-import utils.uploadFile;
 
 /**
  *
@@ -57,7 +56,8 @@ public class addUserServlet extends HttpServlet {
         String email = request.getParameter("txtEmail");
         String phone = request.getParameter("txtMobile");
         String chkStatus = request.getParameter("chkStatus");
-        String avatar = uploadFile.uploadFile(request, "avatar");
+//        String avatar = uploadFile.uploadFile(request, "avatar");
+        String avatar ="";
         String role = request.getParameter("txtRole");
         String password;
         int status = 0;

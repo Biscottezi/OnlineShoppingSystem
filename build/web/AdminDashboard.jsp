@@ -442,8 +442,8 @@
         <script>
             $('#datepicker').daterangepicker({
                 "showDropdowns": true,
-                "startDate":  moment().subtract('days', 7),
-                "endDate": moment(),
+                "startDate":  '${start}',
+                "endDate": '${end}',
                 locale:{
                     format: 'YYYY/MM/DD'
                 }
