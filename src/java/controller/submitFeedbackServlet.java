@@ -87,15 +87,15 @@ public class submitFeedbackServlet extends HttpServlet {
             if(productID != null){
                 int prodID = Integer.parseInt(productID);
                 FeedBackDAO dao = new FeedBackDAO();
-                boolean result = dao.addNewProductFeedback(name, content, email, phone, ratedStar, prodID);
-                if(result){
+                int generatedID = dao.addNewProductFeedback(name, content, email, phone, ratedStar, prodID);
+                if(generatedID > 0){
                     url = HOMEPAGE;
                 }
             }
             else{
                 FeedBackDAO dao = new FeedBackDAO();
-                boolean result = dao.addNewGeneralFeedback(name, content, email, phone, ratedStar);
-                if(result){
+                int generatedID = dao.addNewGeneralFeedback(name, content, email, phone, ratedStar);
+                if(generatedID > 0){
                     url = HOMEPAGE;
                 }
             }

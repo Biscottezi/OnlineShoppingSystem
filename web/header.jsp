@@ -61,6 +61,9 @@
             .pop-up{
                 box-shadow: 0 0 100px 1000px rgba(0, 0, 0, 0.5);
             }
+            .fa-shopping-cart, .fa-search, .droplist-avatar, .droplist-btn, .header-sign-in, .form-col-btn, .welcome-btn, .close-btn, #ava-label{
+                cursor: pointer;
+            }
         </style>
         
         <script>
