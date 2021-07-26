@@ -119,7 +119,7 @@
         
         <script type="text/javascript">
             $(document).ready(function(){
-                const pageSize = 2;
+                const pageSize = 12;
 
                 let noOfProd = $(".product-wrapper").length;
                 let noOfPage = Math.ceil(noOfProd / pageSize);

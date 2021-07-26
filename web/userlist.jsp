@@ -29,6 +29,7 @@
         <script src="js/upload.js"></script>
         <script src="js/statuschange.js"></script>
         <script src="js/homepage.js"></script>
+        <script src="js/staffpop-up.js"></script>
         <style>
             .status{
                 width:100px;
@@ -225,7 +226,7 @@
         </div>
         
         <div class="popupwrapper" id="usermenu" style="padding:0;margin:0;">
-            <div class="pro5 row popupitem">
+            <div class="pro5 row popupitem" onclick="openProfile()">
                 <div class="col-3 d-flex align-items-center justify-content-center" style="padding:0;">
                     <div id="menuavatar" style="background-image: url(img/${user.avatar});"></div>
                 </div>
@@ -359,6 +360,45 @@
                 </div>
             </div>
         </div>
-                    
+        
+        <!--User profile-->
+                <div id="user-profile" class="pop-up">
+                    <div class="close-btn" onclick="closePopUp('user-profile')">
+                        <i class="far fa-times-circle" style="color: white"></i>
+                    </div>
+                    <div class="decor-div"></div>
+                    <img src="img/${user.avatar}" alt="user avatar" id="user-ava">
+                    <label for="ava-user">
+                        <img src="img/add-ava.png" id="ava-label">
+                    </label>
+                    <input type="file" id="ava-user" hidden name="avatar" form="user-avatar" onchange="readURL(this)">
+                    <button type="submit" class="form-col-btn user-ava-btn" form="user-avatar" style="width: 170px;">Update avatar</button>
+                    <div class="profile-div col">
+                        <div class="d-flex justify-content-center" style="margin-bottom: 1em">
+                            <span class="col-2 info-label">Full Name:</span>
+                            <input type="text" name="txtName" class="col-6 form-control" value="${user.name}" style="margin-top: 0" form="user-info">
+                        </div>
+                        <div class="d-flex justify-content-center" style="margin-bottom: 1em">
+                            <span class="col-2 info-label">Gender:</span>
+                            <select class="form-control col-6" name="txtGender" style="margin-top: 0" form="user-info">
+                                <option value="0" <c:if test="${user.gender == 0}">selected</c:if> >Male</option>
+                                <option value="1" <c:if test="${user.gender == 1}">selected</c:if> >Female</option>
+                            </select>
+                        </div>
+                        <div class="d-flex justify-content-center" style="margin-bottom: 1em">
+                            <span class="col-2 info-label">Mobile:</span>
+                            <input type="text" name="txtPhone" class="col-6 form-control" value="${user.phone}" style="margin-top: 0" form="user-info">
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <span class="col-2 info-label">Address:</span>
+                            <textarea class="form-control col-6" name="txtAddress" style="margin-top: 0" form="user-info">${user.address}</textarea>
+                        </div>
+                        <button type="submit" form="user-info" class="form-col-btn" style="width: 120px; margin-left: 44%; margin-bottom: 1em">Save</button>
+                        <input type="hidden" name="userID" value="${user.id}" form="user-info">
+                    </div>
+                    <form id="user-avatar" action="updateAvatar" method="POST" enctype="multipart/form-data"></form>
+                    <form id="user-info" method="GET" action="updateProfile"></form>
+                </div>            
+        
     </body>
 </html>

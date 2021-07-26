@@ -16,13 +16,17 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="css/pop-up.css">
         <link rel="stylesheet" href="css/managersider.css">
         <link rel="stylesheet" href="css/managerprofile.css"/>
         <link rel="stylesheet" href="css/userlist.css"/>
         <link rel="stylesheet" href="css/editinfo.css"/>
+        <link rel="stylesheet" href="css/staffpop-up.css"/>
         <script src="js/managerpopup.js"></script>
         <script src="js/upload.js"></script>
         <script src="js/statusChangeProduct.js"></script>
+        <script src="js/homepage.js"></script>
+        <script src="js/staffpop-up.js"></script>
         <style>
             .status{
                 width:100px;
@@ -226,7 +230,7 @@
                             <div style="margin-top:18px;">Thumbnail</div>
                             <div class="avawrapper row">
                                 <img id="avapreview" class="col-3" src="img/${product.thumbnail}" onchange="showPreview();" style="display: block">
-                                <input type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="updateform" name="productThumbnail"/>
+                            <input type="file" id="upload" hidden="hidden" onchange="readURLThumb(this);" form="updateform" name="productThumbnail"/>
                                 <div class="col-4 d-flex align-items-end" style="padding-top: 117px;">
                                     <label for="upload" class="d-flex align-items-center justify-content-center uplbtn">
                                         <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
@@ -259,9 +263,9 @@
                             <div class="avawrapper" style="margin-top: 20px; margin-bottom: 1.5em">
                                 <input type="file" id="upload-attached" form="updateform" multiple name="productAttachedImage">
                                 <div class="col-4 d-flex align-items-end">
-                                    <label for="upload-attached" class="d-flex align-items-center justify-content-center uplbtn">
+                                    <!--<label for="upload-attached" class="d-flex align-items-center justify-content-center uplbtn">
                                         <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
-                                    </label>
+                                    </label>-->
                                 </div>
                             </div>
                             <c:set var="images" value="${requestScope.PRODUCT_IMAGES}"/>
@@ -313,7 +317,7 @@
         </div>
         
         <div class="popupwrapper" id="usermenu" style="padding:0;margin:0;">
-            <div class="pro5 row popupitem">
+            <div class="pro5 row popupitem" onclick="openProfile()">
                 <div class="col-3 d-flex align-items-center justify-content-center" style="padding:0;">
                     <div id="menuavatar" style="background-image: url(img/${user.avatar});"></div>
                 </div>
@@ -325,7 +329,7 @@
                 </div>
             </div>
             <div class="menu-divider"></div>
-            <div class="chgpsw row popupitem">
+            <div class="chgpsw row popupitem" onclick="openChangePwd()">
                 <div class="col-3 d-flex align-items-center justify-content-center" id="chgpsw">
                     <div class="menuitemicon" style="background-image: url(img/chgpsw.png);"></div>
                 </div>
@@ -341,6 +345,75 @@
         </div>
         
         <form action="updateProd" id="updateform" method="POST" enctype="multipart/form-data"></form>
+        
+        <!--Change password-->
+                <c:set var="error" value="${requestScope.CHANGE_PASS_ERR}"/>
+                <div id="change-pwd" class="container pop-up form-col" <c:if test="${not empty error}">style="display: block"</c:if> >
+                    <div class="close-btn" onclick="closePopUp('change-pwd')">
+                        <i class="far fa-times-circle"></i>
+                    </div>
+                    <div class="container">
+                        <div class="col-12">
+                            <h1>Change Password</h1>
+                            <form action="changePass" method="POST" class="form">
+                                <div class="form-group">
+                                    <input class="form-control" type="password" placeholder="Current Password" name="txtOldPassword">
+                                    <p style="color: red">${error.oldPassErr}</p>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" type="password" placeholder="New Password" name="txtNewPassword">
+                                    <p style="color: red">${error.newPassErr}</p>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" type="password" placeholder="Confirm New Password" name="txtConfirmPassword">
+                                    <p style="color: red">${error.confirmPassErr}</p>
+                                </div>
+                                <button type="submit" class="form-col-btn forgot-btn">Change Password</button>
+                                <input type="hidden" name="userID" value="${user.id}"/>
+                                <input type="hidden" name="password" value="${user.password}"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--User profile-->
+                <div id="user-profile" class="pop-up">
+                    <div class="close-btn" onclick="closePopUp('user-profile')">
+                        <i class="far fa-times-circle" style="color: white"></i>
+                    </div>
+                    <div class="decor-div"></div>
+                    <img src="img/${user.avatar}" alt="user avatar" id="user-ava">
+                    <label for="ava-user">
+                        <img src="img/add-ava.png" id="ava-label">
+                    </label>
+                    <input type="file" id="ava-user" hidden name="avatar" form="user-avatar" onchange="readURL(this)">
+                    <button type="submit" class="form-col-btn user-ava-btn" form="user-avatar" style="width: 170px;">Update avatar</button>
+                    <div class="profile-div col">
+                        <div class="d-flex justify-content-center" style="margin-bottom: 1em">
+                            <span class="col-2 info-label">Full Name:</span>
+                            <input type="text" name="txtName" class="col-6 form-control" value="${user.name}" style="margin-top: 0" form="user-info">
+                        </div>
+                        <div class="d-flex justify-content-center" style="margin-bottom: 1em">
+                            <span class="col-2 info-label">Gender:</span>
+                            <select class="form-control col-6" name="txtGender" style="margin-top: 0" form="user-info">
+                                <option value="0" <c:if test="${user.gender == 0}">selected</c:if> >Male</option>
+                                <option value="1" <c:if test="${user.gender == 1}">selected</c:if> >Female</option>
+                            </select>
+                        </div>
+                        <div class="d-flex justify-content-center" style="margin-bottom: 1em">
+                            <span class="col-2 info-label">Mobile:</span>
+                            <input type="text" name="txtPhone" class="col-6 form-control" value="${user.phone}" style="margin-top: 0" form="user-info">
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <span class="col-2 info-label">Address:</span>
+                            <textarea class="form-control col-6" name="txtAddress" style="margin-top: 0" form="user-info">${user.address}</textarea>
+                        </div>
+                        <button type="submit" form="user-info" class="form-col-btn" style="width: 120px; margin-left: 44%; margin-bottom: 1em">Save</button>
+                        <input type="hidden" name="userID" value="${user.id}" form="user-info">
+                    </div>
+                    <form id="user-avatar" action="updateAvatar" method="POST" enctype="multipart/form-data"></form>
+                    <form id="user-info" method="GET" action="updateProfile"></form>
+                </div>
         
         <script>
                 $('#updateform').submit(function() {

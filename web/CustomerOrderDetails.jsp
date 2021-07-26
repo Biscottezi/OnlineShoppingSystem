@@ -71,7 +71,7 @@
                                 <c:choose>
                                     <c:when test="${order.status == 0}">Submitted</c:when>
                                     <c:when test="${order.status == 1}">Confirmed</c:when>
-                                    <c:when test="${order.status == 2}">Completed</c:when>
+                                    <c:when test="${order.status == 2}">Shipped</c:when>
                                     <c:when test="${order.status == 3}">Canceled</c:when>
                                 </c:choose>
                             </div>
@@ -93,7 +93,9 @@
                                 <div class="col-5 d-flex flex-column justify-content-between align-items-end">
                                     <h4>$${detail.detailTotal}</h4>
                                     <div>
-                                        <button class="btn-feedback" onclick="location.href='custFeedback?productID=${detail.productId}'">FEEDBACK</button>
+                                        <c:if test="${order.status == 2}">
+                                            <button class="btn-feedback" onclick="location.href='custFeedback?productID=${detail.productId}'">FEEDBACK</button>
+                                        </c:if>
                                         <button class="btn-buy-again" onclick="location.href='viewProductDetails?productID=${detail.productId}'">BUY AGAIN</button>
                                     </div>
                                 </div>

@@ -3,7 +3,8 @@
     Created on : Jul 26, 2021, 12:15:14 AM
     Author     : nguye
 --%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -79,11 +80,11 @@
                                                 <h5>
                                                     <c:choose>
                                                         <c:when test="${product.value.salePrice != 0}">
-                                                            $${product.value.salePrice * product.value.quantity}
+                                                            $<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${product.value.salePrice * product.value.quantity}"/>
                                                             <c:set var="sum" value="${sum + product.value.salePrice * product.value.quantity}"/>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            $${product.value.listPrice * product.value.quantity}
+                                                            $<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${product.value.listPrice * product.value.quantity}"/>
                                                             <c:set var="sum" value="${sum + product.value.listPrice * product.value.quantity}"/>
                                                         </c:otherwise>
                                                     </c:choose>
@@ -137,7 +138,7 @@
                             <h3 class="mb-auto">SUMMARY</h3>
                             <div class="d-flex justify-content-between">
                                 <span>Total:</span>
-                                <span>$${sum}</span>
+                                <span>$<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${sum}"/></span>
                             </div>
                             <br>
                             <div class="d-flex justify-content-between">

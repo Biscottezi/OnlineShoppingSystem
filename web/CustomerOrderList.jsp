@@ -93,7 +93,7 @@
                                             <c:choose>
                                                 <c:when test="${order.status == 0}">Submitted</c:when>
                                                 <c:when test="${order.status == 1}">Confirmed</c:when>
-                                                <c:when test="${order.status == 2}">Completed</c:when>
+                                                <c:when test="${order.status == 2}">Shipped</c:when>
                                                 <c:when test="${order.status == 3}">Canceled</c:when>
                                             </c:choose>
                                         </td>
