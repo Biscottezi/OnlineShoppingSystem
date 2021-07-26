@@ -69,7 +69,7 @@
                             <h6>Description</h6>
                             <textarea name="txtFeedbackContent" form="feedback-form" required class="contact-input" id="contact-dscrpt"></textarea>
                             <h6>Images</h6>
-                            <input type="file" name="txtFeedbackImages" form="feedback-form"><br>
+                            <input type="file" name="txtFeedbackImages" form="feedback-form" multiple="true"><br>
                             <button type="submit" name="btAction" form="feedback-form" id="sbm-btn">SUBMIT</button>
                         </div>
                         

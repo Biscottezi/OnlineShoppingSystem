@@ -120,7 +120,7 @@ public class filterAuthorization implements Filter {
         String resource = uri.substring(uri.lastIndexOf("/") + 1);
         
         
-        UserDTO user = (UserDTO)context.getAttribute("USER");
+        UserDTO user = (UserDTO)rq.getSession().getAttribute("USER");
         int role = 9;
         if(user != null){
             role = user.getRole();

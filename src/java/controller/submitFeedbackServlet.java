@@ -18,6 +18,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import utils.uploadFile;
+import com.oreilly.servlet.MultipartRequest;
+import feedBackAttachedImage.FeedBackAttachedImageDAO;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 
 /**
  *
@@ -33,6 +39,7 @@ import utils.uploadFile;
 public class submitFeedbackServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
     private final String HOMEPAGE = "viewHomePageServlet";
+    private static final String UPLOAD_DIR = "img";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -76,25 +83,41 @@ public class submitFeedbackServlet extends HttpServlet {
             throws ServletException, IOException {
         String url = ERROR_PAGE;
         try{
-            String productID = request.getParameter("txtProductId");
-            String name = request.getParameter("txtName");
-            String email = request.getParameter("txtEmail");
-            String phone = request.getParameter("txtMobile");
-            String rating = request.getParameter("txtRating");
+            String applicationPath = request.getServletContext().getRealPath("");
+            String basePath = applicationPath + File.separator + UPLOAD_DIR + File.separator;
+            MultipartRequest mreq = new MultipartRequest(request, basePath, 500000 * 1024);
+            String productID = mreq.getParameter("txtProductId");
+            String name = mreq.getParameter("txtName");
+            String email = mreq.getParameter("txtEmail");
+            String phone = mreq.getParameter("txtMobile");
+            String rating = mreq.getParameter("txtRating");
             int ratedStar = Integer.parseInt(rating);
-            String content = request.getParameter("txtFeedbackContent");
-            String avatar = uploadFile.uploadFile(request, "txtFeedbackImages");
+            String content = mreq.getParameter("txtFeedbackContent");
+            String[] fileNameList = mreq.getParameterValues("txtFeedbackImages");
+            
+            
+            
             if(productID != null){
                 int prodID = Integer.parseInt(productID);
                 FeedBackDAO dao = new FeedBackDAO();
+                FeedBackAttachedImageDAO imgDao = new FeedBackAttachedImageDAO();
                 boolean result = dao.addNewProductFeedback(name, content, email, phone, ratedStar, prodID);
+                for(int i = 0; i < fileNameList.length; i++){
+                    String fileSystemName= mreq.getFilesystemName(fileNameList[i]);
+                    imgDao.addNewImage(fileSystemName, prodID);
+                }
                 if(result){
                     url = HOMEPAGE;
                 }
             }
             else{
                 FeedBackDAO dao = new FeedBackDAO();
+                FeedBackAttachedImageDAO imgDao = new FeedBackAttachedImageDAO();
                 boolean result = dao.addNewGeneralFeedback(name, content, email, phone, ratedStar);
+                for(int i = 0; i < fileNameList.length; i++){
+                    String fileSystemName= mreq.getFilesystemName(fileNameList[i]);
+                    imgDao.addNewImage(fileSystemName, 1);
+                }
                 if(result){
                     url = HOMEPAGE;
                 }

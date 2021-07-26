@@ -75,7 +75,7 @@ public class FeedBackAttachedImageDAO implements Serializable{
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "INSERT INTO FeedbackAttachedImage (Name. FeedbackID) "
+                String sql = "INSERT INTO FeedbackAttachedImage (Name, FeedbackID) "
                         + "VALUES (?, ?) ";
                 
                 stm = con.prepareStatement(sql);
