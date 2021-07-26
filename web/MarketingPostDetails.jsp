@@ -255,7 +255,7 @@
                             </div>
                         </div>
                         <div class="col-2">
-                            <input type="hidden" name="postID" form="updateform" value=""/>
+                            <input type="hidden" name="postID" form="updateform" value="${post.id}"/>
                         </div>
                         <div class="col-4">
                             <div class="savewrapper row d-flex align-items-end justify-content-end">
