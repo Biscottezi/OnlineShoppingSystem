@@ -42,7 +42,7 @@
                 <!--Sider-->
                 <div class="sider col-2">
                     <div class="col" id="sidercontent">
-                        <form action="" class="col-sm-12 searchbar">
+                        <form action="searchProduct" class="col-sm-12 searchbar">
                             <input type="text" placeholder="Search" class="search-input col-sm-10" name="txtSearchProduct" id="sider-search">
                             <button type="submit" id="search-button" style="padding:0px; padding-left:10px;" class="col-sm-2">
                                 <i class="fas fa-search"></i>

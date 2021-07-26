@@ -56,18 +56,17 @@ public class SaleEditStatusServlet extends HttpServlet {
             OrderDAO oDAO = new OrderDAO();
             ProductDAO productDAO = new ProductDAO();
             String email = oDAO.GetEmailByOrderID(Integer.parseInt(selectedOrderID));
-            for (int i = 0; i < detailList.size(); ++i) {
-                int prodID = detailList.get(i).getProductId();
-                int quantity = detailList.get(i).getQuantity();
-                String productName = productDAO.getProductNameByProductID(prodID);
-                if (oDAO.updateStatus(Integer.parseInt(selectedOrderID), 4) == true) {
+            if (oDAO.updateStatus(Integer.parseInt(selectedOrderID), 4) == true) {
+                for (int i = 0; i < detailList.size(); ++i) {
+                    int prodID = detailList.get(i).getProductId();
+                    String productName = productDAO.getProductNameByProductID(prodID);
                     sendMail.mailShippedOrder(email, prodID, productName);
+
                 }
             }
 
-            
             productDAO.getAllProduct();
-            
+
             oDAO.updateStatus(Integer.parseInt(selectedOrderID), Integer.parseInt(changedStatus));
             ProductCategoryDAO cate = new ProductCategoryDAO();
             List<ProductCategoryDTO> categoryList = cate.getCategoryList();

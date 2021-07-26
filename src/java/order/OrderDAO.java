@@ -1499,5 +1499,38 @@ public class OrderDAO implements Serializable {
         }
         return totalList;
     }
+    public int GetSaleByOrderID(int OrderID) throws SQLException, ClassNotFoundException, NamingException {
+        Connection connection = null;
+        PreparedStatement prestm = null;
+        ResultSet rs = null;
+        int id = 0;
+        try {
+            connection = DBHelper.makeConnection();
+            if (connection != null) {
+                String orderSQLString = "SELECT SaleMemberID "
+                        + "FROM [Order] "
+                        + "WHERE OrderID = ?";
 
+                prestm = connection.prepareStatement(orderSQLString);
+                prestm.setInt(1, OrderID);
+                rs = prestm.executeQuery();
+
+                if (rs.next()) {
+                    id= rs.getInt(1);
+
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (prestm != null) {
+                prestm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return id;
+    }
 }
