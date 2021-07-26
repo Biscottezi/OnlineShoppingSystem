@@ -163,7 +163,7 @@
                         <div class="extended col-4 row d-flex">
                             <div class="col-6 d-flex align-items-center justify-content-end"></div>
                             <div class="col-3 d-flex align-items-center justify-content-end"></div>
-                            <div class="col-3 d-flex align-items-center justify-content-end"><i class="fas fa-filter"></i>Filter</div>
+                            <div class="col-3 d-flex align-items-center justify-content-end"></div>
                         </div>
                     </div>
                     

@@ -24,6 +24,14 @@
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
         <script src="js/table.js"></script>
+        <style>
+            #sidercontent{
+                padding:0px;
+            }
+            #sider-search{
+                padding-left: 0px;
+            }
+        </style>
     </head>
     
     <body>
@@ -34,10 +42,10 @@
             <div class="row">
                 <!--Sider-->
                 <div class="sider col-2">
-                    <div class="col">
+                    <div class="col" id="sidercontent">
                         <form action="" class="col-sm-12 searchbar">
-                            <input type="text" placeholder="Search" class="search-input col-sm-10" name="txtSearchProduct">
-                            <button type="submit" id="search-button" class="col-sm-2">
+                            <input type="text" placeholder="Search" class="search-input col-sm-10" name="txtSearchProduct" id="sider-search">
+                            <button type="submit" id="search-button" style="padding:0px; padding-left:10px;" class="col-sm-2">
                                 <i class="fas fa-search"></i>
                             </button>
                         </form>
