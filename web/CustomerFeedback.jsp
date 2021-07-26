@@ -75,7 +75,7 @@
                             <h6>Description</h6>
                             <textarea name="txtFeedbackContent" form="feedback-form" required class="contact-input" id="contact-dscrpt"></textarea>
                             <h6>Images</h6>
-                            <input type="file" name="txtFeedbackImages" form="feedback-form" multiple="true"><br>
+                            <input type="file" name="txtFeedbackImages" form="feedback-form" multiple="true" id="upload-attached"><br>
                             <button type="submit" name="btAction" form="feedback-form" id="sbm-btn">SUBMIT</button>
                         </div>
                         
@@ -94,7 +94,23 @@
                 </div>
             </div>
         </main>
-        <br><br><br><br><br><br><br><br>                     
+        <br><br><br><br><br><br><br><br>  
+        <script>
+                $('#feedback-form').submit(function() {
+                    var form = document.getElementById('feedback-form');
+                    var fi = document.getElementById('upload-attached');
+                    for (var i = 0; i <= fi.files.length -1; i++){
+                        var fname = fi.files.item(i).name;
+                        var input = document.createElement('input');
+                        input.setAttribute('name', 'fileNameList');
+                        input.setAttribute('value', fname);
+                        input.setAttribute('type', 'hidden');
+                        form.appendChild(input);
+                    }
+
+                    return true; // return false to cancel form action
+                });
+        </script>
         <!--Footer-->                
         <footer class="container footer-wrapper">
             <div class="row footer-row-1">
