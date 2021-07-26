@@ -230,7 +230,7 @@
                             <div style="margin-top:18px;">Thumbnail</div>
                             <div class="avawrapper row">
                                 <img id="avapreview" class="col-3" src="img/${product.thumbnail}" onchange="showPreview();" style="display: block">
-                                <input type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="updateform" name="productThumbnail"/>
+                            <input type="file" id="upload" hidden="hidden" onchange="readURLThumb(this);" form="updateform" name="productThumbnail"/>
                                 <div class="col-4 d-flex align-items-end" style="padding-top: 117px;">
                                     <label for="upload" class="d-flex align-items-center justify-content-center uplbtn">
                                         <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
@@ -263,9 +263,9 @@
                             <div class="avawrapper" style="margin-top: 20px; margin-bottom: 1.5em">
                                 <input type="file" id="upload-attached" form="updateform" multiple name="productAttachedImage">
                                 <div class="col-4 d-flex align-items-end">
-                                    <label for="upload-attached" class="d-flex align-items-center justify-content-center uplbtn">
+                                    <!--<label for="upload-attached" class="d-flex align-items-center justify-content-center uplbtn">
                                         <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
-                                    </label>
+                                    </label>-->
                                 </div>
                             </div>
                             <c:set var="images" value="${requestScope.PRODUCT_IMAGES}"/>

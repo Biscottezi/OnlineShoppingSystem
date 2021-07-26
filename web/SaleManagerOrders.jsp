@@ -48,6 +48,9 @@
             .submitted{
                 background: #FFCB15;
             }
+            .canceled{
+                background: #CC2929;
+            }
             #tbllist_info {
                 padding: 8px;
             }
@@ -207,7 +210,8 @@
                                   <div class="d-flex align-items-center justify-content-center status 
                                         <c:if test="${order.status==2}">shipped</c:if>
                                         <c:if test="${order.status==1}">confirmed</c:if>
-                                        <c:if test="${order.status==0}">submitted</c:if>">
+                                        <c:if test="${order.status==0}">submitted</c:if>
+                                        <c:if test="${order.status==3}">canceled</c:if>">
                                       <c:choose>
                                           <c:when test="${order.status == 2}">
                                               SHIPPED
@@ -215,8 +219,11 @@
                                           <c:when test="${order.status == 1}">
                                               CONFIRMED
                                           </c:when>
+                                          <c:when test="${order.status == 3}">
+                                              CANCELED
+                                          </c:when>
                                           <c:otherwise>
-                                              SUBMIITED
+                                              SUBMITTED
                                           </c:otherwise>
                                       </c:choose>
                                   </div>
@@ -236,7 +243,7 @@
         </div>
         
         <div class="popupwrapper" id="usermenu" style="padding:0;margin:0;">
-            <div class="pro5 row popupitem">
+            <div class="pro5 row popupitem" onclick="openProfile()">
                 <div class="col-3 d-flex align-items-center justify-content-center" style="padding:0;">
                     <div id="menuavatar" style="background-image: url(img/${user.avatar});"></div>
                 </div>

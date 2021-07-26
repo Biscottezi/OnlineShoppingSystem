@@ -47,7 +47,7 @@ public class viewMarketingDashboardServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR_PAGE;
         
-        String now = java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        String now = java.time.LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         String monthago = java.time.LocalDate.now().minusMonths(1).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         String weekago = java.time.LocalDate.now().minusDays(7).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         

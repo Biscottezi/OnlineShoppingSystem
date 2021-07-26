@@ -339,7 +339,7 @@
                     Thumbnail<br>
                     <div class="avawrapper row">
                         <img id="avapreview" class="col-3" src="http://placehold.it/180" onchange="showPreview();">
-                        <input type="file" id="upload" hidden="hidden" onchange="readURL(this);" form="createform" name="productThumbnail"/>
+                        <input type="file" id="upload" hidden="hidden" onchange="readURLThumb(this);" form="createform" name="productThumbnail"/>
                         <div class="col-4 d-flex align-items-end" style="padding-top: 117px;">
                             <label for="upload" class="d-flex align-items-center justify-content-center uplbtn">
                                 <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
@@ -375,9 +375,9 @@
                 <div class="avawrapper" style="margin-top: 20px; margin-bottom: 1.5em">
                     <input type="file" id="upload-attached" form="createform" multiple name="productAttachedImage">
                     <div class="col-4 d-flex align-items-end">
-                        <label for="upload-attached" class="d-flex align-items-center justify-content-center uplbtn">
+                        <!--<label for="upload-attached" class="d-flex align-items-center justify-content-center uplbtn">
                             <i class="fas fa-upload" style="margin-right:10px;"></i>Upload file
-                        </label>
+                        </label>-->
                     </div>
                 </div>
             </div>

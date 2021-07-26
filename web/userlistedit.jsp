@@ -211,7 +211,7 @@
         </div>
         
         <div class="popupwrapper" id="usermenu" style="padding:0;margin:0;">
-            <div class="pro5 row popupitem">
+            <div class="pro5 row popupitem" onclick="openProfile()">
                 <div class="col-3 d-flex align-items-center justify-content-center" style="padding:0;">
                     <div id="menuavatar" style="background-image: url(img/${user.avatar});"></div>
                 </div>
