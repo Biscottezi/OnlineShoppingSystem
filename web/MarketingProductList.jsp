@@ -307,7 +307,7 @@
                 <div class="col-9 d-flex align-items-center description menu-itemtitle">Change Your Password</div>
             </div>
             <div class="menu-divider"></div>
-            <div class="signout row popupitem" onclick="location.href='homepage.jsp';">
+            <div class="signout row popupitem" onclick="location.href='logout';">
                 <div class="col-3 d-flex align-items-center justify-content-center" id="signout">
                     <div class="menuitemicon" style="background-image: url(img/signout.png);"></div>
                 </div>
@@ -349,10 +349,10 @@
                 </div>
                 <div class="col">
                     Quantity<br>
-                    <input class="inputbox" type="number" name="productQuantity" value="" form="createform" required/>
+                    <input class="inputbox" type="number" name="productQuantity" value="" form="createform"/>
                     <br>
                     <div style="margin-top:12px;">Price</div>
-                    <input class="inputbox" type="number" name="productBasePrice" value="" form="createform" required/>
+                    <input class="inputbox" type="number" name="productBasePrice" value="" form="createform" required step=".01" pattern="^\d+(?:\.\d{1,2})?$"/>
                 </div>
             </div>
             <div class="info row">
@@ -362,7 +362,7 @@
                 </div>
                 <div class="col">
                     Sale Price<br>
-                    <input class="inputbox" type="number" name="productSalePrice" value="" form="createform"/>
+                    <input class="inputbox" type="number" name="productSalePrice" value="" form="createform"  required step=".01" pattern="^\d+(?:\.\d{1,2})?$"/>
                     <br>
                     <div style="margin-top:12px;">Featured</div>
                     <input type="checkbox" name="productFeatured" value="ON" checked="checked" id="" class="col-1"  form="createform" style="zoom: 2; margin-top: 1em"/>
