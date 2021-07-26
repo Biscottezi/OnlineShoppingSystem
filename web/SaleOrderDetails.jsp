@@ -16,14 +16,17 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="css/pop-up.css">
         <link rel="stylesheet" href="css/managersider.css">
         <link rel="stylesheet" href="css/managerprofile.css"/>
         <link rel="stylesheet" href="css/userlist.css"/>
         <link rel="stylesheet" href="css/editinfo.css"/>
         <link rel="stylesheet" href="css/saleorderdetails.css"/>
+        <link rel="stylesheet" href="css/staffpop-up.css"/>
         <script src="js/managerpopup.js"></script>
         <script src="js/upload.js"></script>
         <script src="js/statuschange.js"></script>
+        <script src="js/homepage.js"></script>
         <style>
             .status{
                 width:100px;
@@ -67,7 +70,7 @@
               <ul class="nav flex-column col">
                   
                   <!-- header -->
-                  <li class="nav-item" id="header" onclick="location.href='SaleManagerDashboard';">
+                  <li class="nav-item" id="header" onclick="location.href='<c:if test="${user.role==2}">SaleManagerDashboard</c:if><c:if test="${user.role==1}">SaleMemberDashboard</c:if>';">
                     <div class="navbar-brand" href="#">
                         <div class="container">
                             <div class="row justify-content-md-center">
@@ -79,7 +82,7 @@
                   </li>
                   
                   <!-- item 1 -->
-                  <li class="nav-item naviitem row" onclick="location.href='SaleManagerDashboard';">
+                  <li class="nav-item naviitem row" onclick="location.href='<c:if test="${user.role==2}">SaleManagerDashboard</c:if><c:if test="${user.role==1}">SaleMemberDashboard</c:if>';">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
@@ -91,7 +94,7 @@
                   </li>
                   
                   <!-- item 2 -->
-                  <li class="nav-item naviitem row" id="active" onclick="location.href='SaleManagerViewOrderList';">
+                  <li class="nav-item naviitem row" id="active" onclick="location.href='<c:if test="${user.role==2}">SaleManagerViewOrderList</c:if><c:if test="${user.role==1}">ViewSaleOrderList</c:if>';">
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
@@ -297,7 +300,7 @@
                 </div>
             </div>
             <div class="menu-divider"></div>
-            <div class="chgpsw row popupitem">
+            <div class="chgpsw row popupitem" onclick="openChangePwd()">
                 <div class="col-3 d-flex align-items-center justify-content-center" id="chgpsw">
                     <div class="menuitemicon" style="background-image: url(img/chgpsw.png);"></div>
                 </div>
@@ -311,6 +314,36 @@
                 <div class="col-9 d-flex align-items-center description menu-itemtitle">Sign Out</div>
             </div>
         </div>
+                        
+        <c:set var="error" value="${requestScope.CHANGE_PASS_ERR}"/>
+        <div id="change-pwd" class="container pop-up form-col" <c:if test="${not empty error}">style="display: block"</c:if> >
+            <div class="close-btn" onclick="closePopUp('change-pwd')">
+                <i class="far fa-times-circle"></i>
+            </div>
+            <div class="container">
+                <div class="col-12">
+                    <h1>Change Password</h1>
+                    <form action="changePass" method="POST" class="form">
+                        <div class="form-group">
+                            <input class="form-control" type="password" placeholder="Current Password" name="txtOldPassword">
+                            <p style="color: red">${error.oldPassErr}</p>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="password" placeholder="New Password" name="txtNewPassword">
+                            <p style="color: red">${error.newPassErr}</p>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="password" placeholder="Confirm New Password" name="txtConfirmPassword">
+                            <p style="color: red">${error.confirmPassErr}</p>
+                        </div>
+                        <button type="submit" class="form-col-btn forgot-btn">Change Password</button>
+                        <input type="hidden" name="userID" value="${user.id}"/>
+                        <input type="hidden" name="password" value="${user.password}"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+                        
         <c:set var="announce" value="${requestScope.Announce}"/>
         <c:set var="chosensale" value="${requestScope.chosensale}"/>
         <c:set var="status" value="${requestScope.status}"/>
