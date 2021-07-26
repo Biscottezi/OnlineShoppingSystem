@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.*;  
 import javax.mail.internet.*;  
+import orderDetail.OrderItemObj;
 /**
  *
  * @author ASUS
@@ -154,8 +155,7 @@ public class sendMail implements Serializable{
                 message.setFrom(new InternetAddress(myAcc));
                 message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
                 message.setSubject("Order confirmation from OnlineShoppingSystem");
-                String htmlCode = "<h2>Your Order "+ OrderID +" is confirmed . Thank you for your Purchase!</h2></br>"
-                        +"<a href=" + confirmLink + ">Click here to view your order!</a>";
+                String htmlCode = "<h2>Your Order "+ OrderID +" is confirmed . Thank you for your Purchase!</h2>";
                         
                 message.setContent(htmlCode, "text/html");
             }catch(MessagingException ex){
@@ -166,9 +166,9 @@ public class sendMail implements Serializable{
             Logger.getLogger(sendMail.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public static void mailShippedOrder(String recipient, int ProductID, String productName){
+    public static void mailShippedOrder(String recipient, ArrayList<OrderItemObj> list){
         try {
-            String feedbackLink = "http://localhost:8084/OnlineShoppingSystem/custFeedback?productID=" + ProductID;
+            String feedbackLink = "http://localhost:8084/OnlineShoppingSystem/custFeedback?productID=";
             Properties prop = new Properties();
             
             prop.put("mail.smtp.auth", "true");
@@ -191,8 +191,12 @@ public class sendMail implements Serializable{
                 message.setFrom(new InternetAddress(myAcc));
                 message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
                 message.setSubject("Order is shipped OnlineShoppingSystem");
-                String htmlCode = "<h2>Your is now shipping! </h2></br>"
-                        +"<a href=" + feedbackLink + ">Click here to enter your feedback for "+productName+"!</a>";
+                String htmlCode = "<h2>Your is now shipping! </h2></br>";
+                for (int i = 0; i < list.size(); ++i){
+                    String prodID = String.valueOf(list.get(i).getProduct().getId());
+                    String prodName = list.get(i).getProduct().getTitle();
+                    htmlCode += "<a href=" + feedbackLink + prodID + ">Click here to enter your feedback for "+prodName+"!</a><br>";
+                }
                         
                 message.setContent(htmlCode, "text/html");
             }catch(MessagingException ex){

@@ -60,7 +60,7 @@ public class SaleEditStatusServlet extends HttpServlet {
                 for (int i = 0; i < detailList.size(); ++i) {
                     int prodID = detailList.get(i).getProductId();
                     String productName = productDAO.getProductNameByProductID(prodID);
-                    sendMail.mailShippedOrder(email, prodID, productName);
+//                    sendMail.mailShippedOrder(email, prodID, productName);
 
                 }
             }

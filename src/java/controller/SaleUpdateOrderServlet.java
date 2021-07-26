@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -23,7 +24,10 @@ import order.CustomizedOrderDTO;
 import order.OrderDAO;
 import order.OrderDTO;
 import orderDetail.OrderDetailDAO;
+import orderDetail.OrderDetailDTO;
+import orderDetail.OrderItemObj;
 import user.SaleMember;
+import utils.sendMail;
 
 /**
  *
@@ -43,7 +47,7 @@ public class SaleUpdateOrderServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException{
         response.setContentType("text/html;charset=UTF-8");
         
         HttpSession session = request.getSession(false);
@@ -78,12 +82,27 @@ public class SaleUpdateOrderServlet extends HttpServlet {
                 request.setAttribute("Announce","Order has been updated!");
                 request.setAttribute("status",status);
                 request.setAttribute("chosensale",saleID);
+                
+                String mail = orderDAO.GetEmailByOrderID(orderID);
+                
+                if(status == 1){
+                    sendMail.mailConfirmOrder(mail, orderID);
+                }
+                else if(status == 2){
+                    OrderDetailDAO detailDAO = new OrderDetailDAO();
+                    ArrayList<OrderItemObj> list = detailDAO.GetOrderDetailByOrderID(orderID);
+                    sendMail.mailShippedOrder(mail, list);
+                    
+                }
             }
         } catch (SQLException ex) {
             log("SaleUpdateOrderServlet_SQLException: " + ex.getMessage());
         } catch (NamingException ex) { 
             log("SaleUpdateOrderServlet_NamingException: " + ex.getMessage());
-        } finally {
+        } catch (ClassNotFoundException ex) { 
+            log("SaleUpdateOrderServlet_ClassNotFound: " + ex.getMessage());
+        } 
+        finally {
             RequestDispatcher rd = request.getRequestDispatcher(urlRewriting);
             rd.forward(request, response);
          
