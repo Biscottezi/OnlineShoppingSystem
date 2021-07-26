@@ -5,10 +5,12 @@
  */
 package controller;
 
+import feedBack.FeedBackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,6 +19,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import order.OrderDAO;
+import order.totalInOrderTable;
+import post.PostDAO;
+import product.ProductDAO;
+import user.UserDAO;
 
 /**
  *
@@ -25,7 +32,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "viewMarketingDashboardServlet", urlPatterns = {"/viewMarketingDashboardServlet"})
 public class viewMarketingDashboardServlet extends HttpServlet {
     private final String ERROR_PAGE="Error.html";
-    private final String MARKETING_DASHBOARD="";
+    private final String MARKETING_DASHBOARD="MarketingDashboard.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,17 +46,47 @@ public class viewMarketingDashboardServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR_PAGE;
+        
         String now = java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         String monthago = java.time.LocalDate.now().minusMonths(1).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        String weekago = java.time.LocalDate.now().minusDays(7).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        
         HttpSession session = request.getSession(false);
         try{
+            UserDAO userDAO = new UserDAO();
+            int numOfCust = userDAO.getNoOfCustomerByMonth(now, monthago);
+            session.setAttribute("CUSTOMERS", numOfCust);
+            
+            ProductDAO prodDAO = new ProductDAO();
+            int numOfProd = prodDAO.getNoOfProductByMonth(now, monthago);
+            session.setAttribute("PRODUCTS", numOfProd);
+            
+            PostDAO postDAO = new PostDAO();
+            int numOfPost = postDAO.getNoOfPostByMonth(now, monthago);
+            session.setAttribute("POSTS", numOfPost);
+            
+            FeedBackDAO feedDAO = new FeedBackDAO();
+            int numOfFeed = feedDAO.getNoOfFeedbackByMonth();
+            session.setAttribute("FEEDBACKS", numOfFeed);
+            
+            OrderDAO orderDAO = new OrderDAO();
+            List<totalInOrderTable> graph = orderDAO.getMktGraphTotal(weekago, now);
+            if(graph.size()>0){
+                session.setAttribute("GRAPH", graph);
+            }
+            
+            session.setAttribute("DATESTART", weekago);
+            session.setAttribute("DATEEND", now);
             
             url = MARKETING_DASHBOARD;
-//        }catch(SQLException ex){
-//            log("viewMarketingDashboardServlet _ SQL:" + ex.getMessage());
-//        }catch(NamingException ex){
-//            log("viewMarketingDashboardServlet _ Naming:" + ex.getMessage());
-        }finally{
+        }
+        catch(SQLException ex){
+            log("viewMarketingDashboardServlet _ SQL:" + ex.getMessage());
+        }
+        catch(NamingException ex){
+            log("viewMarketingDashboardServlet _ Naming:" + ex.getMessage());
+        }
+        finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
             

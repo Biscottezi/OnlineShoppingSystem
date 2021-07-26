@@ -25,6 +25,7 @@ import javax.servlet.http.HttpSession;
 public class modifyQuantityCartServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
     private final String CART_DETAILS_PAGE = "CartDetails.jsp";
+    private final String CART_DETAILS_UPDATE = "CartDetailsUpdate.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,7 +49,14 @@ public class modifyQuantityCartServlet extends HttpServlet {
             cart.modifyQuantity(ID, quantity);
 
             session.setAttribute("CART", cart);
-            url = CART_DETAILS_PAGE;
+            
+            if(session.getAttribute("ORDER") != null){
+                url = CART_DETAILS_UPDATE;
+            }
+            else{
+                url = CART_DETAILS_PAGE;
+            }
+            
         }catch(SQLException ex){
             log("modifyQuantityCartServlet _ SQL:" + ex.getMessage());
         }catch(NamingException ex){

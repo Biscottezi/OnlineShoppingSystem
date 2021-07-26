@@ -24,6 +24,14 @@
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
         <script src="js/table.js"></script>
+        <style>
+            #sidercontent{
+                padding:0px;
+            }
+            #sider-search{
+                padding-left: 0px;
+            }
+        </style>
     </head>
     
     <body>
@@ -34,10 +42,10 @@
             <div class="row">
                 <!--Sider-->
                 <div class="sider col-2">
-                    <div class="col">
+                    <div class="col" id="sidercontent">
                         <form action="" class="col-sm-12 searchbar">
-                            <input type="text" placeholder="Search" class="search-input col-sm-10" name="txtSearchProduct">
-                            <button type="submit" id="search-button" class="col-sm-2">
+                            <input type="text" placeholder="Search" class="search-input col-sm-10" name="txtSearchProduct" id="sider-search">
+                            <button type="submit" id="search-button" style="padding:0px; padding-left:10px;" class="col-sm-2">
                                 <i class="fas fa-search"></i>
                             </button>
                         </form>
@@ -74,9 +82,13 @@
                                         <td>${order.orderedDate}</td>
                                         <td>
                                             <c:set var="details" value="${order.details}"/>
-                                            <c:forEach var="detail" items="${details}" begin="0" end="0">${detail.productName}</c:forEach> and ${order.noOfProd - 1} more product(s)
+                                            <c:forEach var="detail" items="${details}" begin="0" end="0">${detail.productName}</c:forEach>
+                                            <c:choose>
+                                                <c:when test="${order.noOfProd == 2}"> and ${order.noOfProd - 1} more product</c:when>
+                                                <c:when test="${order.noOfProd > 2}"> and ${order.noOfProd - 1} more products</c:when>
+                                            </c:choose>
                                         </td>
-                                        <td>${order.total}</td>
+                                        <td>$${order.total}</td>
                                         <td>
                                             <c:choose>
                                                 <c:when test="${order.status == 0}">Submitted</c:when>

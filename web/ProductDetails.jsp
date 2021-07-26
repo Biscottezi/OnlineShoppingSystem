@@ -19,6 +19,14 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" href="css/sider.css">
         <link rel="stylesheet" href="css/ProductDetails.css">
+        <style>
+            #sidercontent{
+                padding:0px;
+            }
+            #sider-search{
+                padding-left: 0px;
+            }
+        </style>
     </head>
 
     <body>
@@ -29,10 +37,10 @@
             <div class="row">
                 <!--Sider-->
                 <div class="sider col-2">
-                    <div class="col">
+                    <div class="col" id="sidercontent">
                         <form action="" class="col-sm-12 searchbar">
-                            <input type="text" placeholder="Search" class="search-input col-sm-10" name="txtSearchProduct">
-                            <button type="submit" id="search-button" class="col-sm-2">
+                            <input type="text" placeholder="Search" class="search-input col-sm-10" name="txtSearchProduct" id="sider-search">
+                            <button type="submit" id="search-button" style="padding:0px; padding-left:10px;" class="col-sm-2">
                                 <i class="fas fa-search"></i>
                             </button>
                         </form>

@@ -19,6 +19,14 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" href="css/sider.css">
         <link rel="stylesheet" href="css/CustomerOrderDetails.css">
+        <style>
+            #sidercontent{
+                padding:0px;
+            }
+            #sider-search{
+                padding-left: 0px;
+            }
+        </style>
     </head>
     <body>
         <!--Header-->
@@ -28,10 +36,10 @@
             <div class="row">
                 <!--Sider-->
                 <div class="sider col-2">
-                    <div class="col">
+                    <div class="col" id="sidercontent">
                         <form action="" class="col-12 searchbar">
-                            <input type="text" placeholder="Search" class="search-input col-9" name="txtSearchProduct">
-                            <button type="submit" id="search-button" class="col-3">
+                            <input type="text" placeholder="Search" class="search-input col-9" name="txtSearchProduct" id="sider-search">
+                            <button type="submit" id="search-button" style="padding:0px; padding-left:10px;" class="col-3">
                                 <i class="fas fa-search"></i>
                             </button>
                         </form>
@@ -93,7 +101,7 @@
                             <c:if test="${order.status == 0}">
                                 <div class="btn-cancel-update">
                                     <button id="btn-cancel">CANCEL</button>
-                                    <button id="btn-update">UPDATE</button>
+                                    <button id="btn-update" onclick="location.href='updateOrder?orderID=${order.orderId}'">UPDATE</button>
                                 </div>
                             </c:if>
                             <h3 id="order-total-price">Total: $${order.total}</h3>

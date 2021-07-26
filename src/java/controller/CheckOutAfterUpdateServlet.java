@@ -50,14 +50,14 @@ public class CheckOutAfterUpdateServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String OrderID = request.getParameter("OrderID");
+        String orderID = request.getParameter("orderID");
         String Receivername = request.getParameter("txtReceiverName");
         String Receivergender = request.getParameter("txtReceiverGender");
         String email = request.getParameter("txtReceiverEmail");
         String phone = request.getParameter("txtReceiverMobile");
         String address = request.getParameter("txtReceiverAddress");
         String note = request.getParameter("txtNote");
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         String url = SUCCESS_PAGE;
         try {         
             ProductCategoryDAO productCategoryDao = new ProductCategoryDAO();
@@ -66,39 +66,38 @@ public class CheckOutAfterUpdateServlet extends HttpServlet {
             if(productCategoryDto != null){
                 request.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
             }
+            
             if (session != null) {
-                //2.Take customer's cart
                 Cart cart = (Cart) session.getAttribute("CART");
                 if (cart != null) {
                     Map<Integer,ProductDTO> items = cart.getItems();
                     if (items != null) {
-                        //3.Create order
-                        UserDAO dao= new UserDAO();
-                        int saleID = dao.getSaleMemberActive();
-                        OrderDAO orderDAO = new OrderDAO();
-                        int newOrderID= 0;
-                        if(session.getAttribute("custId") != null){
-                            int custId = (int) session.getAttribute("custId");
-                            newOrderID = orderDAO.CreateOrder(custId, Receivername, Integer.parseInt(Receivergender), address, email, phone, note, saleID);
-                        }
+                        OrderDAO orderdao = new OrderDAO();
+                        orderdao.updateOrderCheckout(Integer.parseInt(orderID), Receivername, Integer.parseInt(Receivergender), address, email, phone, note);
                         
-                        //4.Get each item and add to order
                         OrderDetailDAO detailDAO = new OrderDetailDAO();
+                        detailDAO.deleteOrderDetail(Integer.parseInt(orderID));
                         for (int ID : items.keySet()) {
                             int quantity = items.get(ID).getQuantity();
-                            detailDAO.CreateOrderDetail(newOrderID, ID, quantity);
-                        }//end for items.keySet
-                    }//end if items is not null  
+                            detailDAO.CreateOrderDetail(Integer.parseInt(orderID), ID, quantity);
+                        }
+                    }  
                     session.removeAttribute("CART");
-                }//end if cart is not null
-            }//end if session is not null
-        } catch (SQLException ex) {
-            log(" CheckoutServlet SQLException " + ex.getMessage());
-        } catch (ClassNotFoundException ex) {
-            log(" CheckoutServlet SQLException " + ex.getMessage());
-        } catch (NamingException ex) {
-            log(" CheckoutServlet NamingException " + ex.getMessage());
-        } finally {
+                    session.removeAttribute("ORDER");
+                    session.removeAttribute("PRODUCT_CATEGORY");
+                }
+            }
+        }
+        catch (SQLException ex) {
+            log(" CheckoutAfterUpdateServlet SQLException: " + ex.getMessage());
+        }
+        catch (ClassNotFoundException ex) {
+            log(" CheckoutAfterUpdateServlet_ClassNotFound: " + ex.getMessage());
+        }
+        catch (NamingException ex) {
+            log(" CheckoutAfterUpdateServlet_NamingException: " + ex.getMessage());
+        }
+        finally {
             RequestDispatcher rd = request.getRequestDispatcher(SUCCESS_PAGE);
             rd.forward(request, response);
 

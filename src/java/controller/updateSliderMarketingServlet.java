@@ -39,13 +39,19 @@ public class updateSliderMarketingServlet extends HttpServlet {
         String sliderID = request.getParameter("sliderID");
         String title = request.getParameter("sliderTitle");
         String description = request.getParameter("sliderDescription");
-        String status = request.getParameter("sliderStatus");
+        int status;
+        if(request.getParameter("sliderStatus") == null){
+            status = 0;
+        }
+        else{
+            status = 1;
+        }
         String SLIDER_DETAILS_PAGE = "viewSliderDetailsMarketingServlet?sliderID=" + sliderID;
         String url = ERROR_PAGE;
         
         try {
             SliderDAO sliderDao = new SliderDAO();
-            boolean result = sliderDao.updateSlider(Integer.parseInt(sliderID), title, description, Integer.parseInt(status));
+            boolean result = sliderDao.updateSlider(Integer.parseInt(sliderID), title, description, status);
             if(result){
                 url = SLIDER_DETAILS_PAGE;
             }

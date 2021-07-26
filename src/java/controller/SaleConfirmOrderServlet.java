@@ -57,9 +57,9 @@ public class SaleConfirmOrderServlet extends HttpServlet {
             
             productDAO.getAllProduct();
             OrderDAO oDAO = new OrderDAO();
-            
+            String email= oDAO.GetEmailByOrderID(Integer.parseInt(selectedOrderID));
             oDAO.updateStatus(Integer.parseInt(selectedOrderID), 2);
-            sendMail.mailConfirmOrder(SaleID, Integer.parseInt(selectedOrderID));
+            sendMail.mailConfirmOrder(email, Integer.parseInt(selectedOrderID));
             ProductCategoryDAO cate = new ProductCategoryDAO();
             List<ProductCategoryDTO> categoryList = cate.getCategoryList();
 

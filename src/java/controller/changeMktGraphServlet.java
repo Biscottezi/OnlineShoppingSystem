@@ -8,23 +8,27 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import productAttachedImage.ProductAttachedImageDAO;
+import javax.servlet.http.HttpSession;
+import order.OrderDAO;
+import order.totalInOrderTable;
 
 /**
  *
- * @author ASUS
+ * @author nguye
  */
-@WebServlet(name = "removeProductImageServlet", urlPatterns = {"/removeProductImageServlet"})
-public class removeProductImageServlet extends HttpServlet {
-    private final String ERROR_PAGE = "Error.html";
-    private final String PRODUCT_MARKETING_PAGE = "MarketingProductList.jsp";
+@WebServlet(name = "changeMktGraphServlet", urlPatterns = {"/changeMktGraphServlet"})
+public class changeMktGraphServlet extends HttpServlet {
+
+    private final String MKT_PAGE = "MarketingDashboard.jsp";
+    private final String ERROR_PAGE = "viewMarketingDashboardServlet";
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,26 +41,32 @@ public class removeProductImageServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR_PAGE;
-        String productID = request.getParameter("prodID");
-        String imageID = request.getParameter("imgID");
         
-        try{
-            ProductAttachedImageDAO dao = new ProductAttachedImageDAO();
-            boolean result = dao.removeProductImage(Integer.parseInt(productID), Integer.parseInt(imageID));
-            if(result){
-                url = "viewProductDetailsMarketingServlet?productID=" + productID;
-            }
-            
-        }catch(SQLException ex){
-            log("removeProductImageServlet _ SQL:" + ex.getMessage());
-        }catch(NamingException ex){
-            log("removeProductImageServlet _ Naming:" + ex.getMessage());
-        }finally{
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
-            
+        HttpSession session = request.getSession(false);
+        String url = ERROR_PAGE;
+        String daterange = request.getParameter("daterange");
+        String[] date = daterange.split(" - ");
+        String start = date[0];
+        String end = date[1];
+        
+        try {
+            OrderDAO orderdao = new OrderDAO();
+            List<totalInOrderTable> graph = orderdao.getMktGraphTotal(start, end);
+            session.setAttribute("GRAPH", graph);
+            session.setAttribute("DATESTART", start);
+            session.setAttribute("DATEEND", end);
+            url = MKT_PAGE;
         }
+        catch(SQLException ex){
+            log("changeMktGraphServlet _ SQL:" + ex.getMessage());
+        }
+        catch(NamingException ex){
+            log("changeMktGraphServlet _ Naming:" + ex.getMessage());
+        }
+        finally{
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

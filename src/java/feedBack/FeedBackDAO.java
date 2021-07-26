@@ -219,4 +219,37 @@ public class FeedBackDAO implements Serializable{
         }
         return false;
     }
+    
+    public int getNoOfFeedbackByMonth() throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int totalFeedback = 0;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT COUNT(FeedbackID) as NumOfFeed "
+                        + "FROM Feedback ";
+                
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    totalFeedback += rs.getInt("NumOfFeed");
+                }
+            }
+        }
+        finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return totalFeedback;
+    }
 }

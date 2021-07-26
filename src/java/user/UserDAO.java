@@ -92,8 +92,8 @@ public class UserDAO implements Serializable {
     }
 
     public boolean createNewCustomer(String email, String password, String name, int gender, String phone, 
-            String address,int status, Date dateCreated, int role, String avatar)
-            throws SQLException, ClassNotFoundException, NamingException {
+            String address,int status, int role, String avatar)
+            throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -625,5 +625,41 @@ public class UserDAO implements Serializable {
             }
         }
         return 0;
+    }
+    
+    public int getNoOfCustomerByMonth(String now, String monthago) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int totalCustomer = 0;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "SELECT COUNT(UserID) as NumOfCust "
+                        + "FROM [User] "
+                        + "WHERE Role = 4 AND DateCreated >= ? AND DateCreated <= ? ";
+                
+                stm = con.prepareStatement(sql);
+                stm.setString(1, monthago);
+                stm.setString(2, now);
+                rs = stm.executeQuery();
+                
+                while(rs.next()){
+                    totalCustomer += rs.getInt("NumOfCust");
+                }
+            }
+        }
+        finally{
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return totalCustomer;
     }
 }
