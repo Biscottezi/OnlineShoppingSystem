@@ -58,6 +58,9 @@
             .profile-div{
                 margin-top: 6em;
             }
+            .pop-up{
+                box-shadow: 0 0 100px 1000px rgba(0, 0, 0, 0.5);
+            }
         </style>
         
         <script>
@@ -271,7 +274,7 @@
         </div>
 
         <!--User register form-->
-        <div id="register" class="container pop-up">
+        <div id="register" class="container pop-up" <c:if test="${not empty requestScope.REGISTER_ERROR}">style="display: block"</c:if> >
             <div class="row">
                 <div class="col-4 welcome" id="register-welcome">
                     <div class="container">
@@ -288,30 +291,35 @@
                     <div class="container">
                         <div class="col-12">
                             <h1>Create Account</h1>
+                        <c:set var="registerErr" value="${requestScope.REGISTER_ERROR}"/>
                             <form action="registration" method="POST" class="form">
                                 <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Email" name="txtEmail">
+                                    <p style="color: red">${registerErr.emailError}</p>
+                                    <input class="form-control" type="email" placeholder="Email" name="txtEmail" required value="${requestScope.EMAIL_ERROR}">
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" type="password" placeholder="Password" name="txtPassword">
+                                    <p style="color: red">${registerErr.passErr}</p>
+                                    <input class="form-control" type="password" placeholder="Password" name="txtPassword" required value="${requestScope.PASSWORD_ERROR}">
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" type="password" placeholder="Confirm password" name="txtConfirm">
+                                    <p style="color: red">${registerErr.confirmpassErr}</p>
+                                    <input class="form-control" type="password" placeholder="Confirm password" name="txtConfirm" required value="${requestScope.CONFIRM_ERROR}">
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Fullname" name="txtFullName">
+                                    <input class="form-control" type="text" placeholder="Fullname" name="txtFullName" required value="${requestScope.NAME_ERROR}">
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Mobile" name="txtMobile">
+                                    <p style="color: red">${registerErr.phoneError}</p>
+                                    <input class="form-control" type="text" placeholder="Mobile" name="txtMobile" required value="${requestScope.PHONE_ERROR}">
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" name="txtGender">
-                                        <option value="0">Male</option>
+                                        <option value="0" selected>Male</option>
                                         <option value="1">Female</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <textarea class="form-control" placeholder="Address" name="txtAddress"></textarea>
+                                    <textarea class="form-control" placeholder="Address" name="txtAddress" required>${requestScope.ADDRESS_ERROR}</textarea>
                                 </div>
                                 <button type="submit" class="form-col-btn" name="btAction">Sign up</button>
                             </form>

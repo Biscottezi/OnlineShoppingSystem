@@ -35,98 +35,70 @@ public class RegisterServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private final String REGISTER_PAGE = "registerPage.jsp";
-    private final String SUCCESS_PAGE = "registerSuccess.jsp";
+    private final String HOMEPAGE = "viewHomePageServlet";
+    private final String ERROR_PAGE = "error.html";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         boolean changed = (request.getParameter("changed") != null);
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String confirmPassword = request.getParameter("confirmPassword");
-        String fullname = request.getParameter("fullname");
-        String address = request.getParameter("address");
-        String phone = request.getParameter("phone");
-        int gender = Integer.parseInt(request.getParameter("gender"));
+
+        String email = request.getParameter("txtEmail");
+        String password = request.getParameter("txtPassword");
+        String confirmPassword = request.getParameter("txtConfirm");
+        String fullname = request.getParameter("txtFullName");
+        String address = request.getParameter("txtAddress");
+        String phone = request.getParameter("txtMobile");
+        int gender = Integer.parseInt(request.getParameter("txtGender"));
         int role = 4;
-        Date dateCreated = null;
         int status = 1;
-        String avatar = null;    
-        String url = REGISTER_PAGE;
+        String avatar = "defaultAvatar.jpg";    
+        String url = HOMEPAGE;
         CustomerError errObj = new CustomerError();
         boolean founderror = false;
-        try {
-            if (changed) {
-                //1.Check user errorr
-                if (email.trim().length() < 5 || email.trim().length() > 10) {
-                    founderror = true;
-                    errObj.setEmailError("Username is required input from 5 to 10 chars");
-
-                    String wrongUsername = request.getParameter("username");
-                    request.setAttribute("wrongUsername", wrongUsername);
-                }
-                if (password.trim().length() < 5 || password.trim().length() > 20) {
-                    founderror = true;
-                    errObj.setPassErr("Password is required input from 5 to 20 chars");
-
-                } else if (!password.trim().equals(confirmPassword.trim())) {
-                    founderror = true;
-                    errObj.setConfirmpassErr("Confirm password must match with password!");
-
-                }
-                if (fullname.trim().length() < 5 || fullname.trim().length() > 50) {
-                    founderror = true;
-                    errObj.setFullnameErr("Full name is required input from 5 to 50 chars");                   
-
-                } 
-                if (phone.trim().length() < 10 ) {
-                    founderror = true;
-                    errObj.setFullnameErr("Phone number is required input  10 chars");                   
-
-                }else if (address.trim().length() < 5 || address.trim().length() > 100) {
-                    founderror = true;
-                    errObj.setAddressErr("Address is required input from 5 to 100 chars");
-                }
+        
+        try{
+            if(password.trim().length() < 5 || password.trim().length() > 20){
+                founderror = true;
+                errObj.setPassErr("Password must be from 5 to 20 characters in length");
             }
-            if (founderror) {
-                //2.1 caching errors, then forward to report error
-                request.setAttribute("errObj", errObj);
-
-                String wrongUsername = request.getParameter("email");
-                request.setAttribute("wrongUsername", wrongUsername);
-                String wrongPassword = request.getParameter("password");
-                request.setAttribute("wrongPassword", wrongPassword);
-                String wrongConfirmPassword = request.getParameter("confirmPassword");
-                request.setAttribute("wrongConfirmPassword", wrongConfirmPassword);
-                String wrongFullname = request.getParameter("fullname");
-                request.setAttribute("wrongFullname", wrongFullname);
-                String wrongAddress = request.getParameter("address");
-                request.setAttribute("wrongAddress", wrongAddress);
-                String wrongPhone = request.getParameter("phone");
-                request.setAttribute("wrongPhone", wrongPhone);
-
-            } else {
+            else if(!password.trim().equals(confirmPassword.trim())){
+                founderror = true;
+                errObj.setConfirmpassErr("Confirm password and password does not match");
+            }
+            if(phone.trim().length() < 10 || phone.trim().length() > 12){
+                founderror = true;
+                errObj.setPhoneError("Phone number must be from 10 to 12 digits");
+            }
+            if(founderror){
+                request.setAttribute("REGISTER_ERROR", errObj);
+                request.setAttribute("EMAIL_ERROR", email);
+                request.setAttribute("PASSWORD_ERROR", password);
+                request.setAttribute("CONFIRM_ERROR", confirmPassword);
+                request.setAttribute("NAME_ERROR", fullname);
+                request.setAttribute("PHONE_ERROR", phone);
+                request.setAttribute("ADDRESS_ERROR", address);
+            }
+            else{
                 UserDAO dao = new UserDAO();
-                boolean result = dao.createNewCustomer(email, password, url, gender, phone, address, status, dateCreated, role, avatar);
-                if (result) {
-                    url = SUCCESS_PAGE;
+                boolean result = dao.createNewCustomer(email, password, fullname, gender, phone, address, status, role, avatar);
+                if(!result){
+                    url = ERROR_PAGE;
                 }
             }
-        } catch (SQLException ex) {
-            String errMsg = ex.getMessage();
-            log("RegisterServlet SQLException: " + errMsg);
-            if (errMsg.contains("duplicate")) {
-                errObj.setEmailError(email + " is existed! Please choose another one!");
-                request.setAttribute("errObj", errObj);
+        }
+        catch(SQLException ex){
+            String msg = ex.getMessage();
+            log("RegisterServlet_SQL: " + msg);
+            if(msg.contains("duplicate")){
+                errObj.setEmailError(email + " already exists");
+                request.setAttribute("REGISTER_ERROR", errObj);
             }
-        } catch (ClassNotFoundException ex) {
-            log("RegisterServlet ClassNotFoundException: " + ex.getMessage());
-        }  catch (NamingException ex) {
-            log("RegisterServlet NamingException: " + ex.getMessage());
-        }finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+        }
+        catch(NamingException ex){
+            log("RegisterServlet_Naming: " + ex.getMessage());
+        }
+        finally{
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
