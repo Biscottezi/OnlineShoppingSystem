@@ -14,12 +14,10 @@
                     <file>${# Space-separated list of extra javac options}</file>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.javax.mail.jar-1}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
+                    <file>${file.reference.cos.jar}</file>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.sqljdbc4.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
+                    <file>${file.reference.javax.mail.jar}</file>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.cos.jar-2}</file>
