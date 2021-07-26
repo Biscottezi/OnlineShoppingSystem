@@ -197,8 +197,8 @@
                             </form>
                         </div>
                         <div class="extended col-4 row d-flex justify-content-end">
-                            <div class="col-3 d-flex align-items-center justify-content-end"><i class="fas fa-sort-amount-up"></i>Sort</div>
-                            <div class="col-3 d-flex align-items-center justify-content-end"><i class="fas fa-filter"></i>Filter</div>
+                            <div class="col-3 d-flex align-items-center justify-content-end"></div>
+                            <div class="col-3 d-flex align-items-center justify-content-end"></div>
                         </div>
                     </div>
                     
