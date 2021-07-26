@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import product.ProductDAO;
 import product.ProductDTO;
 import productAttachedImage.ProductAttachedImageDAO;
@@ -46,8 +47,10 @@ public class viewProductDetailsServlet extends HttpServlet {
         String productID = request.getParameter("productID");
         String url = ERROR_PAGE;
         try{
+            HttpSession session = request.getSession(false);
             ProductDAO productDao = new ProductDAO();
             productDao.searchProductByID(Integer.parseInt(productID));
+            session.setAttribute("PRODUCT_ID", productID);
             ProductDTO productDto = productDao.getProduct();
             if(productDto != null){
                 request.setAttribute("PRODUCT_DETAILS", productDto);

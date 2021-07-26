@@ -249,7 +249,7 @@
                     <div class="info row">
                         <div class="col">
                             <h6 class="input-title">Description</h6>
-                            <textarea name="productDescription" id="prod-dscrpt" class="editbox">${product.description}</textarea>
+                            <textarea name="productDescription" id="prod-dscrpt" class="editbox" form="updateform">${product.description}</textarea>
                         </div>
                     </div>
                         <hr>
@@ -343,25 +343,20 @@
         <form action="updateProd" id="updateform" method="POST" enctype="multipart/form-data"></form>
         
         <script>
-            var input= document.getElementById("upload-attached");
-            
-            input.onchange = function () {
-                var files = $("#upload-attached")[0].files;
-                $('#updateform').append('<input type="hidden" class="input-files" name="fileNamelist" value="'+files+'" />');
-//                for (var i = 0; i < files.length; i++)
-//                {
-//                $('#form').append('<input type="text" value="'+yourValue+'" />');
-//                }
-            };
-            
-            $("#updateform").submit(function(){
-                var num =$(".input-files").length;
-                var files = $(".input-files");
-                for (var i=0; i<num-1;i++){
-                    files[i].remove();
-                }
-                return true;
-            });
+                $('#updateform').submit(function() {
+                    var form = document.getElementById('updateform');
+                    var fi = document.getElementById('upload-attached');
+                    for (var i = 0; i <= fi.files.length -1; i++){
+                        var fname = fi.files.item(i).name;
+                        var input = document.createElement('input');
+                        input.setAttribute('name', 'fileNameList');
+                        input.setAttribute('value', fname);
+                        input.setAttribute('type', 'hidden');
+                        form.appendChild(input);
+                    }
+
+                    return true; // return false to cancel form action
+                });
         </script>
         
     </body>
