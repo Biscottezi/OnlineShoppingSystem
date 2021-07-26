@@ -364,9 +364,9 @@ public class PostDAO implements Serializable {
             if (con != null) {
                 //B2. create SQL string 
 
-                String sql = "INSERT INTO Product "
+                String sql = "INSERT INTO Post "
                         + "(Title, Thumbnail, BriefInfo, Author, Description, Featured, Status, PostCategoryID, DateCreated) "
-                        + "(?, ?, ?, ?, ?, ?, ?, ?, GETDATE())";
+                        + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, GETDATE())";
 
                 stm = con.prepareStatement(sql);
                 stm.setString(1, title);
