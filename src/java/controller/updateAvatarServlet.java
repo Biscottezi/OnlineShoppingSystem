@@ -6,7 +6,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -15,16 +14,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import user.UserDAO;
-import utils.uploadFile;
+import com.oreilly.servlet.MultipartRequest;
+import java.io.File;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpSession;
+import user.UserDTO;
 
 /**
  *
  * @author ASUS
  */
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 10,
+        maxFileSize = 1024 * 1024 * 50,
+        maxRequestSize = 1024 * 1024 * 100
+)
 @WebServlet(name = "updateAvatarServlet", urlPatterns = {"/updateAvatarServlet"})
 public class updateAvatarServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
     private final String HOME_PAGE = "homepage.jsp";
+    private static final String UPLOAD_DIR = "img";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,22 +47,32 @@ public class updateAvatarServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String userID = request.getParameter("userID");
-        String avatar = uploadFile.uploadFile(request, "avatar");
+        String applicationPath = request.getServletContext().getRealPath("");
+        String basePath = applicationPath + File.separator + UPLOAD_DIR + File.separator;
+        MultipartRequest mreq = new MultipartRequest(request, basePath, 500000 * 1024);
+        String avatar = mreq.getFilesystemName("avatar");
+        
         String url = ERROR_PAGE;
         
         try{
+            HttpSession session = request.getSession(false);
+            UserDTO user = (UserDTO)session.getAttribute("USER");
+            int userID = user.getId();
             UserDAO dao = new UserDAO();
-            boolean result = dao.updateUserAvatar(Integer.parseInt(userID), avatar);
+            boolean result = dao.updateUserAvatar(userID, avatar);
+            dao.getUserByID(userID);
+            UserDTO newUser = dao.getUser();
+            session.setAttribute("USER", newUser);
             if(result){
                 url = HOME_PAGE;
-    }
+            }       
         } catch (SQLException ex) {
             log("updateUserProfileServlet_SQLException: " + ex.getMessage());
         } catch (NamingException ex) {
             log("updateUserProfileServlet_NamingException: " + ex.getMessage());
         } finally {
-            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

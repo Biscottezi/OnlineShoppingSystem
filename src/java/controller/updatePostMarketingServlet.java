@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import post.PostDAO;
-import utils.uploadFile;
 
 /**
  *
@@ -40,7 +39,8 @@ public class updatePostMarketingServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String postID = request.getParameter("postID");
         String title = request.getParameter("txtTitle");
-        String thumbnail = uploadFile.uploadFile(request, "thumnail");
+//        String thumbnail = uploadFile.uploadFile(request, "thumnail");
+        String thumbnail ="";
         String briefInfo = request.getParameter("txtBriefInfo");
         String author = request.getParameter("txtAuthor");
         String description = request.getParameter("txtDescription");

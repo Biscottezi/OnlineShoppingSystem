@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import user.UserDAO;
 import user.UserDTO;
 import com.oreilly.servlet.MultipartRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -53,7 +54,8 @@ public class updateUserProfileServlet extends HttpServlet {
             oldDao.AddCustomerOldDetails(name, Integer.parseInt(gender), address, phone, Integer.parseInt(userID));
             userDao.getUserByID(Integer.parseInt(userID));
             UserDTO userDto = userDao.getUser();
-            request.setAttribute("USER", userDto);
+            HttpSession session = request.getSession(false);
+            session.setAttribute("USER", userDto);
             if(result){
                 url = HOME_PAGE;
             }
