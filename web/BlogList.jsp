@@ -19,6 +19,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" href="css/sider.css">
+        <link rel="stylesheet" href="css/header-footer.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css"/>
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
@@ -37,6 +38,22 @@
             #sider-search{
                 padding-left: 0px;
             }
+            #custBlogTable_info {
+                padding: 0;
+            }
+            #custBlogTable_paginate{
+                padding: 0px;
+            }
+            #custBlogTable_paginate > a{
+                margin: 20px;
+            }
+            .paginate_button {
+              cursor: pointer;
+              *cursor: hand;
+            }
+            tr{
+                cursor: pointer;
+            }
         </style>
     </head>
     <body>
@@ -47,8 +64,8 @@
                 <!--Sider-->
                 <div class="sider col-2">
                     <div class="col" id="sidercontent">
-                        <form action="searchProduct" class="col-sm-12 searchbar">
-                            <input type="text" placeholder="Search" class="search-input col-sm-10" name="txtSearchPost" value="" id="sider-search">
+                        <form action="searchPost" class="col-sm-12 searchbar">
+                            <input type="text" placeholder="Search" class="search-input col-sm-10" name="txtSearchPost" value="${param.txtSearchPost}" id="sider-search">
                             <button type="submit" id="search-button" style="padding:0px; padding-left:10px;" class="col-sm-2">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -65,13 +82,12 @@
                 </div>
                         
                 <div class="main-content col-10 container">
-                    <div class="container">
                     <h1>Latest Posts</h1>
                     <table class="table table-hover" id="custBlogTable">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th></th>
+                                <th scope="col">Thumbnail</th>
+                                <th scope="col">Title</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -84,11 +100,8 @@
                                     <td class="post-title">${post.title}</td>
                                 </tr>
                             </c:forEach>
-                            
-                            
                         </tbody>
                     </table>
-                    </div>
                 </div>
             </div>
         </main>
