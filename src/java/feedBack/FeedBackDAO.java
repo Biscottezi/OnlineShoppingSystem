@@ -120,9 +120,11 @@ public class FeedBackDAO implements Serializable{
         }
     }
     
-    public boolean addNewGeneralFeedback(String name, String content, String email, String phone, int ratedStar) throws SQLException, NamingException{
+    public int addNewGeneralFeedback(String name, String content, String email, String phone, int ratedStar) throws SQLException, NamingException{
         Connection con = null;
         PreparedStatement stm = null;
+        ResultSet rs = null;
+        int generatedID = 0;
         
         try{
             con = DBHelper.makeConnection();
@@ -130,7 +132,7 @@ public class FeedBackDAO implements Serializable{
                 String sql = "INSERT INTO Feedback (Name, FeedbackContent, Email, Phone, [Status], RatedStar) "
                         + "VALUES (?, ?, ?, ?, 0, ?) ";
                 
-                stm = con.prepareStatement(sql);
+                stm = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
                 stm.setString(1, name);
                 stm.setString(2, content);
                 stm.setString(3, email);
@@ -139,7 +141,10 @@ public class FeedBackDAO implements Serializable{
                 
                 int rowAffected = stm.executeUpdate();
                 if(rowAffected > 0){
-                    return true;
+                    rs = stm.getGeneratedKeys();
+                    while(rs.next()){
+                        generatedID = rs.getInt(1);
+                    }
                 }
             }
         }
@@ -151,12 +156,14 @@ public class FeedBackDAO implements Serializable{
                 con.close();
             }
         }
-        return false;
+        return generatedID;
     }
     
-    public boolean addNewProductFeedback(String name, String content, String email, String phone, int ratedStar, int productID) throws SQLException, NamingException{
+    public int addNewProductFeedback(String name, String content, String email, String phone, int ratedStar, int productID) throws SQLException, NamingException{
         Connection con = null;
         PreparedStatement stm = null;
+        ResultSet rs = null;
+        int generatedID = 0;
         
         try{
             con = DBHelper.makeConnection();
@@ -164,7 +171,7 @@ public class FeedBackDAO implements Serializable{
                 String sql = "INSERT INTO Feedback (Name, FeedbackContent, Email, Phone, [Status], RatedStar, ProductID) "
                         + "VALUES (?, ?, ?, ?, 0, ?, ?) ";
                 
-                stm = con.prepareStatement(sql);
+                stm = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
                 stm.setString(1, name);
                 stm.setString(2, content);
                 stm.setString(3, email);
@@ -174,7 +181,10 @@ public class FeedBackDAO implements Serializable{
                 
                 int rowAffected = stm.executeUpdate();
                 if(rowAffected > 0){
-                    return true;
+                    rs = stm.getGeneratedKeys();
+                    while(rs.next()){
+                        generatedID = rs.getInt(1);
+                    }
                 }
             }
         }
@@ -186,7 +196,7 @@ public class FeedBackDAO implements Serializable{
                 con.close();
             }
         }
-        return false;
+        return generatedID;
     }
     
     public boolean updateFeedback(int id, int status) throws SQLException, NamingException{

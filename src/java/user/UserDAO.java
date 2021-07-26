@@ -92,8 +92,8 @@ public class UserDAO implements Serializable {
     }
 
     public boolean createNewCustomer(String email, String password, String name, int gender, String phone, 
-            String address,int status, Date dateCreated, int role, String avatar)
-            throws SQLException, ClassNotFoundException, NamingException {
+            String address,int status, int role, String avatar)
+            throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;

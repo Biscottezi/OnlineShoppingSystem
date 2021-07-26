@@ -23,6 +23,7 @@ import orderDetail.OrderItemObj;
 import product.ProductDAO;
 import productCategory.ProductCategoryDAO;
 import productCategory.ProductCategoryDTO;
+import utils.sendMail;
 
 /**
  *
@@ -51,11 +52,14 @@ public class SaleConfirmOrderServlet extends HttpServlet {
             OrderDetailDAO dao = new OrderDetailDAO();
             ArrayList<OrderItemObj> detailList = dao.GetOrderDetailByOrderID(Integer.parseInt(selectedOrderID));
             int quantity = dao.GetQuantityByOrderID(Integer.parseInt(selectedOrderID));
+            
             ProductDAO productDAO = new ProductDAO();
             
             productDAO.getAllProduct();
-            
-            
+            OrderDAO oDAO = new OrderDAO();
+            String email= oDAO.GetEmailByOrderID(Integer.parseInt(selectedOrderID));
+            oDAO.updateStatus(Integer.parseInt(selectedOrderID), 2);
+            sendMail.mailConfirmOrder(email, Integer.parseInt(selectedOrderID));
             ProductCategoryDAO cate = new ProductCategoryDAO();
             List<ProductCategoryDTO> categoryList = cate.getCategoryList();
 

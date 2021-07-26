@@ -101,24 +101,25 @@ public class submitFeedbackServlet extends HttpServlet {
                 int prodID = Integer.parseInt(productID);
                 FeedBackDAO dao = new FeedBackDAO();
                 FeedBackAttachedImageDAO imgDao = new FeedBackAttachedImageDAO();
-                boolean result = dao.addNewProductFeedback(name, content, email, phone, ratedStar, prodID);
+                
+                int generatedID = dao.addNewProductFeedback(name, content, email, phone, ratedStar, prodID);
                 for(int i = 0; i < fileNameList.length; i++){
                     String fileSystemName= mreq.getFilesystemName(fileNameList[i]);
-                    imgDao.addNewImage(fileSystemName, prodID);
+                    imgDao.addNewImage(fileSystemName, generatedID);
                 }
-                if(result){
+                if(generatedID > 0){
                     url = HOMEPAGE;
                 }
             }
             else{
                 FeedBackDAO dao = new FeedBackDAO();
                 FeedBackAttachedImageDAO imgDao = new FeedBackAttachedImageDAO();
-                boolean result = dao.addNewGeneralFeedback(name, content, email, phone, ratedStar);
+                int generatedID = dao.addNewGeneralFeedback(name, content, email, phone, ratedStar);
                 for(int i = 0; i < fileNameList.length; i++){
                     String fileSystemName= mreq.getFilesystemName(fileNameList[i]);
-                    imgDao.addNewImage(fileSystemName, 1);
+                    imgDao.addNewImage(fileSystemName, generatedID);
                 }
-                if(result){
+                if(generatedID > 0){
                     url = HOMEPAGE;
                 }
             }

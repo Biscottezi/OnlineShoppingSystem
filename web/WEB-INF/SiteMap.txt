@@ -75,9 +75,13 @@ ViewSMemberDashboard = ViewSMemberDashboardServlet
 ViewSaleOrderList = ViewSaleOrderListServlet
 SaleUpdateOrder = SaleUpdateOrderServlet
 updateAvatar = updateAvatarServlet
+<<<<<<< HEAD
+custOrderDetail=CustomerOrderDetails.jsp
+=======
 checkoutUpdate = CheckOutAfterUpdateServlet
 viewCartUpdate = CartDetailsUpdate.jsp
 cartContactUpdate = CartContactUpdate.jsp
 updateOrder = UpdateOrderServlet
 removeProdImg = removeProductImageServlet
 changeMktGraph = changeMktGraphServlet
+>>>>>>> bf2d822b7604b109e381b9f03b543b0a2af72c9a
