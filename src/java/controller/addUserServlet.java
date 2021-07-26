@@ -6,6 +6,8 @@
 package controller;
 
 
+import com.oreilly.servlet.MultipartRequest;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Random;
@@ -34,8 +36,9 @@ import utils.sendMail;
 
 
 public class addUserServlet extends HttpServlet {
-    private final String USER_LiST_PAGE = "userlist.jsp";
+    private final String USER_LiST_PAGE = "viewUserListPageServlet";
     private final String ERROR_PAGE = "Error.html";
+    private static final String UPLOAD_DIR = "img";
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,15 +52,18 @@ public class addUserServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String applicationPath = request.getServletContext().getRealPath("");
+        String basePath = applicationPath + File.separator + UPLOAD_DIR + File.separator;
+        MultipartRequest mreq = new MultipartRequest(request, basePath, 500000 * 1024);
         String url = ERROR_PAGE;
-        String fullName = request.getParameter("txtFullName");
-        String gender = request.getParameter("txtGender");
-        String address = request.getParameter("txtAddress");
-        String email = request.getParameter("txtEmail");
-        String phone = request.getParameter("txtMobile");
-        String chkStatus = request.getParameter("chkStatus");
-        String avatar = "defaultAvatar.jpg";
-        String role = request.getParameter("txtRole");
+        String fullName = mreq.getParameter("txtFullName");
+        String gender = mreq.getParameter("txtGender");
+        String address = mreq.getParameter("txtAddress");
+        String email = mreq.getParameter("txtEmail");
+        String phone = mreq.getParameter("txtMobile");
+        String chkStatus = mreq.getParameter("chkStatus");
+        String avatar = mreq.getFilesystemName("avatar");
+        String role = mreq.getParameter("txtRole");
         String password;
         int status = 0;
         

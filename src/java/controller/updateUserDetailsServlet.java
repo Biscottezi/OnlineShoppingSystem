@@ -48,15 +48,16 @@ public class updateUserDetailsServlet extends HttpServlet {
             UserDAO dao = new UserDAO();
             boolean result = dao.updateUser(Integer.parseInt(userID), Integer.parseInt(role), userStatus);
             if(result){
-                urlRewriting = "viewUserDetails?userID="+userID;
+                urlRewriting = "viewUserDetailsPageServlet?userID="+userID;
             }
-            
+            request.setAttribute("Announce", "User has been updated!");
         }catch(SQLException ex){
             log("updateUserDetailsServlet _ SQL:" + ex.getMessage());
         }catch(NamingException ex){
             log("updateUserDetailsServlet _ Naming:" + ex.getMessage());
         }finally{
-            response.sendRedirect(urlRewriting);
+            RequestDispatcher rd = request.getRequestDispatcher(urlRewriting);
+            rd.forward(request, response);
             
         }
     }
