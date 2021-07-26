@@ -5,6 +5,8 @@
  */
 package controller;
 
+import com.oreilly.servlet.MultipartRequest;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -33,6 +35,7 @@ import productAttachedImage.ProductAttachedImageDAO;
 public class addProductMarketingServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
     private final String PRODUCT_MARKETING_PAGE = "MarketingProductList.jsp";
+    private static final String UPLOAD_DIR = "img";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,19 +48,20 @@ public class addProductMarketingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String title = request.getParameter("txtTitle");
-        String categoryID = request.getParameter("txtCategoryID");
-//        String thumbnail = uploadFile.uploadFile(request, "thumbnail");
-        String thumbnail ="";
-        String briefInfo = request.getParameter("txtBriefInfo");
-        String description = request.getParameter("txtDescription");
-        String quantity = request.getParameter("txtQuantity");
-        String listPrice = request.getParameter("txtListPrice");
-        String salePrice = request.getParameter("txtSalePrice");
-        String chkFeatured = request.getParameter("chkFeatured");
-        String chkStatus = request.getParameter("chkStatus");
-//        ArrayList<String> attachedImages = uploadFile.uploadFiles(request, 1);
-        ArrayList<String> attachedImages = null;
+        String applicationPath = request.getServletContext().getRealPath("");
+        String basePath = applicationPath + File.separator + UPLOAD_DIR + File.separator;
+        MultipartRequest mreq = new MultipartRequest(request, basePath, 500000 * 1024);
+        String title = request.getParameter("productTitle");
+        String categoryID = request.getParameter("productCategory");
+        String thumbnail = mreq.getFilesystemName("productThumbnail");
+        String briefInfo = request.getParameter("productBriefInfo");
+        String description = request.getParameter("productDescription");
+        String quantity = request.getParameter("productQuantity");
+        String listPrice = request.getParameter("productBasePrice");
+        String salePrice = request.getParameter("productSalePrice");
+        String chkFeatured = request.getParameter("productFeatured");
+        String chkStatus = request.getParameter("productStatus");
+        String[] fileNamelist = mreq.getParameterValues("fileNameList");
         String url = ERROR_PAGE;
         int status = 0;
         int featured = 0;
@@ -73,8 +77,8 @@ public class addProductMarketingServlet extends HttpServlet {
             ProductDAO productDao = new ProductDAO();
             int productID = productDao.addNewProduct(title, Integer.parseInt(categoryID), thumbnail, briefInfo, description, Integer.parseInt(quantity), 
                     Float.parseFloat(listPrice), Float.parseFloat(salePrice), featured, status);
-            for(int i = 0; i < attachedImages.size(); i++){
-                imageDao.addProductImage(attachedImages.get(i), productID);
+            for(int i = 0; i < fileNamelist.length; i++){
+                imageDao.addProductImage(fileNamelist[i], productID);
             }
             
             url = PRODUCT_MARKETING_PAGE;
