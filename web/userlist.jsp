@@ -108,7 +108,7 @@
                       <a class="navbar-brand overview" href="#">
                           <div class="container">
                             <div class="row justify-content-md-center">
-                                <div class="col align-self-baseline"><img src="img/users.png" alt=""/></div>
+                                <div class="col align-self-baseline"><img src="img/users-chosen.png" alt=""/></div>
                                 <div class="col align-self-baseline" style="font-size: 19px;">Users</div>
                             </div>
                           </div>

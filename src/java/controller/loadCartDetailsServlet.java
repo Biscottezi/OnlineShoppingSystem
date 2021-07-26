@@ -8,7 +8,6 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -17,19 +16,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import order.OrderDAO;
-import orderDetail.OrderDetailDAO;
-import orderDetail.OrderItemObj;
-import product.ProductDAO;
 import productCategory.ProductCategoryDAO;
 import productCategory.ProductCategoryDTO;
 
 /**
  *
- * @author Admin
+ * @author nguye
  */
-@WebServlet(name = "CustomerCancelOrderServlet", urlPatterns = {"/CustomerCancelOrderServlet"})
-public class CustomerCancelOrderServlet extends HttpServlet {
+@WebServlet(name = "loadCartDetailsServlet", urlPatterns = {"/loadCartDetailsServlet"})
+public class loadCartDetailsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,22 +35,28 @@ public class CustomerCancelOrderServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
+    private final String CART_DETAILS = "CartDetails.jsp";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String selectedOrderID = request.getParameter("orderID");
-        String url = "custOrderDetail?OrderID=" + Integer.parseInt(selectedOrderID);
-        try {
-            OrderDAO oDAO= new OrderDAO();
-            oDAO.updateCancelStatus(Integer.parseInt(selectedOrderID));
-
-        } catch (SQLException ex) {
-            log("ViewOlderOrderDetailServlet SQLException: " + ex.getMessage());
-        }catch (NamingException ex) {
-            log("ViewOlderOrderDetailServlet NamingException: " + ex.getMessage());
+        String url = CART_DETAILS;
+        try{
+            ProductCategoryDAO productCategoryDao = new ProductCategoryDAO();
+            productCategoryDao.getAllCategory();
+            List<ProductCategoryDTO> productCategoryDto = productCategoryDao.getCategoryList();
+            if(productCategoryDto != null){
+                request.setAttribute("PRODUCT_CATEGORY", productCategoryDto);
+            }
+        }
+        catch (SQLException ex) {
+            log("loadCartDetailsServlet_SQLException: " + ex.getMessage());
+        }
+        catch (NamingException ex) {
+            log("loadCartDetailsServlet_NamingException: " + ex.getMessage());
         } finally {
-            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

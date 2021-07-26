@@ -26,6 +26,14 @@
             #sider-search{
                 padding-left: 0px;
             }
+            .quantity-input{
+                text-align: center;
+                font-size: 16px;
+                font-weight: 600;
+            }
+            .btn-add-to-cart{
+                cursor: pointer;
+            }
         </style>
     </head>
 
@@ -57,9 +65,30 @@
                 
                 <div class="main-content container col-10" style="min-height: 700px;">
                     <c:set var="product" value="${requestScope.PRODUCT_DETAILS}"/>
+                    <c:set var="images" value="${requestScope.PRODUCT_IMAGES}"/>
                     <h1>Product</h1>
                     <div class="row">
-                        <img src="img/${product.thumbnail}" alt="product-thumbnail" class="col-6 product-img">
+                        
+                        
+                        <div id="carouselExampleIndicators" class="carousel slide container product-img col-6" data-ride="carousel" style="height: 430px">
+                            <!--<ol class="carousel-indicators">
+                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                            </ol>-->
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img class="product-img col-12" src="img/${product.thumbnail}" alt="First slide">
+                                </div>
+                                <c:forEach var="image" items="${images}">
+                                    <div class="carousel-item">
+                                        <img class="product-img col-12" src="img/${image.name}" alt="Second slide">
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </div>
+                        
+                        
                         <div class="col-6 product-info">
                             <h2>${product.title}</h2>
                             <span>Star: 4/5</span>
