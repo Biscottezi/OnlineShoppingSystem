@@ -139,7 +139,7 @@
             <div class="container slider-wrapper" style="min-height: 820px">
                 <div class="col-12">
                     <div class="row">
-                        <h2 class="slider-title">On sale right now!</h2>
+                        <h2 class="slider-title">Hot products!</h2>
                     </div>
                     <div id="sale-slider" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
