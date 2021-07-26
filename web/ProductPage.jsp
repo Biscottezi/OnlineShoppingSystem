@@ -39,6 +39,9 @@
             #sider-search{
                 padding-left: 0px;
             }
+            .product-wrapper{
+                cursor: pointer;
+            }
         </style>
     </head>
 

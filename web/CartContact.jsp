@@ -28,6 +28,9 @@
             #sider-search{
                 padding-left: 0px;
             }
+            .btn-change, .btn-submit{
+                cursor: pointer;
+            }
         </style>
     </head>
 

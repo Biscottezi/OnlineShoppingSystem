@@ -54,7 +54,7 @@
                         <c:set var="productCategoryList" value="${requestScope.PRODUCT_CATEGORY}"/>
                         <c:forEach var="productCategory" items="${productCategoryList}">
                         <div class="category">
-                            <a href="">${productCategory.name}</a>
+                            <a href="viewProdByCate?categoryID=${productCategory.id}">${productCategory.name}</a>
                         </div>
                         </c:forEach>
                     </div>
@@ -94,6 +94,7 @@
                                                 <c:when test="${order.status == 0}">Submitted</c:when>
                                                 <c:when test="${order.status == 1}">Confirmed</c:when>
                                                 <c:when test="${order.status == 2}">Completed</c:when>
+                                                <c:when test="${order.status == 3}">Canceled</c:when>
                                             </c:choose>
                                         </td>
                                     </tr>
