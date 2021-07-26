@@ -48,7 +48,7 @@
                         <c:set var="productCategoryList" value="${requestScope.PRODUCT_CATEGORY}"/>
                         <c:forEach var="productCategory" items="${productCategoryList}">
                         <div class="category">
-                            <a href="">${productCategory.name}</a>
+                            <a href="viewProdByCate?categoryID=${productCategory.id}">${productCategory.name}</a>
                         </div>
                         </c:forEach>
                     </div>
@@ -69,6 +69,7 @@
                                     <c:when test="${order.status == 0}">Submitted</c:when>
                                     <c:when test="${order.status == 1}">Confirmed</c:when>
                                     <c:when test="${order.status == 2}">Completed</c:when>
+                                    <c:when test="${order.status == 3}">Canceled</c:when>
                                 </c:choose>
                             </div>
                         </div>
@@ -100,7 +101,7 @@
                         <div class="d-flex flex-row justify-content-between">
                             <c:if test="${order.status == 0}">
                                 <div class="btn-cancel-update">
-                                    <button id="btn-cancel">CANCEL</button>
+                                    <button id="btn-cancel" onclick="location.href='cancelOrder?orderID=${order.orderId}'">CANCEL</button>
                                     <button id="btn-update" onclick="location.href='updateOrder?orderID=${order.orderId}'">UPDATE</button>
                                 </div>
                             </c:if>
