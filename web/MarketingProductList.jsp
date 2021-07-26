@@ -26,10 +26,10 @@
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
         <script src="js/tbllist.js"></script>
         <script src="js/managerpopup.js"></script>
-        <script src="js/upload.js"></script>
         <script src="js/statuschange.js"></script>
         <script src="js/homepage.js"></script>
         <script src="js/staffpop-up.js"></script>
+        <script src="js/upload.js"></script>
         <style>
             .status{
                 width:100px;
@@ -216,11 +216,11 @@
                             </form>
                         </div>
                         <div class="extended col-4 row d-flex">
+                            <div class="col-3 d-flex align-items-center justify-content-end"></div>
+                            <div class="col-3 d-flex align-items-center justify-content-end"></div>
                             <div class="col-6 d-flex align-items-center justify-content-end">
                                 <div class="addbtn d-flex align-items-center justify-content-center" id="adduser" onclick="showCreatePopup()">Add Product</div>
                             </div>
-                            <div class="col-3 d-flex align-items-center justify-content-end"><i class="fas fa-sort-amount-up"></i>Sort</div>
-                            <div class="col-3 d-flex align-items-center justify-content-end"><i class="fas fa-filter"></i>Filter</div>
                         </div>
                     </div>
                     
@@ -362,7 +362,7 @@
                 </div>
                 <div class="col">
                     Sale Price<br>
-                    <input class="inputbox" type="number" name="productSalePrice" value="" form="createform"  required step=".01" pattern="^\d+(?:\.\d{1,2})?$"/>
+                    <input class="inputbox" type="number" name="productSalePrice" value="" form="createform" step=".01" pattern="^\d+(?:\.\d{1,2})?$"/>
                     <br>
                     <div style="margin-top:12px;">Featured</div>
                     <input type="checkbox" name="productFeatured" value="ON" checked="checked" id="" class="col-1"  form="createform" style="zoom: 2; margin-top: 1em"/>

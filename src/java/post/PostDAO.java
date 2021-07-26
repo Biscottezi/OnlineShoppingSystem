@@ -47,7 +47,7 @@ public class PostDAO implements Serializable {
                 while (rs.next()) {
                     int PostID = rs.getInt("PostID");
                     String Title = rs.getString("Title");
-                    String Thumbnail = rs.getString("Thumbnail");
+                    String Thumbnail = rs.getString("Thumbnail").trim();
                     String BriefInfo = rs.getString("BriefInfo");
                     String Author = rs.getString("Author");
                     String Description = rs.getString("Description");
@@ -93,7 +93,7 @@ public class PostDAO implements Serializable {
                 while (rs.next()) {
 
                     String Title = rs.getString("Title");
-                    String Thumbnail = rs.getString("Thumbnail");
+                    String Thumbnail = rs.getString("Thumbnail").trim();
                     String BriefInfo = rs.getString("BriefInfo");
                     String Author = rs.getString("Author");
                     String Description = rs.getString("Description");
@@ -141,7 +141,7 @@ public class PostDAO implements Serializable {
                 while (rs.next()) {
                     int PostID = rs.getInt("PostID");
                     String Title = rs.getString("Title");
-                    String Thumbnail = rs.getString("Thumbnail");
+                    String Thumbnail = rs.getString("Thumbnail").trim();
                     String BriefInfo = rs.getString("BriefInfo");
                     String Author = rs.getString("Author");
                     String Description = rs.getString("Description");
@@ -192,7 +192,7 @@ public class PostDAO implements Serializable {
                while (rs.next()) {
                     int PostID = rs.getInt("PostID");
                     String Title = rs.getString("Title");
-                    String Thumbnail = rs.getString("Thumbnail");
+                    String Thumbnail = rs.getString("Thumbnail").trim();
                     String BriefInfo = rs.getString("BriefInfo");
                     String Author = rs.getString("Author");
                     String Description = rs.getString("Description");
@@ -236,7 +236,7 @@ public class PostDAO implements Serializable {
                 while(rs.next()){
                     int PostID = rs.getInt("PostID");
                     String Title = rs.getString("Title");
-                    String Thumbnail = rs.getString("Thumbnail");
+                    String Thumbnail = rs.getString("Thumbnail").trim();
                     String BriefInfo = rs.getString("BriefInfo");
                     String Author = rs.getString("Author");
                     String Description = rs.getString("Description");
@@ -281,7 +281,7 @@ public class PostDAO implements Serializable {
                 while (rs.next()) {
                     int PostID = rs.getInt("PostID");
                     String Title = rs.getString("Title");
-                    String Thumbnail = rs.getString("Thumbnail");
+                    String Thumbnail = rs.getString("Thumbnail").trim();
                     String BriefInfo = rs.getString("BriefInfo");
                     String Author = rs.getString("Author");
                     String Description = rs.getString("Description");

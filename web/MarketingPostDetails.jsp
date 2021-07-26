@@ -221,7 +221,7 @@
                     <div class="infor row">
                         <div class="col">
                             Brief Info<br>
-                            <textarea name="postBriefInfo" class="editbox" form="updateform" id="post-info">Ngày xửa ngày xưa có con chim cánh cụt thở bằng mông, một ngày nọ nó ngồi xuống và chết.</textarea>
+                            <textarea name="postBriefInfo" class="editbox" form="updateform" id="post-info">${post.briefInfo}</textarea>
                         </div>
                         <div class="col">
                             <div style="margin-top:6px;">Thumbnail</div><br>

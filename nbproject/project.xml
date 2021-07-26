@@ -11,11 +11,14 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.javax.mail.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
+                    <file>${# Space-separated list of extra javac options}</file>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.cos.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.javax.mail.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
