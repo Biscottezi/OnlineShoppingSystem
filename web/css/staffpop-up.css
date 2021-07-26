@@ -12,3 +12,39 @@ and open the template in the editor.
     left: 25%;
     top: 25%;
 }
+#user-profile{
+    left: 25%;
+    top: 15%;
+}
+.decor-div{
+    background: linear-gradient(180deg, rgba(0, 133, 255, 0.58) 0%, rgba(0, 83, 158, 0.80738) 78.79%, #002A4B 141.2%);
+    border-radius: 0 0 50px 50px;
+    height: 120px;
+}
+#user-ava{
+    width: 130px;
+    height: 130px;
+    border: 2px solid white;
+    border-radius: 50%;
+    position: absolute;
+    left: 44%;
+    top: 50px;
+}
+#ava-label{
+    width: 2em;
+    position: absolute;
+    left: 54%;
+    top: 9em;
+}
+.user-ava-btn{
+    position: absolute;
+    right: 13%;
+}
+.info-label{
+    font-size: 20px;
+    margin-top: 3px;
+    font-weight: 500;
+}
+.profile-div{
+    margin-top: 6em;
+}

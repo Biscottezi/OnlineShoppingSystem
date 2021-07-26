@@ -82,9 +82,6 @@ updateOrder = UpdateOrderServlet
 removeProdImg = removeProductImageServlet
 changeMktGraph = changeMktGraphServlet
 cancelOrder = CustomerCancelOrderServlet
-<<<<<<< HEAD
-=======
 addPost = addPostMarketingServlet
 addProduct = addProductMarketingServlet
->>>>>>> af8a8871b2bc3eac4a7f743139df94545ebb805a
 searchPost = SearchBlogServlet
