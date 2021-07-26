@@ -210,11 +210,11 @@
                             </form>
                         </div>
                         <div class="extended col-4 row d-flex">
+                            <div class="col-3 d-flex align-items-center justify-content-end"></div>
+                            <div class="col-3 d-flex align-items-center justify-content-end"></div>
                             <div class="col-6 d-flex align-items-center justify-content-end">
                                 <div class="addbtn d-flex align-items-center justify-content-center" id="adduser" onclick="showCreatePopup()">Add Post</div>
                             </div>
-                            <div class="col-3 d-flex align-items-center justify-content-end"><i class="fas fa-sort-amount-up"></i>Sort</div>
-                            <div class="col-3 d-flex align-items-center justify-content-end"><i class="fas fa-filter"></i>Filter</div>
                         </div>
                     </div>
                     

@@ -78,8 +78,10 @@ public class addProductMarketingServlet extends HttpServlet {
             ProductDAO productDao = new ProductDAO();
             int productID = productDao.addNewProduct(title, Integer.parseInt(categoryID), thumbnail, briefInfo, description, Integer.parseInt(quantity), 
                     Float.parseFloat(listPrice), Float.parseFloat(salePrice), featured, status);
-            for(int i = 0; i < fileNamelist.length; i++){
-                imageDao.addProductImage(fileNamelist[i], productID);
+            if(fileNamelist!=null && fileNamelist.length>0){
+                for(int i = 0; i < fileNamelist.length; i++){
+                    imageDao.addProductImage(fileNamelist[i], productID);
+                }
             }
             
             url = PRODUCT_MARKETING_PAGE;
