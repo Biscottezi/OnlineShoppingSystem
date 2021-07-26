@@ -6,9 +6,9 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,8 +22,8 @@ import user.UserDAO;
  */
 @WebServlet(name = "resetNewPasswordServlet", urlPatterns = {"/resetNewPasswordServlet"})
 public class resetNewPasswordServlet extends HttpServlet {
-    private final String ERROR_PAGE = "Error.html";
     private final String HOME_PAGE = "homepage.jsp";
+    private final String RESET_PAGE = "resetPassword.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,20 +38,26 @@ public class resetNewPasswordServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String userID = request.getParameter("userID");
         String password = request.getParameter("txtPassword");
-        String url =ERROR_PAGE;
+        String confirm = request.getParameter("txtConfirm");
+        String url = RESET_PAGE;
         
         try{
-            UserDAO dao = new UserDAO();
-            boolean result = dao.resetNewPassword(Integer.parseInt(userID), password);
-            if(result){
-                url = HOME_PAGE;
+            if(password.equals(confirm)){
+                UserDAO dao = new UserDAO();
+                boolean result = dao.resetNewPassword(Integer.parseInt(userID), password);
+                if(result){
+                    url = HOME_PAGE;
+                }
+            }else{
+                request.setAttribute("ERROR", "");
             }
         }catch(SQLException ex){
             log("resetNewPasswordServlet _ SQL:" + ex.getMessage());
         }catch(NamingException ex){
             log("resetNewPasswordServlet _ Naming:" + ex.getMessage());
         }finally{
-            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 
