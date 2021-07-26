@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +35,7 @@ import productAttachedImage.ProductAttachedImageDAO;
 
 public class addProductMarketingServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
-    private final String PRODUCT_MARKETING_PAGE = "MarketingProductList.jsp";
+    private final String PRODUCT_MARKETING_PAGE = "viewProductMarketingServlet";
     private static final String UPLOAD_DIR = "img";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -88,7 +89,8 @@ public class addProductMarketingServlet extends HttpServlet {
         } catch (NamingException ex) {
             log("addProductMarketingServlet_NamingException: " + ex.getMessage());
         } finally {
-            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 
