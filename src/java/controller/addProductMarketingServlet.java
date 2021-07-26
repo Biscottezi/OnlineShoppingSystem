@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -35,7 +34,7 @@ import productAttachedImage.ProductAttachedImageDAO;
 
 public class addProductMarketingServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
-    private final String PRODUCT_MARKETING_PAGE = "viewProductMarketingServlet";
+    private final String PRODUCT_MARKETING_PAGE = "MarketingProductList.jsp";
     private static final String UPLOAD_DIR = "img";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -52,16 +51,16 @@ public class addProductMarketingServlet extends HttpServlet {
         String applicationPath = request.getServletContext().getRealPath("");
         String basePath = applicationPath + File.separator + UPLOAD_DIR + File.separator;
         MultipartRequest mreq = new MultipartRequest(request, basePath, 500000 * 1024);
-        String title = mreq.getParameter("productTitle");
-        String categoryID = mreq.getParameter("productCategory");
+        String title = request.getParameter("productTitle");
+        String categoryID = request.getParameter("productCategory");
         String thumbnail = mreq.getFilesystemName("productThumbnail");
-        String briefInfo = mreq.getParameter("productBriefInfo");
-        String description = mreq.getParameter("productDescription");
-        String quantity = mreq.getParameter("productQuantity");
-        String listPrice = mreq.getParameter("productBasePrice");
-        String salePrice = mreq.getParameter("productSalePrice");
-        String chkFeatured = mreq.getParameter("productFeatured");
-        String chkStatus = mreq.getParameter("productStatus");
+        String briefInfo = request.getParameter("productBriefInfo");
+        String description = request.getParameter("productDescription");
+        String quantity = request.getParameter("productQuantity");
+        String listPrice = request.getParameter("productBasePrice");
+        String salePrice = request.getParameter("productSalePrice");
+        String chkFeatured = request.getParameter("productFeatured");
+        String chkStatus = request.getParameter("productStatus");
         String[] fileNamelist = mreq.getParameterValues("fileNameList");
         String url = ERROR_PAGE;
         int status = 0;
@@ -89,8 +88,7 @@ public class addProductMarketingServlet extends HttpServlet {
         } catch (NamingException ex) {
             log("addProductMarketingServlet_NamingException: " + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            response.sendRedirect(url);
         }
     }
 
