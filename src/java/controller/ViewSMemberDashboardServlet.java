@@ -31,7 +31,7 @@ import user.UserDTO;
 @WebServlet(name = "ViewSMemberDashboardServlet", urlPatterns = {"/ViewSMemberDashboardServlet"})
 public class ViewSMemberDashboardServlet extends HttpServlet {
 
-    private final String SMEMBER_DASHBOARD = "SaleMemberDashboard";
+    private final String SMEMBER_DASHBOARD = "SaleMemberDashboard.jsp";
     private final String ERROR_PAGE = "Error.html";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -80,7 +80,7 @@ public class ViewSMemberDashboardServlet extends HttpServlet {
         } catch(NamingException ex){
             log("viewSManagerDashboardServlet_Naming:" + ex.getMessage());
         } finally{
-            response.sendRedirect(url);
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

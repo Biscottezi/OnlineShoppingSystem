@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import user.UserDAO;
+import user.UserDTO;
 
 /**
  *
@@ -25,6 +26,10 @@ import user.UserDAO;
 public class changePasswordServlet extends HttpServlet {
     private final String ERROR_PAGE = "Error.html";
     private final String HOME_PAGE = "viewHomePageServlet";
+    private final String MARKETING_DASHBOARD = "viewMarketingDashboardServlet";
+    private final String SALE_MANAGER_DASHBOARD = "viewSManagerDashboardServlet";
+    private final String SALE_MEMBER_DASHBOARD = "ViewSMemberDashboardServlet";
+    private final String ADMIN_DASHBOARD = "viewAdminDashboardServlet";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -64,12 +69,31 @@ public class changePasswordServlet extends HttpServlet {
             
             if(founderror){
                 request.setAttribute("CHANGE_PASS_ERR", error);
+                dao.getUserByID(Integer.parseInt(userID));
+                UserDTO dto = dao.getUser();
+                int role = dto.getRole();
+                switch (role){
+                            case 0:
+                                url = MARKETING_DASHBOARD;
+                                break;
+                            case 1:
+                                url = SALE_MEMBER_DASHBOARD;
+                                break;
+                            case 2:
+                                url = SALE_MANAGER_DASHBOARD;
+                                break;
+                            case 3:
+                                url = ADMIN_DASHBOARD;
+                                break;
+                            case 4:
+                                url = HOME_PAGE;
+                                break;
+                        }
+                
             }else{
                 dao.resetNewPassword(Integer.parseInt(userID), newPassword);
                 request.getSession(false).invalidate();
             }
-            
-            url = HOME_PAGE;
         }catch (SQLException ex) {
             log("changePasswordServlet_SQLException: " + ex.getMessage());
         } catch (NamingException ex) {

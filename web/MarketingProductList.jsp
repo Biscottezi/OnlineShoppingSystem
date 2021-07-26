@@ -397,7 +397,7 @@
             </div>
         </div>
         
-        <form action="addProduct" id="createform" method="POST" enctype="multipart/form-data"></form>
+        <form action="" id="createform" method="POST" enctype="multipart/form-data"></form>
         <script>
                 $('#createform').submit(function() {
                     var form = document.getElementById('createform');
