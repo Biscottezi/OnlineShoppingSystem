@@ -293,7 +293,7 @@
                     <div class="col-3 sale-member picker-title"><span id="session-role">Feedbacks</span><br>
                         <div class="select-wrapper">
                             <select class="d-flex align-items-center admin-filter" id="slFeedbacks">
-                                <option value="" selected>Select category</option>
+                                <option value="4.1" selected>Select category</option>
                                 <option
                                     <c:set var="fbPhone" value="${0}"/>
                                     <c:forEach var="fb" items="${ratedStars}">
@@ -338,7 +338,7 @@
                         </div><br>
                         <div class="admin-stats d-flex align-items-center justify-content-center">
                             <div class="details-header">Average stars<br>
-                                <span class="details" id="feedbackscount">4.5</span>
+                                <span class="details" id="feedbackscount">4.1</span>
                             </div>
                         </div>
                     </div>
